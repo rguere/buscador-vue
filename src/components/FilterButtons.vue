@@ -7,85 +7,99 @@
       <a href="#" v-scroll-to="{
                   el: '#filter_ubicacion',
                   offset: -100,
-              }" @click="addFilter('Ubicación')">
+                  onDone: onDone
+              }" @click="addFilter($event)">
         Ubicación
       </a>
       <a href="#" v-scroll-to="{
                   el: '#filter_antiguedad',
                   offset: -100,
-              }" @click="addFilter('Antigüedad')">
+                  onDone: onDone
+              }" @click="addFilter($event)">
         Antigüedad
       </a>
       <a href="#" v-scroll-to="{
                   el: '#filter_numero_de_empleados',
                   offset: -100,
-              }" @click="addFilter('Número de empleados')">
+                  onDone: onDone
+              }" @click="addFilter($event)">
         Número de empleados
       </a>
       <a href="#" v-scroll-to="{
                   el: '#filter_estado',
                   offset: -100,
-              }" @click="addFilter('Estado')">
+                  onDone: onDone
+              }" @click="addFilter($event)">
         Estado
       </a>
       <a href="#" v-scroll-to="{
                   el: '#filter_tipo_de_cuentas',
                   offset: -100,
-              }" @click="addFilter('Tipo de cuentas')">
+                  onDone: onDone
+              }" @click="addFilter($event)">
         Tipo de cuentas
       </a>
       <a href="#" v-scroll-to="{
                   el: '#filter_sector_actividad',
                   offset: -100,
-              }" @click="addFilter('Sector/Actividad')">
+                  onDone: onDone
+              }" @click="addFilter($event)">
         Sector/Actividad
       </a>
       <a href="#" v-scroll-to="{
                   el: '#filter_cargos',
                   offset: -100,
-              }" @click="addFilter('Cargos')">
+                  onDone: onDone
+              }" @click="addFilter($event)">
         Cargos
       </a>
       <a href="#" v-scroll-to="{
                   el: '#filter_codigo_postal',
                   offset: -100,
-              }" @click="addFilter('Código Postal')">
+                  onDone: onDone
+              }" @click="addFilter($event)">
         Código Postal
       </a>
       <a href="#" v-scroll-to="{
                   el: '#filter_nombre_o_razon_social',
                   offset: -100,
-              }" @click="addFilter('Nombre o razón social')">
+                  onDone: onDone
+              }" @click="addFilter($event)">
         Nombre o razón social
       </a>
       <a href="#" v-scroll-to="{
                   el: '#filter_nif',
                   offset: -100,
-              }" @click="addFilter('NIF')">
+                  onDone: onDone
+              }" @click="addFilter($event)">
         NIF
       </a>
       <a href="#" v-scroll-to="{
                   el: '#filter_anios_con_cuentas_disponibles',
                   offset: -100,
-              }" @click="addFilter('Años con cuentas disponibles')">
+                  onDone: onDone
+              }" @click="addFilter($event)">
         Años con cuentas disponibles
       </a>
       <a href="#" v-scroll-to="{
                   el: '#filter_informacion_financiera',
                   offset: -100,
-              }" @click="addFilter('Información Financiera')">
+                  onDone: onDone
+              }" @click="addFilter($event)">
         Información Financiera
       </a>
       <a href="#" v-scroll-to="{
                   el: '#filter_auditores',
                   offset: -100,
-              }" @click="addFilter('Auditores')">
+                  onDone: onDone
+              }" @click="addFilter($event)">
         Auditores
       </a>
       <a href="#" v-scroll-to="{
                   el: '#filter_directivos_y_vinculaciones',
                   offset: -100,
-              }" @click="addFilter('Directivos y Vinculaciones')">
+                  onDone: onDone
+              }" @click="addFilter($event)">
         Directivos y Vinculaciones
       </a>
     </div>
@@ -104,8 +118,16 @@
     },
     mounted() {},
     methods: {
-      addFilter(filter) {
-        this.$store.dispatch('filters/addFilters', filter)
+      addFilter(event) {
+        this.$store.dispatch('filters/addFilters', event.target.innerText);
+      },
+      onDone (element) {
+        if (typeof element == 'object') {
+          element.classList.add("bounce-leave-active")
+          setTimeout(function () {
+            element.classList.remove("bounce-leave-active")
+          }, 1000)
+        }
       }
     }
   }

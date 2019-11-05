@@ -2,6 +2,7 @@
     <div class="conten-flex-70-30">
 
       <div class="flex-70-30">
+
         <filter-ubicacion></filter-ubicacion>
 
         <filter-antiguedad></filter-antiguedad>
@@ -47,9 +48,9 @@
         filters_labels: 'filters/filters_labels',
         filters: 'filters/filters',
       }),
-      data() {
-        return {}
-      },
+      data: () => ({
+        show: true
+      }),
       mounted() {},
       methods: {}
     }

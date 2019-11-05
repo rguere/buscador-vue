@@ -49,9 +49,7 @@ export const mutations = {
 
 // actions
 export const actions = {
-  addFilters({
-    commit
-  }, filter) {
+  addFilters({ commit }, filter) {
     if (!state.filters.includes(filter)) {
       commit(types.ADD_FILTER, {
         filter: filter
