@@ -111,7 +111,7 @@
   }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .filter-buttons {
   display: grid;
   grid-template-columns: 20% 80%;
@@ -147,4 +147,34 @@
   justify-content: center;
   align-items: center;
 }
+
+
+@media (max-width: 950px) {
+  .filter-buttons {
+    
+    grid-template-columns: 100%;
+    
+    .filter-btns{
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+  }
+}
+
+@media (max-width: 550px) {
+  .filter-buttons {
+    .filter-btns{
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+}
+
+@media (max-width: 350px) {
+  .filter-buttons {
+    .filter-btns{
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
+}
+
 </style>

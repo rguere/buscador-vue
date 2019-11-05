@@ -24,12 +24,12 @@ body {
 }
 
 .banner-top>div:nth-child(1) div:nth-child(1) {
-  padding: 15px 30px;
+  padding: 30px 30px;
   background-color: #fff;
 }
 
 .banner-top>div:nth-child(1) div:nth-child(2) {
-  padding: 15px 30px;
+  padding: 30px 30px;
 }
 
 .banner-top>div:nth-child(1) div:nth-child(2) p {
@@ -125,4 +125,55 @@ body {
   width: 0;
   height: 0;
   opacity: 0;
+}
+
+
+@media (max-width: 950px) {
+  .banner-top {
+    padding: 45px 0 0 0;
+  }
+
+  .banner-top>div:nth-child(1) {
+    grid-template-columns: 100%;
+  }
+
+  .grid-5-columns-1fr {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .grid-4-columns-1fr {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .grid-3-columns-1fr {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid-2-columns-1fr {
+    grid-template-columns: 100%;
+  }
+
+}
+
+@media (max-width: 750px) {
+  .grid-2-columns-1fr, .grid-3-columns-1fr, .grid-4-columns-1fr, .grid-5-columns-1fr {
+    grid-template-columns: 50% 50%;
+  }
+
+  .conten-flex-70-30>div:nth-child(odd), .conten-flex-70-30>div:nth-child(even) {
+    width: 100%;
+  }
+
+  .conten-flex-50-50>div:nth-child(odd), .conten-flex-50-50>div:nth-child(even) {
+    width: 100%;
+  }
+}
+
+@media (max-width: 550px) {
+  .grid-2-columns-1fr, .grid-3-columns-1fr, .grid-4-columns-1fr, .grid-5-columns-1fr {
+    grid-template-columns: 100%;
+  }
+}
+
+@media (max-width: 350px) {  
 }

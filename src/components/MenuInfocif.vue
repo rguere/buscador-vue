@@ -112,4 +112,11 @@
   background-color: #e6e6e6;
   border-color: #adadad;
 }
+
+@media (max-width: 950px) {
+  .wrap-menu {
+    display: none;
+  }
+}
+
 </style>
