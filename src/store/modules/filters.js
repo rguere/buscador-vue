@@ -1,5 +1,7 @@
 //import axios from 'axios'
 import * as types from '../mutation-types'
+import data from './../../assets/buscador-data.json'
+
 
 // state
 export const state = {
@@ -20,7 +22,8 @@ export const state = {
     'Directivos y Vinculaciones'
   ],
   filters: [],
-  selected_companies: 100000
+  selected_companies: 100000,
+  ...data
 }
 
 // getters

@@ -5,6 +5,7 @@ import store from './store'
 
 import './components/index'
 import './plugins/vue-scrollto'
+import './plugins/vue-treeselect'
 
 Vue.config.productionTip = false
 
