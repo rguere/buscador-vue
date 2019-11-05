@@ -4,6 +4,7 @@ import MenuInfocif from './MenuInfocif.vue'
 import FilterButtons from './FilterButtons.vue'
 import FilterActionsTop from './FilterActionsTop.vue'
 import FilterListCheckboxs from './FilterListCheckboxs.vue'
+import BannerTop from './BannerTop.vue'
 
 
 import FilterUbicacion from './filters/FilterUbicacion.vue'
@@ -26,6 +27,7 @@ import FilterAniosCuentasDisponibles from './filters/FilterAniosCuentasDisponibl
   FilterButtons,
   FilterActionsTop,
   FilterListCheckboxs,
+  BannerTop,
   FilterUbicacion,
   FilterCodigoPostal,
   FilterRazonSocial,
