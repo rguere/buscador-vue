@@ -105,4 +105,17 @@ export default {
   }
 }
 
+@media (min-width: 750px) and (max-width: 820px) {  
+  .flex-space-between-center {
+    flex-wrap: wrap;
+    button {
+      width: 100%;
+      margin-bottom: 5px;
+    }
+    .select-treeselect {
+      width: 100%;
+    }
+  }
+}
+
 </style>
