@@ -9,7 +9,7 @@
         <textarea class="filter_textarea" placeholder="Escriba aqui el nombre o razón social de la empresa"></textarea>
 
         <div class="flex-space-between-flex-end">
-          <button class="btn btn-ver-mas">Ver más</button>
+          <button class="btn btn-ver-mas">Ver detalles</button>
           <button class="btn btn-action-search wi">BUSCAR</button>
         </div>
 

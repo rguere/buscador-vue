@@ -33,7 +33,7 @@
           </div>
 
 
-          <button class="btn btn-ver-mas">Ver más</button>
+          <button class="btn btn-ver-mas">Ver detalles</button>
         </div>
 
       </div>

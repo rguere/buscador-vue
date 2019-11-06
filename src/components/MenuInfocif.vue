@@ -57,7 +57,7 @@
 .nav-fixed {
   position: fixed;
   width: 100%;
-  z-index: 99999;
+  z-index: 111;
 }
 
 .nav-menu {

@@ -1,68 +1,72 @@
 //import axios from 'axios'
 import * as types from '../mutation-types'
-import data from './../../assets/buscador-data.json'
 
+const initialState = () => {
+  return {
+    form: {
+      selected_provinces: []
+    },
+    applied_filters: [],
+    selected_companies: 0,
+  }
+}
 
 // state
-export const state = {
-  filters_labels: [
-    'Ubicación',
-    'Antigüedad',
-    'Número de empleados',
-    'Estado',
-    'Tipo de cuentas',
-    'Sector/Actividad',
-    'Cargos',
-    'Código Postal',
-    'Nombre o razón social',
-    'NIF',
-    'Años con cuentas disponibles',
-    'Información Financiera',
-    'Auditores',
-    'Directivos y Vinculaciones'
-  ],
-  filters: [],
-  selected_companies: 100000,
-  ...data
-}
+export const state = initialState()
 
 // getters
 export const getters = {
-  filters_labels: state => state.filters_labels,
-  filters: state => state.filters,
+  form: state => state.form,
+  applied_filters: state => state.applied_filters,
   selected_companies: state => state.selected_companies,
 }
 
 // mutations
 export const mutations = {
-  [types.ADD_FILTER](state, {
-    filter
-  }) {
-    state.filters.push(filter)
+  [types.RESET_FILTER](state, { initial }) {
+    for (const prop in initial) {
+      state[prop] = initial[prop]
+    }
   },
-  [types.REMOVE_FILTER](state, {
-    filter
-  }) {
-    state.filters = state.filters.filter(_filter => _filter !== filter)
+
+  [types.ADD_FILTER](state, { filter }) {
+    state.applied_filters.push(filter)
+  },
+  
+  [types.REMOVE_FILTER](state, { filter }) {
+    state.applied_filters = state.applied_filters.filter(_filter => _filter !== filter)
+  },
+
+  [types.SET_SELECTED_COMPANIES](state, { quantity, isSum }) {
+    state.selected_companies = (isSum)? state.selected_companies + quantity : state.selected_companies - quantity 
   }
 }
 
 // actions
 export const actions = {
+  resetFilter({ commit }) {
+    commit(types.RESET_FILTER, { 
+      initial: initialState() 
+    })
+  },
   addFilters({ commit }, filter) {
-    if (!state.filters.includes(filter)) {
+    if (!state.applied_filters.includes(filter)) {
       commit(types.ADD_FILTER, {
         filter: filter
       })
     }
   },
-  removeFilters({
-    commit
-  }, filter) {
-    if (state.filters.includes(filter)) {
+  removeFilters({ commit }, filter) {
+    if (state.applied_filters.includes(filter)) {
       commit(types.REMOVE_FILTER, {
         filter: filter
       })
     }
+  },
+  setSelectedCompanies({ commit }, { quantity, isSum }) {
+    commit(types.SET_SELECTED_COMPANIES, {
+      quantity,
+      isSum
+    })
   },
 }

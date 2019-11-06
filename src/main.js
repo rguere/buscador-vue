@@ -4,8 +4,7 @@ import router from './router'
 import store from './store'
 
 import './components/index'
-import './plugins/vue-scrollto'
-import './plugins/vue-treeselect'
+import './plugins/index'
 
 Vue.config.productionTip = false
 

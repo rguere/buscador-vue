@@ -41,13 +41,8 @@
 </template>
 
 <script>
-    import { mapGetters } from 'vuex'
     export default {
       name: 'filter-list-checkboxs',
-      computed: mapGetters({
-        filters_labels: 'filters/filters_labels',
-        filters: 'filters/filters',
-      }),
       data: () => ({
         show: true
       }),

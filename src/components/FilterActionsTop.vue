@@ -35,9 +35,9 @@
       <div>
         <div class="content-selected-filters">
           <p>Filtros aplicados: </p>
-          <button v-for="(filter, key) in filters" :key="key" class="btn">
+          <button v-for="(filter, key) in applied_filters" :key="key" class="btn">
             {{ filter }}
-            <span @click="removeFilter(filter)">X</span>
+            <span @click="resetFilter">X</span>
           </button>
         </div>
       </div>
@@ -50,7 +50,7 @@
   export default {
     name: 'filter-actions-top',
     computed: mapGetters({
-      filters: 'filters/filters',
+      applied_filters: 'filters/applied_filters',
       selected_companies: 'filters/selected_companies',
     }),
     data() {
@@ -58,8 +58,8 @@
     },
     mounted() {},
     methods: {
-      removeFilter(filter) {
-        this.$store.dispatch('filters/removeFilters', filter)
+      resetFilter() {
+        this.$store.dispatch('filters/resetFilter')
       }
     }
   }

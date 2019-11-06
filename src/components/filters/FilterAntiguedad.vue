@@ -48,7 +48,7 @@
                     </div>
                 </div>
                 <div class="flex-space-between-flex-end">
-                    <button class="btn btn-ver-mas">Ver más</button>
+                    <button class="btn btn-ver-mas">Ver detalles</button>
                     <p class="text-help">* Puede elegir más de una opción</p>
                 </div>
             </div>

@@ -13,7 +13,7 @@
         </p>
 
         <div class="flex-space-between-flex-end">
-          <button class="btn btn-ver-mas">Ver más</button>
+          <button class="btn btn-ver-mas">Ver detalles</button>
           <button class="btn btn-action-search wi">BUSCAR</button>
         </div>
 
