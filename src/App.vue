@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <v-dialog/>
     <menu-infocif></menu-infocif>
     <router-view />
   </div>

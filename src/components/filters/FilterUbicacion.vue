@@ -24,14 +24,22 @@
           <p class="text-help">* Puede elegir más de una opción</p>
         </div>
         <modal name="hello-world"
-          :width="'98%'"
-          :height="'98%'"
+          :width="'95%'"
+          :height="'95%'"
+          :scrollable="true"
+          :resizable="false"
+          :adaptive="true"
+          :draggable="true"
+          :alwaysOpen="true"
           :clickToClose="false">
           <div class="content">
+            <button class="btn btn-volver" @click="hideModal"><i class="fa fa-arrow-left"></i> Vover</button>
+            <button class="btn btn-a">
+              {{ title }}
+            </button>
             <div class="conten-flex-70-30">
               <div>
                 <div>
-                  <button class="btn btn-volver" @click="hideModal"><i class="fa fa-arrow-left"></i> Vover</button>
                   <div class="filter-title">
                     Introduce el nombre de una o varias localidades, separados por una coma o por un espacio, y clica en “BUSCAR”.
                   </div>
@@ -50,11 +58,10 @@
                   </div>
                   <div>
                     <treeselect
-                      class="select-partida-financiera"
                       :multiple="true"
                       :options="options"
                       placeholder="Seleccionar"
-                      v-model="form.selected_provinces"
+                      v-model="form.options"
                       />
                   </div>
                 </div>
@@ -77,17 +84,21 @@
 
 <script>
   import { mapGetters } from 'vuex'
+  //import { removeDuplicates } from './../../utils'
   export default {
     name: 'filter-ubicacion',
     computed: mapGetters({
       search: 'search/search',
-      provincia_localidad: 'search/provincia_localidad',
       form: 'filters/form',
     }),
     data: () => ({
       title: 'Ubicación',
       selected_provinces: [],
-      options: [],
+      options: [{
+        id: 'all',
+        label: 'TODA ESPAÑA',
+        children: []
+      }],
       seeMore: false
     }),
     watch: {
@@ -100,13 +111,25 @@
       }
     },
     mounted() {
-      for (const prop in this.provincia_localidad) {
-        this.options.push({
-          id: prop,
-          label: prop,
-        })
-      }
-      console.log(this.options); 
+      this.options[0].children = Object.keys(this.search.provincia_localidad).map((key) => {
+        return {
+          id: key,
+          label: key,
+          children: Object.keys(this.search.provincia_localidad[key]).map((_key) => {
+            return {
+              id: _key,
+              label: _key,
+            }
+          })
+        }
+      });
+      /*this.options = removeDuplicates(this.options, 'id')
+      this.options = removeDuplicates(this.options, 'label')
+      this.options.map((value) => {
+        value.children = removeDuplicates(value.children, 'id')
+        value.children = removeDuplicates(value.children, 'label')
+        return value
+      })*/
     },
     methods: {
       handleChange (province, event) {
@@ -115,6 +138,8 @@
           quantity: province.item,
           isSum: event.target.checked
         })
+
+        console.log(this.form.options, this.form.selected_provinces)
       },
       showModal () {
         this.$modal.show('hello-world');

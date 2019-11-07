@@ -127,6 +127,21 @@ body {
   opacity: 0;
 }
 
+.btn-a {
+  list-style: none;
+  margin: 2.5px;
+  border: 2px solid #1b4973;
+  color: #1b4973;
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 5px;
+  background-color: #deebf7;
+  font-size: 13px;
+  cursor: initial;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+}
+
 
 @media (max-width: 950px) {
   .banner-top {
