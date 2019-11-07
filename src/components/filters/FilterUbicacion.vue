@@ -106,16 +106,7 @@
         }
       },
       selected_provinces_treeselect: function (newValues) {
-        let business_accountant = 0;
-        newValues.forEach((item) => {
-          let results = inArrayObject(this.search.provincia_localidad, item.id)
-          if (results) {
-            business_accountant = business_accountant + item.data.number_companies
-          } else {
-            console.log(item)
-          }
-        })
-        this.setSelectedCompanies(business_accountant)
+        this.updateNumberSelectedCompanies(this.numberCompaniesSelected(newValues))
       }
     },
     mounted() {
@@ -124,10 +115,6 @@
     methods: {
       handleChange () { //province, event
         this.selected_provinces = this.form.selected_provinces
-        /*this.$store.dispatch('filters/setSelectedCompanies', {
-          quantity: province.data.number_companies,
-          isSum: event.target.checked
-        })*/
       },
       inputTreeselect (value) {
         console.log(value, 'inputTreeselect')
@@ -144,10 +131,22 @@
       hideModal () {
         this.$modal.hide('modal_filter_ubicacion');
       },
-      setSelectedCompanies(quantity){
-        this.$store.dispatch('filters/setSelectedCompanies', {
+      updateNumberSelectedCompanies(quantity){
+        this.$store.dispatch('filters/updateNumberSelectedCompanies', {
           quantity
         })
+      },
+      numberCompaniesSelected(newValues) {
+        let business_accountant = 0;
+        newValues.forEach((item) => {
+          let results = inArrayObject(this.search.provincia_localidad, item.id)
+          if (results) {
+            business_accountant = business_accountant + item.data.number_companies
+          } else {
+            console.log(item)
+          }
+        })
+        return business_accountant;
       }
     }
   }

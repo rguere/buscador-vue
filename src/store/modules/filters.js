@@ -63,7 +63,7 @@ export const actions = {
       })
     }
   },
-  setSelectedCompanies({ commit }, { quantity }) {
+  updateNumberSelectedCompanies({ commit }, { quantity }) {
     commit(types.SET_SELECTED_COMPANIES, {
       quantity
     })
