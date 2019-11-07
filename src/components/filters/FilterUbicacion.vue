@@ -6,16 +6,17 @@
     <div class="bg-fff">
       <div class="content">
         <div class="grid-4-columns-1fr">
-          <div v-for="(item, key) in search.provincia" :key="key">
+          <div v-for="(item, key) in search.provincia_localidad" :key="key">
             <label class="custon-checkboxs">
               <input type="checkbox"
                 :name="key"
                 v-model="form.selected_provinces"
-                @change="handleChange({ key, item }, $event)"
-                :value="{key, item}">
+                @change="handleChange(item, $event)"
+                :id="`checkbox_${item.id}`"
+                :value="item">
               <span class="geekmark"></span>
-              <span class="name-checkbox">{{ key }}</span>
-              <span class="num-fil">({{ item }})</span>
+              <span class="name-checkbox">{{ item.label }}</span>
+              <span class="num-fil">({{ item.data.number_companies }})</span>
             </label>
           </div>
         </div>
@@ -23,16 +24,16 @@
           <button class="btn btn-ver-mas" @click="showModal">Ver detalles</button>
           <p class="text-help">* Puede elegir más de una opción</p>
         </div>
-        <modal name="hello-world"
+        <modal name="modal_filter_ubicacion"
           :width="'95%'"
-          :height="'95%'"
+          :minHeight="450"
           :scrollable="true"
           :resizable="false"
           :adaptive="true"
-          :draggable="true"
-          :alwaysOpen="true"
+          :draggable="false"
+          :alwaysOpen="false"
           :clickToClose="false">
-          <div class="content">
+          <div class="content" style="margin-bottom: 30px;">
             <button class="btn btn-volver" @click="hideModal"><i class="fa fa-arrow-left"></i> Vover</button>
             <button class="btn btn-a">
               {{ title }}
@@ -41,27 +42,19 @@
               <div>
                 <div>
                   <div class="filter-title">
-                    Introduce el nombre de una o varias localidades, separados por una coma o por un espacio, y clica en “BUSCAR”.
-                  </div>
-                  <div class="flex-text-btn">
-                    <input type="text" v-model="form.localidad" name="" placeholder="Ejemplo: Las Rozas de Madrid">
-                    <button class="btn btn-naranja">BUSCAR</button>
-                  </div>
-                  <div class="filter-title">
-                    CCAA, Provincia o Localidad encontradas en base a el (los) nombre(s) introducido(s).
-                  </div>
-                  <div class="flex-textarea">
-                    <textarea></textarea>
-                  </div>
-                  <div class="filter-title">
                     CCAA, Provincia o Localidad encontradas en base a el (los) nombre(s) introducido(s).
                   </div>
                   <div>
                     <treeselect
+                      valueFormat="object"
                       :multiple="true"
                       :options="options"
+                      :always-open="true"
+                      @input="inputTreeselect"
+                      @select="selectTreeselect"
+                      @deselect="deselectTreeselect"
                       placeholder="Seleccionar"
-                      v-model="form.options"
+                      v-model="selected_provinces_treeselect"
                       />
                   </div>
                 </div>
@@ -84,7 +77,7 @@
 
 <script>
   import { mapGetters } from 'vuex'
-  //import { removeDuplicates } from './../../utils'
+  import { inArrayObject } from './../../utils'
   export default {
     name: 'filter-ubicacion',
     computed: mapGetters({
@@ -94,58 +87,67 @@
     data: () => ({
       title: 'Ubicación',
       selected_provinces: [],
+      selected_provinces_treeselect: [],
       options: [{
         id: 'all',
         label: 'TODA ESPAÑA',
+        isDefaultExpanded: true,
         children: []
       }],
       seeMore: false
     }),
     watch: {
       selected_provinces: function (newProvinces) {
+        this.selected_provinces_treeselect = newProvinces
         if (newProvinces.length) {
           this.$store.dispatch('filters/addFilters', this.title)
         }else {
           this.$store.dispatch('filters/removeFilters', this.title)
         }
+      },
+      selected_provinces_treeselect: function (newValues) {
+        let business_accountant = 0;
+        newValues.forEach((item) => {
+          let results = inArrayObject(this.search.provincia_localidad, item.id)
+          if (results) {
+            business_accountant = business_accountant + item.data.number_companies
+          } else {
+            console.log(item)
+          }
+        })
+        this.setSelectedCompanies(business_accountant)
       }
     },
     mounted() {
-      this.options[0].children = Object.keys(this.search.provincia_localidad).map((key) => {
-        return {
-          id: key,
-          label: key,
-          children: Object.keys(this.search.provincia_localidad[key]).map((_key) => {
-            return {
-              id: _key,
-              label: _key,
-            }
-          })
-        }
-      });
-      /*this.options = removeDuplicates(this.options, 'id')
-      this.options = removeDuplicates(this.options, 'label')
-      this.options.map((value) => {
-        value.children = removeDuplicates(value.children, 'id')
-        value.children = removeDuplicates(value.children, 'label')
-        return value
-      })*/
+      this.options[0].children = this.search.provincia_localidad
     },
     methods: {
-      handleChange (province, event) {
+      handleChange () { //province, event
         this.selected_provinces = this.form.selected_provinces
-        this.$store.dispatch('filters/setSelectedCompanies', {
-          quantity: province.item,
+        /*this.$store.dispatch('filters/setSelectedCompanies', {
+          quantity: province.data.number_companies,
           isSum: event.target.checked
-        })
-
-        console.log(this.form.options, this.form.selected_provinces)
+        })*/
+      },
+      inputTreeselect (value) {
+        console.log(value, 'inputTreeselect')
+      },
+      selectTreeselect (value) {
+        console.log(value, 'selectTreeselect')
+      },
+      deselectTreeselect (value) {
+        console.log(value, 'deselectTreeselect')
       },
       showModal () {
-        this.$modal.show('hello-world');
+        this.$modal.show('modal_filter_ubicacion');
       },
       hideModal () {
-        this.$modal.hide('hello-world');
+        this.$modal.hide('modal_filter_ubicacion');
+      },
+      setSelectedCompanies(quantity){
+        this.$store.dispatch('filters/setSelectedCompanies', {
+          quantity
+        })
       }
     }
   }

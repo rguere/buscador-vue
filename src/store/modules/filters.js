@@ -37,8 +37,8 @@ export const mutations = {
     state.applied_filters = state.applied_filters.filter(_filter => _filter !== filter)
   },
 
-  [types.SET_SELECTED_COMPANIES](state, { quantity, isSum }) {
-    state.selected_companies = (isSum)? state.selected_companies + quantity : state.selected_companies - quantity 
+  [types.SET_SELECTED_COMPANIES](state, { quantity }) {
+    state.selected_companies = quantity 
   }
 }
 
@@ -63,10 +63,9 @@ export const actions = {
       })
     }
   },
-  setSelectedCompanies({ commit }, { quantity, isSum }) {
+  setSelectedCompanies({ commit }, { quantity }) {
     commit(types.SET_SELECTED_COMPANIES, {
-      quantity,
-      isSum
+      quantity
     })
   },
 }

@@ -7,17 +7,17 @@
       <div class="filter-actions-top_center">
         <div>
           <button class="btn btn-vaciar-busqueda">
-            Vaciar Búsqueda
+            <i class="fa fa-trash"></i> Vaciar Búsqueda
           </button>
         </div>
         <div>
           <button class="btn btn-guardar-busqueda">
-            Guardar búsqueda
+            <i class="fa fa-save"></i> Guardar búsqueda
           </button>
         </div>
         <div>
           <button class="btn btn-historial">
-            Historial
+            <i class="fa fa-alarm"></i> Historial
           </button>
         </div>
       </div>

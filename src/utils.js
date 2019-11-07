@@ -3,19 +3,24 @@ export const objectToArray = (obj) => {
 		return {
 			[key]: obj[key]
 		}
-	});
+	})
 }
 
 export const removeDuplicates = (originalArray, prop) => {
-	var newArray = [];
-    var lookupObject  = {};
+	let newArray = []
+    let lookupObject  = {}
 
-    for(var i in originalArray) {
+    for(let i in originalArray) {
         lookupObject[originalArray[i][prop]] = originalArray[i];
     }
 
-    for(i in lookupObject) {
+    for(let i in lookupObject) {
         newArray.push(lookupObject[i]);
     }
     return newArray;
+}
+
+export const inArrayObject = (array, search, key = 'id') => {
+    let results = array.filter(function (item) { return item[key] == search })
+    return (results.length > 0) ? results[0] : null
 }
