@@ -11,7 +11,7 @@
               offset: -100,
           }: {
             el: '#app'
-          }">Leer más...</a>
+          }">{{(show)? 'Leer menos' : 'Leer más...'}}</a>
       </div>
       <div>
         <p>¿Le gustaría poder acceder a la <b>información más completa y reciente de todas las empresas que operan en España</b> que sean de su interés?</p>
