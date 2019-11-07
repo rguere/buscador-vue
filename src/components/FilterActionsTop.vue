@@ -2,7 +2,7 @@
   <div class="conten-flex-70-30">
     <div class="conten-flex-50-50">
       <div class="filter-actions-top_left">
-        <p>{{ selected_companies }} empresas seleccionadas</p>
+        <p class="selected_companies">{{ selected_companies }} empresas seleccionadas</p>
       </div>
       <div class="filter-actions-top_center">
         <div>
@@ -66,6 +66,9 @@
 </script>
 
 <style lang="scss" scoped>
+p.selected_companies{
+  font-weight: bold;
+}
 .conten-flex-70-30 {
   margin: 15px 0 0 0;
 }
