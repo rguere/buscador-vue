@@ -10,7 +10,7 @@
             <label class="custon-checkboxs">
               <input type="checkbox"
                 :name="key"
-                v-model="form.selected_provinces"
+                v-model="selected_provinces"
                 @change="handleChange(item, $event)"
                 :id="`checkbox_${item.id}`"
                 :value="item">
@@ -54,18 +54,19 @@
                       @select="selectTreeselect"
                       @deselect="deselectTreeselect"
                       placeholder="Seleccionar"
-                      v-model="selected_provinces_treeselect"
+                      v-model="selected_provinces"
                       />
                   </div>
                 </div>
               </div>
               <div>
                 <div class="filter-title">
-                  Ubicaciones seleccionadas............3
+                  Ubicaciones seleccionadas............ {{ selected_provinces.length }}
                 </div>
                 <div class="filter-title">
-                  Empresas seleccionadas....252.000
+                  Empresas seleccionadas.... {{ selected_companies }}
                 </div>
+                <ul><li v-for="(item, key) in selected_provinces" :key="key">{{ item.label }}</li></ul>
               </div>
             </div>
           </div>
@@ -77,17 +78,17 @@
 
 <script>
   import { mapGetters } from 'vuex'
-  import { inArrayObject } from './../../utils'
+  import { inArrayObjectTreeselect } from './../../utils'
   export default {
     name: 'filter-ubicacion',
     computed: mapGetters({
       search: 'search/search',
       form: 'filters/form',
+      selected_companies: 'filters/selected_companies',
     }),
     data: () => ({
       title: 'Ubicación',
       selected_provinces: [],
-      selected_provinces_treeselect: [],
       options: [{
         id: 'all',
         label: 'TODA ESPAÑA',
@@ -98,32 +99,28 @@
     }),
     watch: {
       selected_provinces: function (newProvinces) {
-        this.selected_provinces_treeselect = newProvinces
+        this.updateNumberSelectedCompanies(this.numberCompaniesSelected(newProvinces))
+        this.form.selected_provinces = this.selected_provinces
         if (newProvinces.length) {
           this.$store.dispatch('filters/addFilters', this.title)
         }else {
           this.$store.dispatch('filters/removeFilters', this.title)
         }
       },
-      selected_provinces_treeselect: function (newValues) {
-        this.updateNumberSelectedCompanies(this.numberCompaniesSelected(newValues))
-      }
     },
     mounted() {
       this.options[0].children = this.search.provincia_localidad
     },
     methods: {
       handleChange () { //province, event
-        this.selected_provinces = this.form.selected_provinces
       },
-      inputTreeselect (value) {
-        console.log(value, 'inputTreeselect')
+      inputTreeselect () { //values
       },
-      selectTreeselect (value) {
-        console.log(value, 'selectTreeselect')
+      selectTreeselect () { //value
+        //console.log(value, 'selectTreeselect')
       },
-      deselectTreeselect (value) {
-        console.log(value, 'deselectTreeselect')
+      deselectTreeselect () { //value
+        //console.log(value, 'deselectTreeselect')
       },
       showModal () {
         this.$modal.show('modal_filter_ubicacion');
@@ -139,11 +136,9 @@
       numberCompaniesSelected(newValues) {
         let business_accountant = 0;
         newValues.forEach((item) => {
-          let results = inArrayObject(this.search.provincia_localidad, item.id)
+          let results = inArrayObjectTreeselect(this.search.provincia_localidad, item.id)
           if (results) {
             business_accountant = business_accountant + item.data.number_companies
-          } else {
-            console.log(item)
           }
         })
         return business_accountant;
