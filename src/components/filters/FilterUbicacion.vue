@@ -10,7 +10,7 @@
             <label class="custon-checkboxs">
               <input type="checkbox"
                 :name="key"
-                v-model="selected_provinces"
+                v-model="selected_provinces_localidad"
                 @change="handleChange(item, $event)"
                 :id="`checkbox_${item.id}`"
                 :value="item">
@@ -33,7 +33,7 @@
           :draggable="false"
           :alwaysOpen="false"
           :clickToClose="false">
-          <div class="content" style="margin-bottom: 30px;">
+          <div class="content" style="margin-bottom: 30px">
             <button class="btn btn-volver" @click="hideModal"><i class="fa fa-arrow-left"></i> Vover</button>
             <button class="btn btn-a">
               {{ title }}
@@ -54,19 +54,19 @@
                       @select="selectTreeselect"
                       @deselect="deselectTreeselect"
                       placeholder="Seleccionar"
-                      v-model="selected_provinces"
+                      v-model="selected_provinces_localidad"
                       />
                   </div>
                 </div>
               </div>
               <div>
                 <div class="filter-title">
-                  Ubicaciones seleccionadas............ {{ selected_provinces.length }}
+                  Ubicaciones seleccionadas <span class="span-info-right">{{ selected_provinces_localidad.length }}</span>
                 </div>
                 <div class="filter-title">
-                  Empresas seleccionadas.... {{ selected_companies }}
+                  Empresas seleccionadas <span class="span-info-right">{{ selected_companies }}</span>
                 </div>
-                <ul><li v-for="(item, key) in selected_provinces" :key="key">{{ item.label }}</li></ul>
+                <ul><li v-for="(item, key) in selected_provinces_localidad" :key="key">{{ item.label }}</li></ul>
               </div>
             </div>
           </div>
@@ -88,7 +88,7 @@
     }),
     data: () => ({
       title: 'Ubicación',
-      selected_provinces: [],
+      selected_provinces_localidad: [],
       options: [{
         id: 'all',
         label: 'TODA ESPAÑA',
@@ -98,15 +98,18 @@
       seeMore: false
     }),
     watch: {
-      selected_provinces: function (newProvinces) {
-        this.updateNumberSelectedCompanies(this.numberCompaniesSelected(newProvinces))
-        this.form.selected_provinces = this.selected_provinces
-        if (newProvinces.length) {
+      selected_provinces_localidad: function (newProvincesLocalidad) {
+        this.updateNumberSelectedCompanies(this.numberCompaniesSelected((this.isAllProvincesLocalidad(newProvincesLocalidad))? this.search.provincia_localidad : newProvincesLocalidad))
+        this.form.selected_provinces_localidad = this.selected_provinces_localidad
+        if (newProvincesLocalidad.length) {
           this.$store.dispatch('filters/addFilters', this.title)
         }else {
           this.$store.dispatch('filters/removeFilters', this.title)
         }
       },
+      selected_companies: function(newValue) {
+      if (newValue === 0) this.selected_provinces_localidad = []
+      }
     },
     mounted() {
       this.options[0].children = this.search.provincia_localidad
@@ -116,58 +119,55 @@
       },
       inputTreeselect () { //values
       },
-      selectTreeselect () { //value
-        //console.log(value, 'selectTreeselect')
+      selectTreeselect () {
       },
-      deselectTreeselect () { //value
-        //console.log(value, 'deselectTreeselect')
+      deselectTreeselect () {
       },
       showModal () {
-        this.$modal.show('modal_filter_ubicacion');
+        this.$modal.show('modal_filter_ubicacion')
       },
       hideModal () {
-        this.$modal.hide('modal_filter_ubicacion');
+        this.$modal.hide('modal_filter_ubicacion')
       },
+      /**
+       * [updateNumberSelectedCompanies actualiza la cantidad de empresas selecionadas en el store de Vuex]
+       * @param  {[number]} quantity [cantidad de empresas selecionadas]
+       */
       updateNumberSelectedCompanies(quantity){
         this.$store.dispatch('filters/updateNumberSelectedCompanies', {
           quantity
         })
       },
-      numberCompaniesSelected(newValues) {
-        let business_accountant = 0;
-        newValues.forEach((item) => {
-          let results = inArrayObjectTreeselect(this.search.provincia_localidad, item.id)
-          if (results) {
-            business_accountant = business_accountant + item.data.number_companies
+      /**
+       * [numberCompaniesSelected cuenta la cantidad de empresas selecionadas]
+       * @param  {[Array<Object>]} newSelectedCompanies [description]
+       * @return {[number]}        business_accountant  [description]
+       */
+      numberCompaniesSelected(newSelectedCompanies) {
+        let business_accountant = 0
+        newSelectedCompanies.forEach((item) => {
+          let result = inArrayObjectTreeselect(this.search.provincia_localidad, item.id)
+          if (result && result.data && result.data.number_companies) {
+            business_accountant = business_accountant + result.data.number_companies
           }
         })
-        return business_accountant;
+        return business_accountant
+      },
+      /**
+       * [isAllProvincesLocalidad saber si el valor del treeselect es TODA ESPAÑA]
+       * @param  {[type]}  arrayProvincesLocalidad [description]
+       * @return {Boolean}                         [description]
+       */
+      isAllProvincesLocalidad (arrayProvincesLocalidad){
+      return (arrayProvincesLocalidad[0] && arrayProvincesLocalidad[0].id === 'all')? true: false
       }
     }
   }
 </script>
 
 <style lang="scss" scoped>
+  @import './../../sass/filters/filters';
 
-    @import './../../sass/filters/filters';
-
-    .flex-text-btn {
-      display: flex;
-      width: 100%;
-      input {
-        width: 90%;
-      }
-      button {
-        width: 10%;
-      }
-    }
-
-    .flex-textarea {
-      display: flex;
-      width: 100%;
-      textarea {
-        width: 100%;
-      }
-    }
+  span.span-info-right { float: right; }
 
 </style>

@@ -1,3 +1,8 @@
+/**
+ * [objectToArray convertir un objeto JSON a Array]
+ * @param  {[Object]} obj [objeto JSON]
+ * @return {[Array]}     [Array]
+ */
 export const objectToArray = (obj) => {
 	return Object.keys(obj).map((key) => {
 		return {
@@ -6,20 +11,31 @@ export const objectToArray = (obj) => {
 	})
 }
 
+/**
+ * [removeDuplicates remueve de una Array de Objetos los duplicados segun una propiedad]
+ * @param  {[Array]} originalArray [Array al que se le removeran los duplicados]
+ * @param  {[String]} prop          [propiedad a remover sus valores duplicados]
+ * @return {[Array]}               [nuevo Array sin duplicados]
+ */
 export const removeDuplicates = (originalArray, prop) => {
 	let newArray = []
     let lookupObject  = {}
-
-    for(let i in originalArray) {
-        lookupObject[originalArray[i][prop]] = originalArray[i];
+    for(let key in originalArray) {
+        lookupObject[originalArray[key][prop]] = originalArray[key];
     }
-
-    for(let i in lookupObject) {
-        newArray.push(lookupObject[i]);
+    for(let key in lookupObject) {
+        newArray.push(lookupObject[key]);
     }
     return newArray;
 }
 
+/**
+ * [inArrayObject description]
+ * @param  {[type]} array  [description]
+ * @param  {[type]} search [description]
+ * @param  {String} key    [description]
+ * @return {[type]}        [description]
+ */
 export const inArrayObject = (array, search, key = 'id') => {
     let results = array.filter(function (item) { return item[key] == search })
     return (results.length > 0) ? results[0] : null
