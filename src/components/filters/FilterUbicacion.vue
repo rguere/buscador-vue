@@ -16,7 +16,7 @@
                 :value="item">
               <span class="geekmark"></span>
               <span class="name-checkbox">{{ item.label }}</span>
-              <span class="num-fil">({{ item.data.number_companies }})</span>
+              <span class="num-fil">({{ item.data }})</span>
             </label>
           </div>
         </div>
@@ -145,8 +145,8 @@
         if (Array.isArray(newSelectedCompanies)) {
           newSelectedCompanies.forEach((item) => {
             let result = inArrayObjectTreeselect(this.search.provincia_localidad, item.id)
-            if (result && result.data && result.data.number_companies) {
-              business_accountant = business_accountant + result.data.number_companies
+            if (result && result.data && result.data) {
+              business_accountant = business_accountant + result.data
             }
           })
         }
