@@ -1,14 +1,12 @@
 //comunidad automa 
 //provincia
 //localidad
-//import axios from 'axios'
-//import * as types from '../mutation-types'
-//import { objectToArray } from './../../utils'
-import data from './../../assets/buscador-data.json'
+import axios from 'axios'
+import * as types from '../mutation-types'
 
 // state
 export const state = {
-  search: data,
+  search: {},
 }
 
 // getters
@@ -18,8 +16,24 @@ export const getters = {
 
 // mutations
 export const mutations = {
+  [types.FETCH_SEARCH] (state, { search }) {
+    state.search = search
+  }
 }
 
 // actions
 export const actions = {
+  async fetchSearch({ commit }) {
+    try {
+      const { data } = await axios.get('/test2')
+
+      commit(types.FETCH_SEARCH, {
+        search: data
+      })
+    } catch (e) {
+      commit(types.FETCH_SEARCH, {
+        search: {}
+      })
+    }
+  }
 }

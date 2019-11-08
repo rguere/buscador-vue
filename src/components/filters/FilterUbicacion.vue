@@ -112,16 +112,16 @@
       }
     },
     mounted() {
-      this.options[0].children = this.search.provincia_localidad
+      this.fetchSearch()
     },
     methods: {
-      handleChange () { //province, event
-      },
-      inputTreeselect () { //values
-      },
-      selectTreeselect () {
-      },
-      deselectTreeselect () {
+      fetchSearch (){
+        this.$store.dispatch('search/fetchSearch').then(() => {
+          this.options[0].children = (this.search && this.search.provincia_localidad) ? this.search.provincia_localidad : []
+        })
+        .catch((error) => {
+          console.log(error)
+        })
       },
       showModal () {
         this.$modal.show('modal_filter_ubicacion')
@@ -145,12 +145,14 @@
        */
       numberCompaniesSelected(newSelectedCompanies) {
         let business_accountant = 0
-        newSelectedCompanies.forEach((item) => {
-          let result = inArrayObjectTreeselect(this.search.provincia_localidad, item.id)
-          if (result && result.data && result.data.number_companies) {
-            business_accountant = business_accountant + result.data.number_companies
-          }
-        })
+        if (Array.isArray(newSelectedCompanies)) {
+          newSelectedCompanies.forEach((item) => {
+            let result = inArrayObjectTreeselect(this.search.provincia_localidad, item.id)
+            if (result && result.data && result.data.number_companies) {
+              business_accountant = business_accountant + result.data.number_companies
+            }
+          })
+        }
         return business_accountant
       },
       /**
@@ -160,7 +162,15 @@
        */
       isAllProvincesLocalidad (arrayProvincesLocalidad){
       return (arrayProvincesLocalidad[0] && arrayProvincesLocalidad[0].id === 'all')? true: false
-      }
+      },
+      handleChange () { //province, event
+      },
+      inputTreeselect () { //values
+      },
+      selectTreeselect () {
+      },
+      deselectTreeselect () {
+      },
     }
   }
 </script>
