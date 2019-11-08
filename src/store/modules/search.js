@@ -3,10 +3,13 @@
 //localidad
 import axios from 'axios'
 import * as types from '../mutation-types'
+import data from './../../assets/buscador-data.json'
 
 // state
 export const state = {
-  search: {},
+  search: {
+    provincia_localidad: data.provincia_localidad
+  },
 }
 
 // getters

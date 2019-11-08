@@ -112,7 +112,8 @@
       }
     },
     mounted() {
-      this.fetchSearch()
+      //this.fetchSearch()
+      this.options[0].children = (this.search && this.search.provincia_localidad) ? this.search.provincia_localidad : []
     },
     methods: {
       fetchSearch (){
