@@ -119,9 +119,6 @@
         this.$store.dispatch('search/fetchSearch').then(() => {
           this.options[0].children = (this.search && this.search.provincia_localidad) ? this.search.provincia_localidad : []
         })
-        .catch((error) => {
-          console.log(error)
-        })
       },
       showModal () {
         this.$modal.show('modal_filter_ubicacion')
