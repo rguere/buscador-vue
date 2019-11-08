@@ -65,14 +65,12 @@ export const inArrayObjectTreeselect = (array, search, key = 'id') => {
 
                 } else if (array[i].children[j].children && Array.isArray(array[i].children[j].children)){
         
-                    for (let k in array[i].children[j]) {
+                    for (let k in array[i].children[j].children) {
 
-                        if ((array[i].children[j][k][key] === search)) {
+                        if ((array[i].children[j].children[k][key] === search)) {
                             
-                            results = array[i].children[j][k]
-
+                            results = array[i].children[j].children[k]
                             break
-
                         }
 
                     }
