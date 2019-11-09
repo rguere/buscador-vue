@@ -5,72 +5,82 @@
     </div>
     <div class="bg-fff">
       <div class="content">
-        <div class="grid-4-columns-1fr">
-          <div v-for="(item, key) in search.provincia_localidad" :key="key">
-            <label class="custon-checkboxs">
-              <input type="checkbox"
-                :name="key"
-                v-model="selected_provinces_localidad"
-                @change="handleChange(item, $event)"
-                :id="`checkbox_${item.id}`"
-                :value="item">
-              <span class="geekmark"></span>
-              <span class="name-checkbox">{{ item.label }}</span>
-              <span class="num-fil">({{ item.data }})</span>
-            </label>
-          </div>
-        </div>
-        <div class="flex-space-between-flex-end">
-          <button class="btn btn-ver-mas" @click="showModal">Ver detalles</button>
-          <p class="text-help">* Puede elegir más de una opción</p>
-        </div>
-        <modal name="modal_filter_ubicacion"
-          :width="'95%'"
-          :minHeight="450"
-          :scrollable="true"
-          :resizable="false"
-          :adaptive="true"
-          :draggable="false"
-          :alwaysOpen="false"
-          :clickToClose="false">
-          <div class="content" style="margin-bottom: 30px">
-            <button class="btn btn-volver" @click="hideModal"><i class="fa fa-arrow-left"></i> Vover</button>
-            <button class="btn btn-a">
-              {{ title }}
-            </button>
-            <div class="conten-flex-70-30">
-              <div>
-                <div>
-                  <div class="filter-title">
-                    CCAA, Provincia o Localidad encontradas en base a el (los) nombre(s) introducido(s).
-                  </div>
-                  <div>
-                    <treeselect
-                      valueFormat="object"
-                      :multiple="true"
-                      :options="options"
-                      :always-open="true"
-                      @input="inputTreeselect"
-                      @select="selectTreeselect"
-                      @deselect="deselectTreeselect"
-                      placeholder="Seleccionar"
-                      v-model="selected_provinces_localidad"
-                      />
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="filter-title">
-                  Ubicaciones seleccionadas <span class="span-info-right">{{ selected_provinces_localidad.length }}</span>
-                </div>
-                <div class="filter-title">
-                  Empresas seleccionadas <span class="span-info-right">{{ selected_companies }}</span>
-                </div>
-                <ul><li v-for="(item, key) in selected_provinces_localidad" :key="key">{{ item.label }}</li></ul>
-              </div>
+        <h3 v-if="loading" class="text-center"> <i class="fa fa-circle-o-notch fa-pulse fa-3x fa-fw upload-file"></i> </h3>
+        <div v-if="!loading">
+          <div class="grid-4-columns-1fr">
+            <div v-for="(item, key) in search.provincia_localidad" :key="key">
+              <label class="custon-checkboxs">
+                <input type="checkbox"
+                  :name="key"
+                  v-model="selected_provinces_localidad"
+                  @change="handleChange(item, $event)"
+                  :id="`checkbox_${item.id}`"
+                  :value="item">
+                <span class="geekmark"></span>
+                <span class="name-checkbox">{{ item.label }}</span>
+                <span class="num-fil">({{ item.data }})</span>
+              </label>
             </div>
           </div>
-        </modal>
+          <div v-if="search.provincia_localidad" class="flex-space-between-flex-end">
+            <button class="btn btn-ver-mas" @click="showModal">Ver detalles</button>
+            <p class="text-help">* Puede elegir más de una opción</p>
+          </div>
+          <modal name="modal_filter_ubicacion"
+            :width="'95%'"
+            :minHeight="450"
+            :scrollable="true"
+            :resizable="false"
+            :adaptive="true"
+            :draggable="false"
+            :alwaysOpen="false"
+            :clickToClose="false">
+            <div class="content" style="margin-bottom: 30px">
+              <button class="btn btn-volver" @click="hideModal"><i class="fa fa-arrow-left"></i> Vover</button>
+              <button class="btn btn-a">
+                {{ title }}
+              </button>
+              <div class="conten-flex-70-30">
+                <div>
+                  <div>
+                    <div class="filter-title">
+                      CCAA, Provincia o Localidad encontradas en base a el (los) nombre(s) introducido(s).
+                    </div>
+                    <div>
+                      <treeselect
+                        valueFormat="object"
+                        :multiple="true"
+                        :options="options"
+                        :always-open="true"
+                        :default-expand-level="1"
+                        @input="inputTreeselect"
+                        @select="selectTreeselect"
+                        @deselect="deselectTreeselect"
+                        placeholder="Seleccionar"
+                        v-model="selected_provinces_localidad"
+                        >
+                        <label slot="option-label" slot-scope="{ node, shouldShowCount, count, labelClassName, countClassName }" :class="labelClassName">
+                          {{ node.label }} <span class="num-fil" v-if="node.raw.id != 'all'">({{ node.raw.data }})</span>
+                          <span v-if="shouldShowCount" :class="countClassName">({{ count }})</span>
+                        </label>
+                      </treeselect>
+
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div class="filter-title">
+                    Ubicaciones seleccionadas <span class="span-info-right">{{ selected_provinces_localidad.length }}</span>
+                  </div>
+                  <div class="filter-title">
+                    Empresas seleccionadas <span class="span-info-right">{{ selected_companies }}</span>
+                  </div>
+                  <ul><li v-for="(item, key) in selected_provinces_localidad" :key="key">{{ item.label }} <span class="num-fil" v-if="item.id != 'all'">({{ item.data }})</span></li></ul>
+                </div>
+              </div>
+            </div>
+          </modal>
+        </div>
       </div>
     </div>
   </div>
@@ -95,6 +105,7 @@
         isDefaultExpanded: true,
         children: []
       }],
+      loading: false,
       seeMore: false
     }),
     watch: {
@@ -116,7 +127,9 @@
     },
     methods: {
       fetchSearch (){
+        this.loading = true
         this.$store.dispatch('search/fetchSearch').then(() => {
+          this.loading = false
           this.options[0].children = (this.search && this.search.provincia_localidad) ? this.search.provincia_localidad : []
         })
       },
@@ -176,5 +189,6 @@
   @import './../../sass/filters/filters';
 
   span.span-info-right { float: right; }
+  span.num-fil { color: #2196f3; }
 
 </style>
