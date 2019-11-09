@@ -28,9 +28,9 @@
           </div>
           <modal name="modal_filter_ubicacion"
             :width="'95%'"
-            :minHeight="450"
+            :minHeight="550"
             :scrollable="true"
-            :resizable="false"
+            :resizable="true"
             :adaptive="true"
             :draggable="false"
             :alwaysOpen="false"
@@ -75,7 +75,7 @@
                   <div class="filter-title">
                     Empresas seleccionadas <span class="span-info-right">{{ selected_companies }}</span>
                   </div>
-                  <ul><li v-for="(item, key) in selected_provinces_localidad" :key="key">{{ item.label }} <span class="num-fil" v-if="item.id != 'all'">({{ item.data }})</span></li></ul>
+                  <ul class="ul_selected_provinces_localidad"><li v-for="(item, key) in selected_provinces_localidad" :key="key">{{ item.label }} <span class="num-fil" v-if="item.id != 'all'">({{ item.data }})</span></li></ul>
                 </div>
               </div>
             </div>
@@ -190,5 +190,9 @@
 
   span.span-info-right { float: right; }
   span.num-fil { color: #2196f3; }
+  ul.ul_selected_provinces_localidad {
+    height: 280px;
+    overflow-y: scroll;
+  }
 
 </style>
