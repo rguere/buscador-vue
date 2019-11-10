@@ -23,63 +23,57 @@
             </div>
           </div>
           <div v-if="search.provincia_localidad && search.provincia_localidad.length != 0" class="flex-space-between-flex-end">
-            <button class="btn btn-ver-mas" @click="showModal">Ver detalles</button>
+            <button class="btn btn-ver-mas" @click="$bvModal.show('bv-modal-filter-ubicacion')">Ver detalles</button>
             <p class="text-help">* Puede elegir más de una opción</p>
-          </div>
-          <modal name="modal_filter_ubicacion"
-            :width="'95%'"
-            :minHeight="550"
-            :scrollable="true"
-            :resizable="true"
-            :adaptive="true"
-            :draggable="false"
-            :alwaysOpen="false"
-            :clickToClose="false">
-            <div class="content" style="margin-bottom: 30px">
-              <button class="btn btn-volver" @click="hideModal"><i class="fa fa-arrow-left"></i> Vover</button>
-              <button class="btn btn-a">
-                {{ title }}
-              </button>
-              <div class="conten-flex-70-30">
-                <div>
-                  <div>
-                    <div class="filter-title">
-                      CCAA, Provincia o Localidad encontradas en base a el (los) nombre(s) introducido(s).
+            <b-modal id="bv-modal-filter-ubicacion" hide-footer hide-header static no-close-on-backdrop scrollable size="lg">
+              <div class="d-block">
+                <div class="content" style="margin-bottom: 30px">
+                  <button class="btn btn-volver" @click="$bvModal.hide('bv-modal-filter-ubicacion')"><i class="fa fa-arrow-left"></i> Vover</button>
+                  <button class="btn btn-a">
+                    {{ title }}
+                  </button>
+                  <div class="conten-flex-70-30">
+                    <div>
+                      <div>
+                        <div class="filter-title">
+                          CCAA, Provincia o Localidad encontradas en base a el (los) nombre(s) introducido(s).
+                        </div>
+                        <div>
+                          <treeselect
+                            valueFormat="object"
+                            :multiple="true"
+                            :options="options"
+                            :always-open="true"
+                            :default-expand-level="1"
+                            :load-options="fetchSearch"
+                            @input="inputTreeselect"
+                            @select="selectTreeselect"
+                            @deselect="deselectTreeselect"
+                            placeholder="Seleccionar"
+                            v-model="selected_provinces_localidad"
+                            >
+                            <label slot="option-label" slot-scope="{ node, shouldShowCount, count, labelClassName, countClassName }" :class="labelClassName">
+                              {{ node.label }} <span class="num-fil" v-if="node.raw.id != 'all'">({{ node.raw.data }})</span>
+                              <span v-if="shouldShowCount" :class="countClassName">({{ count }})</span>
+                            </label>
+                          </treeselect>
+                        </div>
+                      </div>
                     </div>
                     <div>
-                      <treeselect
-                        valueFormat="object"
-                        :multiple="true"
-                        :options="options"
-                        :always-open="true"
-                        :default-expand-level="1"
-                        @input="inputTreeselect"
-                        @select="selectTreeselect"
-                        @deselect="deselectTreeselect"
-                        placeholder="Seleccionar"
-                        v-model="selected_provinces_localidad"
-                        >
-                        <label slot="option-label" slot-scope="{ node, shouldShowCount, count, labelClassName, countClassName }" :class="labelClassName">
-                          {{ node.label }} <span class="num-fil" v-if="node.raw.id != 'all'">({{ node.raw.data }})</span>
-                          <span v-if="shouldShowCount" :class="countClassName">({{ count }})</span>
-                        </label>
-                      </treeselect>
-
+                      <div class="filter-title">
+                        Ubicaciones seleccionadas <span class="span-info-right">{{ selected_provinces_localidad.length }}</span>
+                      </div>
+                      <div class="filter-title">
+                        Empresas seleccionadas <span class="span-info-right">{{ selected_companies }}</span>
+                      </div>
+                      <ul class="ul_selected_provinces_localidad"><li v-for="(item, key) in selected_provinces_localidad" :key="key">{{ item.label }} <span class="num-fil" v-if="item.id != 'all'">({{ item.data }})</span></li></ul>
                     </div>
                   </div>
                 </div>
-                <div>
-                  <div class="filter-title">
-                    Ubicaciones seleccionadas <span class="span-info-right">{{ selected_provinces_localidad.length }}</span>
-                  </div>
-                  <div class="filter-title">
-                    Empresas seleccionadas <span class="span-info-right">{{ selected_companies }}</span>
-                  </div>
-                  <ul class="ul_selected_provinces_localidad"><li v-for="(item, key) in selected_provinces_localidad" :key="key">{{ item.label }} <span class="num-fil" v-if="item.id != 'all'">({{ item.data }})</span></li></ul>
-                </div>
               </div>
-            </div>
-          </modal>
+            </b-modal>
+          </div>
         </div>
         <div v-if="search.provincia_localidad && search.provincia_localidad.length === 0 && !loading" class="alert alert-dismissible alert-primary">
           <strong>Oh!</strong> datos no encontrados.
