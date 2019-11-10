@@ -6,7 +6,9 @@ import * as types from '../mutation-types'
 
 // state
 export const state = {
-  search: {},
+  search: {
+    provincia_localidad: []
+  },
 }
 
 // getters
@@ -32,7 +34,9 @@ export const actions = {
       })
     } catch (e) {
       commit(types.FETCH_SEARCH, {
-        search: {}
+        search: {
+          provincia_localidad: []
+        }
       })
     }
   }

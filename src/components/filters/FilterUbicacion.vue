@@ -22,7 +22,7 @@
               </label>
             </div>
           </div>
-          <div v-if="search.provincia_localidad" class="flex-space-between-flex-end">
+          <div v-if="search.provincia_localidad && search.provincia_localidad.length != 0" class="flex-space-between-flex-end">
             <button class="btn btn-ver-mas" @click="showModal">Ver detalles</button>
             <p class="text-help">* Puede elegir más de una opción</p>
           </div>
@@ -80,6 +80,9 @@
               </div>
             </div>
           </modal>
+        </div>
+        <div v-if="search.provincia_localidad && search.provincia_localidad.length === 0 && !loading" class="alert alert-dismissible alert-primary">
+          <strong>Oh!</strong> datos no encontrados.
         </div>
       </div>
     </div>
