@@ -14,34 +14,34 @@
     <div class="wrap-menu">
       <div class="container-fluid">
         <div class="nav-menu2">
-          <a href="">
+          <router-link to="/">
             <img src="../assets/images/icono-informes-comerciales-infocif.png">
             Informes de empresas
-          </a>
-          <a href="" class="active">
+          </router-link>
+          <router-link to="/" class="active">
             <img src="../assets/images/icono-noticias-infocif.png">
             Buscardor de empresas
-          </a>
-          <a href="">
+          </router-link>
+          <router-link to="/">
             <img src="../assets/images/icono-ranking-empresas-infocif.png">
             Ranking de empresas
-          </a>
-          <a href="">
+          </router-link>
+          <router-link to="/">
             <img src="../assets/images/icono-base-de-datos-infocif.png">
             Servicios infocif
-          </a>
-          <a href="">
+          </router-link>
+          <router-link to="/">
             <img src="../assets/images/icono-licitaciones.png">
             Licitaciones
-          </a>
-          <a href="">
+          </router-link>
+          <router-link to="/">
             <img src="../assets/images/icono-noticias-infocif.png">
             Noticias de empresas
-          </a>
-          <a href="">
+          </router-link>
+          <router-link to="/">
             <img src="../assets/images/icono-opiniones-de-empresas-infocif.png">
             Opiniones de empresas
-          </a>
+          </router-link>
         </div>
       </div>
     </div>

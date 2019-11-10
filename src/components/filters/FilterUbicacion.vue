@@ -23,12 +23,12 @@
             </div>
           </div>
           <div v-if="search.provincia_localidad && search.provincia_localidad.length != 0" class="flex-space-between-flex-end">
-            <button class="btn btn-ver-mas" @click="$bvModal.show('bv-modal-filter-ubicacion')">Ver detalles</button>
+            <button class="btn btn-ver-mas" @click="showModal">Ver detalles</button>
             <p class="text-help">* Puede elegir más de una opción</p>
             <b-modal id="bv-modal-filter-ubicacion" hide-footer hide-header static no-close-on-backdrop scrollable size="lg">
               <div class="d-block">
                 <div class="content" style="margin-bottom: 30px">
-                  <button class="btn btn-volver" @click="$bvModal.hide('bv-modal-filter-ubicacion')"><i class="fa fa-arrow-left"></i> Vover</button>
+                  <button class="btn btn-volver" @click="hideModal"><i class="fa fa-arrow-left"></i> Vover</button>
                   <button class="btn btn-a">
                     {{ title }}
                   </button>
@@ -131,10 +131,10 @@
         })
       },
       showModal () {
-        this.$modal.show('modal_filter_ubicacion')
+        this.$bvModal.show('bv-modal-filter-ubicacion')
       },
       hideModal () {
-        this.$modal.hide('modal_filter_ubicacion')
+        this.$bvModal.hide('bv-modal-filter-ubicacion')
       },
       /**
        * [updateNumberSelectedCompanies actualiza la cantidad de empresas selecionadas en el store de Vuex]
