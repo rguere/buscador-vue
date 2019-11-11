@@ -80,7 +80,7 @@
           </div>
         </div>
         <div v-if="search.provincia_localidad && search.provincia_localidad.length === 0 && !loading" class="alert alert-dismissible alert-primary">
-          <strong>Oh!</strong> datos no encontrados.
+          <strong>Oh!</strong> datos no encontrados. <button type="button" class="btn" @click="fetchSearch">Refrescar</button>
         </div>
       </div>
     </div>
