@@ -23,7 +23,11 @@
             </div>
           </div>
           <div v-if="search.provincia_localidad && search.provincia_localidad.length != 0" class="flex-space-between-flex-end">
-            <button class="btn btn-ver-mas" @click="showModal">Ver detalles</button>
+            <div class="btns">
+              <button type="button" class="btn btn-ver-mas" @click="showModal">Ver detalles</button>
+              <button type="button" class="btn btn-aplicar" v-if="!areApplied" @click="apply">Aplicar</button>
+              <button type="button" class="btn btn-limpiar" v-if="areApplied" @click="clean">Limpiar</button>
+            </div>
             <p class="text-help">* Puede elegir más de una opción</p>
             <b-modal id="bv-modal-filter-ubicacion" hide-footer hide-header static no-close-on-backdrop scrollable size="lg">
               <div class="d-block">
@@ -85,7 +89,7 @@
 
 <script>
   import { mapGetters } from 'vuex'
-  import { inArrayObjectTreeselect } from './../../utils'
+  import { inArrayObjectTreeselect, inArrayObject } from './../../utils'
   export default {
     name: 'filter-ubicacion',
     computed: mapGetters({
@@ -102,6 +106,7 @@
         isDefaultExpanded: true,
         children: []
       }],
+      areApplied: false,
       loading: false,
       seeMore: false
     }),
@@ -128,7 +133,7 @@
         this.$store.dispatch('search/fetchSearch').then(() => {
           this.loading = false
           this.options[0].children = (this.search && this.search.provincia_localidad) ? this.search.provincia_localidad : []
-        })
+        }).catch(() => { this.loading = false })
       },
       showModal () {
         this.$bvModal.show('bv-modal-filter-ubicacion')
@@ -170,6 +175,23 @@
       isAllProvincesLocalidad (arrayProvincesLocalidad){
       return (arrayProvincesLocalidad[0] && arrayProvincesLocalidad[0].id === 'all')? true: false
       },
+      apply () {
+        if (this.selected_provinces_localidad && this.selected_provinces_localidad.length !== 0) {
+          this.search.provincia_localidad = this.selected_provinces_localidad.filter((item) => {
+            let result = inArrayObject(this.search.provincia_localidad, item.id)
+            if (result) {
+              return result
+            }
+          })
+          this.options[0].children = this.search.provincia_localidad
+          this.areApplied = !this.areApplied
+        }
+      },
+      clean () {
+        this.$store.dispatch('filters/resetFilter')
+        this.fetchSearch()
+        this.areApplied = !this.areApplied
+      },
       handleChange () { //province, event
       },
       inputTreeselect () { //values
@@ -191,5 +213,6 @@
     height: 280px;
     overflow-y: scroll;
   }
+  .btns button { margin: 0 5px 0 0; }
 
 </style>
