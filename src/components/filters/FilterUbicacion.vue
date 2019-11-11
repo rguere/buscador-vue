@@ -89,7 +89,7 @@
 
 <script>
   import { mapGetters } from 'vuex'
-  import { inArrayObjectTreeselect, inArrayObject } from './../../utils'
+  import { inArrayObjectTreeselect } from './../../utils'
   export default {
     name: 'filter-ubicacion',
     computed: mapGetters({
@@ -178,9 +178,9 @@
       apply () {
         if (this.selected_provinces_localidad && this.selected_provinces_localidad.length !== 0) {
           this.search.provincia_localidad = this.selected_provinces_localidad.filter((item) => {
-            let result = inArrayObject(this.search.provincia_localidad, item.id)
+            let result = inArrayObjectTreeselect(this.search.provincia_localidad, item.id)
             if (result) {
-              return result
+              return item
             }
           })
           this.options[0].children = this.search.provincia_localidad
