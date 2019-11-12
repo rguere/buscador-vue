@@ -25,7 +25,7 @@
           <div v-if="search.provincia_localidad && search.provincia_localidad.length != 0" class="flex-space-between-flex-end">
             <div class="btns">
               <button type="button" class="btn btn-ver-mas" @click="showModal">Ver detalles</button>
-              <button type="button" class="btn btn-aplicar" v-if="!areApplied" @click="apply">Aplicar</button>
+              <button type="button" class="btn btn-aplicar" v-if="!areApplied && selected_provinces_localidad.length !== 0" @click="apply">Aplicar</button>
               <button type="button" class="btn btn-limpiar" v-if="areApplied" @click="clean">Limpiar</button>
             </div>
             <p class="text-help">* Puede elegir más de una opción</p>
@@ -74,13 +74,17 @@
                       <ul class="ul_selected_provinces_localidad"><li v-for="(item, key) in selected_provinces_localidad" :key="key">{{ item.label }} <span class="num-fil" v-if="item.id != 'all'">({{ item.data }})</span></li></ul>
                     </div>
                   </div>
+                  <div>
+                    <button type="button" class="btn btn-aplicar" v-if="!areApplied && selected_provinces_localidad.length !== 0" @click="apply">Aplicar</button>
+                    <button type="button" class="btn btn-limpiar" v-if="areApplied" @click="clean">Limpiar</button>
+                  </div>
                 </div>
               </div>
             </b-modal>
           </div>
         </div>
         <div v-if="search.provincia_localidad && search.provincia_localidad.length === 0 && !loading" class="alert alert-dismissible alert-primary">
-          <strong>Oh!</strong> datos no encontrados. <button type="button" class="btn" @click="fetchSearch">Refrescar</button>
+          <strong>Oh!</strong> datos no encontrados. <button type="button" class="btn" @click="fetchSearch">Recargar</button>
         </div>
       </div>
     </div>
