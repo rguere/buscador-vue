@@ -34,9 +34,20 @@ export const actions = {
       })
     } catch (e) {
       commit(types.FETCH_SEARCH, {
-        search: {
-          provincia_localidad: []
-        }
+        search: state.search
+      })
+    }
+  },
+  async filtrarUbicacion({ commit }, filters) {
+    try {
+      const { data } = await axios.post('/filtrar', filters)
+
+      commit(types.FETCH_SEARCH, {
+        search: data
+      })
+    } catch (e) {
+      commit(types.FETCH_SEARCH, {
+        search: state.search
       })
     }
   }

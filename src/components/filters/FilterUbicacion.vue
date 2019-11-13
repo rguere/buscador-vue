@@ -97,7 +97,7 @@
 
 <script>
   import { mapGetters } from 'vuex'
-  import { inArrayObjectTreeselect, inArrayObject } from './../../utils'
+  import { inArrayObjectTreeselect } from './../../utils'
   export default {
     name: 'filter-ubicacion',
     computed: mapGetters({
@@ -185,14 +185,27 @@
       },
       apply () {
         if (this.selected_provinces_localidad && this.selected_provinces_localidad.length !== 0) {
-          this.search.provincia_localidad = this.selected_provinces_localidad.filter((item) => {
-            let result = inArrayObject(this.search.provincia_localidad, item.id)
-            if (result) {
-              return result
+          let dataPOST = {
+            comunidades: [],
+            Provincias: [],
+            Localidades: []
+          }
+          this.selected_provinces_localidad.forEach((item) => {
+            let result = inArrayObjectTreeselect(this.search.provincia_localidad, item.id)
+            if (result && result.id) {
+              let level = result.id.split("|").length
+              if (level === 1) {
+                dataPOST.comunidades.push(result.id)
+              }else if (level === 2) {
+                dataPOST.Provincias.push(result.id)
+              }
+              else if (level === 3) {
+                dataPOST.Localidades.push(result.id)
+              }
             }
           })
-          this.options[0].children = this.search.provincia_localidad
-          this.areApplied = !this.areApplied
+          this.$store.dispatch('search/filtrarUbicacion', dataPOST)
+          this.hideModal()
         }
       },
       clean () {
