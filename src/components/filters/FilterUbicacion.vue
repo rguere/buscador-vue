@@ -32,10 +32,18 @@
             <b-modal id="bv-modal-filter-ubicacion" hide-footer hide-header static no-close-on-backdrop scrollable size="lg">
               <div class="d-block">
                 <div class="content" style="margin-bottom: 30px">
-                  <button class="btn btn-volver" @click="hideModal"><i class="fa fa-arrow-left"></i> Vover</button>
-                  <button class="btn btn-a">
-                    {{ title }}
-                  </button>
+                  <div class="btns-modal-header">
+                    <div>
+                      <button class="btn btn-volver" @click="hideModal"><i class="fa fa-arrow-left"></i> Vover</button>
+                      <button class="btn btn-a">
+                        {{ title }}
+                      </button>
+                    </div>
+                    <div>
+                      <button type="button" class="btn btn-aplicar" v-if="!areApplied && selected_provinces_localidad.length !== 0" @click="apply">Aplicar</button>
+                      <button type="button" class="btn btn-limpiar" v-if="areApplied" @click="clean">Limpiar</button>
+                    </div>
+                  </div>
                   <div class="conten-flex-70-30">
                     <div>
                       <div>
@@ -69,14 +77,10 @@
                         Ubicaciones seleccionadas <span class="span-info-right">{{ selected_provinces_localidad.length }}</span>
                       </div>
                       <div class="filter-title">
-                        Empresas seleccionadas <span class="span-info-right">{{ selected_companies }}</span>
+                        Empresas seleccionadas <span class="span-info-right">{{ selected_companies | numeral('0,0') }}</span>
                       </div>
                       <ul class="ul_selected_provinces_localidad"><li v-for="(item, key) in selected_provinces_localidad" :key="key">{{ item.label }} <span class="num-fil" v-if="item.id != 'all'">({{ item.data }})</span></li></ul>
                     </div>
-                  </div>
-                  <div>
-                    <button type="button" class="btn btn-aplicar" v-if="!areApplied && selected_provinces_localidad.length !== 0" @click="apply">Aplicar</button>
-                    <button type="button" class="btn btn-limpiar" v-if="areApplied" @click="clean">Limpiar</button>
                   </div>
                 </div>
               </div>
@@ -218,5 +222,14 @@
     overflow-y: scroll;
   }
   .btns button { margin: 0 5px 0 0; }
+  .btns-modal-header {
+    display: flex;
+    justify-content: space-between;
+    button.btn-aplicar {
+      background-color: #e2801d;
+      color: #fff;
+      padding: 5px;
+    }
+  }
 
 </style>

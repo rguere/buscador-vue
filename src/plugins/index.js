@@ -1,4 +1,5 @@
 import './axios'
 import './vue-scrollto'
 import './vue-treeselect'
+import './vue-numeral-filter'
 import './bootstrap-vue'

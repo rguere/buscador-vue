@@ -2,7 +2,7 @@
   <div class="conten-flex-70-30">
     <div class="conten-flex-50-50">
       <div class="filter-actions-top_left">
-        <p class="selected_companies">{{ selected_companies }} empresas seleccionadas</p>
+        <p class="selected_companies">{{ selected_companies | numeral('0,0') }} empresas seleccionadas</p>
       </div>
       <div class="filter-actions-top_center">
         <div>
