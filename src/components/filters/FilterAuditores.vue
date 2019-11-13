@@ -19,6 +19,9 @@
                     <button class="btn btn-ver-mas">Ver detalles</button>
                     <p class="text-help">* Puede elegir más de una opción</p>
                 </div>
+                <div v-if="search.auditor && search.auditor.length === 0" class="alert alert-dismissible alert-primary">
+                  <strong>Oh!</strong> datos no encontrados. <button type="button" class="btn" @click="fetchSearch">Recargar</button>
+                </div>
             </div>
 
         </div>
