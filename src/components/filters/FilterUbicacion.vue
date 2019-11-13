@@ -204,8 +204,13 @@
               }
             }
           })
-          this.$store.dispatch('search/filtrarUbicacion', dataPOST)
+          this.loading = true
           this.hideModal()
+          this.$store.dispatch('search/filtrarUbicacion', dataPOST).then(() => {
+            this.loading = false
+          }).catch(() => { 
+            this.loading = false
+          })
         }
       },
       clean () {
