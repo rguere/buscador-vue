@@ -11,7 +11,7 @@
             <div v-for="(item, key) in search.provincia_localidad" :key="key">
               <label class="custon-checkboxs">
                 <input type="checkbox"
-                  :name="key"
+                  :name="`checkbox_${item.id}`"
                   v-model="selected_provinces_localidad"
                   @change="handleChange(item, $event)"
                   :id="`checkbox_${item.id}`"

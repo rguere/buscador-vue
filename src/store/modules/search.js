@@ -7,7 +7,8 @@ import * as types from '../mutation-types'
 // state
 export const state = {
   search: {
-    provincia_localidad: []
+    provincia_localidad: [],
+    auditor: {}
   },
 }
 

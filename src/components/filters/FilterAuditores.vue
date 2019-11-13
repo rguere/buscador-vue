@@ -6,36 +6,12 @@
         <div class="bg-fff">
             <div class="content">
                 <div class="grid-4-columns-1fr">
-                    <div>
+                    <div v-for="(item, key) in search.auditor" :key="key">
                         <label class="custon-checkboxs">
                             <input type="checkbox" name="">
                             <span class="geekmark"></span>
-                            <span class="name-checkbox">Checkbox</span>
-                            <span class="num-fil">(100.000)</span>
-                        </label>
-                    </div>
-                    <div>
-                        <label class="custon-checkboxs">
-                            <input type="checkbox" name="">
-                            <span class="geekmark"></span>
-                            <span class="name-checkbox">Checkbox</span>
-                            <span class="num-fil">(100.000)</span>
-                        </label>
-                    </div>
-                    <div>
-                        <label class="custon-checkboxs">
-                            <input type="checkbox" name="">
-                            <span class="geekmark"></span>
-                            <span class="name-checkbox">Checkbox</span>
-                            <span class="num-fil">(100.000)</span>
-                        </label>
-                    </div>
-                    <div>
-                        <label class="custon-checkboxs">
-                            <input type="checkbox" name="">
-                            <span class="geekmark"></span>
-                            <span class="name-checkbox">Checkbox</span>
-                            <span class="num-fil">(100.000)</span>
+                            <span class="name-checkbox">{{ key }}</span>
+                            <span class="num-fil">({{ item }})</span>
                         </label>
                     </div>
                 </div>
@@ -50,8 +26,12 @@
 </template>
 
 <script>
+    import { mapGetters } from 'vuex'
     export default {
         name: 'filter-auditores',
+        computed: mapGetters({
+          search: 'search/search',
+        })
     }
 </script>
 
