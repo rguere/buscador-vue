@@ -10,8 +10,8 @@
                         <label class="custon-checkboxs">
                             <input type="checkbox" name="">
                             <span class="geekmark"></span>
-                            <span class="name-checkbox">{{ key }}</span>
-                            <span class="num-fil">({{ item }})</span>
+                            <span class="name-checkbox">{{ item.label }}</span>
+                            <span class="num-fil">({{ item.data }})</span>
                         </label>
                     </div>
                 </div>
