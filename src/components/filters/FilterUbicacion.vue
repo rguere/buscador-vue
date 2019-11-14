@@ -7,7 +7,7 @@
       <div class="content">
         <h3 v-if="loading" class="text-center"> <i class="fa fa-circle-o-notch fa-pulse fa-3x fa-fw upload-file"></i> </h3>
         <div v-if="!loading">
-          <div class="grid-4-columns-1fr">
+          <div class="grid-4-columns-1fr" v-if="!areApplied">
             <div v-for="(item, key) in search.provincia_localidad" :key="key">
               <label class="custon-checkboxs">
                 <input type="checkbox"
@@ -26,7 +26,7 @@
           <div class="selected_children" v-if="areApplied">
             <ul class="grid-4-columns-1fr">
               <li v-for="(item, key) in selected_children" :key="key">
-                <span class="name-checkbox">{{ item.label }}</span>
+                <span class="name-checkbox">- {{ item.id.split('|').join(',') }} </span>
                 <span class="num-fil">({{ item.data | numeral('0,0') }})</span>
               </li>
             </ul>
@@ -74,7 +74,7 @@
                             v-model="selected_provinces_localidad"
                             >
                             <label slot="option-label" slot-scope="{ node, shouldShowCount, count, labelClassName, countClassName }" :class="labelClassName">
-                              {{ node.label }} <span class="num-fil" v-if="node.raw.id != 'all'">({{ node.raw.data }})</span>
+                              {{ node.label }} <span class="num-fil" v-if="node.raw.id != 'all'">({{ node.raw.data | numeral('0,0') }})</span>
                               <span v-if="shouldShowCount" :class="countClassName">({{ count }})</span>
                             </label>
                           </treeselect>
@@ -88,7 +88,7 @@
                       <div class="filter-title">
                         Empresas seleccionadas <span class="span-info-right">{{ selected_companies | numeral('0,0') }}</span>
                       </div>
-                      <ul class="ul_selected_provinces_localidad"><li v-for="(item, key) in selected_provinces_localidad" :key="key">{{ item.label }} <span class="num-fil" v-if="item.id != 'all'">({{ item.data }})</span></li></ul>
+                      <ul class="ul_selected_provinces_localidad"><li v-for="(item, key) in selected_provinces_localidad" :key="key">{{ item.label }} <span class="num-fil" v-if="item.id != 'all'">({{ item.data | numeral('0,0') }})</span></li></ul>
                     </div>
                   </div>
                 </div>
@@ -198,9 +198,10 @@
           this.selected_provinces_localidad.forEach((item) => {
             let result = inArrayObjectTreeselect(this.search.provincia_localidad, item.id)
             if (result && result.id) {
-              let level = result.id.split("|").length
+              let resultIdSplit = result.id.split("|")
+              let level = resultIdSplit.length
               if (level === 1) {
-                dataPOST.comunidades.push(result.id)
+                dataPOST.comunidades.push(result.id); this.selected_children.push(result)
               }else if (level === 2) {
                 dataPOST.Provincias.push(result.id)
                 this.selected_children.push(result)
@@ -270,8 +271,10 @@
     margin-inline-start: 0px;
     margin-inline-end: 0px;
     padding-inline-start: 0;
+    margin-bottom: 10px;
     li {
       display: inline-block;
+      font-weight: bold;
     }
   }
 </style>
