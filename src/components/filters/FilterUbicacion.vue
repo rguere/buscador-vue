@@ -34,7 +34,7 @@
           <div v-if="search.provincia_localidad && search.provincia_localidad.length != 0" class="flex-space-between-flex-end">
             <div class="btns">
               <button type="button" class="btn btn-ver-mas" @click="showModal">Ver detalles</button>
-              <button type="button" class="btn btn-aplicar" v-if="selected_provinces_localidad.length !== 0" @click="apply">Aplicar</button>
+              <button type="button" class="btn btn-aplicar" v-if="selected_provinces_localidad.length !== 0 && !areApplied" @click="apply">Aplicar</button>
               <button type="button" class="btn btn-limpiar" v-if="areApplied" @click="clean">Limpiar</button>
             </div>
             <p class="text-help">* Puede elegir más de una opción</p>
@@ -190,32 +190,9 @@
       },
       apply () {
         if (this.selected_provinces_localidad && this.selected_provinces_localidad.length !== 0) {
-          let dataPOST = {
-            comunidades: [],
-            Provincias: [],
-            Localidades: []
-          }
-          this.selected_children = []
-          this.selected_provinces_localidad.forEach((item) => {
-            let result = inArrayObjectTreeselect(this.search.provincia_localidad, item.id)
-            if (result && result.id) {
-              let resultIdSplit = result.id.split("|")
-              let level = resultIdSplit.length
-              if (level === 1) {
-                dataPOST.comunidades.push(result.id); this.selected_children.push(result)
-              }else if (level === 2) {
-                dataPOST.Provincias.push(result.id)
-                this.selected_children.push(result)
-              }
-              else if (level === 3) {
-                dataPOST.Localidades.push(result.id)
-                this.selected_children.push(result)
-              }
-            }
-          })
           this.loading = true
           this.hideModal()
-          this.$store.dispatch('search/filtrarUbicacion', dataPOST).then((response) => {
+          this.$store.dispatch('search/filtrarUbicacion', this.formatearDataPOST()).then((response) => {
             this.loading = false
             this.options[0].children = (this.search && this.search.provincia_localidad) ? this.search.provincia_localidad : []
             this.updateNumberSelectedCompanies(response.cantidad)
@@ -240,7 +217,7 @@
       },
       deselectTreeselect () {
       },
-      formatearLabel(item){
+      formatearLabel (item){
       let arr = item.id.split('|');
       arr.reverse();
       if (arr.length === 1) {
@@ -249,6 +226,32 @@
       let primero = arr[0]
       arr.shift()
       return `${primero} (${arr.join(',')})`}
+      },
+      formatearDataPOST (){
+      let dataPOST = {
+        comunidades: [],
+        Provincias: [],
+        Localidades: []
+      }
+      this.selected_children = []
+      this.selected_provinces_localidad.forEach((item) => {
+        let result = inArrayObjectTreeselect(this.search.provincia_localidad, item.id)
+        if (result && result.id) {
+          let resultIdSplit = result.id.split("|")
+          let level = resultIdSplit.length
+          if (level === 1) {
+            dataPOST.comunidades.push(result.id); this.selected_children.push(result)
+          }else if (level === 2) {
+            dataPOST.Provincias.push(result.id)
+            this.selected_children.push(result)
+          }
+          else if (level === 3) {
+            dataPOST.Localidades.push(result.id)
+            this.selected_children.push(result)
+          }
+        }
+        })
+        return dataPOST
       }
     }
   }
