@@ -19,13 +19,22 @@
                 <span class="geekmark"></span>
                 <span class="name-checkbox">{{ item.label }}</span>
                 <span class="num-fil">({{ item.data }})</span>
+                <!-- {{ (item.isChecked)? 'si' : 'no' }} -->
               </label>
             </div>
+          </div>
+          <div class="selected_children" v-if="areApplied">
+            <ul class="grid-4-columns-1fr">
+              <li v-for="(item, key) in selected_children" :key="key">
+                <span class="name-checkbox">{{ item.label }}</span>
+                <span class="num-fil">({{ item.data }})</span>
+              </li>
+            </ul>
           </div>
           <div v-if="search.provincia_localidad && search.provincia_localidad.length != 0" class="flex-space-between-flex-end">
             <div class="btns">
               <button type="button" class="btn btn-ver-mas" @click="showModal">Ver detalles</button>
-              <button type="button" class="btn btn-aplicar" v-if="!areApplied && selected_provinces_localidad.length !== 0" @click="apply">Aplicar</button>
+              <button type="button" class="btn btn-aplicar" v-if="selected_provinces_localidad.length !== 0" @click="apply">Aplicar</button>
               <button type="button" class="btn btn-limpiar" v-if="areApplied" @click="clean">Limpiar</button>
             </div>
             <p class="text-help">* Puede elegir más de una opción</p>
@@ -40,7 +49,7 @@
                       </button>
                     </div>
                     <div>
-                      <button type="button" class="btn btn-aplicar" v-if="!areApplied && selected_provinces_localidad.length !== 0" @click="apply">Aplicar</button>
+                      <button type="button" class="btn btn-aplicar" v-if="selected_provinces_localidad.length !== 0" @click="apply">Aplicar</button>
                       <button type="button" class="btn btn-limpiar" v-if="areApplied" @click="clean">Limpiar</button>
                     </div>
                   </div>
@@ -108,6 +117,7 @@
     data: () => ({
       title: 'Ubicación',
       selected_provinces_localidad: [],
+      selected_children: [],
       options: [{
         id: 'all',
         label: 'TODA ESPAÑA',
@@ -119,14 +129,14 @@
       seeMore: false
     }),
     watch: {
-      selected_provinces_localidad: function (newProvincesLocalidad) {
-        this.updateNumberSelectedCompanies(this.numberCompaniesSelected((this.isAllProvincesLocalidad(newProvincesLocalidad))? this.search.provincia_localidad : newProvincesLocalidad))
+      selected_provinces_localidad: function () { //newProvincesLocalidad
+        /*this.updateNumberSelectedCompanies(this.numberCompaniesSelected((this.isAllProvincesLocalidad(newProvincesLocalidad))? this.search.provincia_localidad : newProvincesLocalidad))
         this.form.selected_provinces_localidad = this.selected_provinces_localidad
         if (newProvincesLocalidad.length) {
           this.$store.dispatch('filters/addFilters', this.title)
         }else {
           this.$store.dispatch('filters/removeFilters', this.title)
-        }
+        }*/
       },
       selected_companies: function(newValue) {
       if (newValue === 0) this.selected_provinces_localidad = []
@@ -190,6 +200,7 @@
             Provincias: [],
             Localidades: []
           }
+          this.selected_children = []
           this.selected_provinces_localidad.forEach((item) => {
             let result = inArrayObjectTreeselect(this.search.provincia_localidad, item.id)
             if (result && result.id) {
@@ -198,25 +209,32 @@
                 dataPOST.comunidades.push(result.id)
               }else if (level === 2) {
                 dataPOST.Provincias.push(result.id)
+                this.selected_children.push(result)
               }
               else if (level === 3) {
                 dataPOST.Localidades.push(result.id)
+                this.selected_children.push(result)
               }
             }
           })
           this.loading = true
           this.hideModal()
-          this.$store.dispatch('search/filtrarUbicacion', dataPOST).then(() => {
+          this.$store.dispatch('search/filtrarUbicacion', dataPOST).then((response) => {
             this.loading = false
+            this.options[0].children = (this.search && this.search.provincia_localidad) ? this.search.provincia_localidad : []
+            this.updateNumberSelectedCompanies(response.cantidad)
+            this.$store.dispatch('filters/addFilters', this.title)
+            this.areApplied = true
           }).catch(() => { 
             this.loading = false
           })
         }
       },
       clean () {
+        this.selected_children = []
         this.$store.dispatch('filters/resetFilter')
         this.fetchSearch()
-        this.areApplied = !this.areApplied
+        this.areApplied = false
       },
       handleChange () { //province, event
       },
@@ -247,7 +265,19 @@
       background-color: #e2801d;
       color: #fff;
       padding: 5px;
+      margin-right: 5px;
+    }
+    button.btn-limpiar { padding: 5px; }
+  }
+  .selected_children ul {
+    list-style-type: disc;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 0;
+    li {
+      display: inline-block;
     }
   }
-
 </style>

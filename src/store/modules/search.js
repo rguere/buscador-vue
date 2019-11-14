@@ -46,6 +46,9 @@ export const actions = {
       commit(types.FETCH_SEARCH, {
         search: data
       })
+
+      return data
+
     } catch (e) {
       commit(types.FETCH_SEARCH, {
         search: state.search
