@@ -18,7 +18,7 @@
                   :value="item">
                 <span class="geekmark"></span>
                 <span class="name-checkbox">{{ item.label }}</span>
-                <span class="num-fil">({{ item.data }})</span>
+                <span class="num-fil">({{ item.data | numeral('0,0') }})</span>
                 <!-- {{ (item.isChecked)? 'si' : 'no' }} -->
               </label>
             </div>
@@ -27,7 +27,7 @@
             <ul class="grid-4-columns-1fr">
               <li v-for="(item, key) in selected_children" :key="key">
                 <span class="name-checkbox">{{ item.label }}</span>
-                <span class="num-fil">({{ item.data }})</span>
+                <span class="num-fil">({{ item.data | numeral('0,0') }})</span>
               </li>
             </ul>
           </div>
@@ -129,14 +129,8 @@
       seeMore: false
     }),
     watch: {
-      selected_provinces_localidad: function () { //newProvincesLocalidad
-        /*this.updateNumberSelectedCompanies(this.numberCompaniesSelected((this.isAllProvincesLocalidad(newProvincesLocalidad))? this.search.provincia_localidad : newProvincesLocalidad))
+      selected_provinces_localidad: function () {
         this.form.selected_provinces_localidad = this.selected_provinces_localidad
-        if (newProvincesLocalidad.length) {
-          this.$store.dispatch('filters/addFilters', this.title)
-        }else {
-          this.$store.dispatch('filters/removeFilters', this.title)
-        }*/
       },
       selected_companies: function(newValue) {
       if (newValue === 0) this.selected_provinces_localidad = []
