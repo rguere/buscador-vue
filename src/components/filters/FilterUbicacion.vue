@@ -26,7 +26,7 @@
           <div class="selected_children" v-if="areApplied">
             <ul class="grid-4-columns-1fr">
               <li v-for="(item, key) in selected_children" :key="key">
-                <span class="name-checkbox">- {{ item.id.split('|').join(',') }} </span>
+                <span class="name-checkbox">- {{ formatearLabel(item) }} </span>
                 <span class="num-fil">({{ item.data | numeral('0,0') }})</span>
               </li>
             </ul>
@@ -129,7 +129,8 @@
       seeMore: false
     }),
     watch: {
-      selected_provinces_localidad: function () {
+      selected_provinces_localidad: function (newProvincesLocalidad) {
+        this.updateNumberSelectedCompanies(this.numberCompaniesSelected((this.isAllProvincesLocalidad(newProvincesLocalidad))? this.search.provincia_localidad : newProvincesLocalidad))
         this.form.selected_provinces_localidad = this.selected_provinces_localidad
       },
       selected_companies: function(newValue) {
@@ -239,6 +240,16 @@
       },
       deselectTreeselect () {
       },
+      formatearLabel(item){
+      let arr = item.id.split('|');
+      arr.reverse();
+      if (arr.length === 1) {
+      return item.label
+      }else if (arr.length > 1){
+      let primero = arr[0]
+      arr.shift()
+      return `${primero} (${arr.join(',')})`}
+      }
     }
   }
 </script>
