@@ -2,6 +2,7 @@
   <div id="filter_ubicacion">
     <div class="filter-title">
       {{ title }}
+      <span class="span-info-right">{{ selected_by_location | numeral('0,0') }}</span>
     </div>
     <div class="bg-fff">
       <div class="content">
@@ -86,7 +87,7 @@
                       Ubicaciones seleccionadas <span class="span-info-right">{{ selected_provinces_localidad.length }}</span>
                     </div>
                     <div class="filter-title">
-                      Empresas seleccionadas <span class="span-info-right">{{ selected_companies | numeral('0,0') }}</span>
+                      Empresas seleccionadas <span class="span-info-right">{{ selected_by_location | numeral('0,0') }}</span>
                     </div>
                     <ul class="ul_selected_provinces_localidad"><li v-for="(item, key) in selected_provinces_localidad" :key="key">{{ item.label }} <span class="num-fil" v-if="item.id != 'all'">({{ item.data | numeral('0,0') }})</span></li></ul>
                   </div>
@@ -118,6 +119,7 @@
       title: 'Ubicación',
       selected_provinces_localidad: [],
       selected_children: [],
+      selected_by_location: 0,
       options: [{
         id: 'all',
         label: 'TODA ESPAÑA',
@@ -129,10 +131,10 @@
     }),
     watch: {
       selected_provinces_localidad: function (newProvincesLocalidad) {
-        this.updateNumberSelectedCompanies(this.numberCompaniesSelected((this.isAllProvincesLocalidad(newProvincesLocalidad))? this.search.provincia_localidad : newProvincesLocalidad))
+        this.selected_by_location = this.numberCompaniesSelected((this.isAllProvincesLocalidad(newProvincesLocalidad))? this.search.provincia_localidad : newProvincesLocalidad)
         this.form.selected_provinces_localidad = this.selected_provinces_localidad
       },
-      selected_companies: function(newValue) {
+      selected_by_location: function(newValue) {
       if (newValue === 0) this.selected_provinces_localidad = []
       },
       search: function (newSearch) {
@@ -207,6 +209,8 @@
       },
       clean () {
         this.selected_children = []
+        this.updateNumberSelectedCompanies(this.selected_companies - this.selected_by_location)
+        this.selected_by_location = 0
         this.$store.dispatch('filters/removeFilters', this.title)
         this.areApplied = false
       },
