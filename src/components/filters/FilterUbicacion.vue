@@ -1,104 +1,107 @@
 <template>
-  <div id="filter_ubicacion">
-    <div class="filter-title">
+  <div class="panel panel-primary" id="filter_ubicacion">
+    <div class="panel-heading">
       {{ title }}
       <span class="span-info-right">{{ selected_by_location | numeral('0,0') }}</span>
     </div>
-    <div class="bg-fff">
-      <div class="content">
-        <div v-if="!loading && search.provincia_localidad && search.provincia_localidad.length != 0">
-          <div class="grid-4-columns-1fr" v-if="!areApplied">
-            <div v-for="(item, key) in search.provincia_localidad" :key="key">
-              <label class="custon-checkboxs">
-                <input type="checkbox"
-                  :name="`checkbox_${item.id}`"
-                  v-model="selected_provinces_localidad"
-                  @change="handleChange(item, $event)"
-                  :id="`checkbox_${item.id}`"
-                  :value="item">
-                <span class="geekmark"></span>
-                <span class="name-checkbox">{{ item.label }}</span>
-                <span class="num-fil">({{ item.data | numeral('0,0') }})</span>
-                <!-- {{ (item.isChecked)? 'si' : 'no' }} -->
-              </label>
-            </div>
+    <div class="panel-body">
+      <div v-if="!loading && search.provincia_localidad && search.provincia_localidad.length != 0">
+        <div class="grid-4-columns-1fr" v-if="!areApplied">
+          <div v-for="(item, key) in search.provincia_localidad" :key="key">
+            <label class="custon-checkboxs">
+              <input type="checkbox"
+                :name="`checkbox_${item.id}`"
+                v-model="selected_provinces_localidad"
+                @change="handleChange(item, $event)"
+                :id="`checkbox_${item.id}`"
+                :value="item">
+              <span class="geekmark"></span>
+              <span class="name-checkbox">{{ item.label }}</span>
+              <span class="num-fil">({{ item.data | numeral('0,0') }})</span>
+            </label>
           </div>
-          <div class="selected_children" v-if="areApplied">
-            <ul class="grid-4-columns-1fr">
-              <li v-for="(item, key) in selected_children" :key="key">
-                <span class="name-checkbox">- {{ formatearLabel(item) }} </span>
-                <span class="num-fil">({{ item.data | numeral('0,0') }})</span>
-              </li>
-            </ul>
+        </div>
+        <div class="selected_children" v-if="areApplied">
+          <ul class="grid-4-columns-1fr">
+            <li v-for="(item, key) in selected_children" :key="key">
+              <span class="name-checkbox">- {{ formatearLabel(item) }} </span>
+              <span class="num-fil">({{ item.data | numeral('0,0') }})</span>
+            </li>
+          </ul>
+        </div>
+        <div class="flex-space-between-flex-end">
+          <div class="btns">
+            <button type="button" class="btn btn-warning" @click="showModal">Ver detalles</button>
+            <button type="button" class="btn btn-success" v-if="selected_provinces_localidad.length !== 0 && !areApplied" @click="apply">Aplicar</button>
+            <button type="button" class="btn btn-info" v-if="areApplied" @click="clean">Limpiar</button>
           </div>
-          <div class="flex-space-between-flex-end">
-            <div class="btns">
-              <button type="button" class="btn btn-ver-mas" @click="showModal">Ver detalles</button>
-              <button type="button" class="btn btn-aplicar" v-if="selected_provinces_localidad.length !== 0 && !areApplied" @click="apply">Aplicar</button>
-              <button type="button" class="btn btn-limpiar" v-if="areApplied" @click="clean">Limpiar</button>
-            </div>
-            <p class="text-help">* Puede elegir más de una opción</p>
-          </div>
-          <b-modal id="bv-modal-filter-ubicacion" hide-footer hide-header static no-close-on-backdrop scrollable size="lg">
-            <div class="d-block">
-              <div class="content" style="margin-bottom: 30px">
-                <div class="btns-modal-header">
-                  <div>
-                    <button class="btn btn-volver" @click="hideModal"><i class="fa fa-arrow-left"></i> Vover</button>
-                    <button class="btn btn-a">
-                      {{ title }}
-                    </button>
-                  </div>
-                  <div>
-                    <button type="button" class="btn btn-aplicar" v-if="selected_provinces_localidad.length !== 0" @click="apply">Aplicar</button>
-                    <button type="button" class="btn btn-limpiar" v-if="areApplied" @click="clean">Limpiar</button>
+          <p class="text-help">* Puede elegir más de una opción</p>
+        </div>
+        <b-modal id="bv-modal-filter-ubicacion" hide-footer hide-header static no-close-on-backdrop scrollable size="lg">
+          <div class="d-block">
+            <div class="content" style="margin-bottom: 30px">
+              <div class="btns-modal-header">
+                <div>
+                  <button class="btn btn-warning" @click="hideModal"><i class="fa fa-arrow-left"></i> Vover</button>
+                  <button class="btn btn-a">
+                    {{ title }}
+                  </button>
+                </div>
+                <div>
+                  <button type="button" class="btn btn-success" v-if="selected_provinces_localidad.length !== 0" @click="apply">Aplicar</button>
+                  <button type="button" class="btn btn-info" v-if="areApplied" @click="clean">Limpiar</button>
+                </div>
+              </div>
+              <div class="conten-flex-70-30" v-if="search.provincia_localidad && search.provincia_localidad.length != 0">
+                <div>
+                  <div class="panel panel-primary" style="border-color: transparent;">
+                    <div class="panel-heading">
+                      CCAA, Provincia o Localidad encontradas en base a el (los) nombre(s) introducido(s).
+                    </div>
+                    <div style="height: 400px;">
+                      <treeselect
+                        valueFormat="object"
+                        :multiple="true"
+                        :options="options"
+                        :always-open="true"
+                        :default-expand-level="1"
+                        :load-options="fetchSearch"
+                        @input="inputTreeselect"
+                        @select="selectTreeselect"
+                        @deselect="deselectTreeselect"
+                        placeholder="Seleccionar"
+                        v-model="selected_provinces_localidad"
+                        >
+                        <label slot="option-label" slot-scope="{ node, shouldShowCount, count, labelClassName, countClassName }" :class="labelClassName">
+                          {{ node.label }} <span class="num-fil" v-if="node.raw.id != 'all'">({{ node.raw.data | numeral('0,0') }})</span>
+                          <span v-if="shouldShowCount" :class="countClassName">({{ count }})</span>
+                        </label>
+                      </treeselect>
+                    </div>
                   </div>
                 </div>
-                <div class="conten-flex-70-30" v-if="search.provincia_localidad && search.provincia_localidad.length != 0">
-                  <div>
-                    <div>
-                      <div class="filter-title">
-                        CCAA, Provincia o Localidad encontradas en base a el (los) nombre(s) introducido(s).
-                      </div>
-                      <div>
-                        <treeselect
-                          valueFormat="object"
-                          :multiple="true"
-                          :options="options"
-                          :always-open="true"
-                          :default-expand-level="1"
-                          :load-options="fetchSearch"
-                          @input="inputTreeselect"
-                          @select="selectTreeselect"
-                          @deselect="deselectTreeselect"
-                          placeholder="Seleccionar"
-                          v-model="selected_provinces_localidad"
-                          >
-                          <label slot="option-label" slot-scope="{ node, shouldShowCount, count, labelClassName, countClassName }" :class="labelClassName">
-                            {{ node.label }} <span class="num-fil" v-if="node.raw.id != 'all'">({{ node.raw.data | numeral('0,0') }})</span>
-                            <span v-if="shouldShowCount" :class="countClassName">({{ count }})</span>
-                          </label>
-                        </treeselect>
-                      </div>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="filter-title">
+                <div>
+                  <div class="panel panel-primary">
+                    <div class="panel-heading">
                       Ubicaciones seleccionadas <span class="span-info-right">{{ selected_provinces_localidad.length }}</span>
                     </div>
-                    <div class="filter-title">
+                  </div>
+                  <div class="panel panel-primary">
+                    <div class="panel-heading">
                       Empresas seleccionadas <span class="span-info-right">{{ selected_by_location | numeral('0,0') }}</span>
                     </div>
-                    <ul class="ul_selected_provinces_localidad"><li v-for="(item, key) in selected_provinces_localidad" :key="key">{{ item.label }} <span class="num-fil" v-if="item.id != 'all'">({{ item.data | numeral('0,0') }})</span></li></ul>
+                    <div class="panel-body">
+                      <ul class="ul_selected_provinces_localidad"><li v-for="(item, key) in selected_provinces_localidad" :key="key">{{ item.label }} <span class="num-fil" v-if="item.id != 'all'">({{ item.data | numeral('0,0') }})</span></li></ul>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </b-modal>
-        </div>
-        <div v-if="search.provincia_localidad && search.provincia_localidad.length === 0 && !loading" class="alert alert-dismissible alert-primary">
-          <strong>Oh!</strong> datos no encontrados. <button type="button" class="btn" @click="fetchSearch">Recargar</button>
-        </div>
+          </div>
+        </b-modal>
+      </div>
+      <div v-if="search.provincia_localidad && search.provincia_localidad.length === 0 && !loading" class="alert alert-dismissible alert-primary">
+        <strong>Oh!</strong> datos no encontrados. <button type="button" class="btn" @click="fetchSearch">Recargar</button>
       </div>
     </div>
   </div>
@@ -275,13 +278,11 @@
   .btns-modal-header {
     display: flex;
     justify-content: space-between;
-    button.btn-aplicar {
-      background-color: #e2801d;
-      color: #fff;
+    button.btn-success {
       padding: 5px;
       margin-right: 5px;
     }
-    button.btn-limpiar { padding: 5px; }
+    button.btn-info { padding: 5px; }
   }
   .selected_children ul {
     list-style-type: disc;

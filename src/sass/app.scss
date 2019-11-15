@@ -2,44 +2,51 @@
 /* @import url('https://fonts.googleapis.com/css?family=Nunito'); */
 
 // Variables
-@import '~font-awesome/css/font-awesome.min.css';
 @import 'variables';
-@import 'transitions';
+@import '~font-awesome/css/font-awesome.min.css';
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 @import '~bootstrap-vue/src/index.scss';
+@import 'buttons';
+@import 'panels';
+@import 'transitions';
+/* @import 'estilosres.css'; */
 
 body {
   width: 100%;
+  font-size: 14px;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #555;
 }
 
-.banner-top {
-  padding: 95px 0 0 0;
-  background-color: #ddd;
+strong {
+  color: #222 !important;
+  font-weight: bolder !important;
 }
-
-.banner-top>div:nth-child(1) {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  /* border-bottom: 0.5px solid #ddd; */
+.fwb {
+  font-weight: bold !important;
 }
-
-.banner-top>div:nth-child(1) div:nth-child(1) {
-  padding: 30px 30px;
-  background-color: #fff;
+.fs20 {
+  font-size: 20px!important;
 }
-
-.banner-top>div:nth-child(1) div:nth-child(2) {
-  padding: 30px 30px;
+.title-lg {
+  font-size: 32px;
 }
-
-.banner-top>div:nth-child(1) div:nth-child(2) p {
-  font-size: 30px;
-  color: #0c296a;
+.tipo_link, .ct_azul {
+  color: #0071BC !important;
+  cursor: pointer !important;
 }
-
+.title-md {
+  font-size: 26px;
+}
 .bg-gris {
   background-color: #ddd;
+}
+.bg-blanco {
+  background-color: #fff;
+}
+.dottedbottom {
+  border-bottom: 1px dotted #999 !important;
 }
 
 .btn-action-search {
@@ -143,15 +150,7 @@ body {
   transition: all 0.2s;
 }
 
-
 @media (max-width: 950px) {
-  .banner-top {
-    padding: 45px 0 0 0;
-  }
-
-  .banner-top>div:nth-child(1) {
-    grid-template-columns: 100%;
-  }
 
   .grid-5-columns-1fr {
     grid-template-columns: repeat(4, 1fr);
@@ -200,5 +199,11 @@ body {
     .modal-lg, .modal-xl {
         max-width: 90%!important;
     }
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1330px;
   }
 }

@@ -1,46 +1,42 @@
 <template>
-  <div id="filter_sector_actividad">
-    <div class="filter-title">
+  <div class="panel panel-primary" id="filter_sector_actividad">
+    <div class="panel-heading">
       Sector/Actividad
     </div>
-    <div class="bg-fff">
-      <div class="content">
-        <div>
-          <label class="custon-checkboxs">
-            <input type="checkbox" name="">
-            <span class="geekmark"></span>
-            <span class="name-checkbox">Checkbox</span>
-            <span class="num-fil">(100.000)</span>
-          </label>
-        </div>
+    <div class="panel-body">
+      <div>
+        <label class="custon-checkboxs">
+          <input type="checkbox" name="">
+          <span class="geekmark"></span>
+          <span class="name-checkbox">Checkbox</span>
+          <span class="num-fil">(100.000)</span>
+        </label>
+      </div>
 
-        <div class="flex-space-between-center">
-          <button class="btn btn-ver-mas">Ver detalles</button>
-          <treeselect class="select-treeselect" :multiple="true" :options="options" placeholder="Seleccionar" v-model="value" />
-        </div>
+      <div class="flex-space-between-center">
+        <button class="btn btn-ver-mas">Ver detalles</button>
+        <treeselect class="select-treeselect" :multiple="true" :options="options" placeholder="Seleccionar" v-model="value" />
+      </div>
 
-        <div>
-          <label class="custon-checkboxs">
-            <input type="checkbox" name="">
-            <span class="geekmark"></span>
-            <span class="name-checkbox">Checkbox</span>
-            <span class="num-fil">(100.000)</span>
-          </label>
-        </div>
+      <div>
+        <label class="custon-checkboxs">
+          <input type="checkbox" name="">
+          <span class="geekmark"></span>
+          <span class="name-checkbox">Checkbox</span>
+          <span class="num-fil">(100.000)</span>
+        </label>
+      </div>
 
-        <div class="flex-space-between-center">
-          <button class="btn btn-ver-mas">Ver detalles</button>
-          <treeselect class="select-treeselect" :multiple="true" :options="options" placeholder="Seleccionar" v-model="value2" />
-        </div>
+      <div class="flex-space-between-center">
+        <button class="btn btn-ver-mas">Ver detalles</button>
+        <treeselect class="select-treeselect" :multiple="true" :options="options" placeholder="Seleccionar" v-model="value2" />
+      </div>
 
-        <div class="flex-space-between-flex-end">
-          <p></p>
-          <p class="text-help">
-            * Puede elegir más de una opción
-          </p>
-        </div>
-
-
+      <div class="flex-space-between-flex-end">
+        <p></p>
+        <p class="text-help">
+          * Puede elegir más de una opción
+        </p>
       </div>
     </div>
   </div>

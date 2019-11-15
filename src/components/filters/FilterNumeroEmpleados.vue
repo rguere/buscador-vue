@@ -1,50 +1,47 @@
 <template>
-    <div id="filter_numero_de_empleados">
-        <div class="filter-title">
+    <div class="panel panel-primary" id="filter_numero_de_empleados">
+        <div class="panel-heading">
             Número de empleados
         </div>
-        <div class="bg-fff">
-            <div class="content">
-                <div class="grid-2-columns-1fr">
-                    <div>
-                        <label class="custon-checkboxs">
-                            <input type="checkbox" name="">
-                            <span class="geekmark"></span>
-                            <span class="name-checkbox">Checkbox</span>
-                            <span class="num-fil">(100.000)</span>
-                        </label>
-                    </div>
-                    <div>
-                        <label class="custon-checkboxs">
-                            <input type="checkbox" name="">
-                            <span class="geekmark"></span>
-                            <span class="name-checkbox">Checkbox</span>
-                            <span class="num-fil">(100.000)</span>
-                        </label>
-                    </div>
-                    <div>
-                        <label class="custon-checkboxs">
-                            <input type="checkbox" name="">
-                            <span class="geekmark"></span>
-                            <span class="name-checkbox">Checkbox</span>
-                            <span class="num-fil">(100.000)</span>
-                        </label>
-                    </div>
-                    <div>
-                        <label class="custon-checkboxs">
-                            <input type="checkbox" name="">
-                            <span class="geekmark"></span>
-                            <span class="name-checkbox">Checkbox</span>
-                            <span class="num-fil">(100.000)</span>
-                        </label>
-                    </div>
+        <div class="panel-body">
+            <div class="grid-2-columns-1fr">
+                <div>
+                    <label class="custon-checkboxs">
+                        <input type="checkbox" name="">
+                        <span class="geekmark"></span>
+                        <span class="name-checkbox">Checkbox</span>
+                        <span class="num-fil">(100.000)</span>
+                    </label>
                 </div>
-                <div class="flex-space-between-flex-end">
-                    <button class="btn btn-ver-mas">Ver detalles</button>
-                    <p class="text-help">* Puede elegir más de una opción</p>
+                <div>
+                    <label class="custon-checkboxs">
+                        <input type="checkbox" name="">
+                        <span class="geekmark"></span>
+                        <span class="name-checkbox">Checkbox</span>
+                        <span class="num-fil">(100.000)</span>
+                    </label>
+                </div>
+                <div>
+                    <label class="custon-checkboxs">
+                        <input type="checkbox" name="">
+                        <span class="geekmark"></span>
+                        <span class="name-checkbox">Checkbox</span>
+                        <span class="num-fil">(100.000)</span>
+                    </label>
+                </div>
+                <div>
+                    <label class="custon-checkboxs">
+                        <input type="checkbox" name="">
+                        <span class="geekmark"></span>
+                        <span class="name-checkbox">Checkbox</span>
+                        <span class="num-fil">(100.000)</span>
+                    </label>
                 </div>
             </div>
-
+            <div class="flex-space-between-flex-end">
+                <button class="btn btn-ver-mas">Ver detalles</button>
+                <p class="text-help">* Puede elegir más de una opción</p>
+            </div>
         </div>
     </div>
 </template>

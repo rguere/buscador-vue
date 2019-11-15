@@ -1,10 +1,7 @@
 <template>
 	<div class="home">
 		<banner-top></banner-top>
-		<div class="container-loading">
-		<div v-if="loading" class="loading">Loading&#8230;</div>
-		</div>
-		<filter-list-checkboxs :search="search"></filter-list-checkboxs>
+    <div class="container"><div v-if="loading" class="loading">Loading&#8230;</div><filter-list-checkboxs :search="search"></filter-list-checkboxs></div>
 	</div>
 </template>
 

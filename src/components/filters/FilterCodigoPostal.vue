@@ -1,22 +1,18 @@
 <template>
-  <div id="filter_codigo_postal">
-    <div class="filter-title">
+  <div class="panel panel-primary" id="filter_codigo_postal">
+    <div class="panel-heading">
       Código Postal
     </div>
-    <div class="bg-fff">
-      <div class="content">
-
-        <textarea class="filter_textarea"></textarea>
-
-        <p class="text-help">
-          *Puede incluir uno o más códigos postales separados por coma o por salto de línea
-        </p>
-
-        <div class="flex-space-between-flex-end">
-          <button class="btn btn-ver-mas">Ver detalles</button>
-          <button class="btn btn-action-search wi">BUSCAR</button>
-        </div>
-
+    <div class="panel-body">
+      <div class="form-group">
+        <textarea class="form-control"></textarea>
+      </div>
+      <p class="text-help">
+        *Puede incluir uno o más códigos postales separados por coma o por salto de línea
+      </p>
+      <div class="flex-space-between-flex-end">
+        <button class="btn btn-ver-mas">Ver detalles</button>
+        <button class="btn btn-action-search wi">BUSCAR</button>
       </div>
     </div>
   </div>

@@ -1,38 +1,38 @@
 <template>
-  <div class="conten-flex-70-30">
-    <div class="conten-flex-50-50">
-      <div class="filter-actions-top_left">
+  <div class="padding-to-20">
+    <div class="row">
+      <div class="col-md-3">
         <p class="selected_companies">{{ selected_companies | numeral('0,0') }} empresas seleccionadas</p>
       </div>
-      <div class="filter-actions-top_center">
-        <div>
-          <button class="btn btn-vaciar-busqueda">
-            <i class="fa fa-trash"></i> Vaciar Búsqueda
-          </button>
-        </div>
-        <div>
-          <button class="btn btn-guardar-busqueda">
-            <i class="fa fa-save"></i> Guardar búsqueda
-          </button>
-        </div>
-        <div>
-          <button class="btn btn-historial">
-            <i class="fa fa-alarm"></i> Historial
-          </button>
+      <div class="col-md-5">
+        <div class="filter-actions-top_center">
+          <div>
+            <button class="btn btn-warning">
+              <i class="fa fa-trash"></i> Vaciar Búsqueda
+            </button>
+          </div>
+          <div>
+            <button class="btn btn-danger">
+              <i class="fa fa-save"></i> Guardar búsqueda
+            </button>
+          </div>
+          <div>
+            <button class="btn btn-info">
+              <i class="fa fa-clock-o"></i> Historial
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-    <div>
-      <div class="filter-actions-top_right">
+      <div class="col-md-4">
         <div>
-          <button class="btn btn-action-search">
+          <button class="btn btn-warning btn-block">
             VISUALIZAR LISTA DE RESULTADOS
           </button>
         </div>
       </div>
     </div>
-    <div class="filters-applied">
-      <div>
+    <div class="row">
+      <div class="col-md-12">
         <div class="content-selected-filters">
           <p>Filtros aplicados: </p>
           <button v-for="(filter, key) in applied_filters" :key="key" class="btn" v-on:click.stop="showModalFilter(filter)">
@@ -69,13 +69,12 @@
 </script>
 
 <style lang="scss" scoped>
+.padding-to-20 {
+  padding-top: 20px;
+}
 p.selected_companies{
   font-weight: bold;
 }
-.conten-flex-70-30 {
-  margin: 15px 0 0 0;
-}
-
 .filter-actions-top_center {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -87,23 +86,10 @@ p.selected_companies{
     button {
       width: 100%;
       font-size: 12px;
-      color: #000;
+      color: #333;
       font-weight: bold;
       padding: 2px 5px;
     }
-
-    button.btn-vaciar-busqueda {
-      background-color: #ffd966;
-    }
-
-    button.btn-guardar-busqueda {
-      background-color: #ee7758;
-    }
-
-    button.btn-historial {
-      background-color: #9dc3e6;
-    }
-  
   }
 }
 

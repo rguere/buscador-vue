@@ -1,126 +1,122 @@
 <template>
-  <div id="filter_informacion_financiera">
-    <div class="filter-title">
+  <div class="panel panel-primary" id="filter_informacion_financiera">
+    <div class="panel-heading">
       Información Financiera
     </div>
-    <div class="bg-fff">
-      <div class="content">
-
-        <div class="grid-2-columns-1fr">
-          <div>
-            <div class="flex">
-              <div class="width-50-porcent">
-                <div class="_flex-row">
-                  <div class="padding-0-5">
-                    <div class="title-informacion-financiera">
-                      Partida financiera
-                    </div>
-                    <div>
-                      <treeselect
-                        class="select-partida-financiera"
-                        :multiple="true"
-                        :options="options"
-                        placeholder="Seleccionar"
-                        v-model="value"
-                        />
-                    </div>
+    <div class="panel-body">
+      <div class="grid-2-columns-1fr">
+        <div>
+          <div class="flex">
+            <div class="width-50-porcent">
+              <div class="_flex-row">
+                <div class="padding-0-5">
+                  <div class="title-informacion-financiera">
+                    Partida financiera
                   </div>
                   <div>
-                    <button class="btn btn-ver-mas">Ver detalles</button>
+                    <treeselect
+                      class="select-partida-financiera"
+                      :multiple="true"
+                      :options="options"
+                      placeholder="Seleccionar"
+                      v-model="value"
+                      />
                   </div>
                 </div>
-              </div>
-              <div class="width-50-porcent">
-                <div class="padding-0-5">
-                  <div class="padding-0-0-10-0">
-                    <div class="title-informacion-financiera">
-                      Minimo
-                    </div>
-                    <div class="conten-input-informacion-financiera">
-                      <input type="text" value="1000" name="min" id="min">
-                      <label for="min">Miles de Euros</label>
-                    </div>
-                  </div>
-
-                  <div class="padding-0-0-10-0">
-                    <div class="title-informacion-financiera">
-                      Maximo
-                    </div>
-                    <div class="conten-input-informacion-financiera">
-                      <input type="text" value="1000" name="max" id="max">
-                      <label for="max">Miles de Euros</label>
-                    </div>
-                  </div>
+                <div>
+                  <button class="btn btn-ver-mas">Ver detalles</button>
                 </div>
               </div>
             </div>
-          </div>
-          <div>
-            <div>
-              <div class="title-informacion-financiera">
-                Seleccionar Ejercicio
-              </div>
-
-              <div class="anios_checkboxs">
-                <div>
-                  <label class="custon-checkboxs">
-                    <input type="checkbox" name="">
-                    <span class="geekmark"></span>
-                    <span class="title">2018</span>
-                  </label>
+            <div class="width-50-porcent">
+              <div class="padding-0-5">
+                <div class="padding-0-0-10-0">
+                  <div class="title-informacion-financiera">
+                    Minimo
+                  </div>
+                  <div class="conten-input-informacion-financiera">
+                    <input type="text" value="1000" name="min" id="min">
+                    <label for="min">Miles de Euros</label>
+                  </div>
                 </div>
 
-                <div>
-                  <label class="custon-checkboxs">
-                    <input type="checkbox" name="">
-                    <span class="geekmark"></span>
-                    <span class="title">2017</span>
-                  </label>
+                <div class="padding-0-0-10-0">
+                  <div class="title-informacion-financiera">
+                    Maximo
+                  </div>
+                  <div class="conten-input-informacion-financiera">
+                    <input type="text" value="1000" name="max" id="max">
+                    <label for="max">Miles de Euros</label>
+                  </div>
                 </div>
-
-                <div>
-                  <label class="custon-checkboxs">
-                    <input type="checkbox" name="">
-                    <span class="geekmark"></span>
-                    <span class="title">2016</span>
-                  </label>
-                </div>
-
-                <div>
-                  <label class="custon-checkboxs">
-                    <input type="checkbox" name="">
-                    <span class="geekmark"></span>
-                    <span class="title">Ultimo año con consultas disponibles</span>
-                  </label>
-                </div>
-              </div>
-
-              <div class="flex-space-between-flex-end">
-                <p></p>
-                <p class="text-help">* Puede elegir más de una opción</p>
-              </div>
-
-
-            </div>
-            <div>
-              <div class="bg-g">
-                <label class="custon-checkboxs">
-                  <input type="checkbox" name="">
-                  <span class="geekmark"></span>
-                  <span class="title">Aplicar en la búsqueda <i>al menos uno</i> de los años seleccionados</span>
-                </label>
-              </div>
-              <div class="bg-g">
-                <label class="custon-checkboxs">
-                  <input type="checkbox" name="">
-                  <span class="geekmark"></span>
-                  <span class="title">Aplicar en la búsqueda <i>TODOS</i> los años seleccionados</span>
-                </label>
               </div>
             </div>
           </div>
         </div>
+        <div>
+          <div>
+            <div class="title-informacion-financiera">
+              Seleccionar Ejercicio
+            </div>
 
+            <div class="anios_checkboxs">
+              <div>
+                <label class="custon-checkboxs">
+                  <input type="checkbox" name="">
+                  <span class="geekmark"></span>
+                  <span class="title">2018</span>
+                </label>
+              </div>
+
+              <div>
+                <label class="custon-checkboxs">
+                  <input type="checkbox" name="">
+                  <span class="geekmark"></span>
+                  <span class="title">2017</span>
+                </label>
+              </div>
+
+              <div>
+                <label class="custon-checkboxs">
+                  <input type="checkbox" name="">
+                  <span class="geekmark"></span>
+                  <span class="title">2016</span>
+                </label>
+              </div>
+
+              <div>
+                <label class="custon-checkboxs">
+                  <input type="checkbox" name="">
+                  <span class="geekmark"></span>
+                  <span class="title">Ultimo año con consultas disponibles</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="flex-space-between-flex-end">
+              <p></p>
+              <p class="text-help">* Puede elegir más de una opción</p>
+            </div>
+
+
+          </div>
+          <div>
+            <div class="bg-g">
+              <label class="custon-checkboxs">
+                <input type="checkbox" name="">
+                <span class="geekmark"></span>
+                <span class="title">Aplicar en la búsqueda <i>al menos uno</i> de los años seleccionados</span>
+              </label>
+            </div>
+            <div class="bg-g">
+              <label class="custon-checkboxs">
+                <input type="checkbox" name="">
+                <span class="geekmark"></span>
+                <span class="title">Aplicar en la búsqueda <i>TODOS</i> los años seleccionados</span>
+              </label>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

@@ -1,12 +1,11 @@
 <template>
-    <div class="bg-gris">
-      <div class="container-fluid">
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="">
         <filter-buttons></filter-buttons>
         <filter-actions-top></filter-actions-top>
-        <div class="conten-flex-70-30">
-
-          <div class="flex-70-30">
-
+        <div class="row">
+          <div class="col-md-8">
             <filter-ubicacion></filter-ubicacion>
 
             <filter-antiguedad></filter-antiguedad>
@@ -22,11 +21,8 @@
             <filter-auditores :search="search"></filter-auditores>
 
             <filter-cargos></filter-cargos>
-
           </div>
-
-          <div>
-
+          <div class="col-md-4">
             <filter-codigo-postal></filter-codigo-postal>
 
             <filter-razon-social></filter-razon-social>
@@ -38,12 +34,11 @@
             <filter-sector-actividad></filter-sector-actividad>
 
             <filter-directivos-vinculaciones></filter-directivos-vinculaciones>
-
           </div>
-
         </div>
       </div>
     </div>
+  </div>
 </template>
 
 <script>

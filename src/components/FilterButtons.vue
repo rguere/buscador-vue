@@ -4,102 +4,130 @@
       ¡Incorpore a sus búsqueda tantos filtros como quiera, dentro de nuestras múltiples posibilidades!
     </div>
     <div class="filter-btns">
-      <a href="#" v-scroll-to="{
-                  el: '#filter_ubicacion',
-                  offset: -100,
-                  onDone: onDone
-              }">
+      <a href="#" 
+      class="btn btn-primary"
+      v-scroll-to="{
+          el: '#filter_ubicacion',
+          offset: -100,
+          onDone: onDone
+      }">
         Ubicación
       </a>
-      <a href="#" v-scroll-to="{
-                  el: '#filter_antiguedad',
-                  offset: -100,
-                  onDone: onDone
-              }">
+      <a href="#" 
+      class="btn btn-primary"
+      v-scroll-to="{
+          el: '#filter_antiguedad',
+          offset: -100,
+          onDone: onDone
+      }">
         Antigüedad
       </a>
-      <a href="#" v-scroll-to="{
-                  el: '#filter_numero_de_empleados',
-                  offset: -100,
-                  onDone: onDone
-              }">
+      <a href="#" 
+      class="btn btn-primary"
+      v-scroll-to="{
+          el: '#filter_numero_de_empleados',
+          offset: -100,
+          onDone: onDone
+      }">
         Número de empleados
       </a>
-      <a href="#" v-scroll-to="{
-                  el: '#filter_estado',
-                  offset: -100,
-                  onDone: onDone
-              }">
+      <a href="#" 
+      class="btn btn-primary"
+      v-scroll-to="{
+          el: '#filter_estado',
+          offset: -100,
+          onDone: onDone
+      }">
         Estado
       </a>
-      <a href="#" v-scroll-to="{
-                  el: '#filter_tipo_de_cuentas',
-                  offset: -100,
-                  onDone: onDone
-              }">
+      <a href="#" 
+      class="btn btn-primary"
+      v-scroll-to="{
+          el: '#filter_tipo_de_cuentas',
+          offset: -100,
+          onDone: onDone
+      }">
         Tipo de cuentas
       </a>
-      <a href="#" v-scroll-to="{
-                  el: '#filter_sector_actividad',
-                  offset: -100,
-                  onDone: onDone
-              }">
+      <a href="#" 
+      class="btn btn-primary"
+      v-scroll-to="{
+          el: '#filter_sector_actividad',
+          offset: -100,
+          onDone: onDone
+      }">
         Sector/Actividad
       </a>
-      <a href="#" v-scroll-to="{
-                  el: '#filter_cargos',
-                  offset: -100,
-                  onDone: onDone
-              }">
+      <a href="#" 
+      class="btn btn-primary"
+      v-scroll-to="{
+          el: '#filter_cargos',
+          offset: -100,
+          onDone: onDone
+      }">
         Cargos
       </a>
-      <a href="#" v-scroll-to="{
-                  el: '#filter_codigo_postal',
-                  offset: -100,
-                  onDone: onDone
-              }">
+      <a href="#" 
+      class="btn btn-primary"
+      v-scroll-to="{
+          el: '#filter_codigo_postal',
+          offset: -100,
+          onDone: onDone
+      }">
         Código Postal
       </a>
-      <a href="#" v-scroll-to="{
-                  el: '#filter_nombre_o_razon_social',
-                  offset: -100,
-                  onDone: onDone
-              }">
+      <a href="#" 
+      class="btn btn-primary"
+      v-scroll-to="{
+          el: '#filter_nombre_o_razon_social',
+          offset: -100,
+          onDone: onDone
+      }">
         Nombre o razón social
       </a>
-      <a href="#" v-scroll-to="{
-                  el: '#filter_nif',
-                  offset: -100,
-                  onDone: onDone
-              }">
+      <a href="#" 
+      class="btn btn-primary"
+      v-scroll-to="{
+          el: '#filter_nif',
+          offset: -100,
+          onDone: onDone
+      }">
         NIF
       </a>
-      <a href="#" v-scroll-to="{
-                  el: '#filter_anios_con_cuentas_disponibles',
-                  offset: -100,
-                  onDone: onDone
-              }">
+      <a href="#" 
+      class="btn btn-primary"
+      v-scroll-to="{
+          el: '#filter_anios_con_cuentas_disponibles',
+          offset: -100,
+          onDone: onDone
+      }">
         Años con cuentas disponibles
       </a>
-      <a href="#" v-scroll-to="{
-                  el: '#filter_informacion_financiera',
-                  offset: -100,
-                  onDone: onDone
-              }">
+      <a href="#" 
+      class="btn btn-primary"
+      v-scroll-to="{
+          el: '#filter_informacion_financiera',
+          offset: -100,
+          onDone: onDone
+      }">
         Información Financiera
       </a>
-      <a href="#" v-scroll-to="{
-                  el: '#filter_auditores',
-                  offset: -100,
-                  onDone: onDone
-              }">
+      <a href="#" 
+      class="btn btn-primary"
+      v-scroll-to="{
+          el: '#filter_auditores',
+          offset: -100,
+          onDone: onDone
+      }">
         Auditores
       </a>
-      <a href="#" v-scroll-to="{
-                  el: '#filter_directivos_y_vinculaciones',
-                  offset: -100,
-                  onDone: onDone
-              }">
+      <a href="#" 
+      class="btn btn-primary"
+      v-scroll-to="{
+          el: '#filter_directivos_y_vinculaciones',
+          offset: -100,
+          onDone: onDone
+      }">
         Directivos y Vinculaciones
       </a>
     </div>
@@ -139,7 +167,10 @@
 .filter-buttons .filter-buttons_description {
   color: #0c296a;
   font-weight: bold;
-  font-size: 18px;
+  font-size: 13px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .filter-buttons .filter-btns {
@@ -149,15 +180,7 @@
 
 .filter-buttons .filter-btns a {
   margin: 2.5px;
-  border: 2px solid #1b4973;
-  color: #1b4973;
-  font-weight: bold;
-  border-radius: 8px;
-  padding: 5px;
-  background-color: #deebf7;
   font-size: 13px;
-  text-align: center;
-  text-decoration: none;
   display: flex;
   justify-content: center;
   align-items: center;
