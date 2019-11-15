@@ -141,8 +141,7 @@
     },
     mounted() {
       this.$root.$on('clean_filter', (filter) => {
-        console.log(filter)
-        this.clean()
+        if (filter === this.title) { this.clean() }
       })
       this.$root.$on('show_modal_filter', (filter) => {
         if (filter === this.title) { this.showModal() }
