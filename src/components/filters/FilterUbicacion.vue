@@ -5,8 +5,7 @@
     </div>
     <div class="bg-fff">
       <div class="content">
-        <h3 v-if="loading" class="text-center"> <i class="fa fa-circle-o-notch fa-pulse fa-3x fa-fw upload-file"></i> </h3>
-        <div v-if="!loading">
+        <div v-if="!loading && search.provincia_localidad && search.provincia_localidad.length != 0">
           <div class="grid-4-columns-1fr" v-if="!areApplied">
             <div v-for="(item, key) in search.provincia_localidad" :key="key">
               <label class="custon-checkboxs">
@@ -31,7 +30,7 @@
               </li>
             </ul>
           </div>
-          <div v-if="search.provincia_localidad && search.provincia_localidad.length != 0" class="flex-space-between-flex-end">
+          <div class="flex-space-between-flex-end">
             <div class="btns">
               <button type="button" class="btn btn-ver-mas" @click="showModal">Ver detalles</button>
               <button type="button" class="btn btn-aplicar" v-if="selected_provinces_localidad.length !== 0 && !areApplied" @click="apply">Aplicar</button>
@@ -111,6 +110,7 @@
     name: 'filter-ubicacion',
     computed: mapGetters({
       search: 'search/search',
+      loading: 'search/loading',
       form: 'filters/form',
       selected_companies: 'filters/selected_companies',
     }),
@@ -125,7 +125,6 @@
         children: []
       }],
       areApplied: false,
-      loading: false,
       seeMore: false
     }),
     watch: {
@@ -135,18 +134,25 @@
       },
       selected_companies: function(newValue) {
       if (newValue === 0) this.selected_provinces_localidad = []
+      },
+      search: function (newSearch) {
+        this.options[0].children = (newSearch && newSearch.provincia_localidad) ? newSearch.provincia_localidad : []
       }
     },
     mounted() {
-      this.fetchSearch()
+      this.$root.$on('clean_filter', (filter) => {
+        console.log(filter)
+        this.clean()
+      })
+      this.$root.$on('show_modal_filter', (filter) => {
+        if (filter === this.title) { this.showModal() }
+      })
     },
     methods: {
       fetchSearch (){
-        this.loading = true
         this.$store.dispatch('search/fetchSearch').then(() => {
-          this.loading = false
           this.options[0].children = (this.search && this.search.provincia_localidad) ? this.search.provincia_localidad : []
-        }).catch(() => { this.loading = false })
+        })
       },
       showModal () {
         this.$bvModal.show('bv-modal-filter-ubicacion')
@@ -190,23 +196,19 @@
       },
       apply () {
         if (this.selected_provinces_localidad && this.selected_provinces_localidad.length !== 0) {
-          this.loading = true
           this.hideModal()
           this.$store.dispatch('search/filtrarUbicacion', this.formatearDataPOST()).then((response) => {
-            this.loading = false
-            this.options[0].children = (this.search && this.search.provincia_localidad) ? this.search.provincia_localidad : []
+            //this.options[0].children = (this.search && this.search.provincia_localidad) ? this.search.provincia_localidad : []
             this.updateNumberSelectedCompanies(response.cantidad)
             this.$store.dispatch('filters/addFilters', this.title)
             this.areApplied = true
           }).catch(() => { 
-            this.loading = false
           })
         }
       },
       clean () {
         this.selected_children = []
-        this.$store.dispatch('filters/resetFilter')
-        this.fetchSearch()
+        this.$store.dispatch('filters/removeFilters', this.title)
         this.areApplied = false
       },
       handleChange () { //province, event

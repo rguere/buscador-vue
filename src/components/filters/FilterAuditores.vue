@@ -5,7 +5,7 @@
         </div>
         <div class="bg-fff">
             <div class="content">
-                <div class="grid-4-columns-1fr">
+                <div class="grid-4-columns-1fr" v-if="search.auditor && search.auditor.length > 0">
                     <div v-for="(item, key) in search.auditor" :key="key">
                         <label class="custon-checkboxs">
                             <input type="checkbox" name="">
@@ -19,9 +19,6 @@
                     <button class="btn btn-ver-mas">Ver detalles</button>
                     <p class="text-help">* Puede elegir más de una opción</p>
                 </div>
-                <div v-if="search.auditor && search.auditor.length === 0" class="alert alert-dismissible alert-primary">
-                  <strong>Oh!</strong> datos no encontrados. <button type="button" class="btn" @click="fetchSearch">Recargar</button>
-                </div>
             </div>
 
         </div>
@@ -29,12 +26,12 @@
 </template>
 
 <script>
-    import { mapGetters } from 'vuex'
+    //import { mapGetters } from 'vuex'
     export default {
         name: 'filter-auditores',
-        computed: mapGetters({
-          search: 'search/search',
-        })
+        props: {
+            search: Object
+        },
     }
 </script>
 

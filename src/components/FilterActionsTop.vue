@@ -35,9 +35,9 @@
       <div>
         <div class="content-selected-filters">
           <p>Filtros aplicados: </p>
-          <button v-for="(filter, key) in applied_filters" :key="key" class="btn">
+          <button v-for="(filter, key) in applied_filters" :key="key" class="btn" v-on:click.stop="showModalFilter(filter)">
             {{ filter }}
-            <span @click="resetFilter">X</span>
+            <span v-on:click.stop="resetFilter(filter)">X</span>
           </button>
         </div>
       </div>
@@ -58,8 +58,11 @@
     },
     mounted() {},
     methods: {
-      resetFilter() {
-        this.$store.dispatch('filters/resetFilter')
+      resetFilter(filter) {
+        this.$root.$emit('clean_filter', filter)
+      },
+      showModalFilter(filter) {
+        this.$root.$emit('show_modal_filter', filter)
       }
     }
   }
