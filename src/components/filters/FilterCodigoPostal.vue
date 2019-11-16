@@ -9,6 +9,7 @@
           placeholder=""
           class="tags-type-textarea"
           v-model="zip_codes"
+          :existing-tags="existing_zip_codes"
           add-tags-on-comma
           :validate="validateZipCodes"
           :typeahead="true"></tags-input>
@@ -29,9 +30,13 @@
     name: 'filter-codigo-postal',
     data: () => ({
       title: 'Código Postal',
+      existing_zip_codes: [],
       zip_codes: []
     }),
     mounted() {
+      for (var i = 1; i <= 52; i++) {
+        this.existing_zip_codes.push({key: i.toString(), value: i.toString()})
+      }
     },
     methods: {
       validateZipCodes (value) {
