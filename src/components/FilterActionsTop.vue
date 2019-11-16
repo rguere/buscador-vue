@@ -26,7 +26,7 @@
       <div class="col-md-4">
         <div>
           <button class="btn btn-warning btn-block">
-            VISUALIZAR LISTA DE RESULTADOS
+            VISUALIZAR LISTA DE RESULTADOS <i class="fa fa-list-alt"></i>
           </button>
         </div>
       </div>

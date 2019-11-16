@@ -1,8 +1,8 @@
 <template>
-  <div class="panel panel-default">
-    <div class="panel-body">
-      <div class="">
-        <filter-buttons></filter-buttons>
+  <div>
+    <filter-buttons></filter-buttons>
+    <div class="panel panel-default">
+      <div class="panel-body">
         <filter-actions-top></filter-actions-top>
         <div class="row">
           <div class="col-md-8">
