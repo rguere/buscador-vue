@@ -18,7 +18,7 @@
           </div>
           <div>
             <button class="btn btn-info">
-              <i class="fa fa-clock-o"></i> Historial
+              <i class="fa fa-history"></i> Historial
             </button>
           </div>
         </div>
@@ -85,10 +85,6 @@ p.selected_companies{
 
     button {
       width: 100%;
-      font-size: 12px;
-      color: #333;
-      font-weight: bold;
-      padding: 2px 5px;
     }
   }
 }

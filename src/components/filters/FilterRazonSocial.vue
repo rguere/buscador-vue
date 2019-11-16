@@ -8,8 +8,8 @@
         <textarea class="form-control" placeholder="Escriba aqui el nombre o razón social de la empresa"></textarea>
       </div>
       <div class="flex-space-between-flex-end">
-        <button class="btn btn-ver-mas">Ver detalles</button>
-        <button class="btn btn-action-search wi">BUSCAR</button>
+        <button class="btn btn-warning">Ver detalles <i class="fa fa-plus-circle"></i></button>
+        <button class="btn btn-info">BUSCAR <i class="fa  fa-search"></i></button>
       </div>
     </div>
   </div>

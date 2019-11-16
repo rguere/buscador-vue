@@ -24,7 +24,7 @@
                   </div>
                 </div>
                 <div>
-                  <button class="btn btn-ver-mas">Ver detalles</button>
+                  <button class="btn btn-warning">Ver detalles <i class="fa fa-plus-circle"></i></button>
                 </div>
               </div>
             </div>

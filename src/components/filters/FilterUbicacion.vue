@@ -31,9 +31,9 @@
         </div>
         <div class="flex-space-between-flex-end">
           <div class="btns">
-            <button type="button" class="btn btn-warning" @click="showModal">Ver detalles</button>
-            <button type="button" class="btn btn-success" v-if="selected_provinces_localidad.length !== 0 && !areApplied" @click="apply">Aplicar</button>
-            <button type="button" class="btn btn-info" v-if="areApplied" @click="clean">Limpiar</button>
+            <button type="button" class="btn btn-warning" @click="showModal">Ver detalles <i class="fa fa-plus-circle"></i></button>
+            <button type="button" class="btn btn-success" v-if="selected_provinces_localidad.length !== 0 && !areApplied" @click="apply">Aplicar <i class="fa fa-send"></i></button>
+            <button type="button" class="btn btn-info" v-if="areApplied" @click="clean">Limpiar <i class="fa fa-undo"></i></button>
           </div>
           <p class="text-help">* Puede elegir más de una opción</p>
         </div>
@@ -48,8 +48,8 @@
                   </button>
                 </div>
                 <div>
-                  <button type="button" class="btn btn-success" v-if="selected_provinces_localidad.length !== 0" @click="apply">Aplicar</button>
-                  <button type="button" class="btn btn-info" v-if="areApplied" @click="clean">Limpiar</button>
+                  <button type="button" class="btn btn-success" v-if="selected_provinces_localidad.length !== 0" @click="apply">Aplicar <i class="fa fa-send"></i></button>
+                  <button type="button" class="btn btn-info" v-if="areApplied" @click="clean">Limpiar <i class="fa fa-undo"></i></button>
                 </div>
               </div>
               <div class="conten-flex-70-30" v-if="search.provincia_localidad && search.provincia_localidad.length != 0">
@@ -279,10 +279,8 @@
     display: flex;
     justify-content: space-between;
     button.btn-success {
-      padding: 5px;
       margin-right: 5px;
     }
-    button.btn-info { padding: 5px; }
   }
   .selected_children ul {
     list-style-type: disc;

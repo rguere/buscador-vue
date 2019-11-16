@@ -1,13 +1,3 @@
-.filter-title {
-  background-color: #127dbd;
-  color: #fff;
-  width: 100%;
-  border-radius: 5px;
-  padding: 2px 30px;
-  margin: 20px 0 2px 0;
-  font-weight: bold;
-}
-
 label.custon-checkboxs {
   font-weight: bold;
   cursor: pointer;
@@ -38,46 +28,9 @@ label.custon-checkboxs {
   }
 }
 
-.btn-volver {
-  background-color: #fef1ca;
-  border: solid 1px #fee38e; 
-  padding: 2px 5px;
-  font-weight: bold;
-}
-
 .btn-naranja {
   background-color: #e2801d;
   color: #fff; 
-  padding: 2px 5px;
-  font-weight: bold;
-}
-
-.btn-ver-mas {
-  background-color: #e2801d;
-  padding: 2px 5px;
-  font-weight: bold;
-}
-
-.btn-ver-mas:after {
-  content: "+";
-  font-weight: bold;
-  padding: 0px 6px;
-  background-color: #c56c15;
-  border-radius: 50%;
-  color: #fff;
-  margin-left: 5px;
-}
-
-.btn-aplicar {
-  background-color: #a9d18e;
-  border: solid 1px #748a69;
-  padding: 2px 5px;
-  font-weight: bold;
-}
-
-.btn-limpiar {
-  background-color: #bdd7ee;
-  border: solid 1px #829ab3;
   padding: 2px 5px;
   font-weight: bold;
 }
@@ -94,15 +47,10 @@ label.custon-checkboxs {
   align-items: center;
 }
 
-.filter_textarea {
-  width: 100%;
-  height: 100px;
-  min-height: 60px;
-  max-height: 100px;
-  overflow-y: scroll;
-  border-radius: 20px;
-}
-
 .btn.btn-action-search {
   width: 30%;
+}
+
+textarea {
+  height: 100px;
 }

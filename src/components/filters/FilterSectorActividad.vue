@@ -14,7 +14,7 @@
       </div>
 
       <div class="flex-space-between-center">
-        <button class="btn btn-ver-mas">Ver detalles</button>
+        <button class="btn btn-warning">Ver detalles <i class="fa fa-plus-circle"></i></button>
         <treeselect class="select-treeselect" :multiple="true" :options="options" placeholder="Seleccionar" v-model="value" />
       </div>
 
@@ -28,7 +28,7 @@
       </div>
 
       <div class="flex-space-between-center">
-        <button class="btn btn-ver-mas">Ver detalles</button>
+        <button class="btn btn-warning">Ver detalles <i class="fa fa-plus-circle"></i></button>
         <treeselect class="select-treeselect" :multiple="true" :options="options" placeholder="Seleccionar" v-model="value2" />
       </div>
 
