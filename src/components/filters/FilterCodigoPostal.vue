@@ -1,11 +1,16 @@
 <template>
   <div class="panel panel-primary" id="filter_codigo_postal">
     <div class="panel-heading">
-      Código Postal
+      {{ title }}
     </div>
     <div class="panel-body">
       <div class="form-group">
-        <textarea class="form-control"></textarea>
+        <tags-input element-id="tags_zip_codes"
+          placeholder=""
+          class="tags-type-textarea"
+          v-model="zip_codes"
+          add-tags-on-comma
+          :typeahead="true"></tags-input>
       </div>
       <p class="text-help">
         *Puede incluir uno o más códigos postales separados por coma o por salto de línea
@@ -21,6 +26,10 @@
 <script>
   export default {
     name: 'filter-codigo-postal',
+    data: () => ({
+      title: 'Código Postal',
+      zip_codes: []
+    }),
   }
 </script>
 

@@ -1,11 +1,16 @@
 <template>
   <div class="panel panel-primary" id="filter_nif">
     <div class="panel-heading">
-      NIF
+      {{ title }}
     </div>
     <div class="panel-body">
       <div class="form-group">
-        <textarea class="form-control"></textarea>
+        <tags-input element-id="tags_nifs"
+          placeholder=""
+          class="tags-type-textarea"
+          v-model="nifs"
+          add-tags-on-comma
+          :typeahead="true"></tags-input>
       </div>
       <p class="text-help">
         *Puede incluir uno o más NIF postales separados por coma o por salto de línea
@@ -21,6 +26,10 @@
 <script>
   export default {
     name: 'filter-nif',
+    data: () => ({
+      title: 'NIF',
+      nifs: []
+    }),
   }
 </script>
 

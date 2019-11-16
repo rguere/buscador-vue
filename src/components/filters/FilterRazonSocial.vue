@@ -1,11 +1,16 @@
 <template>
   <div class="panel panel-primary" id="filter_nombre_o_razon_social">
     <div class="panel-heading">
-      Nombre o razón social
+      {{ title }}
     </div>
     <div class="panel-body">
       <div class="form-group">
-        <textarea class="form-control" placeholder="Escriba aqui el nombre o razón social de la empresa"></textarea>
+        <tags-input element-id="tags"
+          placeholder="Escriba aqui el nombre o razón social de la empresa"
+          class="tags-type-textarea"
+          v-model="names_or_social_reasons"
+          add-tags-on-comma
+          :typeahead="true"></tags-input>
       </div>
       <div class="flex-space-between-flex-end">
         <button class="btn btn-warning">Ver detalles <i class="fa fa-plus-circle"></i></button>
@@ -18,6 +23,10 @@
 <script>
   export default {
     name: 'filter-razon-social',
+    data: () => ({
+      title: 'Nombre o razón social',
+      names_or_social_reasons: []
+    }),
   }
 </script>
 

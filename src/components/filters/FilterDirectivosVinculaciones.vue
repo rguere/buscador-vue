@@ -1,11 +1,16 @@
 <template>
   <div class="panel panel-primary" id="filter_directivos_y_vinculaciones">
     <div class="panel-heading">
-      Directivos y Vinculaciones
+      {{ title }}
     </div>
     <div class="panel-body">
       <div class="form-group">
-        <textarea class="form-control" placeholder='Escriba aqui el nombre de la empresa o sociedad que pertenece al Organo de Administracion y clica en "Buscar"...'></textarea>
+        <tags-input element-id="tags_nifs"
+          placeholder='Escriba aqui el nombre de la empresa o sociedad que pertenece al Organo de Administracion y clica en "Buscar"...'
+          class="tags-type-textarea"
+          v-model="managers_and_links"
+          add-tags-on-comma
+          :typeahead="true"></tags-input>
       </div>
 
       <div class="flex-space-between-flex-end">
@@ -39,6 +44,10 @@
 <script>
   export default {
     name: 'filter-directivos-vinculaciones',
+    data: () => ({
+      title: 'Directivos y Vinculaciones',
+      managers_and_links: []
+    }),
   }
 </script>
 
