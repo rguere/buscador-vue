@@ -10,6 +10,7 @@
           class="tags-type-textarea"
           v-model="zip_codes"
           add-tags-on-comma
+          :validate="validateZipCodes"
           :typeahead="true"></tags-input>
       </div>
       <p class="text-help">
@@ -30,6 +31,14 @@
       title: 'Código Postal',
       zip_codes: []
     }),
+    mounted() {
+    },
+    methods: {
+      validateZipCodes (value) {
+        //let isValid = true
+        return !isNaN(value)
+      }
+    }
   }
 </script>
 
