@@ -18,9 +18,23 @@
         *Puede incluir uno o más códigos postales separados por coma o por salto de línea
       </p>
       <div class="flex-space-between-flex-end">
-        <button class="btn btn-warning">Ver detalles <i class="fa fa-plus-circle"></i></button>
-        <button class="btn btn-info">BUSCAR <i class="fa  fa-search"></i></button>
+        <button class="btn btn-warning" @click="showModal">Ver detalles <i class="fa fa-plus-circle"></i></button>
+        <button class="btn btn-info" @click="searchZipCodes" :disabled="zip_codes.length === 0">BUSCAR <i class="fa  fa-search"></i></button>
       </div>
+      <b-modal id="bv-modal-filter-codigo-postal" hide-footer hide-header static no-close-on-backdrop scrollable size="lg">
+        <div class="d-block">
+          <div class="content" style="margin-bottom: 30px">
+            <div class="btns-modal-header">
+              <div>
+                <button class="btn btn-warning" @click="hideModal"><i class="fa fa-arrow-left"></i> Vover</button>
+                <button class="btn btn-a">
+                  {{ title }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </b-modal>
     </div>
   </div>
 </template>
@@ -42,7 +56,16 @@
       validateZipCodes (value) {
         //let isValid = true
         return !isNaN(value)
-      }
+      },
+      searchZipCodes(){
+        this.$store.dispatch('search/searchZipCodes', this.zip_codes)
+      },
+      showModal () {
+        this.$bvModal.show('bv-modal-filter-codigo-postal')
+      },
+      hideModal () {
+        this.$bvModal.hide('bv-modal-filter-codigo-postal')
+      },
     }
   }
 </script>

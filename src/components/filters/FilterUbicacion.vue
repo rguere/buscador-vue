@@ -101,7 +101,7 @@
         </b-modal>
       </div>
       <div v-if="search.provincia_localidad && search.provincia_localidad.length === 0 && !loading" class="alert alert-dismissible alert-primary">
-        <strong>Oh!</strong> datos no encontrados. <button type="button" class="btn" @click="fetchSearch">Recargar</button>
+        <strong>Oh!</strong> datos no encontrados.
       </div>
     </div>
   </div>
@@ -267,32 +267,4 @@
 
 <style lang="scss" scoped>
   @import './../../sass/filters/filters';
-
-  span.span-info-right { float: right; }
-  span.num-fil { color: #2196f3; }
-  ul.ul_selected_provinces_localidad {
-    height: 280px;
-    overflow-y: scroll;
-  }
-  .btns button { margin: 0 5px 0 0; }
-  .btns-modal-header {
-    display: flex;
-    justify-content: space-between;
-    button.btn-success {
-      margin-right: 5px;
-    }
-  }
-  .selected_children ul {
-    list-style-type: disc;
-    margin-block-start: 0;
-    margin-block-end: 0;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    padding-inline-start: 0;
-    margin-bottom: 10px;
-    li {
-      display: inline-block;
-      font-weight: bold;
-    }
-  }
 </style>

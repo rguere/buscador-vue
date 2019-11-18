@@ -1,6 +1,3 @@
-//comunidad automa 
-//provincia
-//localidad
 import axios from 'axios'
 import * as types from '../mutation-types'
 
@@ -69,6 +66,16 @@ export const actions = {
 
     } catch (e) {
       commit(types.LOADING_SEARCH, {
+        loading: false
+      })
+    }
+  },
+  async searchZipCodes({ commit }, zip_codes){
+    try{
+      const { data } = await axios.post('/zip_codes', zip_codes)
+      return data
+    } catch (e) {
+     commit(types.LOADING_SEARCH, {
         loading: false
       })
     }
