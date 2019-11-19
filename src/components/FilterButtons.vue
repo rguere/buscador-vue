@@ -12,7 +12,7 @@
           class="btn btn-default"
           v-scroll-to="{
               el: '#filter_ubicacion',
-              offset: -185,
+              offset: -175,
               onDone: onDone
           }">
             Ubicación
@@ -21,7 +21,7 @@
           class="btn btn-default"
           v-scroll-to="{
               el: '#filter_antiguedad',
-              offset: -185,
+              offset: -175,
               onDone: onDone
           }">
             Antigüedad
@@ -30,7 +30,7 @@
           class="btn btn-default"
           v-scroll-to="{
               el: '#filter_numero_de_empleados',
-              offset: -185,
+              offset: -175,
               onDone: onDone
           }">
             Número de empleados
@@ -39,7 +39,7 @@
           class="btn btn-default"
           v-scroll-to="{
               el: '#filter_estado',
-              offset: -185,
+              offset: -175,
               onDone: onDone
           }">
             Estado
@@ -48,7 +48,7 @@
           class="btn btn-default"
           v-scroll-to="{
               el: '#filter_tipo_de_cuentas',
-              offset: -185,
+              offset: -175,
               onDone: onDone
           }">
             Tipo de cuentas
@@ -57,7 +57,7 @@
           class="btn btn-default"
           v-scroll-to="{
               el: '#filter_sector_actividad',
-              offset: -185,
+              offset: -175,
               onDone: onDone
           }">
             Sector/Actividad
@@ -66,7 +66,7 @@
           class="btn btn-default"
           v-scroll-to="{
               el: '#filter_cargos',
-              offset: -185,
+              offset: -175,
               onDone: onDone
           }">
             Cargos
@@ -75,7 +75,7 @@
           class="btn btn-default"
           v-scroll-to="{
               el: '#filter_codigo_postal',
-              offset: -185,
+              offset: -175,
               onDone: onDone
           }">
             Código Postal
@@ -84,7 +84,7 @@
           class="btn btn-default"
           v-scroll-to="{
               el: '#filter_nombre_o_razon_social',
-              offset: -185,
+              offset: -175,
               onDone: onDone
           }">
             Nombre o razón social
@@ -93,7 +93,7 @@
           class="btn btn-default"
           v-scroll-to="{
               el: '#filter_nif',
-              offset: -185,
+              offset: -175,
               onDone: onDone
           }">
             NIF
@@ -102,7 +102,7 @@
           class="btn btn-default"
           v-scroll-to="{
               el: '#filter_anios_con_cuentas_disponibles',
-              offset: -185,
+              offset: -175,
               onDone: onDone
           }">
             Años con cuentas disponibles
@@ -111,7 +111,7 @@
           class="btn btn-default"
           v-scroll-to="{
               el: '#filter_informacion_financiera',
-              offset: -185,
+              offset: -175,
               onDone: onDone
           }">
             Información Financiera
@@ -120,7 +120,7 @@
           class="btn btn-default"
           v-scroll-to="{
               el: '#filter_auditores',
-              offset: -185,
+              offset: -175,
               onDone: onDone
           }">
             Auditores
@@ -129,7 +129,7 @@
           class="btn btn-default"
           v-scroll-to="{
               el: '#filter_directivos_y_vinculaciones',
-              offset: -185,
+              offset: -175,
               onDone: onDone
           }">
             Directivos y Vinculaciones
@@ -182,6 +182,7 @@
 }
 
 .filter-buttons .filter-btns {
+  transition:all 1s;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
 }
@@ -200,16 +201,28 @@
 }
 
 .filter-btns.is-fixed  {
+  background: #ffffff;
+  transition:all 1s;
   position: fixed;
   left: 0;
-  top: 97px;
+  top: 94px;
   width: 100%;
   z-index: 1;
   display: flex;
+  justify-content: space-between;
   a {
     font-size: 10px;
     padding: 6px;
+    flex: 1;
   }
+}
+
+
+@media (max-width: 767px){
+  .filter-btns.is-fixed  {
+    top: 42px;
+    overflow-x: scroll;
+  }  
 }
 
 @media (max-width: 950px) {

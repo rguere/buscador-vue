@@ -2,7 +2,7 @@
   <div class="padding-to-20">
     <div class="row">
       <div class="col-md-3">
-        <p class="selected_companies"><span class="f-16">{{ selected_companies | numeral('0,0') }}</span> Empresas seleccionadas</p>
+        <p class="selected_companies"><span class="f-18">{{ selected_companies | numeral('0,0') }}</span> Empresas seleccionadas</p>
       </div>
       <div class="col-md-5">
         <div class="filter-actions-top_center">
@@ -69,7 +69,7 @@
 </script>
 
 <style lang="scss" scoped>
-.f-16 { font-size: 14px; }
+.f-18 { font-size: 18px; }
 .padding-to-20 {
   padding-top: 20px;
 }
@@ -118,14 +118,12 @@ p.selected_companies{
 
     span {
       position: relative;
-      background-color: red;
-      color: #fff;
+      color: #333;
+      font-weight: bold;
       top: -10px;
-      right: -12px;
-      border-radius: 50%;
+      right: -15px;
       padding: 2px 4px;
-      font-size: 10px;
-      cursor: pointer;
+      font-size: 12px;
     }
 
   }

@@ -41,9 +41,9 @@
       </div>
       <div class="col-xs-6 col-sm-2 col-md-3">
         <div class="header-icons">
-          <div class="sb-toggle sb-toggle-right navbar-right" v-on:click.stop="showSlidebar" style="float: right">
-            <span class="glyphicon glyphicon-menu-hamburger"></span>
-            <span class="hidden-xs hidden-sm">Menu</span>
+          <div class="sb-toggle sb-toggle-right navbar-right" style="float: right">
+            <span class="glyphicon glyphicon-menu-hamburger" @click="showSlidebar"></span>
+            <span class="hidden-xs hidden-sm" @click="showSlidebar">Menu</span>
           </div>
           <div class="sb-toggle login-header navbar-right" style="float: right">
 
@@ -84,7 +84,7 @@
 
     <div class="sb-slidebar sb-right sb-style-overlay sb-active">
       <ul class="list-unstyled">
-        <li class="sb-close" v-on:click.stop="showSlidebar"><span><i class="glyphicon glyphicon glyphicon-minus"></i> Cerrar</span></li>
+        <li class="sb-close" @click="showSlidebar"><span><i class="glyphicon glyphicon glyphicon-minus"></i> Cerrar</span></li>
         <li><span class="text-left"><i class="fa fa-chevron-left"></i> Informes Comerciales</span></li>
         <li><span class="text-left"><i class="fa fa-chevron-left"></i> Ranking empresas</span></li>
         <li><span><i class="fa fa-chevron-left"></i> Servicios</span>
@@ -154,18 +154,18 @@
     mounted() {},
     methods: {
       showSlidebar(){
-        $('.sb-slidebar').toggleClass('show-slidebar', 1000, "easeOutSine")   
+        $('.sb-slidebar').toggleClass('show-slidebar', 300, "easeOutSine")   
       }
     }
   }
 </script>
 <style scoped>
   .sb-slidebar {
-    margin-right: -400px;
+    margin-right: -700px;
     transition:all 1s;
   }
   .sb-slidebar.show-slidebar {
-    margin-right: 0;
+    margin-right: 0!important;
     transition:all 1s;
   }
 </style>

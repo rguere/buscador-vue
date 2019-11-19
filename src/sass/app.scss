@@ -106,15 +106,15 @@
 
 .btn-a {
   list-style: none;
+  color: #0071BC !important;
+  list-style: none;
   margin: 2.5px;
-  border: 2px solid #1b4973;
+  border: 1px solid #dddddd;
   color: #1b4973;
-  font-weight: bold;
-  border-radius: 8px;
-  background-color: #deebf7;
+  border-radius: 4px;
+  padding: 8px 15px;
+  background-color: #eeeeee;
   font-size: 13px;
-  cursor: initial;
-  -webkit-transition: all 0.2s;
   transition: all 0.2s;
 }
 
