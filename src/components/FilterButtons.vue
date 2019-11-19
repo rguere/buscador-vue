@@ -1,13 +1,15 @@
 <template>
-  <div class="panel panel-default">
+  <div class="panel panel-default cd margin-top-20">
     <div class="panel-body">
       <div class="filter-buttons">
         <div class="filter-buttons_description">
-          ¡Incorpore a sus búsqueda tantos filtros como quiera, dentro de nuestras múltiples posibilidades!
+          <p class="fs12">
+            ¡Incorpore a sus búsqueda tantos filtros como quiera, dentro de nuestras múltiples posibilidades!
+          </p>
         </div>
         <div class="filter-btns">
           <a href="#" 
-          class="btn btn-primary"
+          class="btn btn-primary colorwhite"
           v-scroll-to="{
               el: '#filter_ubicacion',
               offset: -100,
@@ -16,7 +18,7 @@
             Ubicación
           </a>
           <a href="#" 
-          class="btn btn-primary"
+          class="btn btn-primary colorwhite"
           v-scroll-to="{
               el: '#filter_antiguedad',
               offset: -100,
@@ -25,7 +27,7 @@
             Antigüedad
           </a>
           <a href="#" 
-          class="btn btn-primary"
+          class="btn btn-primary colorwhite"
           v-scroll-to="{
               el: '#filter_numero_de_empleados',
               offset: -100,
@@ -34,7 +36,7 @@
             Número de empleados
           </a>
           <a href="#" 
-          class="btn btn-primary"
+          class="btn btn-primary colorwhite"
           v-scroll-to="{
               el: '#filter_estado',
               offset: -100,
@@ -43,7 +45,7 @@
             Estado
           </a>
           <a href="#" 
-          class="btn btn-primary"
+          class="btn btn-primary colorwhite"
           v-scroll-to="{
               el: '#filter_tipo_de_cuentas',
               offset: -100,
@@ -52,7 +54,7 @@
             Tipo de cuentas
           </a>
           <a href="#" 
-          class="btn btn-primary"
+          class="btn btn-primary colorwhite"
           v-scroll-to="{
               el: '#filter_sector_actividad',
               offset: -100,
@@ -61,7 +63,7 @@
             Sector/Actividad
           </a>
           <a href="#" 
-          class="btn btn-primary"
+          class="btn btn-primary colorwhite"
           v-scroll-to="{
               el: '#filter_cargos',
               offset: -100,
@@ -70,7 +72,7 @@
             Cargos
           </a>
           <a href="#" 
-          class="btn btn-primary"
+          class="btn btn-primary colorwhite"
           v-scroll-to="{
               el: '#filter_codigo_postal',
               offset: -100,
@@ -79,7 +81,7 @@
             Código Postal
           </a>
           <a href="#" 
-          class="btn btn-primary"
+          class="btn btn-primary colorwhite"
           v-scroll-to="{
               el: '#filter_nombre_o_razon_social',
               offset: -100,
@@ -88,7 +90,7 @@
             Nombre o razón social
           </a>
           <a href="#" 
-          class="btn btn-primary"
+          class="btn btn-primary colorwhite"
           v-scroll-to="{
               el: '#filter_nif',
               offset: -100,
@@ -97,7 +99,7 @@
             NIF
           </a>
           <a href="#" 
-          class="btn btn-primary"
+          class="btn btn-primary colorwhite"
           v-scroll-to="{
               el: '#filter_anios_con_cuentas_disponibles',
               offset: -100,
@@ -106,7 +108,7 @@
             Años con cuentas disponibles
           </a>
           <a href="#" 
-          class="btn btn-primary"
+          class="btn btn-primary colorwhite"
           v-scroll-to="{
               el: '#filter_informacion_financiera',
               offset: -100,
@@ -115,7 +117,7 @@
             Información Financiera
           </a>
           <a href="#" 
-          class="btn btn-primary"
+          class="btn btn-primary colorwhite"
           v-scroll-to="{
               el: '#filter_auditores',
               offset: -100,
@@ -124,7 +126,7 @@
             Auditores
           </a>
           <a href="#" 
-          class="btn btn-primary"
+          class="btn btn-primary colorwhite"
           v-scroll-to="{
               el: '#filter_directivos_y_vinculaciones',
               offset: -100,
@@ -134,6 +136,7 @@
           </a>
         </div>
       </div>
+      <filter-actions-top></filter-actions-top>
     </div>
   </div>
 </template>
@@ -165,9 +168,6 @@
 }
 
 .filter-buttons .filter-buttons_description {
-  color: #0c296a;
-  font-weight: bold;
-  font-size: 13px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -182,6 +182,7 @@
   margin: 2.5px;
   font-size: 13px;
   display: flex;
+  white-space: pre-wrap!important;
   justify-content: center;
   align-items: center;
 }

@@ -1,7 +1,9 @@
 <template>
-    <div class="panel panel-primary" id="filter_numero_de_empleados">
+    <div class="panel panel-default cd" id="filter_numero_de_empleados">
         <div class="panel-heading">
-            Número de empleados
+            <p class="panel-title roboto white">
+                Número de empleados
+            </p>
         </div>
         <div class="panel-body">
             <div class="grid-2-columns-1fr">

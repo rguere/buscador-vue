@@ -112,7 +112,6 @@ p.selected_companies{
     padding: 5px;
     background-color: #deebf7;
     font-size: 13px;
-    cursor: initial;
     transition: all 0.2s;
 
     span {

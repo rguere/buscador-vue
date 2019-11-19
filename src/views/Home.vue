@@ -1,5 +1,5 @@
 <template>
-	<div class="home">
+	<div class="home" id="page-wrapper">
 		<banner-top></banner-top>
     <div class="container"><div v-if="loading" class="loading">Loading&#8230;</div><filter-list-checkboxs :search="search"></filter-list-checkboxs></div>
 	</div>

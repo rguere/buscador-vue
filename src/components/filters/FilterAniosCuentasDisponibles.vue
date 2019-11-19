@@ -1,7 +1,9 @@
 <template>
-  <div class="panel panel-primary" id="filter_anios_con_cuentas_disponibles">
+  <div class="panel panel-default cd" id="filter_anios_con_cuentas_disponibles">
     <div class="panel-heading">
-      Años con cuentas disponibles
+      <p class="panel-title roboto white">
+        Años con cuentas disponibles
+      </p>
     </div>
     <div class="panel-body">
       <div class="grid-2-columns-1fr">

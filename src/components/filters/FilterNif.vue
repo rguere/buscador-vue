@@ -1,16 +1,15 @@
 <template>
-  <div class="panel panel-primary" id="filter_nif">
+  <div class="panel panel-default cd" id="filter_nif">
     <div class="panel-heading">
-      {{ title }}
+      <p class="panel-title roboto white">
+        {{ title }}
+      </p>
     </div>
     <div class="panel-body">
       <div class="form-group">
-        <tags-input element-id="tags_nifs"
-          placeholder=""
-          class="tags-type-textarea"
-          v-model="nifs"
-          add-tags-on-comma
-          :typeahead="true"></tags-input>
+        <div class="form-group">
+          <textarea class="form-control"></textarea>
+        </div>
       </div>
       <p class="text-help">
         *Puede incluir uno o más NIF postales separados por coma o por salto de línea

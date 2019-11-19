@@ -1,16 +1,15 @@
 <template>
-  <div class="panel panel-primary" id="filter_directivos_y_vinculaciones">
+  <div class="panel panel-default cd" id="filter_directivos_y_vinculaciones">
     <div class="panel-heading">
-      {{ title }}
+      <p class="panel-title roboto white">
+        {{ title }}
+      </p>
     </div>
     <div class="panel-body">
       <div class="form-group">
-        <tags-input element-id="tags_nifs"
-          placeholder='Escriba aqui el nombre de la empresa o sociedad que pertenece al Organo de Administracion y clica en "Buscar"...'
-          class="tags-type-textarea"
-          v-model="managers_and_links"
-          add-tags-on-comma
-          :typeahead="true"></tags-input>
+        <div class="form-group">
+          <textarea class="form-control" placeholder='Escriba aqui el nombre de la empresa o sociedad que pertenece al Organo de Administracion y clica en "Buscar"...'></textarea>
+        </div>
       </div>
 
       <div class="flex-space-between-flex-end">

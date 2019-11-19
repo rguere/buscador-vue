@@ -5,48 +5,17 @@
 @import 'variables';
 @import '~font-awesome/css/font-awesome.min.css';
 // Bootstrap
-@import '~bootstrap/scss/bootstrap';
-@import '~bootstrap-vue/src/index.scss';
-@import '~@voerro/vue-tagsinput/dist/style.css';
-@import 'buttons';
-@import 'panels';
+@import '~bootstrap/dist/css/bootstrap.min.css';
+//Sweetalert2
+@import '~sweetalert2/src/sweetalert2';
+//toastr
+@import '~toastr/toastr.scss';
+
 @import 'transitions';
 /* @import 'estilosres.css'; */
 
-body {
-  width: 100%;
-  font-size: 14px;
-  font-family: Arial, Helvetica, sans-serif;
-  color: #555;
-}
-
-strong {
-  color: #222 ;
-  font-weight: bolder;
-}
-.fwb {
-  font-weight: bold;
-}
-.fs20 {
-  font-size: 20px;
-}
-.title-lg {
-  font-size: 32px;
-}
-.tipo_link, .ct_azul {
-  color: #0071BC;
-}
-.title-md {
-  font-size: 26px;
-}
-.bg-gris {
-  background-color: #ddd;
-}
-.bg-blanco {
-  background-color: #fff;
-}
-.dottedbottom {
-  border-bottom: 1px dotted #999;
+.margin-top-20 {
+  margin-top: 20px;
 }
 
 .btn-action-search {
@@ -161,6 +130,10 @@ strong {
   }
 }
 
+.vue-treeselect__label {
+  font-weight: 100!important;
+}
+
 @media (max-width: 950px) {
 
   .grid-5-columns-1fr {
@@ -208,13 +181,13 @@ strong {
 @media (min-width: 992px){
   #bv-modal-filter-ubicacion, #bv-modal-filter-codigo-postal {
     .modal-lg, .modal-xl {
-        max-width: 90%;
+        width: 90%;
     }
   }
 }
 
 @media (min-width: 1200px) {
   .container {
-    max-width: 1330px;
+    width: 1330px;
   }
 }

@@ -1,7 +1,9 @@
 <template>
-    <div class="panel panel-primary" id="filter_estado">
+    <div class="panel panel-default cd" id="filter_estado">
         <div class="panel-heading">
-            Estado
+            <p class="panel-title roboto white">
+                Estado
+            </p>
         </div>
         <div class="panel-body">
             <div class="grid-5-columns-1fr">

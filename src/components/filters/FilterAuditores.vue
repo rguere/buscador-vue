@@ -1,7 +1,9 @@
 <template>
-    <div class="panel panel-primary" id="filter_auditores">
+    <div class="panel panel-default cd" id="filter_auditores">
         <div class="panel-heading">
-            Auditores
+            <p class="panel-title roboto white">
+                Auditores
+            </p>
         </div>
         <div class="panel-body">
             <div class="grid-4-columns-1fr" v-if="search.auditor && search.auditor.length > 0">

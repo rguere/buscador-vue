@@ -1,16 +1,15 @@
 <template>
-  <div class="panel panel-primary" id="filter_nombre_o_razon_social">
+  <div class="panel panel-default cd" id="filter_nombre_o_razon_social">
     <div class="panel-heading">
-      {{ title }}
+      <p class="panel-title roboto white">
+        {{ title }}
+      </p>
     </div>
     <div class="panel-body">
       <div class="form-group">
-        <tags-input element-id="tags"
-          placeholder="Escriba aqui el nombre o razón social de la empresa"
-          class="tags-type-textarea"
-          v-model="names_or_social_reasons"
-          add-tags-on-comma
-          :typeahead="true"></tags-input>
+        <div class="form-group">
+          <textarea v-model="names_or_social_reasons" class="form-control" placeholder='Escriba aqui el nombre o razón social de la empresa'></textarea>
+        </div>
       </div>
       <div class="flex-space-between-flex-end">
         <button class="btn btn-warning">Ver detalles <i class="fa fa-plus-circle"></i></button>

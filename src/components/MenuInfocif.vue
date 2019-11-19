@@ -1,51 +1,151 @@
 <template>
-  <div class="nav-fixed">
-    <div class="nav-menu">
-      <div class="container-fluid">
+<section class="wrapper warp-menu-top">
+  <div class="container-fluid">
+    <div class="row clearfix ">
+      <div class="col-xs-6 col-sm-3 col-md-3">
+
         <div class="logo">
-          <img src="../assets/images/buscador-de-empresas.png"> La Red Social de Empresas
+          <a href="">
+            <img class="bloque fl ml15" src="./../assets/images/infocif-logo-126x28.png" alt="Infocif" width="126" height="28">
+          </a>
+          <span class="hidden-xs hidden-sm hidden-md slogan">La Red Social de Empresas</span>
         </div>
-        <div class="nav-top">
-          <a href=""><i class="fa fa-user"></i> Iniciar sesión</a>
-          <a href=""><i class="fa fa-bars"></i> Menu</a>
+
+      </div>
+
+      <div class="hidden-xs col-sm-7 col-md-6 height30" tabindex="-1" id="contenedorformtop">
+
+        <form action="http://www.infocif.es/general/buscador-de-empresas.asp" method="post" class="form-top">
+          <div class="form-group">
+            <div class="input-group">
+              <input id="txt-busqueda" name="txtEmpresaBuscada" class="form-control input-sm" placeholder="Escribe aquí NIF o Razón Social..." type="text">
+              <div class="input-group-btn">
+                <button type="submit" class="btn btn_search btn-sm" tabindex="-1"><i class="fa fa-search"></i></button>
+              </div>
+            </div>
+            <div id="formtop-buscador" class="form-radios cp" style="display:none;">
+              <span><i class="fa fa-angle-down ml10 mr5 fa-2x fl"></i></span>
+              <span class="db mt5 mr10 fl">Buscar por</span>
+            </div>
+          </div>
+          <div id="desplegableoptions" class="form-options-search" style="display:none;">
+            <label class="radio-inline">
+              <input class="form-radio" id="edit-icif-large-options-cif" name="opcbusqueda" value="RazonSocial" checked="checked" type="radio">NIF/Razón Social
+            </label><br>
+            <label class="radio-inline mt10">
+              <input class="form-radio" id="edit-icif-large-options-cargo" name="opcbusqueda" value="Cargo" type="radio">Directivo
+            </label>
+          </div>
+        </form>
+
+      </div>
+      <div class="col-xs-6 col-sm-2 col-md-3">
+        <div class="header-icons">
+          <div class="sb-toggle sb-toggle-right navbar-right" style="float: right">
+            <span class="glyphicon glyphicon-menu-hamburger"></span>
+            <span class="hidden-xs hidden-sm">Menu</span>
+          </div>
+          <div class="sb-toggle login-header navbar-right" style="float: right">
+
+            <div>
+              <span class="glyphicon glyphicon-user"></span>
+              <span class="hidden-xs hidden-sm">Iniciar sesión</span>
+            </div>
+
+          </div>
+          <div class="sb-toggle search-header navbar-right hidden-sm hidden-md hidden-lg" style="float: right">
+            <span class="glyphicon glyphicon-search"></span>
+            <span class="hidden-xs hidden-sm">Buscador de empresas</span>
+          </div>
         </div>
       </div>
     </div>
-    <div class="wrap-menu">
-      <div class="container-fluid">
-        <div class="nav-menu2">
-          <router-link to="/">
-            <img src="../assets/images/icono-informes-comerciales-infocif.png">
-            Informes de empresas
-          </router-link>
-          <router-link to="/" class="active">
-            <img src="../assets/images/icono-noticias-infocif.png">
-            Buscardor de empresas
-          </router-link>
-          <router-link to="/">
-            <img src="../assets/images/icono-ranking-empresas-infocif.png">
-            Ranking de empresas
-          </router-link>
-          <router-link to="/">
-            <img src="../assets/images/icono-base-de-datos-infocif.png">
-            Servicios infocif
-          </router-link>
-          <router-link to="/">
-            <img src="../assets/images/icono-licitaciones.png">
-            Licitaciones
-          </router-link>
-          <router-link to="/">
-            <img src="../assets/images/icono-noticias-infocif.png">
-            Noticias de empresas
-          </router-link>
-          <router-link to="/">
-            <img src="../assets/images/icono-opiniones-de-empresas-infocif.png">
-            Opiniones de empresas
-          </router-link>
-        </div>
+
+    <div style="display: none;" class="search-active col-sx-12">
+      <div class="buscador_header">
+        <form class="icif-search-large-form" action="http://www.infocif.es/general/buscador-de-empresas.asp" method="post" id="icif2-search-large-form" accept-charset="UTF-8" _lpchecked="1">
+          <div>
+            <div class="form-item form-type-textfield form-item-icif-search-large">
+              <input class="icif-search-large form-text" type="text" id="edit-icif-search-large" name="txtEmpresaBuscada" value="" size="60" maxlength="128">
+            </div>
+            <div id="edit-icif-large-options" class="form-radios icif-large-options">
+              <div class="form-item form-type-radio form-item-icif-large-options">
+                <input class="icif-large-options form-radio" type="radio" id="edit-icif-large-options-cif" name="opcbusqueda" value="RazonSocial" checked="checked"> <label class="option" for="edit-icif-large-options-cif">NIF/Razón Social </label>
+              </div>
+              <div class="form-item form-type-radio form-item-icif-large-options">
+                <input class="icif-large-options form-radio" type="radio" id="edit-icif-large-options-cargo" name="opcbusqueda" value="Cargo"> <label class="option" for="edit-icif-large-options-cargo">Directivo </label>
+              </div>
+            </div><input type="image" id="edit-submit--3" name="submit" value="Buscar" src="./../assets/images/ib_search_home.png" class="form-submit"><input type="hidden" name="form_build_id" value="form-MfLmKr9E-rqn7Cttfn96E3SWu6uC4gsLyT-cs_LeZO4">
+            <input type="hidden" name="form_id" value="icif2_search_large_form">
+          </div>
+        </form>
       </div>
     </div>
+
+    <div class="sb-slidebar sb-right sb-style-overlay sb-active" style="margin-right: -270px;">
+      <ul class="list-unstyled">
+        <li class="sb-close"><span><i class="glyphicon glyphicon glyphicon-minus"></i> Cerrar</span></li>
+        <li><span class="text-left"><i class="fa fa-chevron-left"></i> Informes Comerciales</span></li>
+        <li><span class="text-left"><i class="fa fa-chevron-left"></i> Ranking empresas</span></li>
+        <li><span><i class="fa fa-chevron-left"></i> Servicios</span>
+          <ul>
+            <li><span> Tarificador descuento de pagarés</span></li>
+            <li><span> Empresas nuevas</span></li>
+            <li><span> Registro Mercantil</span></li>
+            <li><span> Calculadora IBAN</span></li>
+            <li><span> Ranking concursal</span></li>
+          </ul>
+        </li>
+        <li><span><i class="fa fa-chevron-left"></i> Licitaciones</span></li>
+        <li><span><i class="fa fa-chevron-left"></i> Noticias</span></li>
+
+        <li><span><i class="fa fa-chevron-left"></i> Opiniones</span></li>
+
+        <li><span><i class="fa fa-chevron-left"></i> Iniciar sesión</span></li>
+
+      </ul>
+    </div>
+
   </div>
+  <section class="wrapper wrap-menu hidden-xs">
+    <div class=" container paddingnone">
+
+      <div class="btn-group btn-group-justified" role="group" aria-label="Justified button group with nested dropdown">
+        <a href="http://www.infocif.es/informes/" class="btn btn-noborder" role="button" title="Informes de Empresas">
+          <img src="./../assets/images/icono-informes-comerciales-infocif.png" class="alignmiddle" alt="Informes de Empresas">
+          Informes <span class="hidden-xs hidden-sm hidden-md ">de empresas</span>
+        </a>
+        <a href="http://www.infocif.es/informes/" class="btn btn-noborder" role="button" title="Informes de Empresas">
+          <!-- <img src="./../assets/images/buscador_de_empresas.png" style="width: 35px; height: 35px;" class="alignmiddle" alt="Informes de Empresas"> -->
+          Buscardor <span class="hidden-xs hidden-sm hidden-md ">de empresas</span>
+        </a>
+        <a href="http://www.infocif.es/ranking/ventas-empresas/espana" class="btn btn-noborder" role="button" title="Ranking de empresas">
+          <img src="./../assets/images/icono-ranking-empresas-infocif.png" class="alignmiddle" alt="Ranking de Empresas Infocif">
+          Ranking <span class="hidden-xs hidden-sm hidden-md ">de empresas</span>
+        </a>
+        <a href="http://www.infocif.es/servicios/" class="btn btn-noborder" role="button" title="Servicios Infocif">
+          <img src="./../assets/images/icono-base-de-datos-infocif.png" class="alignmiddle" alt="Servicios Infocif">
+          Servicios <span class="hidden-xs hidden-sm hidden-md ">infocif</span>
+        </a>
+        <a href="http://www.infocif.es/licitaciones/" class="btn btn-noborder" role="button" title="Licitaciones">
+          <img src="./../assets/images/icono-licitaciones.png" class="alignmiddle" alt="Licitaciones">
+          Licitaciones
+        </a>
+
+        <a href="http://noticias.infocif.es" class="btn btn-noborder" role="button" title="Noticias">
+          <img src="./../assets/images/icono-noticias-infocif.png" class="alignmiddle" alt="Noticias Infocif">
+          Noticias <span class="hidden-xs hidden-sm hidden-md ">de empresas</span>
+        </a>
+        <a href="http://www.infocif.es/opiniones-empresas/" class="btn btn-noborder" role="button" title="Opiniones de Empresas">
+          <img src="./../assets/images/icono-opiniones-de-empresas-infocif.png" class="alignmiddle" alt="Opiniones de Empresas">
+          Opiniones <span class="hidden-xs hidden-sm hidden-md ">de empresas</span>
+        </a>
+
+
+      </div>
+    </div>
+  </section>
+</section>
 </template>
 <script>
   export default {
@@ -54,69 +154,4 @@
   }
 </script>
 <style scoped>
-.nav-fixed {
-  position: fixed;
-  width: 100%;
-  z-index: 111;
-}
-
-.nav-menu {
-  background-color: #363636;
-  color: #fff;
-}
-
-.nav-menu>div {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  align-content: center;
-  height: auto;
-  padding: 10px;
-}
-
-.nav-menu>div .nav-top a {
-  padding: 15px;
-  color: #eaeaea;
-  text-decoration: none;
-}
-
-.nav-menu>div .nav-top a:hover {
-  color: #fff;
-}
-
-.wrap-menu {
-  box-shadow: 0.5px 0.866px 4px 0px rgba(4, 1, 0, 0.5);
-  border-bottom: 3px solid #eeeeee;
-  background-color: white;
-  font-family: 'Roboto CR', 'Uga LT', Arial, Helvetica, sans-serif;
-  text-transform: uppercase;
-}
-
-.nav-menu2 {
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-}
-
-.nav-menu2 a {
-  color: #000;
-  font-size: 10px;
-  padding: 5px 2px;
-  text-decoration: none;
-  transition: all 0.5s;
-}
-
-.nav-menu2 a:hover,
-.nav-menu2 a:focus,
-.nav-menu2 a.active {
-  background-color: #e6e6e6;
-  border-color: #adadad;
-}
-
-@media (max-width: 950px) {
-  .wrap-menu {
-    display: none;
-  }
-}
-
 </style>

@@ -1,7 +1,9 @@
 <template>
-  <div class="panel panel-primary" id="filter_sector_actividad">
+  <div class="panel panel-default cd" id="filter_sector_actividad">
     <div class="panel-heading">
-      Sector/Actividad
+      <p class="panel-title roboto white">
+        Sector/Actividad
+      </p>
     </div>
     <div class="panel-body">
       <div>

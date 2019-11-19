@@ -1,7 +1,9 @@
 <template>
-    <div class="panel panel-primary" id="filter_antiguedad">
+    <div class="panel panel-default cd" id="filter_antiguedad">
         <div class="panel-heading">
-            Antigüedad
+            <p class="panel-title roboto white">
+                Antigüedad
+            </p>
         </div>
         <div class="panel-body">
             <div class="grid-3-columns-1fr">

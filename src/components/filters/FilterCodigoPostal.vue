@@ -1,18 +1,15 @@
 <template>
-  <div class="panel panel-primary" id="filter_codigo_postal">
+  <div class="panel panel-default cd" id="filter_codigo_postal">
     <div class="panel-heading">
-      {{ title }}
+      <p class="panel-title roboto white">
+        {{ title }}
+      </p>
     </div>
     <div class="panel-body">
       <div class="form-group">
-        <tags-input element-id="tags_zip_codes"
-          placeholder=""
-          class="tags-type-textarea"
-          v-model="zip_codes"
-          :existing-tags="existing_zip_codes"
-          add-tags-on-comma
-          :validate="validateZipCodes"
-          :typeahead="true"></tags-input>
+        <div class="form-group">
+          <textarea v-model="zip_codes" class="form-control"></textarea>
+        </div>
       </div>
       <p class="text-help">
         *Puede incluir uno o más códigos postales separados por coma o por salto de línea
@@ -21,25 +18,30 @@
         <button class="btn btn-warning" @click="showModal">Ver detalles <i class="fa fa-plus-circle"></i></button>
         <button class="btn btn-info" @click="searchZipCodes" :disabled="zip_codes.length === 0">BUSCAR <i class="fa  fa-search"></i></button>
       </div>
-      <b-modal id="bv-modal-filter-codigo-postal" hide-footer hide-header static no-close-on-backdrop scrollable size="lg">
-        <div class="d-block">
-          <div class="content" style="margin-bottom: 30px">
-            <div class="btns-modal-header">
-              <div>
-                <button class="btn btn-warning" @click="hideModal"><i class="fa fa-arrow-left"></i> Vover</button>
-                <button class="btn btn-a">
-                  {{ title }}
-                </button>
+      <div class="modal fade" id="bv-modal-filter-codigo-postal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="d-block">
+              <div class="content" style="margin-bottom: 30px">
+                <div class="btns-modal-header">
+                  <div>
+                    <button class="btn btn-warning" @click="hideModal"><i class="fa fa-arrow-left"></i> Vover</button>
+                    <button class="btn btn-a">
+                      {{ title }}
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </b-modal>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+  import $ from 'jquery'
   export default {
     name: 'filter-codigo-postal',
     data: () => ({
@@ -61,10 +63,10 @@
         this.$store.dispatch('search/searchZipCodes', this.zip_codes)
       },
       showModal () {
-        this.$bvModal.show('bv-modal-filter-codigo-postal')
+        $('#bv-modal-filter-codigo-postal').modal({ backdrop: 'static', show: true })
       },
       hideModal () {
-        this.$bvModal.hide('bv-modal-filter-codigo-postal')
+        $('#bv-modal-filter-codigo-postal').modal('hide')
       },
     }
   }

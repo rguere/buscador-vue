@@ -1,7 +1,9 @@
 <template>
-    <div class="panel panel-primary" id="filter_cargos">
+    <div class="panel panel-default cd" id="filter_cargos">
         <div class="panel-heading">
-            Cargos
+            <p class="panel-title roboto white">
+                Cargos
+            </p>
         </div>
         <div class="panel-body">
             <div class="grid-4-columns-1fr">

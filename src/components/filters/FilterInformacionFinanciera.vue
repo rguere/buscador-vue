@@ -1,7 +1,9 @@
 <template>
-  <div class="panel panel-primary" id="filter_informacion_financiera">
+  <div class="panel panel-default cd" id="filter_informacion_financiera">
     <div class="panel-heading">
-      Información Financiera
+      <p class="panel-title roboto white">
+        Información Financiera
+      </p>
     </div>
     <div class="panel-body">
       <div class="grid-2-columns-1fr">

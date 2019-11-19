@@ -1,7 +1,9 @@
 <template>
-    <div class="panel panel-primary" id="filter_tipo_de_cuentas">
+    <div class="panel panel-default cd" id="filter_tipo_de_cuentas">
         <div class="panel-heading">
-            Tipo de cuentas
+            <p class="panel-title roboto white">
+                Tipo de cuentas
+            </p>
         </div>
         <div class="panel-body">
             <div>
