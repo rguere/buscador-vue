@@ -2,22 +2,22 @@
   <div class="padding-to-20">
     <div class="row">
       <div class="col-md-3">
-        <p class="selected_companies">{{ selected_companies | numeral('0,0') }} empresas seleccionadas</p>
+        <p class="selected_companies"><span class="f-16">{{ selected_companies | numeral('0,0') }}</span> Empresas seleccionadas</p>
       </div>
       <div class="col-md-5">
         <div class="filter-actions-top_center">
           <div>
-            <button class="btn btn-warning">
-              <i class="fa fa-trash"></i> Vaciar Búsqueda
+            <button class="btn btn-primary">
+              <i class="fa fa-trash"></i> Vaciar búsqueda
             </button>
           </div>
           <div>
-            <button class="btn btn-danger">
+            <button class="btn btn-primary">
               <i class="fa fa-save"></i> Guardar búsqueda
             </button>
           </div>
           <div>
-            <button class="btn btn-info">
+            <button class="btn btn-primary">
               <i class="fa fa-history"></i> Historial
             </button>
           </div>
@@ -25,8 +25,8 @@
       </div>
       <div class="col-md-4">
         <div>
-          <button class="btn btn-warning btn-block">
-            VISUALIZAR LISTA DE RESULTADOS <i class="fa fa-list-alt"></i>
+          <button class="btn btn-primary btn-block">
+            <i class="fa fa-list-alt"></i> Visualizar resultados
           </button>
         </div>
       </div>
@@ -69,6 +69,7 @@
 </script>
 
 <style lang="scss" scoped>
+.f-16 { font-size: 14px; }
 .padding-to-20 {
   padding-top: 20px;
 }
@@ -98,19 +99,20 @@ p.selected_companies{
 }
 
 .content-selected-filters {
+  margin-top: 10px;
   width: 100%;
   display: flex;
   flex-wrap: wrap;
 
   .btn {
+    color: #0071BC !important;
     list-style: none;
     margin: 2.5px;
-    border: 2px solid #1b4973;
+    border: 1px solid #dddddd;
     color: #1b4973;
-    font-weight: bold;
-    border-radius: 8px;
-    padding: 5px;
-    background-color: #deebf7;
+    border-radius: 4px;
+    padding: 10px 15px;
+    background-color: #eeeeee;
     font-size: 13px;
     transition: all 0.2s;
 
@@ -118,9 +120,10 @@ p.selected_companies{
       position: relative;
       background-color: red;
       color: #fff;
-      top: -5px;
+      top: -10px;
+      right: -12px;
       border-radius: 50%;
-      padding: 0px 3px;
+      padding: 2px 4px;
       font-size: 10px;
       cursor: pointer;
     }
