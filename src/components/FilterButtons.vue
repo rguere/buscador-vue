@@ -12,7 +12,7 @@
           class="btn btn-default"
           v-scroll-to="{
               el: '#filter_ubicacion',
-              offset: -100,
+              offset: -185,
               onDone: onDone
           }">
             Ubicación
@@ -21,7 +21,7 @@
           class="btn btn-default"
           v-scroll-to="{
               el: '#filter_antiguedad',
-              offset: -100,
+              offset: -185,
               onDone: onDone
           }">
             Antigüedad
@@ -30,7 +30,7 @@
           class="btn btn-default"
           v-scroll-to="{
               el: '#filter_numero_de_empleados',
-              offset: -100,
+              offset: -185,
               onDone: onDone
           }">
             Número de empleados
@@ -39,7 +39,7 @@
           class="btn btn-default"
           v-scroll-to="{
               el: '#filter_estado',
-              offset: -100,
+              offset: -185,
               onDone: onDone
           }">
             Estado
@@ -48,7 +48,7 @@
           class="btn btn-default"
           v-scroll-to="{
               el: '#filter_tipo_de_cuentas',
-              offset: -100,
+              offset: -185,
               onDone: onDone
           }">
             Tipo de cuentas
@@ -57,7 +57,7 @@
           class="btn btn-default"
           v-scroll-to="{
               el: '#filter_sector_actividad',
-              offset: -100,
+              offset: -185,
               onDone: onDone
           }">
             Sector/Actividad
@@ -66,7 +66,7 @@
           class="btn btn-default"
           v-scroll-to="{
               el: '#filter_cargos',
-              offset: -100,
+              offset: -185,
               onDone: onDone
           }">
             Cargos
@@ -75,7 +75,7 @@
           class="btn btn-default"
           v-scroll-to="{
               el: '#filter_codigo_postal',
-              offset: -100,
+              offset: -185,
               onDone: onDone
           }">
             Código Postal
@@ -84,7 +84,7 @@
           class="btn btn-default"
           v-scroll-to="{
               el: '#filter_nombre_o_razon_social',
-              offset: -100,
+              offset: -185,
               onDone: onDone
           }">
             Nombre o razón social
@@ -93,7 +93,7 @@
           class="btn btn-default"
           v-scroll-to="{
               el: '#filter_nif',
-              offset: -100,
+              offset: -185,
               onDone: onDone
           }">
             NIF
@@ -102,7 +102,7 @@
           class="btn btn-default"
           v-scroll-to="{
               el: '#filter_anios_con_cuentas_disponibles',
-              offset: -100,
+              offset: -185,
               onDone: onDone
           }">
             Años con cuentas disponibles
@@ -111,7 +111,7 @@
           class="btn btn-default"
           v-scroll-to="{
               el: '#filter_informacion_financiera',
-              offset: -100,
+              offset: -185,
               onDone: onDone
           }">
             Información Financiera
@@ -120,7 +120,7 @@
           class="btn btn-default"
           v-scroll-to="{
               el: '#filter_auditores',
-              offset: -100,
+              offset: -185,
               onDone: onDone
           }">
             Auditores
@@ -129,7 +129,7 @@
           class="btn btn-default"
           v-scroll-to="{
               el: '#filter_directivos_y_vinculaciones',
-              offset: -100,
+              offset: -185,
               onDone: onDone
           }">
             Directivos y Vinculaciones
@@ -142,12 +142,18 @@
 </template>
 
 <script>
+  import { handleScroll } from './../utils'
   export default {
     name: 'filter-buttons',
     data() {
       return {}
     },
-    mounted() {},
+    mounted() {
+      window.addEventListener('scroll', handleScroll); 
+    },
+    destroyed () {
+      window.removeEventListener('scroll', handleScroll);
+    },
     methods: {
       onDone (element) {
         if (typeof element == 'object') {
@@ -193,28 +199,17 @@
   align-items: center;
 }
 
-.is-fixed  {
+.filter-btns.is-fixed  {
   position: fixed;
-  z-index: 999;
-  left: -250px;
-  top: 100px;
-  display: inline-block;
-
-  .filter-buttons {
-    display: flex;
-
-    .filter-btns {
-      display: flex;
-    }
-
-    .filter-buttons_description {
-      display: none;
-    }
-  } 
-}
-
-.is-fixed.open {
-  left: 0px;
+  left: 0;
+  top: 97px;
+  width: 100%;
+  z-index: 1;
+  display: flex;
+  a {
+    font-size: 10px;
+    padding: 6px;
+  }
 }
 
 @media (max-width: 950px) {

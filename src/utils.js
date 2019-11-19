@@ -85,3 +85,14 @@ export const inArrayObjectTreeselect = (array, search, key = 'id') => {
 
     return results
 }
+
+export const handleScroll = () => {
+    let element = document.getElementById('filter-buttons')
+    let btns = element.querySelector('.filter-btns')
+    let top = element.offsetTop
+    if (!(top >= window.pageYOffset)) {
+      btns.classList.add('is-fixed')
+    }else {
+      btns.classList.remove('is-fixed')
+    }
+} 

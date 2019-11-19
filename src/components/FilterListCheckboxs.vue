@@ -1,6 +1,8 @@
 <template>
   <div>
-    <filter-buttons></filter-buttons>
+    <div id="filter-buttons">
+      <filter-buttons></filter-buttons>
+    </div>
     <div class="panel panel-default cd">
       <div class="panel-body">
         <div class="row">
