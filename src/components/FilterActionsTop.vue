@@ -127,6 +127,10 @@ p.selected_companies{
       width: auto;
       padding: 1px 4px;
       margin: 0 2px;
+      span {
+        top: 0;
+        right: 0;
+      }
     }
   }
 }

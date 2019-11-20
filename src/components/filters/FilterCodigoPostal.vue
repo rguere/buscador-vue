@@ -37,21 +37,41 @@
         </p>
       </div>
       <div class="flex-space-between-flex-end">
-        <button class="btn btn-warning" @click="showModal">
-          Ver detalles <i class="fa fa-plus-circle"></i>
-        </button>
-        <button 
-          v-if="zip_codes && zip_codes.validos.length === 0" 
-          class="btn btn-info" @click="validateZipCodes" 
-          :disabled="dataFrm.length === 0 || loadingFrm">
-            BUSCAR <i :class="(loadingFrm)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
-        </button>
-        <button 
-          v-if="zip_codes && zip_codes.validos.length !== 0" 
-          class="btn btn-info" @click="resetZipCodes" 
-          :disabled="dataFrm.length === 0 || loadingFrm">
-            BUSCAR <i :class="(loadingFrm)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
-        </button>
+        <div>
+          <button class="btn btn-warning m-r-2" @click="showModal">
+            Ver detalles <i class="fa fa-plus-circle"></i>
+          </button>
+          <button
+              v-if="zip_codes && zip_codes.validos.length !== 0 && !areApplied"
+              type="button"
+              class="btn btn-success"
+              @click="apply">
+                Aplicar <i :class="(loadingFrm)?'fa  fa-spinner fa-spin':'fa  fa-send'"></i>
+            </button>
+          <button
+            type="button"
+            class="btn btn-info"
+            v-if="areApplied"
+            @click="clean">
+              Limpiar <i class="fa fa-undo"></i>
+          </button>
+        </div>
+        <div>
+          <button
+            type="button"
+            v-if="zip_codes && zip_codes.validos.length === 0" 
+            class="btn btn-info" @click="validateZipCodes" 
+            :disabled="dataFrm.length === 0 || loadingFrm">
+              BUSCAR <i :class="(loadingFrm)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
+          </button>
+          <button
+            type="button"        
+            v-if="zip_codes && zip_codes.validos.length !== 0"
+            class="btn btn-info" @click="resetZipCodes" 
+            :disabled="dataFrm.length === 0 || loadingFrm">
+              BUSCAR <i :class="(loadingFrm)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
+          </button>
+        </div>
       </div>
       <div class="modal fade" id="bv-modal-filter-codigo-postal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg" role="document">
@@ -112,6 +132,12 @@
           this.this.selected_zip_codes = 0
         })
       },
+      apply () {
+        this.areApplied = true
+      },
+      clean () {
+        this.areApplied = false
+      },
       resetZipCodes (){
         this.zip_codes = { validos: [], invalidos: [] }
       },
@@ -137,7 +163,7 @@
 <style lang="scss" scoped>
 @import './../../sass/filters/filters';
 
-.label-danger { margin-right: 2px; }
+.label-danger, .m-r-2 { margin-right: 2px; }
 
 @media (min-width: 750px) and (max-width: 1100px) {
   .flex-space-between-flex-end {

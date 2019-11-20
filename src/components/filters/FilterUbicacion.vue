@@ -7,7 +7,7 @@
       </p>
     </div>
     <div class="panel-body">
-      <div v-if="!loading && search.provincia_localidad && search.provincia_localidad.length != 0">
+      <div v-if="search.provincia_localidad && search.provincia_localidad.length != 0">
         <div class="grid-4-columns-1fr" v-if="!areApplied">
           <div v-for="(item, key) in search.provincia_localidad" :key="key">
             <label class="custon-checkboxs">
@@ -33,8 +33,19 @@
         </div>
         <div class="flex-space-between-flex-end">
           <div class="btns">
-            <button type="button" class="btn btn-warning" @click="showModal">Ver detalles <i class="fa fa-plus-circle"></i></button>
-            <button type="button" class="btn btn-success" v-if="selected_provinces_localidad.length !== 0 && !areApplied" @click="apply">Aplicar <i class="fa fa-send"></i></button>
+            <button 
+              type="button"
+              class="btn btn-warning"
+              @click="showModal">
+                Ver detalles <i class="fa fa-plus-circle"></i>
+            </button>
+            <button
+              type="button"
+              class="btn btn-success"
+              v-if="selected_provinces_localidad.length !== 0 && !areApplied"
+              @click="apply">
+                Aplicar <i :class="(loadingFrm)?'fa  fa-spinner fa-spin':'fa  fa-send'"></i>
+            </button>
             <button type="button" class="btn btn-info" v-if="areApplied" @click="clean">Limpiar <i class="fa fa-undo"></i></button>
           </div>
           <p class="text-help">* Puede elegir más de una opción</p>
@@ -52,7 +63,7 @@
                         </button>
                       </div>
                       <div>
-                        <button type="button" class="btn btn-success" v-if="selected_provinces_localidad.length !== 0" @click="apply">Aplicar <i class="fa fa-send"></i></button>
+                        <button type="button" class="btn btn-success" v-if="selected_provinces_localidad.length !== 0" @click="apply">Aplicar <i :class="(loadingFrm)?'fa  fa-spinner fa-spin':'fa  fa-send'"></i></button>
                         <button type="button" class="btn btn-info" v-if="areApplied" @click="clean">Limpiar <i class="fa fa-undo"></i></button>
                       </div>
                     </div>
@@ -142,7 +153,8 @@
         isDefaultExpanded: true,
         children: []
       }],
-      areApplied: false
+      areApplied: false,
+      loadingFrm: false
     }),
     watch: {
       selected_provinces_localidad: function (newProvincesLocalidad) {
@@ -213,12 +225,15 @@
       apply () {
         if (this.selected_provinces_localidad && this.selected_provinces_localidad.length !== 0) {
           this.hideModal()
+          this.loadingFrm = true
           this.$store.dispatch('search/filtrarUbicacion', this.formatearDataPOST()).then((response) => {
             //this.options[0].children = (this.search && this.search.provincia_localidad) ? this.search.provincia_localidad : []
             this.updateNumberSelectedCompanies(response.cantidad)
             this.$store.dispatch('filters/addFilters', this.title)
             this.areApplied = true
-          }).catch(() => { 
+            this.loadingFrm = false
+          }).catch(() => {
+            this.loadingFrm = false
           })
         }
       },
