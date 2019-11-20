@@ -70,9 +70,9 @@ export const actions = {
       })
     }
   },
-  async searchZipCodes({ commit }, zip_codes){
+  async validateZipCodes({ commit }, zip_codes){
     try{
-      const { data } = await axios.post('/zip_codes', zip_codes)
+      const { data } = await axios.post('/codigoPostal/validar', {lista: zip_codes})
       return data
     } catch (e) {
      commit(types.LOADING_SEARCH, {

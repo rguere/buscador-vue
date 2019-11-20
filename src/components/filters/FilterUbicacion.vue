@@ -142,8 +142,7 @@
         isDefaultExpanded: true,
         children: []
       }],
-      areApplied: false,
-      seeMore: false
+      areApplied: false
     }),
     watch: {
       selected_provinces_localidad: function (newProvincesLocalidad) {
