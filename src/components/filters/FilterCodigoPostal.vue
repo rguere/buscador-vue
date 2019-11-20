@@ -85,6 +85,55 @@
                       {{ title }}
                     </button>
                   </div>
+                  <div>
+                    <button
+                        v-if="zip_codes && zip_codes.validos.length !== 0 && !areApplied"
+                        type="button"
+                        class="btn btn-success"
+                        @click="apply">
+                          Aplicar <i :class="(loadingFrm)?'fa  fa-spinner fa-spin':'fa  fa-send'"></i>
+                      </button>
+                    <button
+                      type="button"
+                      class="btn btn-info"
+                      v-if="areApplied"
+                      @click="clean">
+                        Limpiar <i class="fa fa-undo"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="conten-flex-70-30">
+                  <div>
+                    <div class="panel panel-default cd">
+                      <div class="panel-heading">
+                        <p class="panel-title roboto white">
+                          Introduce uno o varios códigos postales, separados por coma o salto de línea, y clica en “BUSCAR”.
+                        </p>
+                      </div>
+                      <div style="height: 400px;">
+                        
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="panel panel-default cd">
+                      <div class="panel-heading">
+                        <p class="panel-title roboto white">
+                          Códigos Postales seleccionadas <span class="span-info-right">{{ zip_codes.validos.length }}</span>
+                        </p>
+                      </div>
+                    </div>
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                        <p class="panel-title roboto white">
+                          Empresas seleccionadas <span class="span-info-right">{{ selected_by_zip_codes | numeral('0,0') }}</span>
+                        </p>
+                      </div>
+                      <div class="panel-body">
+                        <ul class="ul_selected_provinces_localidad"><li v-for="(item, key) in zip_codes.validos" :key="key">{{ item.label }} <span class="num-fil">({{ item.data | numeral('0,0') }})</span></li></ul>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
