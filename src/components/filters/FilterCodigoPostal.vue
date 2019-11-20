@@ -110,25 +110,23 @@
                           Introduce uno o varios códigos postales, separados por coma o salto de línea, y clica en “BUSCAR”.
                         </p>
                       </div>
-                      <div style="overflow-y: scroll;">
-                        <div class="content">
-                          <div class="row">
-                            <div class="col-md-12">
-                              <div class="pull-right" style="display: flex; margin-bottom: 10px;">
-                                <input type="file" name="" class="form-control" placeholder="Adjuntar Archivo">
-                                <button
-                                    type="button"
-                                  class="btn btn-info">
-                                    BUSCAR <i :class="(loadingFrm)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
-                                </button>
-                              </div>
-                              <div style="height: 100px;"></div>
+                      <div class="panel-body">
+                        <div class="row">
+                          <div class="col-md-12">
+                            <div class="pull-right" style="display: flex;">
+                              <input type="file" name="" class="form-control" placeholder="Adjuntar Archivo">
+                              <button
+                                  type="button"
+                                class="btn btn-info">
+                                  BUSCAR <i :class="(loadingFrm)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
+                              </button>
                             </div>
-                            <div class="col-md-12">
-                              <p>
-                                Introduce o pega un máximo de 1.000 códigos postales. En caso de querer incluir una mayor cantidad, adjunte un archivo con un máximo de 1.000.000 de códigos postales clicando en “Adjuntar Archivo”
-                              </p>
-                            </div>
+                            <div style="height: 100px;"></div>
+                          </div>
+                          <div class="col-md-12">
+                            <p>
+                              Introduce o pega un máximo de 1.000 códigos postales. En caso de querer incluir una mayor cantidad, adjunte un archivo con un máximo de 1.000.000 de códigos postales clicando en “Adjuntar Archivo”
+                            </p>
                           </div>
                         </div>
                       </div>
