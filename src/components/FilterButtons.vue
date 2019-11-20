@@ -1,142 +1,144 @@
 <template>
-  <div class="panel panel-default cd margin-top-20" id="filter-buttons">
-    <div class="panel-body">
-      <div class="filter-buttons">
-        <div class="filter-buttons_description">
-          <span class="fs12">
-            ¡Incorpore a sus búsqueda tantos filtros como quiera, dentro de nuestras múltiples posibilidades!
-          </span>
+  <div class="panel panel-default cd margin-top-20">
+    <div class="panel-body min-height-210">
+      <div id="filter-buttons">
+        <div class="filter-buttons">
+          <div class="filter-buttons_description">
+            <span class="fs12">
+              ¡Incorpore a sus búsqueda tantos filtros como quiera, dentro de nuestras múltiples posibilidades!
+            </span>
+          </div>
+          <div class="filter-btns">
+            <a href="#" 
+            class="btn btn-default"
+            v-scroll-to="{
+                el: '#filter_ubicacion',
+                offset: -175,
+                onDone: onDone
+            }">
+              Ubicación
+            </a>
+            <a href="#" 
+            class="btn btn-default"
+            v-scroll-to="{
+                el: '#filter_antiguedad',
+                offset: -175,
+                onDone: onDone
+            }">
+              Antigüedad
+            </a>
+            <a href="#" 
+            class="btn btn-default"
+            v-scroll-to="{
+                el: '#filter_numero_de_empleados',
+                offset: -175,
+                onDone: onDone
+            }">
+              Número de empleados
+            </a>
+            <a href="#" 
+            class="btn btn-default"
+            v-scroll-to="{
+                el: '#filter_estado',
+                offset: -175,
+                onDone: onDone
+            }">
+              Estado
+            </a>
+            <a href="#" 
+            class="btn btn-default"
+            v-scroll-to="{
+                el: '#filter_tipo_de_cuentas',
+                offset: -175,
+                onDone: onDone
+            }">
+              Tipo de cuentas
+            </a>
+            <a href="#" 
+            class="btn btn-default"
+            v-scroll-to="{
+                el: '#filter_sector_actividad',
+                offset: -175,
+                onDone: onDone
+            }">
+              Sector/Actividad
+            </a>
+            <a href="#" 
+            class="btn btn-default"
+            v-scroll-to="{
+                el: '#filter_cargos',
+                offset: -175,
+                onDone: onDone
+            }">
+              Cargos
+            </a>
+            <a href="#" 
+            class="btn btn-default"
+            v-scroll-to="{
+                el: '#filter_codigo_postal',
+                offset: -175,
+                onDone: onDone
+            }">
+              Código Postal
+            </a>
+            <a href="#" 
+            class="btn btn-default"
+            v-scroll-to="{
+                el: '#filter_nombre_o_razon_social',
+                offset: -175,
+                onDone: onDone
+            }">
+              Nombre o razón social
+            </a>
+            <a href="#" 
+            class="btn btn-default"
+            v-scroll-to="{
+                el: '#filter_nif',
+                offset: -175,
+                onDone: onDone
+            }">
+              NIF
+            </a>
+            <a href="#" 
+            class="btn btn-default"
+            v-scroll-to="{
+                el: '#filter_anios_con_cuentas_disponibles',
+                offset: -175,
+                onDone: onDone
+            }">
+              Años con cuentas disponibles
+            </a>
+            <a href="#" 
+            class="btn btn-default"
+            v-scroll-to="{
+                el: '#filter_informacion_financiera',
+                offset: -175,
+                onDone: onDone
+            }">
+              Información Financiera
+            </a>
+            <a href="#" 
+            class="btn btn-default"
+            v-scroll-to="{
+                el: '#filter_auditores',
+                offset: -175,
+                onDone: onDone
+            }">
+              Auditores
+            </a>
+            <a href="#" 
+            class="btn btn-default"
+            v-scroll-to="{
+                el: '#filter_directivos_y_vinculaciones',
+                offset: -175,
+                onDone: onDone
+            }">
+              Directivos y Vinculaciones
+            </a>
+          </div>
         </div>
-        <div class="filter-btns">
-          <a href="#" 
-          class="btn btn-default"
-          v-scroll-to="{
-              el: '#filter_ubicacion',
-              offset: -175,
-              onDone: onDone
-          }">
-            Ubicación
-          </a>
-          <a href="#" 
-          class="btn btn-default"
-          v-scroll-to="{
-              el: '#filter_antiguedad',
-              offset: -175,
-              onDone: onDone
-          }">
-            Antigüedad
-          </a>
-          <a href="#" 
-          class="btn btn-default"
-          v-scroll-to="{
-              el: '#filter_numero_de_empleados',
-              offset: -175,
-              onDone: onDone
-          }">
-            Número de empleados
-          </a>
-          <a href="#" 
-          class="btn btn-default"
-          v-scroll-to="{
-              el: '#filter_estado',
-              offset: -175,
-              onDone: onDone
-          }">
-            Estado
-          </a>
-          <a href="#" 
-          class="btn btn-default"
-          v-scroll-to="{
-              el: '#filter_tipo_de_cuentas',
-              offset: -175,
-              onDone: onDone
-          }">
-            Tipo de cuentas
-          </a>
-          <a href="#" 
-          class="btn btn-default"
-          v-scroll-to="{
-              el: '#filter_sector_actividad',
-              offset: -175,
-              onDone: onDone
-          }">
-            Sector/Actividad
-          </a>
-          <a href="#" 
-          class="btn btn-default"
-          v-scroll-to="{
-              el: '#filter_cargos',
-              offset: -175,
-              onDone: onDone
-          }">
-            Cargos
-          </a>
-          <a href="#" 
-          class="btn btn-default"
-          v-scroll-to="{
-              el: '#filter_codigo_postal',
-              offset: -175,
-              onDone: onDone
-          }">
-            Código Postal
-          </a>
-          <a href="#" 
-          class="btn btn-default"
-          v-scroll-to="{
-              el: '#filter_nombre_o_razon_social',
-              offset: -175,
-              onDone: onDone
-          }">
-            Nombre o razón social
-          </a>
-          <a href="#" 
-          class="btn btn-default"
-          v-scroll-to="{
-              el: '#filter_nif',
-              offset: -175,
-              onDone: onDone
-          }">
-            NIF
-          </a>
-          <a href="#" 
-          class="btn btn-default"
-          v-scroll-to="{
-              el: '#filter_anios_con_cuentas_disponibles',
-              offset: -175,
-              onDone: onDone
-          }">
-            Años con cuentas disponibles
-          </a>
-          <a href="#" 
-          class="btn btn-default"
-          v-scroll-to="{
-              el: '#filter_informacion_financiera',
-              offset: -175,
-              onDone: onDone
-          }">
-            Información Financiera
-          </a>
-          <a href="#" 
-          class="btn btn-default"
-          v-scroll-to="{
-              el: '#filter_auditores',
-              offset: -175,
-              onDone: onDone
-          }">
-            Auditores
-          </a>
-          <a href="#" 
-          class="btn btn-default"
-          v-scroll-to="{
-              el: '#filter_directivos_y_vinculaciones',
-              offset: -175,
-              onDone: onDone
-          }">
-            Directivos y Vinculaciones
-          </a>
-        </div>
+        <filter-actions-top></filter-actions-top>
       </div>
-      <filter-actions-top></filter-actions-top>
     </div>
   </div>
 </template>
@@ -200,13 +202,19 @@
   align-items: center;
 }
 
+.min-height-210 {
+  min-height: 185px;
+}
+
 #filter-buttons.is-fixed {
   position: fixed;
   left: 0;
   top: 72px;
   width: 100%;
   z-index: 1;
-  margin: 0 0 20px 0;
+  background: #ffffff;
+  -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 -2px 11px 0px rgba(0, 0, 0, 0.5);
 
   .panel-body {
     padding: 0;

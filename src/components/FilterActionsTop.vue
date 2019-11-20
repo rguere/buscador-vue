@@ -93,9 +93,11 @@ p.selected_companies{
   }
   .row {
     display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
     margin: 0;
     padding: 0;
-    width: 45%;
+    width: 49%;
     .col-md-3 {
       width: 100%;
     }
@@ -112,7 +114,19 @@ p.selected_companies{
       padding: 0;
       button {
         width: auto;
+        padding: 1px 4px;
+        margin: 0 2px;
       }
+    }
+  }
+
+  .content-selected-filters {
+    padding: 0;
+    margin: 0;
+    button {
+      width: auto;
+      padding: 1px 4px;
+      margin: 0 2px;
     }
   }
 }
