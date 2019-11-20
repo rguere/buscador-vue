@@ -1,5 +1,5 @@
 <template>
-  <div class="panel panel-default cd margin-top-20">
+  <div class="panel panel-default cd margin-top-20" id="filter-buttons">
     <div class="panel-body">
       <div class="filter-buttons">
         <div class="filter-buttons_description">
@@ -200,23 +200,44 @@
   align-items: center;
 }
 
-.filter-btns.is-fixed  {
-  background: #ffffff;
-  transition:all 1s;
+#filter-buttons.is-fixed {
   position: fixed;
   left: 0;
-  top: 94px;
+  top: 72px;
   width: 100%;
   z-index: 1;
-  display: flex;
-  justify-content: space-between;
-  a {
-    font-size: 10px;
-    padding: 6px;
-    flex: 1;
-  }
-}
+  margin: 0 0 20px 0;
 
+  .panel-body {
+    padding: 0;
+  }
+
+  .filter-buttons {
+    grid-template-columns: 100%;
+
+    .filter-buttons_description {
+      display: none;
+    }
+  }
+
+  .filter-btns  {
+    background: #ffffff;
+    transition:all 1s;
+    display: flex;
+    justify-content: space-between;
+    a {
+      font-size: 10px;
+      padding: 4px;
+    }
+  }
+
+  .padding-to-20 {
+    padding: 0;
+    margin: 0;
+    display: flex;
+  }
+
+}
 
 @media (max-width: 767px){
   .filter-btns.is-fixed  {

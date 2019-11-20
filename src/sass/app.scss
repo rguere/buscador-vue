@@ -14,6 +14,18 @@
 @import 'transitions';
 /* @import 'estilosres.css'; */
 
+.wrap-menu.hiden-img {
+
+  .btn-group-justified .btn {
+    padding: 4px 0!important;
+  }
+  
+  a img { display: none; }
+
+}
+
+
+
 .margin-top-20 {
   margin-top: 20px;
 }

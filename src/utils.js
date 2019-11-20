@@ -88,11 +88,13 @@ export const inArrayObjectTreeselect = (array, search, key = 'id') => {
 
 export const handleScroll = () => {
     let element = document.getElementById('filter-buttons')
-    let btns = element.querySelector('.filter-btns')
+    let wrapMenu = document.querySelector('.wrap-menu')
     let top = element.offsetTop
     if (!(top >= window.pageYOffset)) {
-      btns.classList.add('is-fixed')
+      element.classList.add('is-fixed')
+      wrapMenu.classList.add('hiden-img')
     }else {
-      btns.classList.remove('is-fixed')
+      element.classList.remove('is-fixed')
+      wrapMenu.classList.remove('hiden-img')
     }
 } 

@@ -4,30 +4,28 @@
       <div class="col-md-3">
         <p class="selected_companies"><span class="f-18">{{ selected_companies | numeral('0,0') }}</span> Empresas seleccionadas</p>
       </div>
-      <div class="col-md-5">
+      <div class="col-md-9">
         <div class="filter-actions-top_center">
-          <div>
+          <div class="vaciar">
             <button class="btn btn-primary">
-              <i class="fa fa-trash"></i> Vaciar búsqueda
+              <i class="fa fa-trash"></i> Vaciar <span class="hidden-xs hidden-sm">búsqueda</span>
             </button>
           </div>
-          <div>
+          <div class="guardar">
             <button class="btn btn-primary">
-              <i class="fa fa-save"></i> Guardar búsqueda
+              <i class="fa fa-save"></i> Guardar <span class="hidden-xs hidden-sm">búsqueda</span>
             </button>
           </div>
-          <div>
+          <div class="historial">
             <button class="btn btn-primary">
               <i class="fa fa-history"></i> Historial
             </button>
           </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div>
-          <button class="btn btn-primary btn-block">
-            <i class="fa fa-list-alt"></i> Visualizar resultados
-          </button>
+          <div class="visualizar">
+            <button class="btn btn-primary btn-block">
+              <i class="fa fa-list-alt"></i> Visualizar <span class="hidden-xs hidden-sm">resultados</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -78,14 +76,43 @@ p.selected_companies{
 }
 .filter-actions-top_center {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr 1fr 1fr 2fr;
   grid-auto-rows: minmax(auto, auto);
-  
   div {
     padding: 0 5px;
-
     button {
       width: 100%;
+    }
+  }
+}
+
+#filter-buttons.is-fixed {
+  p {
+    margin: 0;
+    padding: 0;
+  }
+  .row {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    width: 45%;
+    .col-md-3 {
+      width: 100%;
+    }
+  }
+  .row:before, .row:after {
+    display: none;
+  }
+
+  .filter-actions-top_center {
+    display: flex;
+    justify-content: flex-end;
+    span.hidden-xs { display: none; }
+    div {
+      padding: 0;
+      button {
+        width: auto;
+      }
     }
   }
 }
