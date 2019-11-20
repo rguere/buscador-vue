@@ -46,6 +46,12 @@
           :disabled="dataFrm.length === 0 || loadingFrm">
             BUSCAR <i :class="(loadingFrm)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
         </button>
+        <button 
+          v-if="zip_codes && zip_codes.validos.length !== 0" 
+          class="btn btn-info" @click="resetZipCodes" 
+          :disabled="dataFrm.length === 0 || loadingFrm">
+            BUSCAR <i :class="(loadingFrm)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
+        </button>
       </div>
       <div class="modal fade" id="bv-modal-filter-codigo-postal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg" role="document">
@@ -93,7 +99,7 @@
     },
     methods: {
       validateZipCodes(){
-        this.loadingFrm = true
+        this.loadingFrm = true  
         let sin_salto = this.dataFrm.replace(/(?:\r\n|\r|\n)/g, ',')
         this.$store.dispatch('search/validateZipCodes', sin_salto).then((response) => {
           this.zip_codes.validos = (response.validos)? response.validos: []
@@ -105,6 +111,9 @@
           this.zip_codes = { validos: [], invalidos: [] }
           this.this.selected_zip_codes = 0
         })
+      },
+      resetZipCodes (){
+        this.zip_codes = { validos: [], invalidos: [] }
       },
       numberSelectedZipCodes(newSelectedZipCodes) {
         let business_accountant = 0
@@ -127,6 +136,8 @@
 
 <style lang="scss" scoped>
 @import './../../sass/filters/filters';
+
+.label-danger { margin-right: 2px; }
 
 @media (min-width: 750px) and (max-width: 1100px) {
   .flex-space-between-flex-end {
