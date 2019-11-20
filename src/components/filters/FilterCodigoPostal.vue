@@ -110,8 +110,57 @@
                           Introduce uno o varios códigos postales, separados por coma o salto de línea, y clica en “BUSCAR”.
                         </p>
                       </div>
-                      <div style="height: 400px;">
-                        
+                      <div style="overflow-y: scroll;">
+                        <div class="content">
+                          <div class="row">
+                            <div class="col-md-12">
+                              <div class="pull-right" style="display: flex; margin-bottom: 10px;">
+                                <input type="file" name="" class="form-control" placeholder="Adjuntar Archivo">
+                                <button
+                                    type="button"
+                                  class="btn btn-info">
+                                    BUSCAR <i :class="(loadingFrm)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
+                                </button>
+                              </div>
+                              <div style="height: 100px;"></div>
+                            </div>
+                            <div class="col-md-12">
+                              <p>
+                                Introduce o pega un máximo de 1.000 códigos postales. En caso de querer incluir una mayor cantidad, adjunte un archivo con un máximo de 1.000.000 de códigos postales clicando en “Adjuntar Archivo”
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="panel panel-default cd">
+                      <div class="panel-heading">
+                        <p class="panel-title roboto white">
+                          Introduce el rango de código postales y clica en “BUSCAR”
+                        </p>
+                      </div>
+                      <div class="panel-body">
+                        <div class="row text-center">
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label class="control-label" for="inputDefault">Del código postal:</label>
+                              <input type="text" class="form-control" id="inputDefault">
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label class="control-label" for="inputDefault">Al código postal:</label>
+                              <input type="text" class="form-control" id="inputDefault">
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <button
+                              type="button"
+                              class="btn btn-info pull-right">
+                                BUSCAR <i :class="(loadingFrm)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
+                            </button>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
