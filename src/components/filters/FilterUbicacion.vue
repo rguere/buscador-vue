@@ -42,7 +42,7 @@
             <button
               type="button"
               class="btn btn-success"
-              v-if="selected_provinces_localidad.length !== 0 && !areApplied"
+              v-if="selected_provinces_localidad.length !== 0"
               @click="apply">
                 Aplicar <i :class="(loadingFrm)?'fa  fa-spinner fa-spin':'fa  fa-send'"></i>
             </button>
@@ -132,7 +132,7 @@
 
 <script>
   import { mapGetters } from 'vuex'
-  import { inArrayObjectTreeselect } from './../../utils'
+  import { inArrayObjectTreeselect, howAnimation } from './../../utils'
   import $ from 'jquery'
   export default {
     name: 'filter-ubicacion',
@@ -154,6 +154,7 @@
         children: []
       }],
       areApplied: false,
+      showBtnApply: false,
       loadingFrm: false
     }),
     watch: {
@@ -162,6 +163,9 @@
       },
       selected_by_location: function(newValue) {
       if (newValue === 0) this.selected_provinces_localidad = []
+      },
+      selected_companies: function () {
+        howAnimation(document.querySelector('.selected_companies'))
       },
       search: function (newSearch) {
         this.options[0].children = (newSearch && newSearch.provincia_localidad) ? newSearch.provincia_localidad : []

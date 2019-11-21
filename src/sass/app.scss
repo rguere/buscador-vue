@@ -130,6 +130,18 @@
   transition: all 0.2s;
 }
 
+.btn-orange {
+  color: #fff;
+  background-color: #fa7f02;
+  border-color: #d66d03;
+}
+
+.btn-orange:hover, .btn-orange:focus, .btn-orange.focus, .btn-orange:active, .btn-orange.active, .open>.dropdown-toggle.btn-orange {
+  color: #fff;
+  background-color: #d66d03;
+  border-color: #d66d03; 
+}
+
 
 .tags-type-textarea {
   .tags-input-wrapper-default {

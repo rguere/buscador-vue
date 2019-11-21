@@ -98,3 +98,12 @@ export const handleScroll = () => {
       wrapMenu.classList.remove('hiden-img')
     }
 } 
+
+export const howAnimation = (element) => {
+    if (element) {
+      element.classList.add("bounce-leave-active")
+      setTimeout(function () {
+        element.classList.remove("bounce-leave-active")
+      }, 1000)
+    }
+}

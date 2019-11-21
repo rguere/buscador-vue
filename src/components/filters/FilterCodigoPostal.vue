@@ -118,7 +118,7 @@
                       <div class="panel-body">
                         <div class="row">
                           <div class="col-md-12">
-                            <div class="pull-right" style="display: flex;">
+                            <div class="pull-right" style="display: flex; margin-bottom: 10px;">
                               <input type="file" name="" class="form-control" placeholder="Adjuntar Archivo">
                               <button
                                   type="button"
@@ -126,7 +126,11 @@
                                   BUSCAR <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
                               </button>
                             </div>
-                            <div style="height: 100px;"></div>
+                            <div style="">
+                              <div class="form-group">
+                                <textarea v-model="dataFrm" class="form-control"></textarea>
+                              </div>
+                            </div>
                           </div>
                           <div class="col-md-12">
                             <p>

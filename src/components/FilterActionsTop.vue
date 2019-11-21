@@ -2,12 +2,21 @@
   <div class="padding-to-20">
     <div class="row">
       <div class="col-md-3">
-        <p class="selected_companies"><span class="f-18">{{ selected_companies | numeral('0,0') }}</span> Empresas seleccionadas</p>
+        <p class="selected_companies">
+          <span class="f-20">{{ selected_companies | numeral('0,0') }}</span> Empresas seleccionadas
+        </p>
       </div>
       <div class="col-md-9">
         <div class="filter-actions-top_center">
+          <div class="visualizar">
+            <button class="btn btn-orange btn-lg btn-block">
+              <i class="fa fa-list-alt"></i> Visualizar <span class="hidden-xs hidden-sm">resultados</span>
+            </button>
+          </div>
           <div class="vaciar">
-            <button class="btn btn-primary">
+            <button class="btn btn-primary"
+              :disabled="applied_filters.length === 0" 
+              @click="emptyFilter">
               <i class="fa fa-trash"></i> Vaciar <span class="hidden-xs hidden-sm">búsqueda</span>
             </button>
           </div>
@@ -19,11 +28,6 @@
           <div class="historial">
             <button class="btn btn-primary">
               <i class="fa fa-history"></i> Historial
-            </button>
-          </div>
-          <div class="visualizar">
-            <button class="btn btn-primary btn-block">
-              <i class="fa fa-list-alt"></i> Visualizar <span class="hidden-xs hidden-sm">resultados</span>
             </button>
           </div>
         </div>
@@ -45,6 +49,7 @@
 
 <script>
   import { mapGetters } from 'vuex'
+  import swal from 'sweetalert2'
   export default {
     name: 'filter-actions-top',
     computed: mapGetters({
@@ -59,6 +64,25 @@
       resetFilter(filter) {
         this.$root.$emit('clean_filter', filter)
       },
+      emptyFilter(){
+        swal.fire({
+          icon: 'question',
+          title: 'Estas seguro?',
+          html: `deseas vaciar los filtros aplicados?`,
+          showCancelButton: true,
+          cancelButtonText: 'Cancelar',
+          cancelButtonColor: '#d9534f',
+          showConfirmButton: true,
+          confirmButtonColor: '#337ab7',
+          confirmButtonText: 'Si, seguro'
+        }).then((result) => {
+          if (result.value) {
+            this.applied_filters.forEach((item) => {
+              this.$root.$emit('clean_filter', item)
+            })
+          }
+        })
+      },
       showModalFilter(filter) {
         this.$root.$emit('show_modal_filter', filter)
       }
@@ -67,16 +91,21 @@
 </script>
 
 <style lang="scss" scoped>
-.f-18 { font-size: 18px; }
+.f-20 { font-size: 20px; }
 .padding-to-20 {
   padding-top: 20px;
 }
 p.selected_companies{
+  display: flex;
+  align-items: center;
   font-weight: bold;
+  .f-20 {
+    margin-right: 2px;
+  }
 }
 .filter-actions-top_center {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 2fr;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
   grid-auto-rows: minmax(auto, auto);
   div {
     padding: 0 5px;
@@ -115,7 +144,7 @@ p.selected_companies{
       button {
         width: auto;
         padding: 1px 4px;
-        margin: 0 2px;
+        margin: 0 5px;
       }
     }
   }

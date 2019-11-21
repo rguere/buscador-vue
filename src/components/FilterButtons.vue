@@ -144,7 +144,7 @@
 </template>
 
 <script>
-  import { handleScroll } from './../utils'
+  import { handleScroll, howAnimation } from './../utils'
   export default {
     name: 'filter-buttons',
     data() {
@@ -158,12 +158,7 @@
     },
     methods: {
       onDone (element) {
-        if (typeof element == 'object') {
-          element.classList.add("bounce-leave-active")
-          setTimeout(function () {
-            element.classList.remove("bounce-leave-active")
-          }, 1000)
-        }
+        howAnimation(element)
       }
     }
   }
@@ -211,6 +206,7 @@
   left: 0;
   top: 72px;
   width: 100%;
+  padding-bottom: 5px;
   z-index: 1;
   background: #ffffff;
   -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
@@ -229,13 +225,15 @@
   }
 
   .filter-btns  {
+    margin-bottom: 2px;
     background: #ffffff;
     transition:all 1s;
     display: flex;
     justify-content: space-between;
     a {
-      font-size: 10px;
-      padding: 4px;
+      font-size: 11px;
+      padding: 0;
+      flex: 1;
     }
   }
 
