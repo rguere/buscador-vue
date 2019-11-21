@@ -4,7 +4,10 @@ import * as types from '../mutation-types'
 const initialState = () => {
   return {
     form: {
-      selected_provinces: []
+      codigosPostales: [],
+      comunidades: [],
+      Provincias: [],
+      Localidades: []
     },
     applied_filters: [],
     selected_companies: 0,

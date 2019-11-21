@@ -8,7 +8,7 @@
     </div>
     <div class="panel-body">
       <div v-if="search.provincia_localidad && search.provincia_localidad.length != 0">
-        <div class="grid-4-columns-1fr" v-if="!areApplied">
+        <div class="grid-4-columns-1fr" v-if="!areApplied || !(form.Provincias && form.Provincias.length !== 0) || (form.Localidades && form.Localidades.length !== 0)">
           <div v-for="(item, key) in search.provincia_localidad" :key="key">
             <label class="custon-checkboxs">
               <input type="checkbox"
@@ -23,7 +23,7 @@
             </label>
           </div>
         </div>
-        <div class="selected_children" v-if="areApplied">
+        <div class="selected_children" v-if="areApplied && (form.Provincias && form.Provincias.length !== 0) || (form.Localidades && form.Localidades.length !== 0)">
           <ul class="grid-4-columns-1fr">
             <li v-for="(item, key) in selected_children" :key="key">
               <span class="name-checkbox">- {{ formatearLabel(item) }} </span>
@@ -159,7 +159,6 @@
     watch: {
       selected_provinces_localidad: function (newProvincesLocalidad) {
         this.selected_by_location = this.numberCompaniesSelected((this.isAllProvincesLocalidad(newProvincesLocalidad))? this.search.provincia_localidad : newProvincesLocalidad)
-        this.form.selected_provinces_localidad = this.selected_provinces_localidad
       },
       selected_by_location: function(newValue) {
       if (newValue === 0) this.selected_provinces_localidad = []
@@ -226,7 +225,8 @@
         if (this.selected_provinces_localidad && this.selected_provinces_localidad.length !== 0) {
           this.hideModal()
           this.loadingFrm = true
-          this.$store.dispatch('search/filtrarUbicacion', this.formatearDataPOST()).then((response) => {
+          this.formatearDataPOST()
+          this.$store.dispatch('search/filtrar', this.form).then((response) => {
             //this.options[0].children = (this.search && this.search.provincia_localidad) ? this.search.provincia_localidad : []
             this.updateNumberSelectedCompanies(response.cantidad)
             this.$store.dispatch('filters/addFilters', this.title)
@@ -239,7 +239,11 @@
       },
       clean () {
         this.selected_children = []
-        this.updateNumberSelectedCompanies(this.selected_companies - this.selected_by_location)
+        this.form.comunidades = []
+        this.form.Provincias = []
+        this.form.Localidades = []
+        let resta = this.selected_companies - this.selected_by_location
+        this.updateNumberSelectedCompanies((resta < 0)? 0: resta)
         this.selected_by_location = 0
         this.$store.dispatch('filters/removeFilters', this.title)
         this.areApplied = false
@@ -263,11 +267,6 @@
       return `${primero} (${arr.join(',')})`}
       },
       formatearDataPOST (){
-      let dataPOST = {
-        comunidades: [],
-        Provincias: [],
-        Localidades: []
-      }
       this.selected_children = []
       this.selected_provinces_localidad.forEach((item) => {
         let result = inArrayObjectTreeselect(this.search.provincia_localidad, item.id)
@@ -275,18 +274,18 @@
           let resultIdSplit = result.id.split("|")
           let level = resultIdSplit.length
           if (level === 1) {
-            dataPOST.comunidades.push(result.id); this.selected_children.push(result)
+            this.form.comunidades.push(result.id); this.selected_children.push(result)
           }else if (level === 2) {
-            dataPOST.Provincias.push(result.id)
+            this.form.Provincias.push(result.id)
             this.selected_children.push(result)
           }
           else if (level === 3) {
-            dataPOST.Localidades.push(result.id)
+            this.form.Localidades.push(result.id)
             this.selected_children.push(result)
           }
         }
         })
-        return dataPOST
+        return this.form
       }
     }
   }

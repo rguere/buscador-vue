@@ -51,7 +51,7 @@ export const actions = {
       })
     }
   },
-  async filtrarUbicacion({ commit }, filters) {
+  async filtrar({ commit }, filters) {
     try {
       commit(types.LOADING_SEARCH, {
         loading: true

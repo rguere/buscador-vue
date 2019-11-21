@@ -7,6 +7,9 @@
       </p>
     </div>
     <div class="panel-body">
+      <!-- <div class="form-group">
+        {{ form }}
+      </div> -->
       <div class="form-group" v-if="zip_codes && zip_codes.validos.length === 0">
         <textarea v-model="dataFrm" class="form-control"></textarea>
       </div>
@@ -43,10 +46,11 @@
           </button>
           <button
               v-if="zip_codes && zip_codes.validos.length !== 0 && !areApplied"
+              :disabled="selected_zip_codes.length === 0 || loadingApply"
               type="button"
               class="btn btn-success"
               @click="apply">
-                Aplicar <i :class="(loadingFrm)?'fa  fa-spinner fa-spin':'fa  fa-send'"></i>
+                Aplicar <i :class="(loadingApply)?'fa  fa-spinner fa-spin':'fa  fa-send'"></i>
             </button>
           <button
             type="button"
@@ -61,15 +65,15 @@
             type="button"
             v-if="zip_codes && zip_codes.validos.length === 0" 
             class="btn btn-info" @click="validateZipCodes" 
-            :disabled="dataFrm.length === 0 || loadingFrm">
-              BUSCAR <i :class="(loadingFrm)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
+            :disabled="dataFrm.length === 0 || loadingValidar">
+              BUSCAR <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
           </button>
           <button
             type="button"        
             v-if="zip_codes && zip_codes.validos.length !== 0"
-            class="btn btn-info" @click="resetZipCodes" 
-            :disabled="dataFrm.length === 0 || loadingFrm">
-              BUSCAR <i :class="(loadingFrm)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
+            class="btn btn-info" @click="clean" 
+            :disabled="dataFrm.length === 0 || loadingValidar">
+              BUSCAR <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
           </button>
         </div>
       </div>
@@ -88,10 +92,11 @@
                   <div>
                     <button
                         v-if="zip_codes && zip_codes.validos.length !== 0 && !areApplied"
+                        :disabled="selected_zip_codes.length === 0 || loadingApply"
                         type="button"
                         class="btn btn-success"
                         @click="apply">
-                          Aplicar <i :class="(loadingFrm)?'fa  fa-spinner fa-spin':'fa  fa-send'"></i>
+                          Aplicar <i :class="(loadingApply)?'fa  fa-spinner fa-spin':'fa  fa-send'"></i>
                       </button>
                     <button
                       type="button"
@@ -118,7 +123,7 @@
                               <button
                                   type="button"
                                 class="btn btn-info">
-                                  BUSCAR <i :class="(loadingFrm)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
+                                  BUSCAR <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
                               </button>
                             </div>
                             <div style="height: 100px;"></div>
@@ -155,7 +160,7 @@
                             <button
                               type="button"
                               class="btn btn-info pull-right">
-                                BUSCAR <i :class="(loadingFrm)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
+                                BUSCAR <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
                             </button>
                           </div>
                         </div>
@@ -192,12 +197,19 @@
 </template>
 
 <script>
+  import { mapGetters } from 'vuex'
   import $ from 'jquery'
   export default {
     name: 'filter-codigo-postal',
+    computed: mapGetters({
+      search: 'search/search',
+      loading: 'search/loading',
+      form: 'filters/form',
+      selected_companies: 'filters/selected_companies',
+    }),
     data: () => ({
       title: 'Código Postal',
-      loadingFrm: false,
+      loadingValidar: false,
       dataFrm: '',
       zip_codes: {
         validos: [],
@@ -205,9 +217,17 @@
       },
       selected_zip_codes: [],
       selected_by_zip_codes: 0,
-      areApplied: false
+      areApplied: false,
+      loadingApply: false
     }),
-    mounted() {},
+    mounted() {
+      this.$root.$on('clean_filter', (filter) => {
+        if (filter === this.title) { this.clean() }
+      })
+      this.$root.$on('show_modal_filter', (filter) => {
+        if (filter === this.title) { this.showModal() }
+      })
+    },
     watch: {
       selected_zip_codes: function (newSelectedZipCodes) {
         this.selected_by_zip_codes = this.numberSelectedZipCodes(newSelectedZipCodes)
@@ -215,26 +235,43 @@
     },
     methods: {
       validateZipCodes(){
-        this.loadingFrm = true  
+        this.loadingValidar = true  
         let sin_salto = this.dataFrm.replace(/(?:\r\n|\r|\n)/g, ',')
         this.$store.dispatch('search/validateZipCodes', sin_salto).then((response) => {
           this.zip_codes.validos = (response.validos)? response.validos: []
           this.zip_codes.invalidos = (response.invalidos)? response.invalidos: []
           this.selected_zip_codes = this.zip_codes.validos
-          this.loadingFrm = false
+          this.loadingValidar = false
         }).catch(() => {
-          this.loadingFrm = false
+          this.loadingValidar = false
           this.zip_codes = { validos: [], invalidos: [] }
           this.this.selected_zip_codes = 0
         })
       },
       apply () {
-        this.areApplied = true
+        if (this.selected_zip_codes && this.selected_zip_codes.length !== 0) {
+          this.hideModal()
+          this.loadingApply = true
+          this.form.codigosPostales = this.selected_zip_codes.map((item) => {
+            return item.id
+          })
+          this.$store.dispatch('search/filtrar', this.form).then((response) => {
+            this.$store.dispatch('filters/addFilters', this.title)
+            this.updateNumberSelectedCompanies(response.cantidad)
+            this.areApplied = true
+            this.loadingApply = false
+          }).catch(() => {
+            this.loadingApply = false
+          })
+        }
       },
-      clean () {
+      clean (){
+        this.$store.dispatch('filters/removeFilters', this.title)
+        let resta = this.selected_companies - this.selected_by_zip_codes
+        this.updateNumberSelectedCompanies((resta < 0)? 0: resta)
         this.areApplied = false
-      },
-      resetZipCodes (){
+        this.selected_by_zip_codes = 0
+        this.form.codigosPostales = []
         this.zip_codes = { validos: [], invalidos: [] }
       },
       numberSelectedZipCodes(newSelectedZipCodes) {
@@ -245,6 +282,11 @@
           })
         }
         return business_accountant
+      },
+      updateNumberSelectedCompanies(quantity){
+        this.$store.dispatch('filters/updateNumberSelectedCompanies', {
+          quantity
+        })
       },
       showModal () {
         $('#bv-modal-filter-codigo-postal').modal({ backdrop: 'static', show: true })
