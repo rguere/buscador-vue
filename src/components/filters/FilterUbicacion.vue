@@ -145,6 +145,7 @@
       loading: 'search/loading',
       form: 'filters/form',
       selected_companies: 'filters/selected_companies',
+      applied_filters: 'filters/applied_filters',
     }),
     data: () => ({
       title: 'Ubicación',
@@ -203,6 +204,7 @@
        * @param  {[number]} quantity [cantidad de empresas selecionadas]
        */
       updateNumberSelectedCompanies(quantity){
+        console.log(quantity, this.selected_provinces_localidad.length)
         this.$store.dispatch('filters/updateNumberSelectedCompanies', {
           quantity
         })
@@ -253,8 +255,14 @@
         this.form.comunidades = []
         this.form.Provincias = []
         this.form.Localidades = []
-        let resta = this.selected_companies - this.selected_by_location
-        this.updateNumberSelectedCompanies((resta < 0)? 0: resta)
+        if (this.applied_filters.length > 1) {
+          this.$store.dispatch('search/filtrar', this.form).then((response) => {
+            this.updateNumberSelectedCompanies(response.cantidad)
+          })
+        }else {
+          let resta = (this.selected_provinces_localidad.length === 0)? 0 : this.selected_companies - this.selected_by_location
+          this.updateNumberSelectedCompanies((resta < 0)? 0: resta)
+        }
         this.selected_by_location = 0
         this.$store.dispatch('filters/removeFilters', this.title)
         this.areApplied = false

@@ -11,10 +11,17 @@
         {{ form }}
       </div> -->
       <div class="form-group" v-if="zip_codes && zip_codes.validos.length === 0">
-        <textarea v-model="dataFrm" class="form-control"></textarea>
+        <textarea v-model="dataFrm" id="zip_codes" class="form-control"></textarea>
       </div>
       <div class="panel panel-default cd" v-if="zip_codes && zip_codes.validos.length !== 0">
         <div class="panel-body">
+          <button
+            type="button"        
+            v-if="zip_codes && zip_codes.validos.length !== 0"
+            class="btn btn-xs btn-info pull-right" @click="editSearch" 
+            :disabled="dataFrm.length === 0 || loadingValidar">
+              Editar búsqueda <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-edit'"></i>
+          </button>
           <div v-for="(item, key) in zip_codes.validos" :key="key">
               <label class="custon-checkboxs">
                   <input type="checkbox"
@@ -30,7 +37,7 @@
         </div>
       </div>
       <div class="form-group" v-if="zip_codes && zip_codes.invalidos.length !== 0">
-        <p>Códigos invalidos</p>
+        <p>Códigos no encontrados</p>
         <span v-for="(item, key) in zip_codes.invalidos" :key="key" class="label label-danger">{{ item }}</span>
         <hr>
       </div>
@@ -45,10 +52,10 @@
             Ver detalles <i class="fa fa-plus-circle"></i>
           </button>
           <button
-              v-if="zip_codes && zip_codes.validos.length !== 0 && !areApplied"
+              v-if="zip_codes && zip_codes.validos.length !== 0"
               :disabled="selected_zip_codes.length === 0 || loadingApply"
               type="button"
-              class="btn btn-success"
+              class="btn btn-success m-r-2"
               @click="apply">
                 Aplicar <i :class="(loadingApply)?'fa  fa-spinner fa-spin':'fa  fa-send'"></i>
             </button>
@@ -65,13 +72,6 @@
             type="button"
             v-if="zip_codes && zip_codes.validos.length === 0" 
             class="btn btn-info" @click="validateZipCodes" 
-            :disabled="dataFrm.length === 0 || loadingValidar">
-              BUSCAR <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
-          </button>
-          <button
-            type="button"        
-            v-if="zip_codes && zip_codes.validos.length !== 0"
-            class="btn btn-info" @click="clean" 
             :disabled="dataFrm.length === 0 || loadingValidar">
               BUSCAR <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
           </button>
@@ -210,6 +210,7 @@
       loading: 'search/loading',
       form: 'filters/form',
       selected_companies: 'filters/selected_companies',
+      applied_filters: 'filters/applied_filters',
     }),
     data: () => ({
       title: 'Código Postal',
@@ -271,13 +272,27 @@
         }
       },
       clean (){
-        this.$store.dispatch('filters/removeFilters', this.title)
-        let resta = this.selected_companies - this.selected_by_zip_codes
-        this.updateNumberSelectedCompanies((resta < 0)? 0: resta)
-        this.areApplied = false
-        this.selected_by_zip_codes = 0
         this.form.codigosPostales = []
         this.zip_codes = { validos: [], invalidos: [] }
+        if (this.applied_filters.length > 1) {
+          this.$store.dispatch('search/filtrar', this.form).then((response) => {
+            this.updateNumberSelectedCompanies(response.cantidad)
+          })
+        }else {
+          let resta = (this.selected_zip_codes.length === 0)? 0 : this.selected_companies - this.selected_by_zip_codes
+          this.updateNumberSelectedCompanies((resta < 0)? 0: resta)
+        }
+        this.selected_by_zip_codes = 0
+        this.$store.dispatch('filters/removeFilters', this.title)
+        this.areApplied = false
+      },
+      editSearch () {
+        this.form.codigosPostales = []
+        this.zip_codes = { validos: [], invalidos: [] }
+        this.selected_by_zip_codes = 0
+        this.$store.dispatch('filters/removeFilters', this.title)
+        this.areApplied = false
+        setTimeout(() => { document.getElementById('zip_codes').focus() }, 100)
       },
       numberSelectedZipCodes(newSelectedZipCodes) {
         let business_accountant = 0
