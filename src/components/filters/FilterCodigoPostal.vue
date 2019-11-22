@@ -63,7 +63,7 @@
             type="button"
             class="btn btn-info"
             v-if="areApplied"
-            @click="clean">
+            @click="confirmClean">
               Limpiar <i class="fa fa-undo"></i>
           </button>
         </div>
@@ -106,7 +106,7 @@
                 type="button"
                 class="btn btn-info"
                 v-if="areApplied"
-                @click="clean">
+                @click="confirmClean">
                   Limpiar <i class="fa fa-undo"></i>
               </button>
             </div>
@@ -203,6 +203,7 @@
 
 <script>
   import { mapGetters } from 'vuex'
+  import swal from 'sweetalert2'
   export default {
     name: 'filter-codigo-postal',
     computed: mapGetters({
@@ -270,6 +271,23 @@
             this.loadingApply = false
           })
         }
+      },
+      confirmClean () {
+        swal.fire({
+          icon: 'question',
+          title: 'Estas seguro?',
+          html: `deseas vaciar el filtro ${this.title}?`,
+          showCancelButton: true,
+          cancelButtonText: 'Cancelar',
+          cancelButtonColor: '#d9534f',
+          showConfirmButton: true,
+          confirmButtonColor: '#337ab7',
+          confirmButtonText: 'Si, seguro'
+        }).then((result) => {
+          if (result.value) {
+            this.clean()
+          }
+        })
       },
       clean (){
         this.form.codigosPostales = []

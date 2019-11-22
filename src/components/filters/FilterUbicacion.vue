@@ -46,7 +46,7 @@
               @click="apply">
                 Aplicar <i :class="(loadingFrm)?'fa  fa-spinner fa-spin':'fa  fa-send'"></i>
             </button>
-            <button type="button" class="btn btn-info" v-if="areApplied" @click="clean">Limpiar <i class="fa fa-undo"></i></button>
+            <button type="button" class="btn btn-info" v-if="areApplied" @click="confirmClean">Limpiar <i class="fa fa-undo"></i></button>
           </div>
           <p class="text-help">* Puede elegir más de una opción</p>
         </div>
@@ -68,7 +68,7 @@
               </div>
               <div>
                 <button type="button" class="btn btn-success" v-if="selected_provinces_localidad.length !== 0" @click="apply">Aplicar <i :class="(loadingFrm)?'fa  fa-spinner fa-spin':'fa  fa-send'"></i></button>
-                <button type="button" class="btn btn-info" v-if="areApplied" @click="clean">Limpiar <i class="fa fa-undo"></i></button>
+                <button type="button" class="btn btn-info" v-if="areApplied" @click="confirmClean">Limpiar <i class="fa fa-undo"></i></button>
               </div>
             </div>
             <div class="conten-flex-70-30" v-if="search.provincia_localidad && search.provincia_localidad.length != 0">
@@ -137,6 +137,7 @@
 
 <script>
   import { mapGetters } from 'vuex'
+  import swal from 'sweetalert2'
   import { inArrayObjectTreeselect, howAnimation } from './../../utils'
   export default {
     name: 'filter-ubicacion',
@@ -204,7 +205,6 @@
        * @param  {[number]} quantity [cantidad de empresas selecionadas]
        */
       updateNumberSelectedCompanies(quantity){
-        console.log(quantity, this.selected_provinces_localidad.length)
         this.$store.dispatch('filters/updateNumberSelectedCompanies', {
           quantity
         })
@@ -249,6 +249,23 @@
             this.loadingFrm = false
           })
         }
+      },
+      confirmClean () {
+        swal.fire({
+          icon: 'question',
+          title: 'Estas seguro?',
+          html: `deseas vaciar el filtro ${this.title}?`,
+          showCancelButton: true,
+          cancelButtonText: 'Cancelar',
+          cancelButtonColor: '#d9534f',
+          showConfirmButton: true,
+          confirmButtonColor: '#337ab7',
+          confirmButtonText: 'Si, seguro'
+        }).then((result) => {
+          if (result.value) {
+            this.clean()
+          }
+        })
       },
       clean () {
         this.selected_children = []

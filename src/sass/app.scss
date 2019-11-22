@@ -8,6 +8,9 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
 //Sweetalert2
 @import '~sweetalert2/src/sweetalert2';
+.swal2-container {
+  z-index: 2079!important;
+}
 //toastr
 @import '~toastr/toastr.scss';
 
@@ -23,8 +26,6 @@
   a img { display: none; }
 
 }
-
-
 
 .margin-top-20 {
   margin-top: 20px;

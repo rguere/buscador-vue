@@ -62,7 +62,21 @@
     mounted() {},
     methods: {
       resetFilter(filter) {
-        this.$root.$emit('clean_filter', filter)
+        swal.fire({
+          icon: 'question',
+          title: 'Estas seguro?',
+          html: `deseas vaciar el filtro ${filter}?`,
+          showCancelButton: true,
+          cancelButtonText: 'Cancelar',
+          cancelButtonColor: '#d9534f',
+          showConfirmButton: true,
+          confirmButtonColor: '#337ab7',
+          confirmButtonText: 'Si, seguro'
+        }).then((result) => {
+          if (result.value) {
+            this.$root.$emit('clean_filter', filter)
+          }
+        })
       },
       emptyFilter(){
         swal.fire({
