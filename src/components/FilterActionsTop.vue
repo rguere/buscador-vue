@@ -92,7 +92,7 @@
         }).then((result) => {
           if (result.value) {
             this.applied_filters.forEach((item) => {
-              this.$root.$emit('clean_filter', item)
+              this.$root.$emit('empty_filter', item)
             })
           }
         })

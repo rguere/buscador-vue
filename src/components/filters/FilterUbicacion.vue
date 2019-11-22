@@ -185,6 +185,9 @@
       this.$root.$on('show_modal_filter', (filter) => {
         if (filter === this.title) { this.showModal() }
       })
+      this.$root.$on('empty_filter', (filter) => {
+        if (filter === this.title) { this.emptyFilter() }
+      })
     },
     methods: {
       fetchSearch (){
@@ -280,6 +283,16 @@
           let resta = (this.selected_provinces_localidad.length === 0)? 0 : this.selected_companies - this.selected_by_location
           this.updateNumberSelectedCompanies((resta < 0)? 0: resta)
         }
+        this.selected_by_location = 0
+        this.$store.dispatch('filters/removeFilters', this.title)
+        this.areApplied = false
+      },
+      emptyFilter () {
+        this.selected_children = []
+        this.form.comunidades = []
+        this.form.Provincias = []
+        this.form.Localidades = []
+        this.updateNumberSelectedCompanies(0)
         this.selected_by_location = 0
         this.$store.dispatch('filters/removeFilters', this.title)
         this.areApplied = false

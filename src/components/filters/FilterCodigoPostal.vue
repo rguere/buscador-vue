@@ -234,6 +234,9 @@
       this.$root.$on('show_modal_filter', (filter) => {
         if (filter === this.title) { this.showModal() }
       })
+      this.$root.$on('empty_filter', (filter) => {
+        if (filter === this.title) { this.emptyFilter() }
+      })
     },
     watch: {
       selected_zip_codes: function (newSelectedZipCodes) {
@@ -300,6 +303,14 @@
           let resta = (this.selected_zip_codes.length === 0)? 0 : this.selected_companies - this.selected_by_zip_codes
           this.updateNumberSelectedCompanies((resta < 0)? 0: resta)
         }
+        this.selected_by_zip_codes = 0
+        this.$store.dispatch('filters/removeFilters', this.title)
+        this.areApplied = false
+      },
+      emptyFilter () {
+        this.form.codigosPostales = []
+        this.zip_codes = { validos: [], invalidos: [] }
+        this.updateNumberSelectedCompanies(0)
         this.selected_by_zip_codes = 0
         this.$store.dispatch('filters/removeFilters', this.title)
         this.areApplied = false
