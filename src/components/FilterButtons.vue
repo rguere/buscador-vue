@@ -9,132 +9,15 @@
             </span>
           </div>
           <div class="filter-btns">
-            <a href="#" 
+            <a 
+            v-for="(filter, key) in filters" :key="key"
+            href="#" 
             class="btn btn-default"
             v-scroll-to="{
-                el: '#filter_ubicacion',
-                offset: -175,
+                el: `#${filter.slug}`,
+                offset: -205,
                 onDone: onDone
-            }">
-              Ubicación
-            </a>
-            <a href="#" 
-            class="btn btn-default"
-            v-scroll-to="{
-                el: '#filter_antiguedad',
-                offset: -175,
-                onDone: onDone
-            }">
-              Antigüedad
-            </a>
-            <a href="#" 
-            class="btn btn-default"
-            v-scroll-to="{
-                el: '#filter_numero_de_empleados',
-                offset: -175,
-                onDone: onDone
-            }">
-              Número de empleados
-            </a>
-            <a href="#" 
-            class="btn btn-default"
-            v-scroll-to="{
-                el: '#filter_estado',
-                offset: -175,
-                onDone: onDone
-            }">
-              Estado
-            </a>
-            <a href="#" 
-            class="btn btn-default"
-            v-scroll-to="{
-                el: '#filter_tipo_de_cuentas',
-                offset: -175,
-                onDone: onDone
-            }">
-              Tipo de cuentas
-            </a>
-            <a href="#" 
-            class="btn btn-default"
-            v-scroll-to="{
-                el: '#filter_sector_actividad',
-                offset: -175,
-                onDone: onDone
-            }">
-              Sector/Actividad
-            </a>
-            <a href="#" 
-            class="btn btn-default"
-            v-scroll-to="{
-                el: '#filter_cargos',
-                offset: -175,
-                onDone: onDone
-            }">
-              Cargos
-            </a>
-            <a href="#" 
-            class="btn btn-default"
-            v-scroll-to="{
-                el: '#filter_codigo_postal',
-                offset: -175,
-                onDone: onDone
-            }">
-              Código Postal
-            </a>
-            <a href="#" 
-            class="btn btn-default"
-            v-scroll-to="{
-                el: '#filter_nombre_o_razon_social',
-                offset: -175,
-                onDone: onDone
-            }">
-              Nombre o razón social
-            </a>
-            <a href="#" 
-            class="btn btn-default"
-            v-scroll-to="{
-                el: '#filter_nif',
-                offset: -175,
-                onDone: onDone
-            }">
-              NIF
-            </a>
-            <a href="#" 
-            class="btn btn-default"
-            v-scroll-to="{
-                el: '#filter_anios_con_cuentas_disponibles',
-                offset: -175,
-                onDone: onDone
-            }">
-              Años con cuentas disponibles
-            </a>
-            <a href="#" 
-            class="btn btn-default"
-            v-scroll-to="{
-                el: '#filter_informacion_financiera',
-                offset: -175,
-                onDone: onDone
-            }">
-              Información Financiera
-            </a>
-            <a href="#" 
-            class="btn btn-default"
-            v-scroll-to="{
-                el: '#filter_auditores',
-                offset: -175,
-                onDone: onDone
-            }">
-              Auditores
-            </a>
-            <a href="#" 
-            class="btn btn-default"
-            v-scroll-to="{
-                el: '#filter_directivos_y_vinculaciones',
-                offset: -175,
-                onDone: onDone
-            }">
-              Directivos y Vinculaciones
-            </a>
+            }"><span>{{ filter.name }}</span></a>
           </div>
         </div>
         <filter-actions-top></filter-actions-top>
@@ -145,13 +28,29 @@
 
 <script>
   import { handleScroll, howAnimation } from './../utils'
+  import { mapGetters } from 'vuex'
+  import $ from 'jquery'
   export default {
     name: 'filter-buttons',
     data() {
       return {}
     },
+    computed: {
+      ...mapGetters({
+        applied_filters: 'filters/applied_filters',
+        filters: 'filters/filters',
+      }),
+    },
     mounted() {
       window.addEventListener('scroll', handleScroll); 
+    },
+    watch: {
+      applied_filters: function (newAppliedFilters) {
+        $('.filter-btns a').removeClass('active')
+        newAppliedFilters.forEach((filter) => {
+          this.activeFilter(filter)
+        })
+      }
     },
     destroyed () {
       window.removeEventListener('scroll', handleScroll);
@@ -159,6 +58,14 @@
     methods: {
       onDone (element) {
         howAnimation(element)
+      },
+      activeFilter(filter) {
+        let links = document.querySelectorAll('.filter-btns a')
+        links.forEach((item) => {
+          if(item.textContent.search(filter) !== -1) {
+            item.classList.add('active')
+          }
+        })
       }
     }
   }
@@ -195,7 +102,54 @@
   white-space: pre-wrap!important;
   justify-content: center;
   align-items: center;
+
+  box-sizing: inherit;
+  transition-property: all;
+  transition-duration: 0.6s;
+  transition-timing-function: ease;
+  overflow: hidden;
+  position: relative;
+
+  span {
+    z-index: 20;
+  }
+  
+  &::after {
+    background: #fff;
+    content: "";
+    height: 155px;
+    left: -75px;
+    opacity: 0.2;
+    position: absolute;
+    top: -50px;
+    transform: rotate(35deg);
+    transition: all 550ms cubic-bezier(0.19, 1, 0.22, 1);
+    width: 50px;
+    z-index: 0;
+  }
+  
+  &:hover {
+    border-color: #aaa;
+    color: #333;
+    
+    &:after {
+      left: 120%;
+      transition: all 550ms cubic-bezier(0.19, 1, 0.22, 1);
+    }
+  }
+
 }
+
+.filter-buttons .filter-btns a.active {
+  border-color: #aaa;
+  color: #333;
+  &:after {
+    left: 120%;
+    transition: all 550ms cubic-bezier(0.19, 1, 0.22, 1);
+  }
+}
+
+
 
 .min-height-210 {
   min-height: 185px;
