@@ -40,7 +40,7 @@ export const actions = {
       commit(types.LOADING_SEARCH, {
         loading: true
       })
-      const { data } = await axios.get('/test2')
+      const { data } = await axios.get('/buscador/resumen')
 
       commit(types.FETCH_SEARCH, {
         search: data
@@ -56,7 +56,7 @@ export const actions = {
       commit(types.LOADING_SEARCH, {
         loading: true
       })
-      const { data } = await axios.post('/filtrar', filters)
+      const { data } = await axios.post('/buscador/filtrar?resumen=false', filters)
 
       commit(types.LOADING_SEARCH, {
         loading: false
@@ -72,7 +72,7 @@ export const actions = {
   },
   async validateZipCodes({ commit }, zip_codes){
     try{
-      const { data } = await axios.post('/codigoPostal/validar', {lista: zip_codes})
+      const { data } = await axios.post('/buscador/codigoPostal/validar', {lista: zip_codes})
       return data
     } catch (e) {
      commit(types.LOADING_SEARCH, {
