@@ -42,7 +42,7 @@
             <button
               type="button"
               class="btn btn-success"
-              v-if="selected_provinces_localidad.length !== 0"
+              v-if="(selected_provinces_localidad.length !== 0 && !areApplied) || (selected_provinces_localidad.length !== 0 && reapply)"
               @click="apply">
                 Aplicar <i :class="(loadingFrm)?'fa  fa-spinner fa-spin':'fa  fa-send'"></i>
             </button>
@@ -160,6 +160,7 @@
         children: []
       }],
       areApplied: false,
+      reapply: false,
       showBtnApply: false,
       loadingFrm: false,
       modalVisible: false
@@ -247,6 +248,7 @@
             this.updateNumberSelectedCompanies(response.cantidad)
             this.$store.dispatch('filters/addFilters', this.title)
             this.areApplied = true
+            this.reapply = false
             this.loadingFrm = false
           }).catch(() => {
             this.loadingFrm = false
@@ -286,6 +288,7 @@
         this.selected_by_location = 0
         this.$store.dispatch('filters/removeFilters', this.title)
         this.areApplied = false
+        this.reapply = false
       },
       emptyFilter () {
         this.selected_children = []
@@ -296,8 +299,10 @@
         this.selected_by_location = 0
         this.$store.dispatch('filters/removeFilters', this.title)
         this.areApplied = false
+        this.reapply = false
       },
       handleChange () { //province, event
+        this.reapply = (this.areApplied)? true: this.areApplied
       },
       inputTreeselect () { //values
       },
