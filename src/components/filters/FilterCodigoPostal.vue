@@ -7,17 +7,14 @@
       </p>
     </div>
     <div class="panel-body">
-      <!-- <div class="form-group">
-        {{ form }}
-      </div> -->
-      <div class="form-group" v-if="zip_codes && zip_codes.validos.length === 0">
+      <div class="form-group" v-if="(zip_codes && zip_codes.validos.length === 0) || (search_edit)">
         <textarea v-model="dataFrm" id="zip_codes" class="form-control"></textarea>
       </div>
-      <div class="panel panel-default cd" v-if="zip_codes && zip_codes.validos.length !== 0">
+      <div class="panel panel-default cd" v-if="zip_codes && zip_codes.validos.length !== 0 && !search_edit">
         <div class="panel-body">
           <button
             type="button"        
-            v-if="zip_codes && zip_codes.validos.length !== 0"
+            v-if="zip_codes && zip_codes.validos.length !== 0 && !search_edit"
             class="btn btn-xs btn-info pull-right" @click="editSearch" 
             :disabled="dataFrm.length === 0 || loadingValidar">
               Editar búsqueda <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-edit'"></i>
@@ -36,9 +33,9 @@
           </div>
         </div>
       </div>
-      <div class="form-group" v-if="zip_codes && zip_codes.invalidos.length !== 0">
+      <div class="form-group" v-if="zip_codes && zip_codes.invalidos.length !== 0 && !search_edit">
         <p>Códigos no encontrados</p>
-        <span v-for="(item, key) in zip_codes.invalidos" :key="key" class="label label-danger">{{ item }}</span>
+        <span v-for="(item, key) in zip_codes.invalidos" :key="key" class="label label-danger label-no-encontrados">{{ item }}</span>
         <hr>
       </div>
       <div class="form-group">
@@ -52,7 +49,7 @@
             Ver detalles <i class="fa fa-plus-circle"></i>
           </button>
           <button
-              v-if="zip_codes && zip_codes.validos.length !== 0"
+              v-if="zip_codes && zip_codes.validos.length !== 0 && !search_edit"
               :disabled="selected_zip_codes.length === 0 || loadingApply"
               type="button"
               class="btn btn-success m-r-2"
@@ -70,7 +67,7 @@
         <div>
           <button
             type="button"
-            v-if="zip_codes && zip_codes.validos.length === 0" 
+            v-if="zip_codes && zip_codes.validos.length === 0 || search_edit" 
             class="btn btn-info" @click="validateZipCodes" 
             :disabled="dataFrm.length === 0 || loadingValidar">
               BUSCAR <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
@@ -125,8 +122,10 @@
                       <div class="pull-right" style="display: flex; margin-bottom: 10px;">
                         <input type="file" name="" class="form-control" placeholder="Adjuntar Archivo">
                         <button
-                            type="button"
-                          class="btn btn-info">
+                          type="button" 
+                          class="btn btn-info"
+                          @click="validateZipCodes" 
+                          :disabled="dataFrm.length === 0 || loadingValidar">
                             BUSCAR <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
                         </button>
                       </div>
@@ -153,21 +152,34 @@
                 <div class="panel-body">
                   <div class="row text-center">
                     <div class="col-md-4">
-                      <div class="form-group">
-                        <label class="control-label" for="inputDefault">Del código postal:</label>
-                        <input type="text" class="form-control" id="inputDefault">
+                      <div class="form-group" :class="{ 'has-error has-feedback': $v.from_zip_code.$error }">
+                        <label class="control-label" for="from_zip_code">Del código postal:</label>
+                        <input type="text"
+                          v-model.trim="$v.from_zip_code.$model"
+                          required
+                          class="form-control"
+                          name="from_zip_code"
+                          id="from_zip_code">
                       </div>
+                      <!-- <div class="error" v-if="!$v.from_zip_code.required">el campo es requerido</div> -->
                     </div>
                     <div class="col-md-4">
-                      <div class="form-group">
-                        <label class="control-label" for="inputDefault">Al código postal:</label>
-                        <input type="text" class="form-control" id="inputDefault">
+                      <div class="form-group" :class="{ 'has-error has-feedback': $v.to_zip_code.$error }">
+                        <label class="control-label" for="to_zip_code">Al código postal:</label>
+                        <input type="text"
+                          v-model.trim="$v.to_zip_code.$model"
+                          required
+                          class="form-control"
+                          name="to_zip_code"
+                          id="to_zip_code">
                       </div>
                     </div>
                     <div class="col-md-4">
                       <button
                         type="button"
-                        class="btn btn-info pull-right">
+                        class="btn btn-info pull-right"
+                        :disabled="$v.$invalid || loadingValidar"
+                        @click="validateRankSearchZipCodes">
                           BUSCAR <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
                       </button>
                     </div>
@@ -190,7 +202,23 @@
                   </p>
                 </div>
                 <div class="panel-body">
-                  <ul class="ul_selected_provinces_localidad"><li v-for="(item, key) in zip_codes.validos" :key="key">{{ item.label }} <span class="num-fil">({{ item.data | numeral('0,0') }})</span></li></ul>
+                  <ul class="ul_selected_provinces_localidad"  id="ul_selected_provinces_localidad">
+                    <li v-for="(item, key) in zip_codes.validos" :key="key">
+                      <label class="custon-checkboxs">
+                        <input type="checkbox"
+                          :name="`checkbox_list_${item.id}`"
+                          v-model="selected_zip_codes"
+                          @change="handleChangeList(item, $event)"
+                          :id="`checkbox_list_${item.id}`"
+                          :value="item">
+                        <span class="geekmark"></span>
+                        <span class="name-checkbox">{{ item.label }}</span>
+                        <span class="num-fil">
+                          ({{ item.data | numeral('0,0') }})
+                        </span>
+                      </label>
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>
@@ -203,6 +231,7 @@
 
 <script>
   import { mapGetters } from 'vuex'
+  import { required, between } from 'vuelidate/lib/validators'
   import swal from 'sweetalert2'
   export default {
     name: 'filter-codigo-postal',
@@ -216,6 +245,7 @@
     data: () => ({
       title: 'Código Postal',
       loadingValidar: false,
+      search_edit: true,
       dataFrm: '',
       zip_codes: {
         validos: [],
@@ -225,8 +255,22 @@
       selected_by_zip_codes: 0,
       areApplied: false,
       loadingApply: false,
-      modalVisible: false
+      modalVisible: false,
+      from_zip_code: '',
+      to_zip_code: '',
     }),
+    validations() {
+      return {
+        from_zip_code: {
+          required,
+          between: between(0, (this.to_zip_code)? this.to_zip_code: 9999999)
+        },
+        to_zip_code: {
+          required,
+          between: between((this.from_zip_code)? this.from_zip_code: 0, 9999999)
+        }
+      }
+    },
     mounted() {
       this.$root.$on('clean_filter', (filter) => {
         if (filter === this.title) { this.clean() }
@@ -252,6 +296,7 @@
           this.zip_codes.invalidos = (response.invalidos)? response.invalidos: []
           this.selected_zip_codes = this.zip_codes.validos
           this.loadingValidar = false
+          this.search_edit = false
         }).catch(() => {
           this.loadingValidar = false
           this.zip_codes = { validos: [], invalidos: [] }
@@ -262,6 +307,7 @@
         if (this.selected_zip_codes && this.selected_zip_codes.length !== 0) {
           this.hideModal()
           this.loadingApply = true
+          this.search_edit = false
           this.form.codigosPostales = this.selected_zip_codes.map((item) => {
             return item.id
           })
@@ -294,6 +340,9 @@
       },
       clean (){
         this.form.codigosPostales = []
+        this.dataFrm = ''
+        this.from_zip_code = ''
+        this.to_zip_code = ''
         this.zip_codes = { validos: [], invalidos: [] }
         if (this.applied_filters.length > 1) {
           this.$store.dispatch('search/filtrar', this.form).then((response) => {
@@ -306,6 +355,7 @@
         this.selected_by_zip_codes = 0
         this.$store.dispatch('filters/removeFilters', this.title)
         this.areApplied = false
+        this.search_edit = true
       },
       emptyFilter () {
         this.form.codigosPostales = []
@@ -314,13 +364,10 @@
         this.selected_by_zip_codes = 0
         this.$store.dispatch('filters/removeFilters', this.title)
         this.areApplied = false
+        this.search_edit = true
       },
       editSearch () {
-        this.form.codigosPostales = []
-        this.zip_codes = { validos: [], invalidos: [] }
-        this.selected_by_zip_codes = 0
-        this.$store.dispatch('filters/removeFilters', this.title)
-        this.areApplied = false
+        this.search_edit = true
         setTimeout(() => { document.getElementById('zip_codes').focus() }, 100)
       },
       numberSelectedZipCodes(newSelectedZipCodes) {
@@ -337,6 +384,35 @@
           quantity
         })
       },
+      handleChangeList (){ //province, event
+      },
+      validateRankSearchZipCodes () {//event
+        this.$v.$touch()
+        if (!this.$v.$invalid) {
+          let from_zip_code = parseInt(this.from_zip_code, 10),
+            to_zip_code = parseInt(this.to_zip_code, 10),
+            ranks = [];
+          let zero_on_left = (this.from_zip_code.charAt(0) === '0' || this.to_zip_code.charAt(0) === '0')? true: false
+          for (var i = from_zip_code; i <= to_zip_code; i++) {
+            ranks.push(`${(zero_on_left)?'0':''}${i}`)
+          }
+          let sin_salto = ranks.join(',')
+          this.dataFrm = sin_salto
+          this.loadingValidar = true
+          this.$store.dispatch('search/validateZipCodes', sin_salto).then((response) => {
+            this.zip_codes.validos = (response.validos)? response.validos: []
+            this.zip_codes.invalidos = (response.invalidos)? response.invalidos: []
+            this.selected_zip_codes = this.zip_codes.validos
+            this.loadingValidar = false
+            this.search_edit = false
+          }).catch(() => {
+            this.loadingValidar = false
+            this.zip_codes = { validos: [], invalidos: [] }
+            this.this.selected_zip_codes = 0
+          })
+
+        }
+      },
       showModal () {
         this.modalVisible = true
       },
@@ -351,6 +427,7 @@
 @import './../../sass/filters/filters';
 
 .label-danger, .m-r-2 { margin-right: 2px; }
+.label-no-encontrados {  display: inline-block!important; }
 
 @media (min-width: 750px) and (max-width: 1100px) {
   .flex-space-between-flex-end {

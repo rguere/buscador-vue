@@ -203,18 +203,20 @@ p.selected_companies{
     color: #0071BC !important;
     list-style: none;
     margin: 2.5px;
-    border: 1px solid #dddddd;
+    border: 2px solid #1b4973;
     color: #1b4973;
     border-radius: 4px;
     padding: 10px 15px;
-    background-color: #eeeeee;
+    background-color: #deebf7;
     font-size: 13px;
     transition: all 0.2s;
 
     span {
       position: relative;
-      color: #333;
+      background-color: red;
+      color: #fff;
       font-weight: bold;
+      border-radius: 50%;
       top: -10px;
       right: -15px;
       padding: 2px 4px;

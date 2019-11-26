@@ -131,6 +131,7 @@
   &:hover {
     border-color: #aaa;
     color: #333;
+    text-decoration: underline;
     
     &:after {
       left: 120%;
