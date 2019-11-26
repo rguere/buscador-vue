@@ -120,7 +120,21 @@
                     </p>
                   </div>
                   <div class="panel-body">
-                    <ul class="ul_selected_provinces_localidad"><li v-for="(item, key) in selected_provinces_localidad" :key="key">{{ item.label }} <span class="num-fil" v-if="item.id != 'all'">({{ item.data | numeral('0,0') }})</span></li></ul>
+                    <ul class="ul_selected_provinces_localidad" id="ul_selected_provinces_localidad">
+                      <li v-for="(item, key) in selected_provinces_localidad" :key="key">
+                        <label class="custon-checkboxs">
+                          <input type="checkbox"
+                            :name="`checkbox_list_${item.id}`"
+                            v-model="selected_provinces_localidad"
+                            @change="handleChangeList(item, $event)"
+                            :id="`checkbox_list_${item.id}`"
+                            :value="item">
+                          <span class="geekmark"></span>
+                          <span class="name-checkbox">{{ item.label }}</span>
+                          <span class="num-fil" v-if="item.id != 'all'">({{ item.data | numeral('0,0') }})</span>
+                        </label> 
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>
@@ -151,6 +165,7 @@
     data: () => ({
       title: 'Ubicación',
       selected_provinces_localidad: [],
+      list_provinces_localidad: [],
       selected_children: [],
       selected_by_location: 0,
       options: [{
@@ -303,6 +318,13 @@
       },
       handleChange () { //province, event
         this.reapply = (this.areApplied)? true: this.areApplied
+      },
+      handleChangeList (province, event){
+        event.preventDefault()
+        let checkboxs = document.querySelectorAll('#ul_selected_provinces_localidad input[type="checkbox"]')
+        checkboxs.forEach((item) => {
+          item.checked = true
+        })
       },
       inputTreeselect () { //values
       },
