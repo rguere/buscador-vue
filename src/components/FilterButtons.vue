@@ -158,9 +158,9 @@
 #filter-buttons.is-fixed {
   position: fixed;
   left: 0;
-  top: 72px;
+  top: 96px;
   width: 100%;
-  padding-bottom: 5px;
+  padding-bottom: 6px;
   z-index: 1;
   background: #ffffff;
   -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
@@ -179,7 +179,7 @@
   }
 
   .filter-btns  {
-    margin-bottom: 2px;
+    margin-bottom: 6px;
     background: #ffffff;
     transition:all 1s;
     display: flex;

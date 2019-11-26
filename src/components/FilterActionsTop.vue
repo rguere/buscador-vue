@@ -14,8 +14,7 @@
             </button>
           </div>
           <div class="vaciar">
-            <button class="btn btn-primary"
-              :disabled="applied_filters.length === 0" 
+            <button class="btn btn-primary" 
               @click="emptyFilter">
               <i class="fa fa-trash"></i> Vaciar <span class="hidden-xs hidden-sm">búsqueda</span>
             </button>
@@ -79,23 +78,31 @@
         })
       },
       emptyFilter(){
-        swal.fire({
-          icon: 'question',
-          title: 'Estas seguro?',
-          html: `deseas vaciar los filtros aplicados?`,
-          showCancelButton: true,
-          cancelButtonText: 'Cancelar',
-          cancelButtonColor: '#d9534f',
-          showConfirmButton: true,
-          confirmButtonColor: '#337ab7',
-          confirmButtonText: 'Si, seguro'
-        }).then((result) => {
-          if (result.value) {
-            this.applied_filters.forEach((item) => {
-              this.$root.$emit('empty_filter', item)
-            })
-          }
-        })
+        if (this.applied_filters.length !== 0) {
+          swal.fire({
+            icon: 'question',
+            title: 'Estas seguro?',
+            html: `deseas vaciar los filtros aplicados?`,
+            showCancelButton: true,
+            cancelButtonText: 'Cancelar',
+            cancelButtonColor: '#d9534f',
+            showConfirmButton: true,
+            confirmButtonColor: '#337ab7',
+            confirmButtonText: 'Si, seguro'
+          }).then((result) => {
+            if (result.value) {
+              this.applied_filters.forEach((item) => {
+                this.$root.$emit('empty_filter', item)
+              })
+            }
+          })
+        } else {
+          swal.fire(
+            'La búsqueda ya está vacía',
+            'Todavía no ha aplicado ningún filtro',
+            'info'
+          )
+        }
       },
       showModalFilter(filter) {
         this.$root.$emit('show_modal_filter', filter)
