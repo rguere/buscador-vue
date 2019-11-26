@@ -60,6 +60,9 @@ span.num-fil { color: #2196f3; }
 ul.ul_selected_provinces_localidad {
   height: 280px;
   overflow-y: scroll;
+  li {
+    margin-bottom: 5px;
+  }
 }
 .btns button { margin: 0 5px 0 0; }
 .btns-modal-header {
