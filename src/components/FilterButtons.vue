@@ -15,7 +15,7 @@
             class="btn btn-default"
             v-scroll-to="{
                 el: `#${filter.slug}`,
-                offset: -205,
+                offset: -230,
                 onDone: onDone
             }"><span>{{ filter.name }}</span></a>
           </div>
