@@ -46,7 +46,12 @@ export default {
   name: 'home',
   middleware: 'guest',
   layout: 'basic',
-
+  metaInfo () {
+    return { 
+      title: 'Home',
+      titleTemplate: `%s | Información GRATIS de Empresas Españolas` 
+    }
+  },
   data: () => ({
     form: {
       email: 'test@example.app',

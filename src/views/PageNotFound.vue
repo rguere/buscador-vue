@@ -17,6 +17,12 @@
 // @ is an alias to /src
 
 export default {
+  metaInfo () {
+    return { 
+      title: 'Page Not Found',
+      titleTemplate: `%s | Información GRATIS de Empresas Españolas` 
+    }
+  },
   name: 'page-not-found',
   layout: 'basic',
 }

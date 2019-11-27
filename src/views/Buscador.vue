@@ -15,6 +15,12 @@ export default {
   name: 'buscador',
   middleware: 'auth',
   layout: 'basic',
+  metaInfo () {
+    return { 
+      title: 'Buscador de empresas',
+      titleTemplate: `%s | Información GRATIS de Empresas Españolas` 
+    }
+  },
   computed: mapGetters({
     search: 'search/search',
     loading: 'search/loading',
