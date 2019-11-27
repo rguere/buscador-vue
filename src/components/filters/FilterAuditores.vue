@@ -6,7 +6,7 @@
             </p>
         </div>
         <div class="panel-body">
-            <div class="grid-4-columns-1fr" v-if="search.auditor && search.auditor.length > 0">
+            <div class="grid-3-columns-1fr" v-if="search.auditor && search.auditor.length > 0">
                 <div v-for="(item, key) in search.auditor" :key="key">
                     <label class="custon-checkboxs">
                         <input type="checkbox" name="">
