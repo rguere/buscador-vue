@@ -415,9 +415,11 @@
       },
       showModal () {
         this.modalVisible = true
+        this.$v.$reset()
       },
       hideModal () {
         this.modalVisible = false
+        this.$v.$reset()
       },
     }
   }
