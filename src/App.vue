@@ -1,16 +1,15 @@
 <template>
   <div id="app">
-    <menu-infocif></menu-infocif>
     <router-view />
   </div>
 </template>
 
 <script> 
-  import MenuInfocif from '@/components/MenuInfocif'
+  //import MenuInfocif from '@/components/MenuInfocif'
   export default {
-    components: {
+    /*components: {
       MenuInfocif
-    }
+    }*/
   }
 </script>
 

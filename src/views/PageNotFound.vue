@@ -18,6 +18,7 @@
 
 export default {
   name: 'page-not-found',
+  layout: 'basic',
 }
 </script>
 

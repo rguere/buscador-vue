@@ -47,9 +47,15 @@
           </div>
           <div class="sb-toggle login-header navbar-right" style="float: right">
 
-            <div>
-              <span class="glyphicon glyphicon-user"></span>
-              <span class="hidden-xs hidden-sm">Iniciar sesión</span>
+            <div class="hidden-xs hidden-sm">
+              <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="download" aria-expanded="false"> <span class="glyphicon glyphicon-user"></span> {{ user.username }} <span class="caret"></span></a>
+                <ul class="dropdown-menu" aria-labelledby="download">
+                  <li>
+                    <a href="#" @click.prevent="logout">Cerrar sesión</a>
+                  </li>
+                </ul>
+              </li>
             </div>
 
           </div>
@@ -115,10 +121,10 @@
           <img src="./../assets/images/icono-informes-comerciales-infocif.png" class="alignmiddle" alt="Informes de Empresas">
           Informes <span class="hidden-xs hidden-sm hidden-md ">de empresas</span>
         </a>
-        <a href="http://www.infocif.es/informes/" class="btn btn-noborder" role="button" title="Informes de Empresas">
+        <router-link to="/buscador" class="btn btn-noborder" role="button" title="Buscardor de Empresas">
           <!-- <img src="./../assets/images/buscador_de_empresas.png" style="width: 35px; height: 35px;" class="alignmiddle" alt="Informes de Empresas"> -->
           Buscardor <span class="hidden-xs hidden-sm hidden-md ">de empresas</span>
-        </a>
+        </router-link>
         <a href="http://www.infocif.es/ranking/ventas-empresas/espana" class="btn btn-noborder" role="button" title="Ranking de empresas">
           <img src="./../assets/images/icono-ranking-empresas-infocif.png" class="alignmiddle" alt="Ranking de Empresas Infocif">
           Ranking <span class="hidden-xs hidden-sm hidden-md ">de empresas</span>
@@ -149,12 +155,24 @@
 </template>
 <script>
   import $ from 'jquery'
+  import { mapGetters } from 'vuex'
   export default {
     name: 'menu-infocif',
-    mounted() {},
+    computed: mapGetters({
+      user: 'auth/user'
+    }),
+    mounted() {
+    },
     methods: {
       showSlidebar(){
         $('.sb-slidebar').toggleClass('show-slidebar', 300, "easeOutSine")   
+      },
+      async logout () {
+        // Log out the user.
+        await this.$store.dispatch('auth/logout')
+
+        // Redirect to home.
+        this.$router.push({ name: 'home' })
       }
     }
   }
@@ -167,5 +185,8 @@
   .sb-slidebar.show-slidebar {
     margin-right: 0!important;
     transition:all 1s;
+  }
+  .dropdown-menu a {
+    color: #333!important;
   }
 </style>
