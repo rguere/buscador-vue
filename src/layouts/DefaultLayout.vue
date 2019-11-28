@@ -8,7 +8,7 @@
 <script> 
   import MenuInfocif from '@/components/MenuInfocif'
   export default {
-    name: 'MainLayout',
+    name: 'DefaultLayout',
     components: {
       MenuInfocif
     }
