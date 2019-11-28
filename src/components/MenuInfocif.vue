@@ -49,7 +49,7 @@
 
             <div class="hidden-xs hidden-sm">
               <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="download" aria-expanded="false"> <span class="glyphicon glyphicon-user"></span> {{ user.username }} <span class="caret"></span></a>
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="download" aria-expanded="false"> <span class="glyphicon glyphicon-user"></span> {{ (user.username)? user.username: 'user' }} <span class="caret"></span></a>
                 <ul class="dropdown-menu" aria-labelledby="download">
                   <li>
                     <a href="#" @click.prevent="logout">Cerrar sesión</a>
