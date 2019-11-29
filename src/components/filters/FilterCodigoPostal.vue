@@ -231,6 +231,9 @@
                       </label>
                     </li>
                   </ul>
+                  <p>Códigos no encontrados</p>
+                  <span v-for="(item, key) in zip_codes.invalidos" :key="key" class="label label-danger label-no-encontrados">{{ item }}</span>
+                  <hr>
                 </div>
               </div>
             </div>
@@ -427,11 +430,20 @@
 
         }
       },
-      async uploadFileZipCodes (file) {
+      uploadFileZipCodes (file) {
         if (file) {
           this.loadingFile = true
-          await this.$store.dispatch('search/validateZipCodesFile', file)
-          this.loadingFile = false
+          this.$store.dispatch('search/validateZipCodesFile', file).then((response) => {
+            this.zip_codes.validos = (response.validos)? response.validos: []
+            this.zip_codes.invalidos = (response.invalidos)? response.invalidos: []
+            this.selected_zip_codes = this.zip_codes.validos
+            this.loadingFile = false
+            this.search_edit = false
+          }).catch(() => {
+            this.loadingFile = false
+            this.zip_codes = { validos: [], invalidos: [] }
+            this.this.selected_zip_codes = 0
+          })
         }
         return false
       },

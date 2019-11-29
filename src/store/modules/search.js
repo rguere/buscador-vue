@@ -83,7 +83,6 @@ export const actions = {
   async validateZipCodesFile({ commit }, file) {
     try{
       var formData = new FormData();
-      console.log("file:" + file)
       formData.append("file", file);
       const { data } = await axios.post('/buscador/codigoPostal/archivo', formData, {
         headers: {
