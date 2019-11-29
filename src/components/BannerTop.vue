@@ -16,7 +16,7 @@
                   offset: -100,
               }: {
                 el: 'body'
-              }" class="nav-toggle2 leermas cp db mt10 tipo_link pl15"> {{(show)? 'Leer menos' : 'Leer más...'}} </span>
+              }" class="nav-toggle2 leermas cp db tipo_link pl15"> {{(show)? 'Leer menos' : 'Leer más...'}} </span>
 
       </div>
       <div class="cb"></div>
@@ -74,5 +74,8 @@
     .padding-30 {
       padding: 20px 15px 5px 15px;
     }
+  }
+  .leermas {
+    margin: 0;
   }
 </style>
