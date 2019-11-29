@@ -83,8 +83,9 @@ export const actions = {
   async validateZipCodesFile({ commit }, file) {
     try{
       var formData = new FormData();
-      formData.append("image", file);
-      const { data } = await axios.post('/buscador/codigoPostal/archivo', { formData }, {
+      console.log("file:" + file)
+      formData.append("file", file);
+      const { data } = await axios.post('/buscador/codigoPostal/archivo', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
