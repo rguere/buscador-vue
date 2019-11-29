@@ -1,11 +1,9 @@
 import Vue from 'vue'
 
 import MenuInfocif from './MenuInfocif.vue'
-import FilterButtons from './FilterButtons.vue'
-import FilterActionsTop from './FilterActionsTop.vue'
 import FilterListCheckboxs from './FilterListCheckboxs.vue'
 import BannerTop from './BannerTop.vue'
-
+import FilterButtons from './FilterButtons.vue'
 
 import FilterUbicacion from './filters/FilterUbicacion.vue'
 import FilterCodigoPostal from './filters/FilterCodigoPostal.vue'
@@ -24,8 +22,6 @@ import FilterAniosCuentasDisponibles from './filters/FilterAniosCuentasDisponibl
 
 [
   MenuInfocif,
-  FilterButtons,
-  FilterActionsTop,
   FilterListCheckboxs,
   BannerTop,
   FilterUbicacion,
@@ -42,6 +38,7 @@ import FilterAniosCuentasDisponibles from './filters/FilterAniosCuentasDisponibl
   FilterAuditores,
   FilterInformacionFinanciera,
   FilterAniosCuentasDisponibles,
+  FilterButtons,
 ].forEach(Component => {
   Vue.component(Component.name, Component)
 })

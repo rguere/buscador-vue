@@ -14,59 +14,73 @@ const initialState = () => {
     filters: [
       {
         name: "Ubicación",
-        slug: "filter_ubicacion"
+        slug: "filter_ubicacion",
+        apply: false,
       },
       {
         name: "Antigüedad",
-        slug: "filter_antiguedad"
+        slug: "filter_antiguedad",
+        apply: false,
       },
       {
         name: "Número de empleados",
-        slug: "filter_numero_de_empleados"
+        slug: "filter_numero_de_empleados",
+        apply: false,
       },
       {
         name: "Estado",
-        slug: "filter_estado"
+        slug: "filter_estado",
+        apply: false,
       },
       {
         name: "Tipo de cuentas",
-        slug: "filter_tipo_de_cuentas"
+        slug: "filter_tipo_de_cuentas",
+        apply: false,
       },
       {
         name: "Sector/Actividad",
-        slug: "filter_sector_actividad"
+        slug: "filter_sector_actividad",
+        apply: false,
       },
       {
         name: "Cargos",
-        slug: "filter_cargos"
+        slug: "filter_cargos",
+        apply: false,
       },
       {
         name: "Código Postal",
-        slug: "filter_codigo_postal"
+        slug: "filter_codigo_postal",
+        apply: false,
       },
       {
         name: "Nombre o razón social",
-        slug: "filter_nombre_o_razon_social"
+        slug: "filter_nombre_o_razon_social",
+        apply: false,
       },
       {
         name: "NIF",
-        slug: "filter_nif"
+        slug: "filter_nif",
+        apply: false,
       },
       {
         name: "Años con cuentas disponibles",
-        slug: "filter_anios_con_cuentas_disponibles"
+        slug: "filter_anios_con_cuentas_disponibles",
+        apply: false,
       },
       {
         name: "Información Financiera",
-        slug: "filter_informacion_financiera"
+        slug: "filter_informacion_financiera",
+        apply: false,
       },
       {
         name: "Auditores",
-        slug: "filter_auditores"
+        slug: "filter_auditores",
+        apply: false,
       },
       {
         name: "Directivos y Vinculaciones",
-        slug: "filter_directivos_y_vinculaciones"
+        slug: "filter_directivos_y_vinculaciones",
+        apply: false,
       }
     ]
   }
@@ -93,10 +107,18 @@ export const mutations = {
 
   [types.ADD_FILTER](state, { filter }) {
     state.applied_filters.push(filter)
+    state.filters = state.filters.map((elem) => {
+      if (elem.name === filter) { elem.apply = true }
+      return elem;
+    })
   },
   
   [types.REMOVE_FILTER](state, { filter }) {
     state.applied_filters = state.applied_filters.filter(_filter => _filter !== filter)
+    state.filters = state.filters.map((elem) => {
+      if (elem.name === filter) { elem.apply = false }
+      return elem;
+    })
   },
 
   [types.SET_SELECTED_COMPANIES](state, { quantity }) {

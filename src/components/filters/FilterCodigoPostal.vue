@@ -119,8 +119,20 @@
                 <div class="panel-body">
                   <div class="row">
                     <div class="col-md-12">
-                      <div class="pull-right" style="display: flex; margin-bottom: 10px;">
-                        <input type="file" name="" class="form-control" placeholder="Adjuntar Archivo">
+                      <div class="attach-file">
+                        <el-upload
+                          :disabled="loadingFile"
+                          action=""
+                          accept=".txt"
+                          :show-file-list="false"
+                          :before-upload="uploadFileZipCodes">
+                          <button 
+                            class="btn btn-success"
+                            :disabled="loadingFile">
+                            <i :class="(loadingFile)?'fa fa-spinner fa-spin': 'fa fa-paperclip'"></i>
+                            {{(loadingFile)? 'Cargando archivo ' : 'Adjuntar Archivo'}}
+                          </button>
+                        </el-upload>
                         <button
                           type="button" 
                           class="btn btn-info"
@@ -258,6 +270,8 @@
       modalVisible: false,
       from_zip_code: '',
       to_zip_code: '',
+      loadingFile: false,
+      file: {},
     }),
     validations() {
       return {
@@ -413,6 +427,14 @@
 
         }
       },
+      async uploadFileZipCodes (file) {
+        if (file) {
+          this.loadingFile = true
+          await this.$store.dispatch('search/validateZipCodesFile', file)
+          this.loadingFile = false
+        }
+        return false
+      },
       showModal () {
         this.modalVisible = true
         this.$v.$reset()
@@ -430,6 +452,14 @@
 
 .label-danger, .m-r-2 { margin-right: 2px; }
 .label-no-encontrados {  display: inline-block!important; }
+
+.attach-file > div {
+  margin-right: 5px;
+}
+
+.attach-file {
+  display: flex; justify-content: flex-end; align-items: flex-start; margin-bottom: 10px;
+}
 
 @media (min-width: 750px) and (max-width: 1100px) {
   .flex-space-between-flex-end {

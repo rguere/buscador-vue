@@ -79,5 +79,21 @@ export const actions = {
         loading: false
       })
     }
+  },
+  async validateZipCodesFile({ commit }, file) {
+    try{
+      var formData = new FormData();
+      formData.append("image", file);
+      const { data } = await axios.post('/buscador/codigoPostal/archivo', { formData }, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+      return data
+    } catch (e) {
+     commit(types.LOADING_SEARCH, {
+        loading: false
+      })
+    }
   }
 }

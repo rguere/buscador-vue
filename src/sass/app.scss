@@ -14,16 +14,6 @@
 @import 'transitions';
 /* @import 'estilosres.css'; */
 
-.wrap-menu.hiden-img {
-
-  /* .btn-group-justified .btn {
-    padding: 4px 0!important;
-  }
-  
-  a img { display: none; } */
-
-}
-
 .margin-top-20 {
   margin-top: 20px;
 }
@@ -140,20 +130,16 @@
   border-color: #d66d03; 
 }
 
-
-.tags-type-textarea {
-  .tags-input-wrapper-default {
-    min-height: 100px;
-    align-items: flex-start;
-    cursor: text;
-  }
-  .tags-input-badge {
-    padding: 8px 0.4em;
-  }
-}
-
 .vue-treeselect__label {
   font-weight: 100!important;
+}
+
+.el-upload {
+  input[type="file"] {
+    width: 0;
+    height: 0;
+    opacity: 0;
+  }
 }
 
 @media (max-width: 950px) {

@@ -17,6 +17,7 @@
 // @ is an alias to /src
 
 export default {
+	/*middleware: 'guest',*/
   metaInfo () {
     return { 
       title: 'Page Not Found',

@@ -12,7 +12,7 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'buscador',
-  middleware: 'auth',
+  /*middleware: 'auth',*/
   layout: 'basic',
   metaInfo () {
     return { 
