@@ -187,7 +187,7 @@
 				padding: 2px 4px;
 				font-size: 11px;
 				font-weight: 100;
-				margin: 3px -3px;
+				margin: 5px -5px;
 				cursor: pointer;
 			}
 		}
