@@ -91,8 +91,10 @@ export const handleScroll = () => {
     let top = element.offsetTop
     if (!(top >= window.pageYOffset)) {
       element.classList.add('is-fixed')
+      element.classList.add('container')
     }else {
       element.classList.remove('is-fixed')
+      element.classList.remove('container')
     }
 } 
 
