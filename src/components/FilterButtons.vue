@@ -1,61 +1,63 @@
 <template>
-	<div class="panel panel-default cd margin-top-10">
-		<div class="panel-body min-height-200">
+	<div class="panel panel-default cd min-height-200">
+		<div class="panel-body">
 			<div id="filter-buttons">
-				<div class="row">
-					<div class="col-md-4"></div>
-					<div class="col-md-8">
-						<p class="filter-buttons_description text-center">¡Incorpore a sus búsqueda tantos filtros como quiera, dentro de nuestras múltiples posibilidades!</p>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-4">
-						<button
-							:disabled="applied_filters.length === 0"
-							class="btn btn-orange btn-lg btn-block">
-							<i class="fa fa-list-alt"></i>
-							Visualizar
-							<span class="hidden-xs hidden-sm">resultados</span>
-						</button>
-						<h3 class="selected_companies">
-							<span class="f-20">{{ selected_companies | numeral('0,0') }}</span>
-							Empresas seleccionadas
-						</h3>
-					</div>
-					<div class="col-md-8">
-						<div class="filter-btns">
-							<div v-for="(filter, key) in filters" :key="key">
-								<a href="" 
-									class="btn btn-default"
-									:class="(filter.apply)? 'active': ''"
-									v-scroll-to="{
-										el: `#${filter.slug}`,
-										offset: -250,
-										onDone: onDone
-									}">
-									{{ filter.name }}
-								</a>
-								<span
-									class="fa fa-close"
-									v-if="filter.apply"
-									v-on:click.stop="resetFilter(filter)"></span>
-							</div>
+				<div class="my_container">
+					<div class="row">
+						<div class="col-md-4"></div>
+						<div class="col-md-8">
+							<p class="filter-buttons_description text-center">¡Incorpore a sus búsqueda tantos filtros como quiera, dentro de nuestras múltiples posibilidades!</p>
 						</div>
-						<div class="actions-btns">
+					</div>
+					<div class="row">
+						<div class="col-md-4">
 							<button
-								class="btn btn-primary"
 								:disabled="applied_filters.length === 0"
-								@click="emptyFilter">
-								<i class="fa fa-trash"></i> Vaciar <span class="hidden-xs hidden-sm"> resultados</span>
+								class="btn btn-orange btn-lg btn-block">
+								<i class="fa fa-list-alt"></i>
+								Visualizar
+								<span class="hidden-xs hidden-sm">resultados</span>
 							</button>
-							<button
-								class="btn btn-primary"
-								:disabled="applied_filters.length === 0">
-								<i class="fa fa-save"></i> Guardar <span class="hidden-xs hidden-sm"> búsqueda</span>
-							</button>
-							<button class="btn btn-primary">
-								<i class="fa fa-history"></i> Historial
-							</button>
+							<h3 class="selected_companies">
+								<span class="f-20">{{ selected_companies | numeral('0,0') }}</span>
+								Empresas seleccionadas
+							</h3>
+						</div>
+						<div class="col-md-8">
+							<div class="filter-btns">
+								<div v-for="(filter, key) in filters" :key="key">
+									<a href="" 
+										class="btn btn-default"
+										:class="(filter.apply)? 'active': ''"
+										v-scroll-to="{
+											el: `#${filter.slug}`,
+											offset: -250,
+											onDone: onDone
+										}">
+										{{ filter.name }}
+									</a>
+									<span
+										class="fa fa-close"
+										v-if="filter.apply"
+										v-on:click.stop="resetFilter(filter)"></span>
+								</div>
+							</div>
+							<div class="actions-btns">
+								<button
+									class="btn btn-primary"
+									:disabled="applied_filters.length === 0"
+									@click="emptyFilter">
+									<i class="fa fa-trash"></i> Vaciar <span class="hidden-xs hidden-sm"> resultados</span>
+								</button>
+								<button
+									class="btn btn-primary"
+									:disabled="applied_filters.length === 0">
+									<i class="fa fa-save"></i> Guardar <span class="hidden-xs hidden-sm"> búsqueda</span>
+								</button>
+								<button class="btn btn-primary">
+									<i class="fa fa-history"></i> Historial
+								</button>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -215,5 +217,6 @@
 	}
 	.min-height-200 {
 		min-height: 200px;
+		margin-top: 20px;
 	}
 </style>
