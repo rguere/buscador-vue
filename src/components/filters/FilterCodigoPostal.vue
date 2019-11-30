@@ -231,9 +231,11 @@
                       </label>
                     </li>
                   </ul>
-                  <p>Códigos no encontrados</p>
-                  <span v-for="(item, key) in zip_codes.invalidos" :key="key" class="label label-danger label-no-encontrados">{{ item }}</span>
-                  <hr>
+                  <div class="form-group" v-if="zip_codes && zip_codes.invalidos.length !== 0 && !search_edit">
+                    <p>Códigos no encontrados</p>
+                    <span v-for="(item, key) in zip_codes.invalidos" :key="key" class="label label-danger label-no-encontrados">{{ item }}</span>
+                    <hr>
+                  </div>
                 </div>
               </div>
             </div>
