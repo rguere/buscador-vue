@@ -47,10 +47,10 @@
           </div>
           <div class="sb-toggle login-header navbar-right" style="float: right">
 
-            <div class="hidden-xs hidden-sm">
+            <a class="hidden-xs hidden-sm" href="http://www.infocif.es/gestion/gestion-acceso.asp">
               <span class="glyphicon glyphicon-user"></span>
               <span class="hidden-xs hidden-sm">Iniciar sesión</span>
-            </div>
+            </a>
 
           </div>
           <div class="sb-toggle search-header navbar-right hidden-sm hidden-md hidden-lg" style="float: right">
@@ -85,23 +85,23 @@
     <div class="sb-slidebar sb-right sb-style-overlay sb-active">
       <ul class="list-unstyled">
         <li class="sb-close" @click="showSlidebar"><span><i class="glyphicon glyphicon glyphicon-minus"></i> Cerrar</span></li>
-        <li><span class="text-left"><i class="fa fa-chevron-left"></i> Informes Comerciales</span></li>
-        <li><span class="text-left"><i class="fa fa-chevron-left"></i> Ranking empresas</span></li>
-        <li><span><i class="fa fa-chevron-left"></i> Servicios</span>
+        <li><a href="http://www.infocif.es/informes/" class="text-left"><i class="fa fa-chevron-left"></i> Informes Comerciales</a></li>
+        <li><a href="http://www.infocif.es/ranking/ventas-empresas/espana" class="text-left"><i class="fa fa-chevron-left"></i> Ranking empresas</a></li>
+        <li><a href="http://www.infocif.es/servicios/"><i class="fa fa-chevron-left"></i> Servicios</a>
           <ul>
-            <li><span> Tarificador descuento de pagarés</span></li>
-            <li><span> Empresas nuevas</span></li>
-            <li><span> Registro Mercantil</span></li>
-            <li><span> Calculadora IBAN</span></li>
-            <li><span> Ranking concursal</span></li>
+            <li><a href="http://www.infocif.es/servicios/calcula-descuento-de-pagares.asp"> Tarificador descuento de pagarés</a></li>
+            <li><a href="http://www.infocif.es/empresas-nuevas/espana.asp"> Empresas nuevas</a></li>
+            <li><a href="http://www.infocif.es/registro-mercantil"> Registro Mercantil</a></li>
+            <li><a href="http://www.infocif.es/servicios/calcular-iban"> Calculadora IBAN</a></li>
+            <li><a href="http://www.infocif.es/ranking/administradores-concursales.asp"> Ranking concursal</a></li>
           </ul>
         </li>
-        <li><span><i class="fa fa-chevron-left"></i> Licitaciones</span></li>
-        <li><span><i class="fa fa-chevron-left"></i> Noticias</span></li>
+        <li><a href="http://www.infocif.es/licitaciones/"><i class="fa fa-chevron-left"></i> Licitaciones</a></li>
+        <li><a href="http://noticias.infocif.es"><i class="fa fa-chevron-left"></i> Noticias</a></li>
 
-        <li><span><i class="fa fa-chevron-left"></i> Opiniones</span></li>
+        <li><a href="http://www.infocif.es/opiniones-empresas/"><i class="fa fa-chevron-left"></i> Opiniones</a></li>
 
-        <li><span><i class="fa fa-chevron-left"></i> Iniciar sesión</span></li>
+        <li><a href="http://www.infocif.es/gestion/gestion-acceso.asp"><i class="fa fa-chevron-left"></i> Iniciar sesión</a></li>
 
       </ul>
     </div>
@@ -183,4 +183,5 @@
   .dropdown-menu a {
     color: #333!important;
   }
+  a:hover { text-decoration: none; }
 </style>
