@@ -142,6 +142,22 @@
   }
 }
 
+.bg-g {
+  background-color: #aaa;
+  margin: 5px 0;
+  color: #fff;
+  padding: 2px 5px;
+  label.custon-checkboxs {
+    margin: 0;
+    font-size: 12px;
+    span.title {
+      i {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
 @media (max-width: 950px) {
 
   .grid-5-columns-1fr {

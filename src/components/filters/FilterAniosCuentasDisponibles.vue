@@ -76,19 +76,4 @@
 
 <style lang="scss" scoped>
   @import './../../sass/filters/filters';
-  .bg-g {
-    background-color: #aaa;
-    margin: 5px 0;
-    color: #fff;
-    padding: 2px 5px;
-    label.custon-checkboxs {
-      margin: 0;
-      font-size: 12px;
-      span.title {
-        i {
-          text-decoration: underline;
-        }
-      }
-    }
-  }
 </style>
