@@ -115,7 +115,7 @@
           <img src="./../assets/images/icono-informes-comerciales-infocif.png" class="alignmiddle" alt="Informes de Empresas">
           Informes <span class="hidden-xs hidden-sm hidden-md ">de empresas</span>
         </a>
-        <router-link to="/buscador" class="btn btn-noborder" role="button" title="Buscardor de Empresas">
+        <router-link to="/" class="btn btn-noborder" role="button" title="Buscardor de Empresas">
           <!-- <img src="./../assets/images/buscador_de_empresas.png" style="width: 35px; height: 35px;" class="alignmiddle" alt="Informes de Empresas"> -->
           Buscardor <span class="hidden-xs hidden-sm hidden-md ">de empresas</span>
         </router-link>

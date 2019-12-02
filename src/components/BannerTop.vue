@@ -6,7 +6,7 @@
           <h1 id="supertituloranking" class="fs20"><strong class="title-lg">Buscador de Empresas</strong><br> Buscador de Empresas</h1>
         </div>
         <div class="col-md-8">
-          <p class="title-md mnone tipo_link">¿Le gustaría poder acceder a la <span class="fwb">información más completa y reciente de todas las empresas que operan en España</span> que sean de su interés?</p>
+          <p class="title-md mnone tipo_link tipo_link_25">¿Le gustaría poder acceder a la <span class="fwb">información más completa y reciente de todas las empresas que operan en España</span> que sean de su interés?</p>
         </div>
         <div class="cb"></div>
 
@@ -78,4 +78,8 @@
   .leermas {
     margin: 0;
   }
+  .tipo_link_25 {
+    font-size: 25px;
+  }
+  h1 { margin-top: 0; }
 </style>
