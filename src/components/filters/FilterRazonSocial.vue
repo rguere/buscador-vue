@@ -146,7 +146,7 @@
                       <tr>
                         <th scope="row">
                           <div class="checkbox">
-                            <label><input type="checkbox" value=""> REPSOL S.A.</label>
+                            <label><input checked type="checkbox" value=""> REPSOL S.A.</label>
                           </div>
                         </th>
                         <td>A78374725</td>
@@ -208,6 +208,44 @@
                 </div>
               </div>
             </div>
+            <div class="col-md-12">
+              <div class="panel panel-default cd">
+                <div class="panel-heading">
+                  <p class="panel-title roboto white">
+                    {{ title }}
+                    <span class="span-info-right" v-if="selected_by_social_reasons !== 0"> ({{ selected_by_social_reasons | numeral('0,0') }} seleccionadas)</span>
+                  </p>
+                </div>
+                <div class="panel-body">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col">Razón social de la empresa</th>
+                        <th scope="col">NIF</th>
+                        <th scope="col">Provincia</th>
+                        <th scope="col">Localidad</th>
+                        <th scope="col">Último año cuentas disponibles</th>
+                        <th scope="col">Ventas último año disponible (miles de €)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">
+                          <div class="checkbox">
+                            <label><input checked type="checkbox" value=""> REPSOL S.A.</label>
+                          </div>
+                        </th>
+                        <td>A78374725</td>
+                        <td>MADRID</td>
+                        <td>MADRID</td>
+                        <td>21/12/2018</td>
+                        <td>21/12/2018</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </el-dialog>
@@ -232,7 +270,7 @@
       title: 'Nombre o razón social',
       loadingValidar: false,
       search_edit: true,
-      dataFrm: '',
+      dataFrm: 'REPSOL',
       social_reasons: {
         validos: [],
         invalidos: []
