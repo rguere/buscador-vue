@@ -68,8 +68,62 @@
                   <div class="panel-body">
                     <div class="row">
                       <div class="col-md-6">
-                        <div class="form-group">
-                          <label class="control-label">Insertar la antigüedad de la(s) empresa(s) en número de años</label>
+                        <div class="conten-epa">
+                          <div class="form-group">
+                            <label class="control-label">Insertar la antigüedad de la(s) empresa(s) en número de años</label>
+                          </div>
+                          <div class="form-group anti-inputs">
+                            <label>De (incluido)</label>
+                            <input type="text" class="form-control" placeholder="(Introducir, en formato número, los años de antigüedad)">
+                            <label>años de antigüedad</label>
+                          </div>
+                          <div class="form-group anti-inputs">
+                            <label>De (incluido)</label>
+                            <input type="text" class="form-control" placeholder="(Introducir, en formato número, los años de antigüedad)">
+                            <label>años de antigüedad</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <button
+                          type="button" 
+                          class="btn btn-info"
+                          :disabled="daterange.length === 0">
+                            BUSCAR <i :class="(loadingDaterange)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
+                        </button>
+                        <div class="panel panel-warning">
+                          <div class="panel-heading">Seleccionar años, por búsqueda estándar</div>
+                          <div class="panel-body">
+                            <div class="checkbox">
+                              <label>(Seleccionar todo) <input type="checkbox" value=""></label>
+                            </div>
+                            <div class="checkbox">
+                              <label>Más de 50 años de antigüedad. <input type="checkbox" value=""></label>
+                            </div>
+                            <div class="checkbox">
+                              <label>De 25 a 10 años de antigüedad. <input type="checkbox" value=""></label>
+                            </div>
+                            <div class="checkbox">
+                              <label>De 10 a 25 años de antigüedad. <input type="checkbox" value=""></label>
+                            </div>
+                            <div class="checkbox">
+                              <label>De 1 a 10 años de antigüedad. <input type="checkbox" value=""></label>
+                            </div>
+                            <div class="checkbox">
+                              <label>Menos de un año. <input type="checkbox" value=""></label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="bg-g">
+                          <label class="custon-checkboxs">
+                            <input type="checkbox" name="">
+                            <span class="geekmark"></span>
+                            <span class="title">
+                              Incluir aquellas empresas en las que se desconoce su antigüedad
+                            </span>
+                          </label>
                         </div>
                       </div>
                     </div>
@@ -209,6 +263,27 @@
 
   .el-range-editor--medium.el-input__inner {
     width: 100%;
+  }
+
+  .anti-inputs {
+    display: flex;
+    align-items: center;
+    input {
+      width: 50%;
+      margin: 0 5px;
+    }
+  }
+
+  .conten-epa {
+    padding: 55px 0;
+  }
+
+  .checkbox input[type=checkbox]{
+    margin-left: 15px;
+  }
+
+  .panel-warning {
+    margin-top: 20px;
   }
 
 </style>
