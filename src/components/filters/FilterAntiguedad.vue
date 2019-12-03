@@ -3,7 +3,7 @@
 
     <div class="panel-heading">
       <p class="panel-title roboto white">
-        Antigüedad
+        {{ title }}
       </p>
     </div>
     <div class="panel-body">
@@ -23,11 +23,11 @@
         </div>
       </div>
       <div class="flex-space-between-flex-end">
-        <button class="btn btn-warning">Ver detalles <i class="fa fa-plus-circle"></i></button>
+        <button class="btn btn-warning" @click="showModal">Ver detalles <i class="fa fa-plus-circle"></i></button>
         <p class="text-help">* Puede elegir más de una opción</p>
       </div>
       <div>
-        <div class="bg-g">
+        <div class="bg-g float-right">
           <label class="custon-checkboxs">
             <input type="checkbox" name="">
             <span class="geekmark"></span>
@@ -37,6 +37,94 @@
           </label>
         </div>
       </div>
+      <el-dialog :visible.sync="modalVisible"
+        width="95%"
+        :close-on-click-modal="false"
+        :show-close="false"
+        :destroy-on-close="true"
+        :center="true"
+        top="5vh">
+          <div>
+            <div class="btns-modal-header">
+              <div>
+                <button class="btn btn-warning" @click="hideModal"><i class="fa fa-arrow-left"></i> Vover</button>
+                <button class="btn btn-a">
+                  {{ title }}
+                </button>
+              </div>
+              <div>
+                <button type="button" class="btn btn-success" v-if="selection_antique.length !== 0" @click="apply">Aplicar <i :class="(loadingFrm)?'fa  fa-spinner fa-spin':'fa  fa-send'"></i></button>
+                <button type="button" class="btn btn-info" v-if="areApplied" @click="confirmClean">Limpiar <i class="fa fa-undo"></i></button>
+              </div>
+            </div>
+            <div class="row" v-if="search.antiguedad && search.antiguedad.length !== 0">
+              <div class="col-md-12">
+                <div class="panel panel-default cd">
+                  <div class="panel-heading">
+                    <p class="panel-title roboto white">
+                      Seleccionar empresas por años de antigüedad.
+                    </p>
+                  </div>
+                  <div class="panel-body">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="control-label">Insertar la antigüedad de la(s) empresa(s) en número de años</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="panel panel-default cd">
+                  <div class="panel-heading">
+                    <p class="panel-title roboto white">
+                      Seleccionar empresas por años de antigüedad.
+                    </p>
+                  </div>
+                  <div class="panel-body">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="control-label">Insertar la fecha de constitución de la(s) empresa(s)</label>
+                          <el-date-picker
+                            v-model="daterange"
+                            class="form-control daterange"
+                            type="daterange"
+                            format="dd/MM/yyyy"
+                            range-separator=""
+                            start-placeholder="Desde (incluido)"
+                            end-placeholder="Hasta (incluido)">
+                          </el-date-picker>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <button
+                          type="button" 
+                          class="btn btn-info"
+                          :disabled="daterange.length === 0">
+                            BUSCAR <i :class="(loadingDaterange)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
+                        </button>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="bg-g">
+                          <label class="custon-checkboxs">
+                            <input type="checkbox" name="">
+                            <span class="geekmark"></span>
+                            <span class="title">
+                              Incluir aquellas empresas en las que se desconoce su antigüedad
+                            </span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </el-dialog>
     </div>
   </div>
 </template>
@@ -55,7 +143,14 @@
     }),
     data: () => ({
       title: 'Antigüedad',
+      daterange: '',
       selection_antique: [],
+      loadingDaterange: false,
+      areApplied: false,
+      reapply: false,
+      showBtnApply: false,
+      loadingFrm: false,
+      modalVisible: false
     }),
     watch: { },
     mounted() {
@@ -105,9 +200,15 @@
 
   @import './../../sass/filters/filters';
 
+  .float-right {
+    float: right;
+  }
   .bg-g {
     width: 50%;
-    float: right;
+  }
+
+  .el-range-editor--medium.el-input__inner {
+    width: 100%;
   }
 
 </style>
