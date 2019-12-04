@@ -4,16 +4,16 @@
 			<div id="filter-buttons">
 				<div class="my_container">
 					<div class="row">
-						<div class="col-md-4"></div>
-						<div class="col-md-8">
+						<div class="col-md-3"></div>
+						<div class="col-md-9">
 							<p class="filter-buttons_description text-center">¡Incorpore a sus búsqueda tantos filtros como quiera, dentro de nuestras múltiples posibilidades!</p>
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-md-4">
+						<div class="col-md-3">
 							<button
 								:disabled="applied_filters.length === 0"
-								class="btn btn-orange btn-lg btn-block">
+								class="btn btn-orange btn-lg">
 								<i class="fa fa-list-alt"></i>
 								Visualizar
 								<span class="hidden-xs hidden-sm">resultados</span>
@@ -23,7 +23,7 @@
 								Empresas seleccionadas
 							</h3>
 						</div>
-						<div class="col-md-8">
+						<div class="col-md-9">
 							<div class="filter-btns">
 								<div v-for="(filter, key) in filters" :key="key">
 									<a href="" 

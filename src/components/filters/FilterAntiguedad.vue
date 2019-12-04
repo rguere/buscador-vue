@@ -284,6 +284,7 @@
 
   .panel-warning {
     margin-top: 20px;
+    width: 300px;
   }
 
 </style>
