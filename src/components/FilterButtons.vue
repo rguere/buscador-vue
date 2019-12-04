@@ -31,7 +31,7 @@
 										:class="(filter.apply)? 'active': ''"
 										v-scroll-to="{
 											el: `#${filter.slug}`,
-											offset: -250,
+											offset: -290,
 											onDone: onDone
 										}">
 										{{ filter.name }}
@@ -58,6 +58,16 @@
 									<i class="fa fa-history"></i> Historial
 								</button>
 							</div>
+						</div>
+						<div class="col-md-12">
+							<h5>
+								<b>Buscador Empresas de Infocif</b>
+								<span v-for="(filter, key) in filters" :key="key">
+									<span class="filter-apply" v-if="filter.apply">
+										> {{ filter.name }} <span class="num-fil">( {{ filter.quantity | numeral('0,0') }} )</span>
+									</span>
+								</span>
+							</h5>
 						</div>
 					</div>
 				</div>
@@ -145,6 +155,9 @@
 </script>
 
 <style lang="scss" scoped>
+	.negrita {
+		font-weight: bold;
+	}
 	.margin-top-10 {
 		margin-top: 10px;
 	}
@@ -218,5 +231,11 @@
 	.min-height-200 {
 		min-height: 200px;
 		margin-top: 20px;
+	}
+	.filter-apply {
+		margin-left: 5px;
+		display: inline-flex;
+		flex-direction: column;
+		align-items: center;
 	}
 </style>

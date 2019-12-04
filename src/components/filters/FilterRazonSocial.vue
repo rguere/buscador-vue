@@ -339,7 +339,10 @@
             return item.id
           })
           this.$store.dispatch('search/filtrar', this.form).then((response) => {
-            this.$store.dispatch('filters/addFilters', this.title)
+            this.$store.dispatch('filters/addFilters', {
+              name: this.title,
+              quantity: this.selected_by_social_reasons
+            })
             this.updateNumberSelectedCompanies(response.cantidad)
             this.areApplied = true
             this.loadingApply = false

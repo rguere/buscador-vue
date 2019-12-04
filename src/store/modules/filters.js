@@ -16,71 +16,85 @@ const initialState = () => {
         name: "Ubicación",
         slug: "filter_ubicacion",
         apply: false,
+        quantity: 0,
       },
       {
         name: "Antigüedad",
         slug: "filter_antiguedad",
         apply: false,
+        quantity: 0,
       },
       {
         name: "Número de empleados",
         slug: "filter_numero_de_empleados",
         apply: false,
+        quantity: 0,
       },
       {
         name: "Estado",
         slug: "filter_estado",
         apply: false,
+        quantity: 0,
       },
       {
         name: "Tipo de cuentas",
         slug: "filter_tipo_de_cuentas",
         apply: false,
+        quantity: 0,
       },
       {
         name: "Sector/Actividad",
         slug: "filter_sector_actividad",
         apply: false,
+        quantity: 0,
       },
       {
         name: "Cargos",
         slug: "filter_cargos",
         apply: false,
+        quantity: 0,
       },
       {
         name: "Código Postal",
         slug: "filter_codigo_postal",
         apply: false,
+        quantity: 0,
       },
       {
         name: "Nombre o razón social",
         slug: "filter_nombre_o_razon_social",
         apply: false,
+        quantity: 0,
       },
       {
         name: "NIF",
         slug: "filter_nif",
         apply: false,
+        quantity: 0,
       },
       {
         name: "Años con cuentas disponibles",
         slug: "filter_anios_con_cuentas_disponibles",
         apply: false,
+        quantity: 0,
       },
       {
         name: "Información Financiera",
         slug: "filter_informacion_financiera",
         apply: false,
+        quantity: 0,
       },
       {
         name: "Auditores",
         slug: "filter_auditores",
         apply: false,
+        quantity: 0,
       },
       {
         name: "Directivos y Vinculaciones",
         slug: "filter_directivos_y_vinculaciones",
         apply: false,
+        quantity: 0,
       }
     ]
   }
@@ -105,10 +119,13 @@ export const mutations = {
     }
   },
 
-  [types.ADD_FILTER](state, { filter }) {
-    state.applied_filters.push(filter)
+  [types.ADD_FILTER](state, { name, quantity }) {
+    state.applied_filters.push(name)
     state.filters = state.filters.map((elem) => {
-      if (elem.name === filter) { elem.apply = true }
+      if (elem.name === name) {
+        elem.apply = true
+        elem.quantity = quantity
+      }
       return elem;
     })
   },
@@ -116,7 +133,10 @@ export const mutations = {
   [types.REMOVE_FILTER](state, { filter }) {
     state.applied_filters = state.applied_filters.filter(_filter => _filter !== filter)
     state.filters = state.filters.map((elem) => {
-      if (elem.name === filter) { elem.apply = false }
+      if (elem.name === filter) {
+        elem.apply = false
+        elem.quantity = 0
+      }
       return elem;
     })
   },
@@ -133,10 +153,11 @@ export const actions = {
       initial: initialState() 
     })
   },
-  addFilters({ commit }, filter) {
-    if (!state.applied_filters.includes(filter)) {
+  addFilters({ commit }, { name, quantity }) {
+    if (!state.applied_filters.includes(name)) {
       commit(types.ADD_FILTER, {
-        filter: filter
+        name: name,
+        quantity: quantity
       })
     }
   },

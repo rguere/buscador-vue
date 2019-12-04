@@ -264,7 +264,10 @@
           this.$store.dispatch('search/filtrar', this.form).then((response) => {
             //this.options[0].children = (this.search && this.search.provincia_localidad) ? this.search.provincia_localidad : []
             this.updateNumberSelectedCompanies(response.cantidad)
-            this.$store.dispatch('filters/addFilters', this.title)
+            this.$store.dispatch('filters/addFilters', {
+              name: this.title,
+              quantity: this.selected_by_location
+            })
             this.areApplied = true
             this.reapply = false
             this.loadingFrm = false
