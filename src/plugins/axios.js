@@ -23,8 +23,8 @@ axios.interceptors.response.use(response => response, error => {
   const { status } = error.response
 
   if (status >= 500) {
-    swal({
-      type: 'error',
+    swal.fire({
+      icon: 'error',
       title: 'Error',
       text: 'Error del servidor',
       reverseButtons: true,
@@ -34,8 +34,8 @@ axios.interceptors.response.use(response => response, error => {
   }
 
   if (status === 401 && store.getters['auth/check']) {
-    swal({
-      type: 'warning',
+    swal.fire({
+      icon: 'warning',
       title: '401 Unauthorized',
       text: 'expired token',
       reverseButtons: true,
