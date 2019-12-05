@@ -123,14 +123,14 @@
                         <el-upload
                           :disabled="loadingFile"
                           action=""
-                          accept=".txt"
+                          accept=".txt, .xls, .csv"
                           :show-file-list="false"
                           :before-upload="uploadFileZipCodes">
                           <button 
                             class="btn btn-success"
                             :disabled="loadingFile">
                             <i :class="(loadingFile)?'fa fa-spinner fa-spin': 'fa fa-paperclip'"></i>
-                            {{(loadingFile)? 'Cargando archivo ' : 'Adjuntar Archivo'}}
+                            {{(loadingFile)? 'Cargando archivo ' : 'Adjuntar Archivo (.txt, .xls, .csv)'}}
                           </button>
                         </el-upload>
                         <button
