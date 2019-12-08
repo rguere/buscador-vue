@@ -88,13 +88,13 @@
             <button class="btn btn-warning" @click="hideResults">
               <i class="fa fa-arrow-left"></i> Vover
             </button>
-            <button class="btn btn-orange">
+            <button class="btn btn-orange m-l-5">
               <i class="fa fa-list-alt"></i>
               Visualizar
               <span class="hidden-xs hidden-sm">resultados</span>
             </button>
           </div>
-          <div class="row">
+          <div class="row m-b-10">
             <div class="col-md-6">
               <button class="btn btn-primary">
                 <i class="fa fa-print"></i>
@@ -102,14 +102,33 @@
               </button>
             </div>
             <div class="col-md-6">
-              <button class="btn btn-info">
-                <i class="fa fa-"></i>
-                Enviar al correo
-              </button>
-              <button class="btn btn-success">
-                <i class="fa fa-file"></i>
-                Descargar en excel
-              </button>
+              <div class="pull-right">
+                <button class="btn btn-info">
+                  <i class="fa fa-envelope"></i>
+                  Enviar al correo
+                </button>
+                <button class="btn btn-success m-l-5">
+                  <i class="fa fa-file-excel-o"></i>
+                  Descargar en excel
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Razón social de la empresa</th>
+                    <th>NIF</th>
+                    <th>Provincia</th>
+                    <th>Localidad</th>
+                    <th>Último año cuentas disponibles</th>
+                    <th>Ventas ultimo año disponible(en miles de €)</th>
+                    <th>Tipo de cuentas</th>
+                  </tr>
+                </thead>
+              </table>
             </div>
           </div>
         </div>
@@ -205,7 +224,7 @@
 </script>
 
 <style lang="scss" scoped>
-	.btns-modal-header .btn-orange {
+	.m-l-5 {
 		margin-left: 5px;
 	}
   .m-b-10 {
