@@ -13,7 +13,8 @@
 						<div class="col-md-3">
 							<button
 								:disabled="applied_filters.length === 0"
-								class="btn btn-orange btn-lg">
+								class="btn btn-orange btn-lg"
+								@click="showResults">
 								<i class="fa fa-list-alt"></i>
 								Visualizar
 								<span class="hidden-xs hidden-sm">resultados</span>
@@ -73,6 +74,47 @@
 				</div>
 			</div>
 		</div>
+		<el-dialog
+			:visible.sync="modalVisible"
+      width="95%"
+      :close-on-click-modal="false"
+      :show-close="false"
+      :destroy-on-close="true"
+      :center="true"
+      top="5vh">
+      <div>
+        <div class="btns-modal-header">
+          <div class="m-b-10">
+            <button class="btn btn-warning" @click="hideResults">
+              <i class="fa fa-arrow-left"></i> Vover
+            </button>
+            <button class="btn btn-orange">
+              <i class="fa fa-list-alt"></i>
+              Visualizar
+              <span class="hidden-xs hidden-sm">resultados</span>
+            </button>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <button class="btn btn-primary">
+                <i class="fa fa-print"></i>
+                Imprimir
+              </button>
+            </div>
+            <div class="col-md-6">
+              <button class="btn btn-info">
+                <i class="fa fa-"></i>
+                Enviar al correo
+              </button>
+              <button class="btn btn-success">
+                <i class="fa fa-file"></i>
+                Descargar en excel
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </el-dialog>
 	</div>
 </template>
 
@@ -83,7 +125,9 @@
 	export default {
 		name: 'filter-buttons',
 		data() {
-      return {}
+      return {
+      modalVisible: false
+      }
     },
     computed: {
       ...mapGetters({
@@ -149,12 +193,24 @@
       },
       showModalFilter(filter) {
         this.$root.$emit('show_modal_filter', filter)
+      },
+      showResults () {
+      this.modalVisible = true
+      },
+      hideResults () {
+      this.modalVisible = false
       }
     }
 	}
 </script>
 
 <style lang="scss" scoped>
+	.btns-modal-header .btn-orange {
+		margin-left: 5px;
+	}
+  .m-b-10 {
+    margin-bottom: 10px;
+  }
 	.negrita {
 		font-weight: bold;
 	}
