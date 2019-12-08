@@ -116,6 +116,21 @@
           </div>
           <div class="row">
             <div class="col-md-12">
+              <div class="text-center">
+                <button class="btn btn-warning">
+                  <i class="fa fa-save"></i>
+                  Guardar Columnas
+                </button>
+                <button class="btn btn-warning m-l-5">
+                  Listados Columnas Guardados
+                </button>
+                <button class="btn btn-warning m-l-5">
+                  <i class="fa fa-list"></i>
+                  Seleccionar Columnas
+                </button>
+              </div>
+            </div>
+            <div class="col-md-12">
               <table class="table">
                 <thead>
                   <tr>
