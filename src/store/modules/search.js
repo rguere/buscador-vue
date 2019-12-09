@@ -95,5 +95,31 @@ export const actions = {
         loading: false
       })
     }
+  },
+  async validateNif({ commit }, list_nif){
+    try{
+      const { data } = await axios.post('/buscador/NIF/validar', {lista: list_nif})
+      return data
+    } catch (e) {
+     commit(types.LOADING_SEARCH, {
+        loading: false
+      })
+    }
+  },
+  async validateNifFile({ commit }, file) {
+    try{
+      var formData = new FormData();
+      formData.append("file", file);
+      const { data } = await axios.post('/buscador/NIF/archivo', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+      return data
+    } catch (e) {
+     commit(types.LOADING_SEARCH, {
+        loading: false
+      })
+    }
   }
 }

@@ -5,6 +5,7 @@ const initialState = () => {
   return {
     form: {
       codigosPostales: [],
+      listNIF: [],
       comunidades: [],
       Provincias: [],
       Localidades: []
