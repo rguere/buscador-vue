@@ -12,7 +12,7 @@
 					<div class="row">
 						<div class="col-md-3">
 							<button
-								:disabled="applied_filters.length === 0"
+								:disabled="!applied_filters.length === 0"
 								class="btn btn-orange btn-lg"
 								@click="showResults">
 								<i class="fa fa-list-alt"></i>
@@ -122,6 +122,7 @@
                   Guardar Columnas
                 </button>
                 <button class="btn btn-warning m-l-5">
+                  <i class="fa fa-save"></i>
                   Listados Columnas Guardados
                 </button>
                 <button class="btn btn-warning m-l-5">
