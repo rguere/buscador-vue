@@ -160,6 +160,11 @@
 
 span.num-fil { color: #2196f3; font-weight: bold; }
 
+.div-scroll-200 {
+  height: 200px;
+  overflow-y: scroll;
+}
+
 @media (max-width: 950px) {
 
   .grid-5-columns-1fr {

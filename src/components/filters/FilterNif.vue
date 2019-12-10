@@ -12,14 +12,15 @@
       </div>
       <div class="panel panel-default cd" v-if="list_nif && list_nif.validos.length !== 0 && !search_edit">
         <div class="panel-body">
-          <button
-            type="button"        
-            v-if="list_nif && list_nif.validos.length !== 0 && !search_edit"
-            class="btn btn-xs btn-info pull-right" @click="editSearch" 
-            :disabled="dataFrm.length === 0 || loadingValidar">
-              Editar búsqueda <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-edit'"></i>
-          </button>
-          <div v-for="(item, key) in list_nif.validos" :key="key">
+          <div class="div-scroll-200">
+            <button
+              type="button"        
+              v-if="list_nif && list_nif.validos.length !== 0 && !search_edit"
+              class="btn btn-xs btn-info pull-right" @click="editSearch" 
+              :disabled="dataFrm.length === 0 || loadingValidar">
+                Editar búsqueda <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-edit'"></i>
+            </button>
+            <div v-for="(item, key) in list_nif.validos" :key="key">
               <label class="custon-checkboxs">
                   <input type="checkbox"
                     :name="`checkbox_${item.id}`"
@@ -30,6 +31,7 @@
                   <span class="name-checkbox">{{ item.label }}</span>
                   <span class="num-fil">({{ item.data | numeral('0,0') }})</span>
               </label>
+            </div>
           </div>
         </div>
       </div>
@@ -191,7 +193,7 @@
                         type="button"
                         class="btn btn-info pull-right"
                         :disabled="$v.$invalid || loadingValidar"
-                        @click="validateRankSearchZipCodes">
+                        @click="validateRankSearchNIF">
                           BUSCAR <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
                       </button>
                     </div>
@@ -214,7 +216,7 @@
                   </p>
                 </div>
                 <div class="panel-body">
-                  <ul class="ul_selected_provinces_localidad"  id="ul_selected_provinces_localidad">
+                  <ul class="ul_selected_provinces_localidad div-scroll-200"  id="ul_selected_provinces_localidad">
                     <li v-for="(item, key) in list_nif.validos" :key="key">
                       <label class="custon-checkboxs">
                         <input type="checkbox"
@@ -408,7 +410,7 @@
       },
       handleChangeList (){ //province, event
       },
-      validateRankSearchZipCodes () {//event
+      validateRankSearchNIF () {//event
         this.$v.$touch()
         if (!this.$v.$invalid) {
           let from_listNIF = parseInt(this.from_listNIF, 10),
