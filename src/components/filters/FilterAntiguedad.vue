@@ -45,7 +45,7 @@
         <div>
           <div class="bg-g float-right">
             <label class="custon-checkboxs">
-              <input type="checkbox" name="">
+              <input type="checkbox" v-model="incluir_null" name="">
               <span class="geekmark"></span>
               <span class="title">
                 Incluir aquellas empresas en las que se desconoce su antigüedad
@@ -234,6 +234,7 @@
       modalVisible: false,
       daterange: '',
       loadingDaterange: false,
+      incluir_null: false
     }),
     watch: {
       selected_antiguedad: function (newProvincesLocalidad) {
@@ -381,10 +382,13 @@
       deselectTreeselect () {
       },
       formatearDataPOST (){
-      this.form.antiguedad = []
-      this.selected_antiguedad.forEach((item) => {
-        this.form.antiguedad.push(item.id)
+        this.form.antiguedad = []
+        this.selected_antiguedad.forEach((item) => {
+          this.form.antiguedad.push(item.id)
         })
+        if (this.incluir_null) {
+          this.form.antiguedad.push("incluir_null")
+        }
         return this.form
       }
     }
