@@ -7,8 +7,8 @@
       </p>
     </div>
     <div class="panel-body">
-      <div v-if="search.antiguedad && search.antiguedad.length != 0">
-        <div class="grid-3-columns-1fr" v-if="!areApplied || (form.antiguedad.length !== 0)">
+      <div v-if="search.antiguedad && search.antiguedad.length !== 0">
+        <div class="grid-3-columns-1fr">
           <div v-for="(item, key) in search.antiguedad" :key="key">
             <label class="custon-checkboxs">
               <input type="checkbox"
@@ -110,23 +110,21 @@
                           <div class="panel panel-warning">
                             <div class="panel-heading">Seleccionar años, por búsqueda estándar</div>
                             <div class="panel-body">
-                              <div class="checkbox">
-                                <label>(Seleccionar todo) <input type="checkbox" value=""></label>
-                              </div>
-                              <div class="checkbox">
-                                <label>Más de 50 años de antigüedad. <input type="checkbox" value=""></label>
-                              </div>
-                              <div class="checkbox">
-                                <label>De 25 a 10 años de antigüedad. <input type="checkbox" value=""></label>
-                              </div>
-                              <div class="checkbox">
-                                <label>De 10 a 25 años de antigüedad. <input type="checkbox" value=""></label>
-                              </div>
-                              <div class="checkbox">
-                                <label>De 1 a 10 años de antigüedad. <input type="checkbox" value=""></label>
-                              </div>
-                              <div class="checkbox">
-                                <label>Menos de un año. <input type="checkbox" value=""></label>
+                              <div v-if="search.antiguedad.length !== 0">
+                                <div class="checkbox">
+                                  <label>(Seleccionar todo) <input type="checkbox" @change="selectAll($event)"></label>
+                                </div>
+                                <div v-for="(item, key) in search.antiguedad" :key="key" class="checkbox">
+                                  <label>
+                                    {{ item.label }}
+                                    <input type="checkbox"
+                                      :name="`checkbox_antiguedad_detalles_${item.id}`"
+                                      v-model="selected_antiguedad"
+                                      @change="handleChange(item, $event)"
+                                      :id="`checkbox_antiguedad_detalles_${item.id}`"
+                                      :value="item">
+                                  </label>
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -369,19 +367,6 @@
       handleChange () { //province, event
         this.reapply = (this.areApplied)? true: this.areApplied
       },
-      handleChangeList (province, event){
-        event.preventDefault()
-        let checkboxs = document.querySelectorAll('#ul_selected_antiguedad input[type="checkbox"]')
-        checkboxs.forEach((item) => {
-          item.checked = true
-        })
-      },
-      inputTreeselect () { //values
-      },
-      selectTreeselect () {
-      },
-      deselectTreeselect () {
-      },
       formatearDataPOST (){
         this.form.antiguedad = []
         this.selected_antiguedad.forEach((item) => {
@@ -391,6 +376,13 @@
           this.form.antiguedad.push("incluir_null")
         }
         return this.form
+      },
+      selectAll (event) {
+        if(event.target.checked){
+          this.selected_antiguedad = this.search.antiguedad
+        }else {
+          this.selected_antiguedad = []
+        }
       }
     }
   }
