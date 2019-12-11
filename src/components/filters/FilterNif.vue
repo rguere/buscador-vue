@@ -157,49 +157,6 @@
                   </div>
                 </div>
               </div>
-              <div class="panel panel-default cd">
-                <div class="panel-heading">
-                  <p class="panel-title roboto white">
-                    Introduce el rango de NIF y clica en “BUSCAR”
-                  </p>
-                </div>
-                <div class="panel-body">
-                  <div class="row text-center">
-                    <div class="col-md-4">
-                      <div class="form-group" :class="{ 'has-error has-feedback': $v.from_listNIF.$error }">
-                        <label class="control-label" for="from_listNIF">Del NIF:</label>
-                        <input type="text"
-                          v-model.trim="$v.from_listNIF.$model"
-                          required
-                          class="form-control"
-                          name="from_listNIF"
-                          id="from_listNIF">
-                      </div>
-                      <!-- <div class="error" v-if="!$v.from_listNIF.required">el campo es requerido</div> -->
-                    </div>
-                    <div class="col-md-4">
-                      <div class="form-group" :class="{ 'has-error has-feedback': $v.to_listNIF.$error }">
-                        <label class="control-label" for="to_listNIF">Al NIF:</label>
-                        <input type="text"
-                          v-model.trim="$v.to_listNIF.$model"
-                          required
-                          class="form-control"
-                          name="to_listNIF"
-                          id="to_listNIF">
-                      </div>
-                    </div>
-                    <div class="col-md-4">
-                      <button
-                        type="button"
-                        class="btn btn-info pull-right"
-                        :disabled="$v.$invalid || loadingValidar"
-                        @click="validateRankSearchNIF">
-                          BUSCAR <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
             <div>
               <div class="panel panel-default cd">
@@ -250,8 +207,6 @@
 
 <script>
   import { mapGetters } from 'vuex'
-  import { required } from 'vuelidate/lib/validators'
-  //const validarNIF = helpers.regex('validarNIF', /((([X-Z])|([LM])){1}([-]?)((\d){7})([-]?)([A-Z]{1}))|((\d{8})([-]?)([A-Z]))/)
   import { spacesByDashes } from './../../utils'
   import swal from 'sweetalert2'
   export default {
@@ -277,23 +232,9 @@
       areApplied: false,
       loadingApply: false,
       modalVisible: false,
-      from_listNIF: '',
-      to_listNIF: '',
       loadingFile: false,
       file: {},
     }),
-    validations() {
-      return {
-        from_listNIF: {
-          required,
-          //validarNIF
-        },
-        to_listNIF: {
-          required,
-          //validarNIF
-        }
-      }
-    },
     mounted() {
       this.$root.$on('clean_filter', (filter) => {
         if (filter === this.title) { this.clean() }
@@ -367,8 +308,6 @@
       clean (){
         this.form.listNIF = []
         this.dataFrm = ''
-        this.from_listNIF = ''
-        this.to_listNIF = ''
         this.list_nif = { validos: [], invalidos: [] }
         if (this.applied_filters.length > 1) {
           this.$store.dispatch('search/filtrar', this.form).then((response) => {
@@ -412,33 +351,6 @@
       },
       handleChangeList (){ //province, event
       },
-      validateRankSearchNIF () {//event
-        this.$v.$touch()
-        if (!this.$v.$invalid) {
-          let from_listNIF = parseInt(this.from_listNIF, 10),
-            to_listNIF = parseInt(this.to_listNIF, 10),
-            ranks = [];
-          let zero_on_left = (this.from_listNIF.charAt(0) === '0' || this.to_listNIF.charAt(0) === '0')? true: false
-          for (var i = from_listNIF; i <= to_listNIF; i++) {
-            ranks.push(`${(zero_on_left)?'0':''}${i}`)
-          }
-          let sin_salto = ranks.join(',')
-          this.dataFrm = sin_salto
-          this.loadingValidar = true
-          this.$store.dispatch('search/validateNif', sin_salto).then((response) => {
-            this.list_nif.validos = (response.validos)? response.validos: []
-            this.list_nif.invalidos = (response.invalidos)? response.invalidos: []
-            this.selected_list_nif = this.list_nif.validos
-            this.loadingValidar = false
-            this.search_edit = false
-          }).catch(() => {
-            this.loadingValidar = false
-            this.list_nif = { validos: [], invalidos: [] }
-            this.this.selected_list_nif = 0
-          })
-
-        }
-      },
       uploadFileZipCodes (file) {
         if (file) {
           this.loadingFile = true
@@ -458,11 +370,9 @@
       },
       showModal () {
         this.modalVisible = true
-        this.$v.$reset()
       },
       hideModal () {
         this.modalVisible = false
-        this.$v.$reset()
       },
     }
   }

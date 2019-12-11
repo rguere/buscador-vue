@@ -21,12 +21,12 @@ export const removeDuplicates = (originalArray, prop) => {
 	let newArray = []
     let lookupObject  = {}
     for(let key in originalArray) {
-        lookupObject[originalArray[key][prop]] = originalArray[key];
+        lookupObject[originalArray[key][prop]] = originalArray[key]
     }
     for(let key in lookupObject) {
-        newArray.push(lookupObject[key]);
+        newArray.push(lookupObject[key])
     }
-    return newArray;
+    return newArray
 }
 
 /**
@@ -115,25 +115,4 @@ export const spacesByDashes = (value) => {
     value = value.split(",,").join(",")
     }
     return value
-}
-
-export const validarNIF = (value) => {
-    let validChars = 'TRWAGMYFPDXBNJZSQVHLCKET';
-    let nifRexp = /^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKET]$/i;
-    let nieRexp = /^[XYZ][0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKET]$/i;
-    let str = value.toString().toUpperCase();
-
-    if (!nifRexp.test(str) && !nieRexp.test(str)) return false;
-
-    let nie = str
-        .replace(/^[X]/, '0')
-        .replace(/^[Y]/, '1')
-        .replace(/^[Z]/, '2');
-
-    let letter = str.substr(-1);
-    let charIndex = parseInt(nie.substr(0, 8)) % 23;
-
-    if (validChars.charAt(charIndex) === letter) return true;
-
-    return false;
 }
