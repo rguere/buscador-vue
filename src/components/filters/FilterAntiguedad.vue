@@ -161,7 +161,7 @@
                               class="form-control daterange"
                               type="daterange"
                               format="dd/MM/yyyy"
-                              value-format="yyyy/MM/dd"
+                              value-format="yyyy-MM-dd"
                               range-separator="|"
                               start-placeholder="Desde (incluido)"
                               end-placeholder="Hasta (incluido)"
