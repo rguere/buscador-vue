@@ -264,7 +264,7 @@
         }).catch(() => {
           this.loadingValidar = false
           this.list_nif = { validos: [], invalidos: [] }
-          this.this.selected_list_nif = 0
+          this.this.selected_list_nif = []
         })
       },
       apply () {
@@ -363,7 +363,7 @@
           }).catch(() => {
             this.loadingFile = false
             this.list_nif = { validos: [], invalidos: [] }
-            this.this.selected_list_nif = 0
+            this.this.selected_list_nif = []
           })
         }
         return false

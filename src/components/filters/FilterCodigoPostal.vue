@@ -320,7 +320,7 @@
         }).catch(() => {
           this.loadingValidar = false
           this.zip_codes = { validos: [], invalidos: [] }
-          this.this.selected_zip_codes = 0
+          this.this.selected_zip_codes = []
         })
       },
       apply () {
@@ -431,7 +431,7 @@
           }).catch(() => {
             this.loadingValidar = false
             this.zip_codes = { validos: [], invalidos: [] }
-            this.this.selected_zip_codes = 0
+            this.this.selected_zip_codes = []
           })
 
         }
@@ -448,7 +448,7 @@
           }).catch(() => {
             this.loadingFile = false
             this.zip_codes = { validos: [], invalidos: [] }
-            this.this.selected_zip_codes = 0
+            this.this.selected_zip_codes = []
           })
         }
         return false
