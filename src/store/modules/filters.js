@@ -8,7 +8,8 @@ const initialState = () => {
       listNIF: [],
       comunidades: [],
       Provincias: [],
-      Localidades: []
+      Localidades: [],
+      antiguedad: [],
     },
     applied_filters: [],
     selected_companies: 0,
