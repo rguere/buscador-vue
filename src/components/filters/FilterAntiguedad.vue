@@ -112,7 +112,7 @@
                             <div class="panel-body">
                               <div v-if="search.antiguedad.length !== 0">
                                 <div class="checkbox">
-                                  <label>(Seleccionar todo) <input type="checkbox" @change="selectAll($event)"></label>
+                                  <label>(Seleccionar todo) <input type="checkbox" v-model="all" @change="selectAll"></label>
                                 </div>
                                 <div v-for="(item, key) in search.antiguedad" :key="key" class="checkbox">
                                   <label>
@@ -161,9 +161,11 @@
                               class="form-control daterange"
                               type="daterange"
                               format="dd/MM/yyyy"
-                              range-separator=""
+                              value-format="yyyy/MM/dd"
+                              range-separator="|"
                               start-placeholder="Desde (incluido)"
-                              end-placeholder="Hasta (incluido)">
+                              end-placeholder="Hasta (incluido)"
+                              :clearable="false">
                             </el-date-picker>
                           </div>
                         </div>
@@ -171,6 +173,7 @@
                           <button
                             type="button" 
                             class="btn btn-info"
+                            @click="applyRange"
                             :disabled="daterange.length === 0">
                               BUSCAR <i :class="(loadingDaterange)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
                           </button>
@@ -178,7 +181,7 @@
                         <div class="col-md-12">
                           <div class="bg-g">
                             <label class="custon-checkboxs">
-                              <input type="checkbox" name="">
+                              <input type="checkbox" v-model="daterange_incluir_null" name="">
                               <span class="geekmark"></span>
                               <span class="title">
                                 Incluir aquellas empresas en las que se desconoce su antigüedad
@@ -230,9 +233,11 @@
       showBtnApply: false,
       loadingFrm: false,
       modalVisible: false,
-      daterange: '',
+      daterange: [],
       loadingDaterange: false,
-      incluir_null: false
+      daterange_incluir_null: false,
+      incluir_null: false,
+      all: false,
     }),
     watch: {
       selected_antiguedad: function (newProvincesLocalidad) {
@@ -323,6 +328,29 @@
           })
         }
       },
+      applyRange () {
+        if (this.daterange && this.daterange.length !== 0) {
+          this.hideModal()
+          this.loadingFrm = true
+          this.form.antiguedad = []
+          this.form.antiguedad.push(`fechas:${this.daterange.join("|")}`)
+          if(this.daterange_incluir_null){
+            this.form.antiguedad.push("incluir_null")
+          }
+          this.$store.dispatch('search/filtrar', this.form).then((response) => {
+            this.updateNumberSelectedCompanies(response.cantidad)
+            this.$store.dispatch('filters/addFilters', {
+              name: this.title,
+              quantity: this.selected_by_antiguedad
+            })
+            this.areApplied = true
+            this.reapply = false
+            this.loadingFrm = false
+          }).catch(() => {
+            this.loadingFrm = false
+          })
+        }
+      },
       confirmClean () {
         swal.fire({
           icon: 'question',
@@ -377,8 +405,8 @@
         }
         return this.form
       },
-      selectAll (event) {
-        if(event.target.checked){
+      selectAll () {
+        if(this.all){
           this.selected_antiguedad = this.search.antiguedad
         }else {
           this.selected_antiguedad = []
