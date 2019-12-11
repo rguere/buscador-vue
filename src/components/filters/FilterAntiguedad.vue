@@ -349,8 +349,7 @@
             this.updateNumberSelectedCompanies(response.cantidad)
           })
         }else {
-          let resta = (this.selected_antiguedad.length === 0)? 0 : this.selected_companies - this.selected_by_antiguedad
-          this.updateNumberSelectedCompanies((resta < 0)? 0: resta)
+          this.updateNumberSelectedCompanies(0)
         }
         this.selected_by_antiguedad = 0
         this.$store.dispatch('filters/removeFilters', this.title)
