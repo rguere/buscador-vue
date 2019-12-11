@@ -118,7 +118,6 @@ export const spacesByDashes = (value) => {
 }
 
 export const validarNIF = (value) => {
-    console.log(value)
     let validChars = 'TRWAGMYFPDXBNJZSQVHLCKET';
     let nifRexp = /^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKET]$/i;
     let nieRexp = /^[XYZ][0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKET]$/i;
