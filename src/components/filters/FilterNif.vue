@@ -250,7 +250,9 @@
 
 <script>
   import { mapGetters } from 'vuex'
-  import { required, between } from 'vuelidate/lib/validators'
+  import { required } from 'vuelidate/lib/validators'
+  //const validarNIF = helpers.regex('validarNIF', /((([X-Z])|([LM])){1}([-]?)((\d){7})([-]?)([A-Z]{1}))|((\d{8})([-]?)([A-Z]))/)
+  import { spacesByDashes } from './../../utils'
   import swal from 'sweetalert2'
   export default {
     name: 'filter-nif',
@@ -284,11 +286,11 @@
       return {
         from_listNIF: {
           required,
-          between: between(0, (this.to_listNIF)? this.to_listNIF: 9999999)
+          //validarNIF
         },
         to_listNIF: {
           required,
-          between: between((this.from_listNIF)? this.from_listNIF: 0, 9999999)
+          //validarNIF
         }
       }
     },
@@ -311,7 +313,7 @@
     methods: {
       validateNif(){
         this.loadingValidar = true  
-        let sin_salto = this.dataFrm.replace(/(?:\r\n|\r|\n)/g, ',')
+        let sin_salto = spacesByDashes(this.dataFrm)
         this.$store.dispatch('search/validateNif', sin_salto).then((response) => {
           this.list_nif.validos = (response.validos)? response.validos: []
           this.list_nif.invalidos = (response.invalidos)? response.invalidos: []

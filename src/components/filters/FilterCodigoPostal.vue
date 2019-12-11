@@ -249,6 +249,7 @@
 <script>
   import { mapGetters } from 'vuex'
   import { required, between } from 'vuelidate/lib/validators'
+  import { spacesByDashes } from './../../utils'
   import swal from 'sweetalert2'
   export default {
     name: 'filter-codigo-postal',
@@ -309,7 +310,7 @@
     methods: {
       validateZipCodes(){
         this.loadingValidar = true  
-        let sin_salto = this.dataFrm.replace(/(?:\r\n|\r|\n)/g, ',')
+        let sin_salto = spacesByDashes(this.dataFrm)
         this.$store.dispatch('search/validateZipCodes', sin_salto).then((response) => {
           this.zip_codes.validos = (response.validos)? response.validos: []
           this.zip_codes.invalidos = (response.invalidos)? response.invalidos: []

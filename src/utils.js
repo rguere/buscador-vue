@@ -107,3 +107,34 @@ export const howAnimation = (element) => {
       }, 1000)
     }
 }
+
+export const spacesByDashes = (value) => {
+    value = value.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '')
+    value = value.replace(/(?:\r\n|\r|\n)/g, ',')
+    for (var i = 0; i <= 20; i++) {
+    value = value.split(",,").join(",")
+    }
+    return value
+}
+
+export const validarNIF = (value) => {
+    console.log(value)
+    let validChars = 'TRWAGMYFPDXBNJZSQVHLCKET';
+    let nifRexp = /^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKET]$/i;
+    let nieRexp = /^[XYZ][0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKET]$/i;
+    let str = value.toString().toUpperCase();
+
+    if (!nifRexp.test(str) && !nieRexp.test(str)) return false;
+
+    let nie = str
+        .replace(/^[X]/, '0')
+        .replace(/^[Y]/, '1')
+        .replace(/^[Z]/, '2');
+
+    let letter = str.substr(-1);
+    let charIndex = parseInt(nie.substr(0, 8)) % 23;
+
+    if (validChars.charAt(charIndex) === letter) return true;
+
+    return false;
+}
