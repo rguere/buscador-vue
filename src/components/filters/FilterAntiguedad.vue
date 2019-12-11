@@ -134,7 +134,7 @@
                         <div class="col-md-12">
                           <div class="bg-g">
                             <label class="custon-checkboxs">
-                              <input type="checkbox" name="">
+                              <input type="checkbox" v-model="incluir_null" name="">
                               <span class="geekmark"></span>
                               <span class="title">
                                 Incluir aquellas empresas en las que se desconoce su antigüedad
@@ -355,6 +355,7 @@
         this.$store.dispatch('filters/removeFilters', this.title)
         this.areApplied = false
         this.reapply = false
+        this.incluir_null = false
       },
       emptyFilter () {
         this.form.antiguedad = []
@@ -363,6 +364,7 @@
         this.$store.dispatch('filters/removeFilters', this.title)
         this.areApplied = false
         this.reapply = false
+        this.incluir_null = false
       },
       handleChange () { //province, event
         this.reapply = (this.areApplied)? true: this.areApplied
