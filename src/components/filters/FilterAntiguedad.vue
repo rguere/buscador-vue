@@ -88,14 +88,26 @@
                             <div class="form-group">
                               <label class="control-label">Insertar la antigüedad de la(s) empresa(s) en número de años</label>
                             </div>
-                            <div class="form-group anti-inputs">
-                              <label>De (incluido)</label>
-                              <input type="text" class="form-control" placeholder="(Introducir, en formato número, los años de antigüedad)">
+                            <div class="form-group anti-inputs" :class="{ 'has-error has-feedback': $v.ahnos_from.$error }">
+                              <label class="control-label" for="ahnos_from">De (incluido)</label>
+                              <input type="text"
+                                v-model.trim="$v.ahnos_from.$model"
+                                required
+                                class="form-control"
+                                name="ahnos_from"
+                                id="ahnos_from"
+                                placeholder="(Introducir, en formato número, los años de antigüedad)">
                               <label>años de antigüedad</label>
                             </div>
-                            <div class="form-group anti-inputs">
-                              <label>De (incluido)</label>
-                              <input type="text" class="form-control" placeholder="(Introducir, en formato número, los años de antigüedad)">
+                            <div class="form-group anti-inputs" :class="{ 'has-error has-feedback': $v.ahnos_to.$error }">
+                              <label class="control-label" for="ahnos_to">De (incluido)</label>
+                              <input type="text"
+                                v-model.trim="$v.ahnos_to.$model"
+                                required
+                                class="form-control"
+                                name="ahnos_to"
+                                id="ahnos_to"
+                                placeholder="(Introducir, en formato número, los años de antigüedad)">
                               <label>años de antigüedad</label>
                             </div>
                           </div>
@@ -104,8 +116,9 @@
                           <button
                             type="button" 
                             class="btn btn-info"
-                            :disabled="daterange.length === 0">
-                              BUSCAR <i :class="(loadingDaterange)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
+                            @click="applyAhnos"
+                            :disabled="$v.$invalid || loadingAhnos">
+                              BUSCAR <i :class="(loadingAhnos)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
                           </button>
                           <div class="panel panel-warning">
                             <div class="panel-heading">Seleccionar años, por búsqueda estándar</div>
@@ -207,6 +220,7 @@
 <script>
   import { mapGetters } from 'vuex'
   import swal from 'sweetalert2'
+  import { required, between } from 'vuelidate/lib/validators'
   import { inArrayObjectTreeselect, howAnimation } from './../../utils'
   export default {
     name: 'filter-antiguedad',
@@ -235,10 +249,25 @@
       modalVisible: false,
       daterange: [],
       loadingDaterange: false,
+      loadingAhnos: false,
       daterange_incluir_null: false,
+      ahnos_to: '',
+      ahnos_from: '',
       incluir_null: false,
       all: false,
     }),
+    validations() {
+      return {
+        ahnos_from: {
+          required,
+          between: between(0, (this.ahnos_to)? this.ahnos_to: 100)
+        },
+        ahnos_to: {
+          required,
+          between: between((this.ahnos_from)? this.ahnos_from: 0, 100)
+        }
+      }
+    },
     watch: {
       selected_antiguedad: function (newProvincesLocalidad) {
         this.selected_by_antiguedad = this.numberCompaniesSelected((this.isAllProvincesLocalidad(newProvincesLocalidad))? this.search.antiguedad : newProvincesLocalidad)
@@ -268,12 +297,12 @@
         })
       },
       showModal () {
+        this.$v.$reset()
         this.modalVisible = true
       },
       hideModal () {
+        this.$v.$reset()
         this.modalVisible = false
-        let treeselect__input = document.querySelector('#options input.vue-treeselect__input')
-        if (treeselect__input) treeselect__input.value = ''
       },
       /**
        * [updateNumberSelectedCompanies actualiza la cantidad de empresas selecionadas en el store de Vuex]
@@ -330,8 +359,8 @@
       },
       applyRange () {
         if (this.daterange && this.daterange.length !== 0) {
-          this.hideModal()
-          this.loadingFrm = true
+          //this.hideModal()
+          this.loadingDaterange = true
           this.form.antiguedad = []
           this.form.antiguedad.push(`fechas:${this.daterange.join("|")}`)
           if(this.daterange_incluir_null){
@@ -345,9 +374,33 @@
             })
             this.areApplied = true
             this.reapply = false
-            this.loadingFrm = false
+            this.loadingDaterange = false
           }).catch(() => {
-            this.loadingFrm = false
+            this.loadingDaterange = false
+          })
+        }
+      },
+      applyAhnos () {
+        this.$v.$touch()
+        if (!this.$v.$invalid) {
+          //this.hideModal()
+          this.loadingAhnos = true
+          this.form.antiguedad = []
+          this.form.antiguedad.push(`ahnos:${this.ahnos_from}|${this.ahnos_to}`)
+          if(this.incluir_null){
+            this.form.antiguedad.push("incluir_null")
+          }
+          this.$store.dispatch('search/filtrar', this.form).then((response) => {
+            this.updateNumberSelectedCompanies(response.cantidad)
+            this.$store.dispatch('filters/addFilters', {
+              name: this.title,
+              quantity: this.selected_by_antiguedad
+            })
+            this.areApplied = true
+            this.reapply = false
+            this.loadingAhnos = false
+          }).catch(() => {
+            this.loadingAhnos = false
           })
         }
       },
