@@ -359,7 +359,7 @@
       },
       applyRange () {
         if (this.daterange && this.daterange.length !== 0) {
-          //this.hideModal()
+          this.hideModal()
           this.loadingDaterange = true
           this.form.antiguedad = []
           this.form.antiguedad.push(`fechas:${this.daterange.join("|")}`)
@@ -383,7 +383,7 @@
       applyAhnos () {
         this.$v.$touch()
         if (!this.$v.$invalid) {
-          //this.hideModal()
+          this.hideModal()
           this.loadingAhnos = true
           this.form.antiguedad = []
           this.form.antiguedad.push(`ahnos:${this.ahnos_from}|${this.ahnos_to}`)
