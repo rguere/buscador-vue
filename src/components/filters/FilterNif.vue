@@ -122,19 +122,36 @@
                   <div class="row">
                     <div class="col-md-12">
                       <div class="attach-file">
-                        <el-upload
-                          :disabled="loadingFile"
-                          action=""
-                          accept=".txt, .xls, .csv"
-                          :show-file-list="false"
-                          :before-upload="uploadFileZipCodes">
-                          <button 
-                            class="btn btn-success"
-                            :disabled="loadingFile">
-                            <i :class="(loadingFile)?'fa fa-spinner fa-spin': 'fa fa-paperclip'"></i>
-                            {{(loadingFile)? 'Cargando archivo ' : 'Adjuntar Archivo (.txt, .xls, .csv)'}}
-                          </button>
-                        </el-upload>
+                        <button type="button" class="btn btn-success m-r-5" @click="innerVisible = true">
+                          <i :class="(loadingFile)?'fa fa-spinner fa-spin': 'fa fa-paperclip'"></i>
+                          Adjuntar Archivo
+                        </button>
+                        <el-dialog
+                          width="55%"
+                          :visible.sync="innerVisible"
+                          append-to-body>
+                          <div>
+                            <el-upload
+                              :disabled="loadingFile"
+                              action=""
+                              accept=".txt, .xls, .csv"
+                              :show-file-list="false"
+                              :before-upload="uploadFileZipCodes">
+                              <button 
+                                class="btn btn-success"
+                                :disabled="loadingFile">
+                                <i :class="(loadingFile)?'fa fa-spinner fa-spin': 'fa fa-paperclip'"></i>
+                                {{(loadingFile)? 'Cargando archivo ' : 'Adjuntar Archivo'}}
+                              </button>
+                            </el-upload>
+                            <el-alert
+                              title="*NOTA"
+                              type="info"
+                              description="El formato debe ser un archivo Excel en el que todos los NIF se encuentren en la primera columna; o un archivo CSV o TXT en el que todos los NIF se encuentren separados por coma."
+                              show-icon>
+                            </el-alert>
+                          </div>
+                        </el-dialog>
                         <button
                           type="button" 
                           class="btn btn-info"
@@ -233,6 +250,7 @@
       loadingApply: false,
       modalVisible: false,
       loadingFile: false,
+      innerVisible: false,
       file: {},
     }),
     mounted() {
