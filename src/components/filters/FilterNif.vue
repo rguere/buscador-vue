@@ -122,7 +122,7 @@
                   <div class="row">
                     <div class="col-md-12">
                       <div class="attach-file">
-                        <button type="button" class="btn btn-success m-r-5" @click="innerVisible = true">
+                        <button type="button" class="btn btn-success m-r-5" @click="innerVisible = true" :disabled="loadingFile">
                           <i :class="(loadingFile)?'fa fa-spinner fa-spin': 'fa fa-paperclip'"></i>
                           Adjuntar Archivo
                         </button>
@@ -131,25 +131,28 @@
                           :visible.sync="innerVisible"
                           append-to-body>
                           <div>
-                            <el-upload
-                              :disabled="loadingFile"
-                              action=""
-                              accept=".txt, .xls, .csv"
-                              :show-file-list="false"
-                              :before-upload="uploadFileZipCodes">
-                              <button 
-                                class="btn btn-success"
-                                :disabled="loadingFile">
-                                <i :class="(loadingFile)?'fa fa-spinner fa-spin': 'fa fa-paperclip'"></i>
-                                {{(loadingFile)? 'Cargando archivo ' : 'Adjuntar Archivo'}}
-                              </button>
-                            </el-upload>
                             <el-alert
                               title="*NOTA"
                               type="info"
+                              :close="false"
                               description="El formato debe ser un archivo Excel en el que todos los NIF se encuentren en la primera columna; o un archivo CSV o TXT en el que todos los NIF se encuentren separados por coma."
                               show-icon>
                             </el-alert>
+                            <div class="btn-upload-right">
+                              <el-upload
+                                :disabled="loadingFile"
+                                action=""
+                                accept=".txt, .xls, .csv"
+                                :show-file-list="false"
+                                :before-upload="uploadFileNif">
+                                <button 
+                                  class="btn btn-primary"
+                                  :disabled="loadingFile">
+                                  <i :class="(loadingFile)?'fa fa-spinner fa-spin': 'fa fa-check'"></i>
+                                  {{(loadingFile)? 'Cargando archivo ' : 'Aceptar'}}
+                                </button>
+                              </el-upload>
+                            </div>
                           </div>
                         </el-dialog>
                         <button
@@ -369,9 +372,10 @@
       },
       handleChangeList (){ //province, event
       },
-      uploadFileZipCodes (file) {
+      uploadFileNif (file) {
         if (file) {
           this.loadingFile = true
+          this.innerVisible = false
           this.$store.dispatch('search/validateNifFile', file).then((response) => {
             this.list_nif.validos = (response.validos)? response.validos: []
             this.list_nif.invalidos = (response.invalidos)? response.invalidos: []
@@ -408,6 +412,12 @@
 
 .attach-file {
   display: flex; justify-content: flex-end; align-items: flex-start; margin-bottom: 10px;
+}
+
+.btn-upload-right {
+  display: flex;
+  margin-top: 10px;
+  justify-content: flex-end;
 }
 
 @media (min-width: 750px) and (max-width: 1100px) {
