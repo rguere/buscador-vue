@@ -132,6 +132,7 @@
                             <el-alert
                               title="*NOTA"
                               type="info"
+                              :closable="false"
                               description="El formato debe ser un archivo Excel en el que todos los códigos postales se encuentren en la primera columna; o un archivo CSV o TXT en el que todos los códigos postales se encuentren separados por coma."
                               show-icon>
                             </el-alert>

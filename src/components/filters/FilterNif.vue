@@ -134,7 +134,7 @@
                             <el-alert
                               title="*NOTA"
                               type="info"
-                              :close="false"
+                              :closable="false"
                               description="El formato debe ser un archivo Excel en el que todos los NIF se encuentren en la primera columna; o un archivo CSV o TXT en el que todos los NIF se encuentren separados por coma."
                               show-icon>
                             </el-alert>
