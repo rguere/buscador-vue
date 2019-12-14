@@ -10,6 +10,7 @@ const initialState = () => {
       Provincias: [],
       Localidades: [],
       antiguedad: [],
+      razonSocial: [],
     },
     applied_filters: [],
     selected_companies: 0,

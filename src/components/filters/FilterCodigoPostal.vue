@@ -12,14 +12,15 @@
       </div>
       <div class="panel panel-default cd" v-if="zip_codes && zip_codes.validos.length !== 0 && !search_edit">
         <div class="panel-body">
-          <button
-            type="button"        
-            v-if="zip_codes && zip_codes.validos.length !== 0 && !search_edit"
-            class="btn btn-xs btn-info pull-right" @click="editSearch" 
-            :disabled="dataFrm.length === 0 || loadingValidar">
-              Editar búsqueda <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-edit'"></i>
-          </button>
-          <div v-for="(item, key) in zip_codes.validos" :key="key">
+          <div class="div-scroll-200">
+            <button
+              type="button"        
+              v-if="zip_codes && zip_codes.validos.length !== 0 && !search_edit"
+              class="btn btn-xs btn-info pull-right" @click="editSearch" 
+              :disabled="dataFrm.length === 0 || loadingValidar">
+                Editar búsqueda <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-edit'"></i>
+            </button>
+            <div v-for="(item, key) in zip_codes.validos" :key="key">
               <label class="custon-checkboxs">
                   <input type="checkbox"
                     :name="`checkbox_${item.id}`"
@@ -30,6 +31,7 @@
                   <span class="name-checkbox">{{ item.label }}</span>
                   <span class="num-fil">({{ item.data | numeral('0,0') }})</span>
               </label>
+            </div>
           </div>
         </div>
       </div>
