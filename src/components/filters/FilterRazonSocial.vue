@@ -234,7 +234,6 @@
           //this.selected_social_reasons = this.social_reasons.FichaEmpresas
           this.loadingValidar = false
           this.search_edit = false
-          console.log(this.social_reasons.FichaEmpresas)
         }).catch(() => {
           this.loadingValidar = false
           this.social_reasons = { FichaEmpresas: [] }
