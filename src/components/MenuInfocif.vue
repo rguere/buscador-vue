@@ -70,10 +70,10 @@
             </div>
             <div id="edit-icif-large-options" class="form-radios icif-large-options">
               <div class="form-item form-type-radio form-item-icif-large-options">
-                <input class="icif-large-options form-radio" type="radio" id="edit-icif-large-options-cif" name="opcbusqueda" value="RazonSocial" checked="checked"> <label class="option" for="edit-icif-large-options-cif">NIF/Razón Social </label>
+                <input class="icif-large-options form-radio" type="radio" id="edit-icif-large-options-cif2" name="opcbusqueda" value="RazonSocial" checked="checked"> <label class="option" for="edit-icif-large-options-cif2">NIF/Razón Social </label>
               </div>
               <div class="form-item form-type-radio form-item-icif-large-options">
-                <input class="icif-large-options form-radio" type="radio" id="edit-icif-large-options-cargo" name="opcbusqueda" value="Cargo"> <label class="option" for="edit-icif-large-options-cargo">Directivo </label>
+                <input class="icif-large-options form-radio" type="radio" id="edit-icif-large-options-cargo2" name="opcbusqueda" value="Cargo"> <label class="option" for="edit-icif-large-options-cargo2">Directivo </label>
               </div>
             </div><input type="image" id="edit-submit--3" name="submit" value="Buscar" src="./../assets/images/ib_search_home.png" class="form-submit"><input type="hidden" name="form_build_id" value="form-MfLmKr9E-rqn7Cttfn96E3SWu6uC4gsLyT-cs_LeZO4">
             <input type="hidden" name="form_id" value="icif2_search_large_form">
