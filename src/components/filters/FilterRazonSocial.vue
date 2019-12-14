@@ -63,7 +63,7 @@
           <button
             type="button"
             v-if="social_reasons && social_reasons.validos.length === 0 || search_edit" 
-            class="btn btn-info" @click="validateZipCodes" 
+            class="btn btn-info" @click="validateRazonSocial" 
             :disabled="dataFrm.length === 0 || loadingValidar">
               BUSCAR <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
           </button>
@@ -116,7 +116,7 @@
                   <button
                     type="button"
                     v-if="social_reasons && social_reasons.validos.length === 0 || search_edit" 
-                    class="btn btn-info pull-right top-10" @click="validateZipCodes" 
+                    class="btn btn-info pull-right top-10" @click="validateRazonSocial" 
                     :disabled="dataFrm.length === 0 || loadingValidar">
                       BUSCAR <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
                   </button>
@@ -255,7 +255,7 @@
 
 <script>
   import { mapGetters } from 'vuex'
-  import { required, between } from 'vuelidate/lib/validators'
+  import { spacesByDashes } from './../../utils'
   import swal from 'sweetalert2'
   export default {
     name: 'filter-razon-social',
@@ -270,7 +270,7 @@
       title: 'Nombre o razón social',
       loadingValidar: false,
       search_edit: true,
-      dataFrm: 'REPSOL',
+      dataFrm: '',
       social_reasons: {
         validos: [],
         invalidos: []
@@ -285,18 +285,6 @@
       loadingFile: false,
       file: {},
     }),
-    validations() {
-      return {
-        from_social_reasons: {
-          required,
-          between: between(0, (this.to_social_reason)? this.to_social_reason: 9999999)
-        },
-        to_social_reason: {
-          required,
-          between: between((this.from_social_reasons)? this.from_social_reasons: 0, 9999999)
-        }
-      }
-    },
     mounted() {
       this.$root.$on('clean_filter', (filter) => {
         if (filter === this.title) { this.clean() }
@@ -314,21 +302,20 @@
       }
     },
     methods: {
-      validateZipCodes(){
-        // this.loadingValidar = true  
-        this.dataFrm.replace(/(?:\r\n|\r|\n)/g, ',')
-        // let sin_salto =
-        // this.$store.dispatch('search/validateZipCodes', sin_salto).then((response) => {
-        //   this.social_reasons.validos = (response.validos)? response.validos: []
-        //   this.social_reasons.invalidos = (response.invalidos)? response.invalidos: []
-        //   this.selected_social_reasons = this.social_reasons.validos
-        //   this.loadingValidar = false
-        //   this.search_edit = false
-        // }).catch(() => {
-        //   this.loadingValidar = false
-        //   this.social_reasons = { validos: [], invalidos: [] }
-        //   this.this.selected_social_reasons = 0
-        // })
+      validateRazonSocial(){
+        this.loadingValidar = true  
+        let sin_salto = spacesByDashes(this.dataFrm)
+        this.$store.dispatch('search/validateRazonSocial', sin_salto).then((response) => {
+          this.social_reasons.validos = (response.validos)? response.validos: []
+          this.social_reasons.invalidos = (response.invalidos)? response.invalidos: []
+          this.selected_social_reasons = this.social_reasons.validos
+          this.loadingValidar = false
+          this.search_edit = false
+        }).catch(() => {
+          this.loadingValidar = false
+          this.social_reasons = { validos: [], invalidos: [] }
+          this.selected_social_reasons = []
+        })
       },
       apply () {
         if (this.selected_social_reasons && this.selected_social_reasons.length !== 0) {
@@ -371,7 +358,6 @@
       clean (){
         this.form.codigosPostales = []
         this.dataFrm = ''
-        this.from_social_reasons = ''
         this.to_social_reason = ''
         this.social_reasons = { validos: [], invalidos: [] }
         if (this.applied_filters.length > 1) {
@@ -414,59 +400,11 @@
           quantity
         })
       },
-      handleChangeList (){ //province, event
-      },
-      validateRankSearchZipCodes () {//event
-        this.$v.$touch()
-        if (!this.$v.$invalid) {
-          let from_social_reasons = parseInt(this.from_social_reasons, 10),
-            to_social_reason = parseInt(this.to_social_reason, 10),
-            ranks = [];
-          let zero_on_left = (this.from_social_reasons.charAt(0) === '0' || this.to_social_reason.charAt(0) === '0')? true: false
-          for (var i = from_social_reasons; i <= to_social_reason; i++) {
-            ranks.push(`${(zero_on_left)?'0':''}${i}`)
-          }
-          let sin_salto = ranks.join(',')
-          this.dataFrm = sin_salto
-          this.loadingValidar = true
-          this.$store.dispatch('search/validateZipCodes', sin_salto).then((response) => {
-            this.social_reasons.validos = (response.validos)? response.validos: []
-            this.social_reasons.invalidos = (response.invalidos)? response.invalidos: []
-            this.selected_social_reasons = this.social_reasons.validos
-            this.loadingValidar = false
-            this.search_edit = false
-          }).catch(() => {
-            this.loadingValidar = false
-            this.social_reasons = { validos: [], invalidos: [] }
-            this.this.selected_social_reasons = 0
-          })
-
-        }
-      },
-      uploadFileZipCodes (file) {
-        if (file) {
-          this.loadingFile = true
-          this.$store.dispatch('search/validateZipCodesFile', file).then((response) => {
-            this.social_reasons.validos = (response.validos)? response.validos: []
-            this.social_reasons.invalidos = (response.invalidos)? response.invalidos: []
-            this.selected_social_reasons = this.social_reasons.validos
-            this.loadingFile = false
-            this.search_edit = false
-          }).catch(() => {
-            this.loadingFile = false
-            this.social_reasons = { validos: [], invalidos: [] }
-            this.this.selected_social_reasons = 0
-          })
-        }
-        return false
-      },
       showModal () {
         this.modalVisible = true
-        this.$v.$reset()
       },
       hideModal () {
         this.modalVisible = false
-        this.$v.$reset()
       },
     }
   }

@@ -342,7 +342,7 @@
         }).catch(() => {
           this.loadingValidar = false
           this.zip_codes = { validos: [], invalidos: [] }
-          this.this.selected_zip_codes = []
+          this.selected_zip_codes = []
         })
       },
       apply () {

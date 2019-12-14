@@ -121,5 +121,15 @@ export const actions = {
         loading: false
       })
     }
+  },
+  async validateRazonSocial({ commit }, razon_social){
+    try{
+      const { data } = await axios.post('/buscador/razonSocial/buscar', {lista: razon_social})
+      return data
+    } catch (e) {
+     commit(types.LOADING_SEARCH, {
+        loading: false
+      })
+    }
   }
 }
