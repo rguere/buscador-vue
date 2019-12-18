@@ -84,6 +84,13 @@
                     <div class="panel-body">
                       <div class="row">
                         <div class="col-md-6">
+                          <button
+                            type="button" 
+                            class="btn btn-info pull-right"
+                            @click="applyAhnos"
+                            :disabled="$v.$invalid || loadingAhnos">
+                              BUSCAR <i :class="(loadingAhnos)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
+                          </button>
                           <div class="conten-epa">
                             <div class="form-group">
                               <label class="control-label">Insertar la antigüedad de la(s) empresa(s) en número de años</label>
@@ -113,29 +120,21 @@
                           </div>
                         </div>
                         <div class="col-md-6">
-                          <button
-                            type="button" 
-                            class="btn btn-info"
-                            @click="applyAhnos"
-                            :disabled="$v.$invalid || loadingAhnos">
-                              BUSCAR <i :class="(loadingAhnos)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
-                          </button>
                           <div class="panel panel-warning">
                             <div class="panel-heading">Seleccionar años, por búsqueda estándar</div>
                             <div class="panel-body">
                               <div v-if="search.antiguedad.length !== 0">
-                                <div class="checkbox">
-                                  <label>(Seleccionar todo) <input type="checkbox" v-model="all" @change="selectAll"></label>
-                                </div>
                                 <div v-for="(item, key) in search.antiguedad" :key="key" class="checkbox">
-                                  <label>
-                                    {{ item.label }}
-                                    <input type="checkbox"
-                                      :name="`checkbox_antiguedad_detalles_${item.id}`"
-                                      v-model="selected_antiguedad"
-                                      @change="handleChange(item, $event)"
-                                      :id="`checkbox_antiguedad_detalles_${item.id}`"
-                                      :value="item">
+                                  <label class="custon-checkboxs">
+                                      <input type="checkbox"
+                                          :name="`checkbox_empleados_${item.id}`"
+                                          v-model="selected_antiguedad"
+                                          @change="handleChange(item, $event)"
+                                          :id="`checkbox_empleados_${item.id}`"
+                                          :value="item">
+                                      <span class="geekmark"></span>
+                                      <span class="name-checkbox">{{ item.label }}</span>
+                                      <span class="num-fil"> ({{ item.data | numeral('0,0') }})</span>
                                   </label>
                                 </div>
                               </div>
@@ -458,13 +457,6 @@
           this.form.antiguedad.push(item.id)
         })
         return this.form
-      },
-      selectAll () {
-        if(this.all){
-          this.selected_antiguedad = this.search.antiguedad
-        }else {
-          this.selected_antiguedad = []
-        }
       }
     }
   }
@@ -515,8 +507,4 @@
     margin-left: 15px;
   }
 
-  .panel-warning {
-    margin-top: 20px;
-    width: 300px;
-  }
 </style>
