@@ -63,7 +63,7 @@
 						<div class="col-md-12">
 							<h5>
 								<b>Buscador Empresas de Infocif</b>
-								<span v-for="(filter, key) in filters" :key="key" @click="showModalFilter(filter.name)" class="show-modal-filter">
+								<span v-for="(filter, key) in orderFilters" :key="key" @click="showModalFilter(filter.name)" class="show-modal-filter">
 									<span class="filter-apply" v-if="filter.apply">
 										> {{ filter.name }} <span class="num-fil">( {{ filter.quantity | numeral('0,0') }} )</span>
 									</span>
@@ -154,7 +154,7 @@
 </template>
 
 <script>
-	import { handleScroll, howAnimation } from './../utils'
+	import { handleScroll, howAnimation, inArrayObject } from './../utils'
 	import { mapGetters } from 'vuex'
 	import swal from 'sweetalert2'
 	export default {
@@ -170,6 +170,12 @@
         selected_companies: 'filters/selected_companies',
         filters: 'filters/filters',
       }),
+      orderFilters: function () {
+        let arrayResult = this.applied_filters.map((item) => {
+          return inArrayObject(this.filters, item, `name`)
+        })
+        return arrayResult
+      }
     },
     mounted() {
       window.addEventListener('scroll', handleScroll); 
