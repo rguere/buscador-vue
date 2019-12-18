@@ -8,7 +8,7 @@
     </div>
     <div class="panel-body">
       <div v-if="search.empleados && search.empleados.length !== 0">
-        <div class="grid-3-columns-1fr">
+        <div class="grid-2-columns-1fr">
           <div v-for="(item, key) in search.empleados" :key="key">
             <label class="custon-checkboxs">
               <input type="checkbox"
