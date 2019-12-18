@@ -63,7 +63,7 @@
 						<div class="col-md-12">
 							<h5>
 								<b>Buscador Empresas de Infocif</b>
-								<span v-for="(filter, key) in filters" :key="key">
+								<span v-for="(filter, key) in filters" :key="key" @click="showModalFilter(filter.name)" class="show-modal-filter">
 									<span class="filter-apply" v-if="filter.apply">
 										> {{ filter.name }} <span class="num-fil">( {{ filter.quantity | numeral('0,0') }} )</span>
 									</span>
@@ -76,80 +76,80 @@
 		</div>
 		<el-dialog
 			:visible.sync="modalVisible"
-      width="95%"
-      :close-on-click-modal="false"
-      :show-close="false"
-      :destroy-on-close="true"
-      :center="true"
-      top="5vh">
-      <div>
-        <div class="btns-modal-header">
-          <div class="m-b-10">
-            <button class="btn btn-warning" @click="hideResults">
-              <i class="fa fa-arrow-left"></i> Vover
-            </button>
-            <button class="btn btn-orange m-l-5">
-              <i class="fa fa-list-alt"></i>
-              Visualizar
-              <span class="hidden-xs hidden-sm">resultados</span>
-            </button>
-          </div>
-          <div class="row m-b-10">
-            <div class="col-md-6">
-              <button class="btn btn-primary">
-                <i class="fa fa-print"></i>
-                Imprimir
-              </button>
-            </div>
-            <div class="col-md-6">
-              <div class="pull-right">
-                <button class="btn btn-info">
-                  <i class="fa fa-envelope"></i>
-                  Enviar al correo
-                </button>
-                <button class="btn btn-success m-l-5">
-                  <i class="fa fa-file-excel-o"></i>
-                  Descargar en excel
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <div class="text-center">
-                <button class="btn btn-warning">
-                  <i class="fa fa-save"></i>
-                  Guardar Columnas
-                </button>
-                <button class="btn btn-warning m-l-5">
-                  <i class="fa fa-save"></i>
-                  Listados Columnas Guardados
-                </button>
-                <button class="btn btn-warning m-l-5">
-                  <i class="fa fa-list"></i>
-                  Seleccionar Columnas
-                </button>
-              </div>
-            </div>
-            <div class="col-md-12">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th>Razón social de la empresa</th>
-                    <th>NIF</th>
-                    <th>Provincia</th>
-                    <th>Localidad</th>
-                    <th>Último año cuentas disponibles</th>
-                    <th>Ventas ultimo año disponible(en miles de €)</th>
-                    <th>Tipo de cuentas</th>
-                  </tr>
-                </thead>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    </el-dialog>
+			width="95%"
+			:close-on-click-modal="false"
+			:show-close="false"
+			:destroy-on-close="true"
+			:center="true"
+			top="5vh">
+			<div>
+				<div class="btns-modal-header">
+				<div class="m-b-10">
+					<button class="btn btn-warning" @click="hideResults">
+					<i class="fa fa-arrow-left"></i> Vover
+					</button>
+					<button class="btn btn-orange m-l-5">
+					<i class="fa fa-list-alt"></i>
+					Visualizar
+					<span class="hidden-xs hidden-sm">resultados</span>
+					</button>
+				</div>
+				<div class="row m-b-10">
+					<div class="col-md-6">
+					<button class="btn btn-primary">
+						<i class="fa fa-print"></i>
+						Imprimir
+					</button>
+					</div>
+					<div class="col-md-6">
+					<div class="pull-right">
+						<button class="btn btn-info">
+						<i class="fa fa-envelope"></i>
+						Enviar al correo
+						</button>
+						<button class="btn btn-success m-l-5">
+						<i class="fa fa-file-excel-o"></i>
+						Descargar en excel
+						</button>
+					</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+					<div class="text-center">
+						<button class="btn btn-warning">
+						<i class="fa fa-save"></i>
+						Guardar Columnas
+						</button>
+						<button class="btn btn-warning m-l-5">
+						<i class="fa fa-save"></i>
+						Listados Columnas Guardados
+						</button>
+						<button class="btn btn-warning m-l-5">
+						<i class="fa fa-list"></i>
+						Seleccionar Columnas
+						</button>
+					</div>
+					</div>
+					<div class="col-md-12">
+					<table class="table">
+						<thead>
+						<tr>
+							<th>Razón social de la empresa</th>
+							<th>NIF</th>
+							<th>Provincia</th>
+							<th>Localidad</th>
+							<th>Último año cuentas disponibles</th>
+							<th>Ventas ultimo año disponible(en miles de €)</th>
+							<th>Tipo de cuentas</th>
+						</tr>
+						</thead>
+					</table>
+					</div>
+				</div>
+				</div>
+			</div>
+			</el-dialog>
 	</div>
 </template>
 
@@ -240,6 +240,9 @@
 </script>
 
 <style lang="scss" scoped>
+  .show-modal-filter {
+    cursor: pointer;
+  }
 	.m-l-5 {
 		margin-left: 5px;
 	}
