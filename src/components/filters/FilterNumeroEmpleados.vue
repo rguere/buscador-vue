@@ -3,7 +3,7 @@
     <div class="panel-heading">
       <p class="panel-title roboto white">
         {{ title }}
-        <span class="span-info-right" v-if="selected_by_empleados !== 0"> ({{ selected_by_empleados | numeral('0,0') }} seleccionadas)</span>
+        <span class="span-info-right" v-if="selected_by_empleados !== 0"> ({{ selected_by_empleados | numeral('0,0') }} empresas seleccionadas)</span>
       </p>
     </div>
     <div class="panel-body">
@@ -79,7 +79,7 @@
                     <div class="panel-heading">
                       <p class="panel-title roboto white">
                         Seleccionar empresas por número de empleados (*Puede elegir más de una opción)
-                        <span class="span-info-right" v-if="selected_by_empleados !== 0"> ({{ selected_by_empleados | numeral('0,0') }} seleccionadas)</span>
+                        <span class="span-info-right" v-if="selected_by_empleados !== 0"> ({{ selected_by_empleados | numeral('0,0') }} empresas seleccionadas)</span>
                       </p>
                     </div>
                     <div class="panel-body">

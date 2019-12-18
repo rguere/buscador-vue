@@ -3,7 +3,7 @@
     <div class="panel-heading">
       <p class="panel-title roboto white">
         {{ title }}
-        <span class="span-info-right" v-if="selected_by_antiguedad !== 0"> ({{ selected_by_antiguedad | numeral('0,0') }} seleccionadas)</span>
+        <span class="span-info-right" v-if="selected_by_antiguedad !== 0"> ({{ selected_by_antiguedad | numeral('0,0') }} empresas seleccionadas)</span>
       </p>
     </div>
     <div class="panel-body">
