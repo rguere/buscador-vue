@@ -220,7 +220,7 @@
 <script>
   import { mapGetters } from 'vuex'
   import swal from 'sweetalert2'
-  import { required, between } from 'vuelidate/lib/validators'
+  import { required, maxLength } from 'vuelidate/lib/validators'
   import { inArrayObjectTreeselect, howAnimation } from './../../utils'
   export default {
     name: 'filter-antiguedad',
@@ -260,11 +260,11 @@
       return {
         ahnos_from: {
           required,
-          between: between(0, (this.ahnos_to)? this.ahnos_to: 100)
+          between: maxLength(9)
         },
         ahnos_to: {
           required,
-          between: between((this.ahnos_from)? this.ahnos_from: 0, 100)
+          between: maxLength(9)
         }
       }
     },

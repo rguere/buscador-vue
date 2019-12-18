@@ -271,7 +271,7 @@
 
 <script>
   import { mapGetters } from 'vuex'
-  import { required, between } from 'vuelidate/lib/validators'
+  import { required, maxLength } from 'vuelidate/lib/validators'
   import { spacesByDashes } from './../../utils'
   import swal from 'sweetalert2'
   export default {
@@ -307,11 +307,11 @@
       return {
         from_zip_code: {
           required,
-          between: between(0, (this.to_zip_code)? this.to_zip_code: 9999999)
+          maxLength: maxLength(5)
         },
         to_zip_code: {
           required,
-          between: between((this.from_zip_code)? this.from_zip_code: 0, 9999999)
+          maxLength: maxLength(5)
         }
       }
     },
@@ -438,9 +438,17 @@
         if (!this.$v.$invalid) {
           let from_zip_code = parseInt(this.from_zip_code, 10),
             to_zip_code = parseInt(this.to_zip_code, 10),
-            ranks = [];
+            ranks = [],
+            mayor = 0, menor = 0;
+          if(from_zip_code > to_zip_code){
+            mayor = from_zip_code
+            menor = to_zip_code
+          }else {
+            mayor = to_zip_code
+            menor = from_zip_code
+          }
           let zero_on_left = (this.from_zip_code.charAt(0) === '0' || this.to_zip_code.charAt(0) === '0')? true: false
-          for (var i = from_zip_code; i <= to_zip_code; i++) {
+          for (var i = menor; i <= mayor; i++) {
             ranks.push(`${(zero_on_left)?'0':''}${i}`)
           }
           let sin_salto = ranks.join(',')

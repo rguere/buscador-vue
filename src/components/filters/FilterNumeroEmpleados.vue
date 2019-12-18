@@ -188,7 +188,7 @@
 <script>
   import { mapGetters } from 'vuex'
   import swal from 'sweetalert2'
-  import { required, between } from 'vuelidate/lib/validators'
+  import { required, maxLength } from 'vuelidate/lib/validators'
   import { inArrayObjectTreeselect, howAnimation } from './../../utils'
   export default {
     name: 'filter-numero-empleados',
@@ -228,11 +228,11 @@
       return {
         ahnos_from: {
           required,
-          between: between(0, (this.ahnos_to)? this.ahnos_to: 100)
+          between: maxLength(9)
         },
         ahnos_to: {
           required,
-          between: between((this.ahnos_from)? this.ahnos_from: 0, 100)
+          between: maxLength(9)
         }
       }
     },
@@ -322,29 +322,6 @@
             this.loadingFrm = false
           }).catch(() => {
             this.loadingFrm = false
-          })
-        }
-      },
-      applyRange () {
-        if (this.daterange && this.daterange.length !== 0) {
-          this.hideModal()
-          this.loadingDaterange = true
-          this.form.empleados = []
-          this.form.empleados.push(`fechas:${this.daterange.join("|")}`)
-          if(this.daterange_incluir_null){
-            this.form.empleados.push("incluir_null")
-          }
-          this.$store.dispatch('search/filtrar', this.form).then((response) => {
-            this.updateNumberSelectedCompanies(response.cantidad)
-            this.$store.dispatch('filters/addFilters', {
-              name: this.title,
-              quantity: this.selected_by_empleados
-            })
-            this.areApplied = true
-            this.reapply = false
-            this.loadingDaterange = false
-          }).catch(() => {
-            this.loadingDaterange = false
           })
         }
       },
