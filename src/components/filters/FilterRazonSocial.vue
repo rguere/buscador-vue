@@ -15,7 +15,7 @@
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <input type="text" disabled v-model="dataFrm">
+                <label class="">{{ dataFrm }}</label>
               </div>
             </div>
             <div class="col-md-6">
