@@ -107,7 +107,7 @@
                               <input type="checkbox" v-model="incluir_null" name="">
                               <span class="geekmark"></span>
                               <span class="title">
-                                Seleccionar empresas por número de empleados
+                                Incluir aquellas empresas en las que se desconoce su número de empleados 
                               </span>
                             </label>
                           </div>
@@ -160,6 +160,15 @@
                                 :disabled="$v.$invalid || loadingAhnos">
                                 BUSCAR <i :class="(loadingAhnos)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
                             </button>
+                        </div>
+                        <div class="col-md-12">
+                          <label class="custon-checkboxs">
+                            <input type="checkbox" v-model="daterange_incluir_null" name="">
+                            <span class="geekmark"></span>
+                            <span class="title">
+                              Incluir aquellas empresas en las que se desconoce su número de empleados 
+                            </span>
+                          </label>
                         </div>
                       </div>
                     </div>
@@ -346,7 +355,7 @@
           this.loadingAhnos = true
           this.form.empleados = []
           this.form.empleados.push(`ahnos:${this.ahnos_from}|${this.ahnos_to}`)
-          if(this.incluir_null){
+          if(this.daterange_incluir_null){
             this.form.empleados.push("incluir_null")
           }
           this.$store.dispatch('search/filtrar', this.form).then((response) => {
