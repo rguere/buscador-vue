@@ -287,6 +287,7 @@
 				background-color: #dddddd;
 				color: #555;
 				border: 2px solid #ffffff;
+				margin: 1px;
 				&:hover, &.active {
 					background-color: #deebf7;
 					color: #0071BC;
