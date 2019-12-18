@@ -45,7 +45,7 @@
         <div>
           <div class=" float-right">
             <label class="custon-checkboxs">
-              <input type="checkbox" v-model="incluir_null" name="">
+              <input type="checkbox" v-model="selected_antiguedad" :value="{id: 'incluir_null', label: 'incluir_null'}" name="">
               <span class="geekmark"></span>
               <span class="title">
                 Incluir aquellas empresas en las que se desconoce su antigüedad
@@ -145,7 +145,7 @@
                         <div class="col-md-12">
                           <div class="">
                             <label class="custon-checkboxs">
-                              <input type="checkbox" v-model="incluir_null" name="">
+                              <input type="checkbox" v-model="selected_antiguedad" :value="{id: 'incluir_null', label: 'incluir_null'}" name="">
                               <span class="geekmark"></span>
                               <span class="title">
                                 Incluir aquellas empresas en las que se desconoce su antigüedad
@@ -194,7 +194,7 @@
                         <div class="col-md-12">
                           <div class="">
                             <label class="custon-checkboxs">
-                              <input type="checkbox" v-model="daterange_incluir_null" name="">
+                              <input type="checkbox" v-model="selected_antiguedad" :value="{id: 'incluir_null', label: 'incluir_null'}" name="">
                               <span class="geekmark"></span>
                               <span class="title">
                                 Incluir aquellas empresas en las que se desconoce su antigüedad
@@ -363,9 +363,6 @@
           this.loadingDaterange = true
           this.form.antiguedad = []
           this.form.antiguedad.push(`fechas:${this.daterange.join("|")}`)
-          if(this.daterange_incluir_null){
-            this.form.antiguedad.push("incluir_null")
-          }
           this.$store.dispatch('search/filtrar', this.form).then((response) => {
             this.updateNumberSelectedCompanies(response.cantidad)
             this.$store.dispatch('filters/addFilters', {
@@ -387,9 +384,6 @@
           this.loadingAhnos = true
           this.form.antiguedad = []
           this.form.antiguedad.push(`ahnos:${this.ahnos_from}|${this.ahnos_to}`)
-          if(this.incluir_null){
-            this.form.antiguedad.push("incluir_null")
-          }
           this.$store.dispatch('search/filtrar', this.form).then((response) => {
             this.updateNumberSelectedCompanies(response.cantidad)
             this.$store.dispatch('filters/addFilters', {
@@ -453,9 +447,6 @@
         this.selected_antiguedad.forEach((item) => {
           this.form.antiguedad.push(item.id)
         })
-        if (this.incluir_null) {
-          this.form.antiguedad.push("incluir_null")
-        }
         return this.form
       },
       selectAll () {

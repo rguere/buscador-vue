@@ -45,7 +45,7 @@
         <div>
           <div class="float-right">
             <label class="custon-checkboxs">
-              <input type="checkbox" v-model="incluir_null" name="">
+              <input type="checkbox" v-model="selected_empleados" :value="{id: 'incluir_null', label: 'incluir_null' }" name="">
               <span class="geekmark"></span>
               <span class="title">
                 Incluir aquellas empresas en las que se desconoce su número de empleados
@@ -104,7 +104,7 @@
                         <div class="col-md-12">
                           <div class="float-right">
                             <label class="custon-checkboxs">
-                              <input type="checkbox" v-model="incluir_null" name="">
+                              <input type="checkbox" v-model="selected_empleados" :value="{id: 'incluir_null', label: 'incluir_null' }" name="">
                               <span class="geekmark"></span>
                               <span class="title">
                                 Incluir aquellas empresas en las que se desconoce su número de empleados 
@@ -132,7 +132,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group" :class="{ 'has-error has-feedback': $v.ahnos_from.$error }">
-                              <label class="control-label" for="ahnos_from">De (incluido)</label>
+                              <label class="control-label" for="ahnos_from">De (incluido) <i class="fa fa-user-circle-o"></i></label>
                               <input type="text"
                                 v-model.trim="$v.ahnos_from.$model"
                                 required
@@ -143,7 +143,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group" :class="{ 'has-error has-feedback': $v.ahnos_to.$error }">
-                              <label class="control-label" for="ahnos_to">Hasta (incluido)</label>
+                              <label class="control-label" for="ahnos_to">Hasta (incluido) <i class="fa fa-user-circle-o"></i></label>
                               <input type="text"
                                 v-model.trim="$v.ahnos_to.$model"
                                 required
@@ -163,7 +163,7 @@
                         </div>
                         <div class="col-md-12">
                           <label class="custon-checkboxs">
-                            <input type="checkbox" v-model="daterange_incluir_null" name="">
+                            <input type="checkbox" v-model="selected_empleados" :value="{id: 'incluir_null', label: 'incluir_null' }" name="">
                             <span class="geekmark"></span>
                             <span class="title">
                               Incluir aquellas empresas en las que se desconoce su número de empleados 
