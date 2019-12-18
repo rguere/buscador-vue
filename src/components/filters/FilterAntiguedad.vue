@@ -166,28 +166,36 @@
                     </div>
                     <div class="panel-body">
                       <div class="row">
-                        <div class="col-md-6">
-                          <div class="form-group">
-                            <label class="control-label">Insertar la fecha de constitución de la(s) empresa(s)</label>
+                        <div class="col-md-4">
+                          <div class="block">
+                            <label class="demonstration">Desde (incluido)</label>
                             <el-date-picker
-                              v-model="daterange"
-                              class="form-control daterange"
-                              type="daterange"
+                              v-model="daterange[0]"
                               format="dd/MM/yyyy"
                               value-format="yyyy-MM-dd"
-                              range-separator="|"
-                              start-placeholder="Desde (incluido)"
-                              end-placeholder="Hasta (incluido)"
-                              :clearable="false">
+                              type="date"
+                              placeholder="(Introducir, en formato dd/mm/aaaa, la fecha de constitución)">
                             </el-date-picker>
                           </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
+                          <div class="block">
+                            <label class="demonstration">Hasta (incluido)</label>
+                            <el-date-picker
+                              v-model="daterange[1]"
+                              format="dd/MM/yyyy"
+                              value-format="yyyy-MM-dd"
+                              type="date"
+                              placeholder="(Introducir, en formato dd/mm/aaaa, la fecha de constitución)">
+                            </el-date-picker>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
                           <button
                             type="button" 
                             class="btn btn-info"
                             @click="applyRange"
-                            :disabled="daterange.length === 0">
+                            :disabled="(this.daterange[0] === null) || (this.daterange[1] === null)">
                               BUSCAR <i :class="(loadingDaterange)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
                           </button>
                         </div>
@@ -247,7 +255,7 @@
       showBtnApply: false,
       loadingFrm: false,
       modalVisible: false,
-      daterange: [],
+      daterange: [null, null],
       loadingDaterange: false,
       loadingAhnos: false,
       daterange_incluir_null: false,
@@ -358,7 +366,7 @@
         }
       },
       applyRange () {
-        if (this.daterange && this.daterange.length !== 0) {
+        if (this.daterange && this.daterange.length !== 0 && this.daterange[0] !== 0 && this.daterange[1] !== 0) {
           this.hideModal()
           this.loadingDaterange = true
           this.form.antiguedad = []
@@ -425,6 +433,7 @@
           this.updateNumberSelectedCompanies(0)
         }
         this.selected_by_antiguedad = 0
+        this.daterange = [null, null],
         this.$store.dispatch('filters/removeFilters', this.title)
         this.areApplied = false
         this.reapply = false
@@ -434,6 +443,7 @@
         this.form.antiguedad = []
         this.updateNumberSelectedCompanies(0)
         this.selected_by_antiguedad = 0
+        this.daterange = [null, null],
         this.$store.dispatch('filters/removeFilters', this.title)
         this.areApplied = false
         this.reapply = false
@@ -462,6 +472,21 @@
 
 <style lang="scss" scoped>
   @import './../../sass/filters/filters';
+
+  .block{
+    display: flex;
+    flex-direction: column;
+
+    .demonstration {
+      margin-bottom: 3px;
+    }
+
+    .el-date-editor{
+      width: 100%;
+    }
+
+  }
+
   .float-right {
     float: right;
   }
