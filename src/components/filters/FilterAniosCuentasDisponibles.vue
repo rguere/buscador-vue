@@ -44,14 +44,14 @@
           </div>
         </div>
         <div>
-          <div class="bg-g">
+          <div class="">
             <label class="custon-checkboxs">
               <input type="checkbox" name="">
               <span class="geekmark"></span>
               <span class="title">Aplicar en la búsqueda <i>al menos uno</i> de los años seleccionados</span>
             </label>
           </div>
-          <div class="bg-g">
+          <div class="">
             <label class="custon-checkboxs">
               <input type="checkbox" name="">
               <span class="geekmark"></span>

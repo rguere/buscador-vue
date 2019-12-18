@@ -43,7 +43,7 @@
           <p class="text-help">* Puede elegir más de una opción</p>
         </div>
         <div>
-          <div class="bg-g float-right">
+          <div class=" float-right">
             <label class="custon-checkboxs">
               <input type="checkbox" v-model="incluir_null" name="">
               <span class="geekmark"></span>
@@ -100,7 +100,7 @@
                               <label>años de antigüedad</label>
                             </div>
                             <div class="form-group anti-inputs" :class="{ 'has-error has-feedback': $v.ahnos_to.$error }">
-                              <label class="control-label" for="ahnos_to">De (incluido)</label>
+                              <label class="control-label" for="ahnos_to">Hasta (incluido)</label>
                               <input type="text"
                                 v-model.trim="$v.ahnos_to.$model"
                                 required
@@ -143,7 +143,7 @@
                           </div>
                         </div>
                         <div class="col-md-12">
-                          <div class="bg-g">
+                          <div class="">
                             <label class="custon-checkboxs">
                               <input type="checkbox" v-model="incluir_null" name="">
                               <span class="geekmark"></span>
@@ -192,7 +192,7 @@
                           </button>
                         </div>
                         <div class="col-md-12">
-                          <div class="bg-g">
+                          <div class="">
                             <label class="custon-checkboxs">
                               <input type="checkbox" v-model="daterange_incluir_null" name="">
                               <span class="geekmark"></span>

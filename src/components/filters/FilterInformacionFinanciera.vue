@@ -60,7 +60,6 @@
             <div class="title-informacion-financiera">
               Seleccionar Ejercicio
             </div>
-
             <div class="anios_checkboxs">
               <div>
                 <label class="custon-checkboxs">
@@ -69,7 +68,6 @@
                   <span class="title">2018</span>
                 </label>
               </div>
-
               <div>
                 <label class="custon-checkboxs">
                   <input type="checkbox" name="">
@@ -77,7 +75,6 @@
                   <span class="title">2017</span>
                 </label>
               </div>
-
               <div>
                 <label class="custon-checkboxs">
                   <input type="checkbox" name="">
@@ -85,7 +82,6 @@
                   <span class="title">2016</span>
                 </label>
               </div>
-
               <div>
                 <label class="custon-checkboxs">
                   <input type="checkbox" name="">
@@ -94,23 +90,20 @@
                 </label>
               </div>
             </div>
-
             <div class="flex-space-between-flex-end">
               <p></p>
               <p class="text-help">* Puede elegir más de una opción</p>
             </div>
-
-
           </div>
           <div>
-            <div class="bg-g">
+            <div class="">
               <label class="custon-checkboxs">
                 <input type="checkbox" name="">
                 <span class="geekmark"></span>
                 <span class="title">Aplicar en la búsqueda <i>al menos uno</i> de los años seleccionados</span>
               </label>
             </div>
-            <div class="bg-g">
+            <div class="">
               <label class="custon-checkboxs">
                 <input type="checkbox" name="">
                 <span class="geekmark"></span>

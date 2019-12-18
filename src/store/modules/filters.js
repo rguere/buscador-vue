@@ -11,6 +11,7 @@ const initialState = () => {
       Localidades: [],
       antiguedad: [],
       razonSocial: [],
+      empleados: [],
     },
     applied_filters: [],
     selected_companies: 0,
