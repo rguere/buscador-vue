@@ -37,7 +37,7 @@
       </div>
       <div class="form-group" v-if="zip_codes && zip_codes.invalidos.length !== 0 && !search_edit">
         <p>Códigos no encontrados</p>
-        <span v-for="(item, key) in zip_codes.invalidos" :key="key" class="label label-danger label-no-encontrados">{{ item }}</span>
+        <span v-for="(item, key) in zip_codes.invalidos.slice(0, 8)" :key="key" class="label label-danger label-no-encontrados">{{ item }}</span>
         <hr>
       </div>
       <div class="form-group">
@@ -256,7 +256,7 @@
                   </ul>
                   <div class="form-group" v-if="zip_codes && zip_codes.invalidos.length !== 0 && !search_edit">
                     <p>Códigos no encontrados</p>
-                    <span v-for="(item, key) in zip_codes.invalidos" :key="key" class="label label-danger label-no-encontrados">{{ item }}</span>
+                    <span v-for="(item, key) in zip_codes.invalidos.slice(0, 8)" :key="key" class="label label-danger label-no-encontrados">{{ item }}</span>
                     <hr>
                   </div>
                 </div>
