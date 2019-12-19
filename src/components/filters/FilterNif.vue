@@ -29,7 +29,7 @@
                     :value="item">
                   <span class="geekmark"></span>
                   <span class="name-checkbox">{{ item.label }}</span>
-                  <span class="num-fil">({{ item.data | numeral('0,0') }})</span>
+                  <span class="num-fil"> ({{ item.data | numeral('0,0') }})</span>
               </label>
             </div>
           </div>
@@ -38,7 +38,7 @@
       <div class="form-group" style="overflow-y: scroll; max-height: 130px;" v-if="list_nif && list_nif.invalidos.length !== 0 && !search_edit">
         <p>NIF no encontrados</p>
         <span v-for="(item, key) in list_nif.invalidos.slice(0, limitNifInvalidos)" :key="key" class="label label-danger label-no-encontrados">{{ item }}</span>
-        <a href="" v-on:click.stop.prevent="showAllInvalidos" v-if="list_nif.invalidos.length >= limitNifInvalidos" class="btn" style="display: block;">{{ (list_nif.invalidos.length == limitNifInvalidos) ? 'Ver menos' : 'Ver todos' }} </a>
+        <a href="" v-on:click.stop.prevent="showAllInvalidos" v-if="list_nif.invalidos.length >= limitNifInvalidos" class="btn" style="display: block;">{{ (list_nif.invalidos.length == limitNifInvalidos) ? 'Ver menos' : `Ver todos (${list_nif.invalidos.length})` }} </a>
         <hr>
       </div>
       <div class="form-group">
@@ -205,16 +205,14 @@
                           :value="item">
                         <span class="geekmark"></span>
                         <span class="name-checkbox">{{ item.label }}</span>
-                        <span class="num-fil">
-                          ({{ item.data | numeral('0,0') }})
-                        </span>
+                        <span class="num-fil"> ({{ item.data | numeral('0,0') }})</span>
                       </label>
                     </li>
                   </ul>
                   <div class="form-group" style="overflow-y: scroll; max-height: 130px;" v-if="list_nif && list_nif.invalidos.length !== 0 && !search_edit">
                     <p>NIF no encontrados</p>
                     <span v-for="(item, key) in list_nif.invalidos.slice(0, limitNifInvalidos)" :key="key" class="label label-danger label-no-encontrados">{{ item }}</span>
-                    <a href="" v-on:click.stop.prevent="showAllInvalidos" v-if="list_nif.invalidos.length >= limitNifInvalidos" class="btn" style="display: block;">{{ (list_nif.invalidos.length == limitNifInvalidos) ? 'Ver menos' : 'Ver todos' }} </a>
+                    <a href="" v-on:click.stop.prevent="showAllInvalidos" v-if="list_nif.invalidos.length >= limitNifInvalidos" class="btn" style="display: block;">{{ (list_nif.invalidos.length == limitNifInvalidos) ? 'Ver menos' : `Ver todos (${list_nif.invalidos.length})` }} </a>
                     <hr>
                   </div>
                 </div>

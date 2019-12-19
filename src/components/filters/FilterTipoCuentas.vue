@@ -11,7 +11,7 @@
                     <input type="checkbox" name="">
                     <span class="geekmark"></span>
                     <span class="name-checkbox">Checkbox</span>
-                    <span class="num-fil">(100.000)</span>
+                    <span class="num-fil"> (100.000)</span>
                 </label>
             </div>
             <div>
@@ -19,7 +19,7 @@
                     <input type="checkbox" name="">
                     <span class="geekmark"></span>
                     <span class="name-checkbox">Checkbox</span>
-                    <span class="num-fil">(100.000)</span>
+                    <span class="num-fil"> (100.000)</span>
                 </label>
             </div>
             <div>
@@ -27,7 +27,7 @@
                     <input type="checkbox" name="">
                     <span class="geekmark"></span>
                     <span class="name-checkbox">Checkbox</span>
-                    <span class="num-fil">(100.000)</span>
+                    <span class="num-fil"> (100.000)</span>
                 </label>
             </div>
         </div>

@@ -19,7 +19,7 @@
                 :value="item">
               <span class="geekmark"></span>
               <span class="name-checkbox">{{ item.label }}</span>
-              <span class="num-fil">({{ item.data | numeral('0,0') }})</span>
+              <span class="num-fil"> ({{ item.data | numeral('0,0') }})</span>
             </label>
           </div>
         </div>
@@ -27,7 +27,7 @@
           <ul class="grid-4-columns-1fr">
             <li v-for="(item, key) in selected_children" :key="key">
               <span class="name-checkbox">- {{ formatearLabel(item) }} </span>
-              <span class="num-fil">({{ item.data | numeral('0,0') }})</span>
+              <span class="num-fil"> ({{ item.data | numeral('0,0') }})</span>
             </li>
           </ul>
         </div>
@@ -134,7 +134,7 @@
                             :value="item">
                           <span class="geekmark"></span>
                           <span class="name-checkbox">{{ item.label }}</span>
-                          <span class="num-fil" v-if="item.id != 'all'">({{ item.data | numeral('0,0') }})</span>
+                          <span class="num-fil" v-if="item.id != 'all'"> ({{ item.data | numeral('0,0') }})</span>
                         </label> 
                       </li>
                     </ul>

@@ -19,7 +19,7 @@
                 :value="item">
               <span class="geekmark"></span>
               <span class="name-checkbox">{{ item.label }}</span>
-              <span class="num-fil">({{ item.data | numeral('0,0') }})</span>
+              <span class="num-fil"> ({{ item.data | numeral('0,0') }})</span>
             </label>
           </div>
         </div>

@@ -29,7 +29,7 @@
                     :value="item">
                   <span class="geekmark"></span>
                   <span class="name-checkbox">{{ item.label }}</span>
-                  <span class="num-fil">({{ item.data | numeral('0,0') }})</span>
+                  <span class="num-fil"> ({{ item.data | numeral('0,0') }})</span>
               </label>
             </div>
           </div>
@@ -38,7 +38,7 @@
       <div class="form-group" style="overflow-y: scroll; max-height: 130px;" v-if="zip_codes && zip_codes.invalidos.length !== 0 && !search_edit">
         <p>Códigos no encontrados</p>
         <span v-for="(item, key) in zip_codes.invalidos.slice(0, limitCodeInvalidos)" :key="key" class="label label-danger label-no-encontrados">{{ item }}</span>
-        <a href="" v-on:click.stop.prevent="showAllInvalidos" v-if="zip_codes.invalidos.length >= limitCodeInvalidos" class="btn" style="display: block;">{{ (zip_codes.invalidos.length == limitCodeInvalidos) ? 'Ver menos' : 'Ver todos' }} </a>
+        <a href="" v-on:click.stop.prevent="showAllInvalidos" v-if="zip_codes.invalidos.length >= limitCodeInvalidos" class="btn" style="display: block;">{{ (zip_codes.invalidos.length == limitCodeInvalidos) ? 'Ver menos' : `Ver todos (${zip_codes.invalidos.length})` }} </a>
         <hr>
       </div>
       <div class="form-group">
@@ -249,16 +249,14 @@
                           :value="item">
                         <span class="geekmark"></span>
                         <span class="name-checkbox">{{ item.label }}</span>
-                        <span class="num-fil">
-                          ({{ item.data | numeral('0,0') }})
-                        </span>
+                        <span class="num-fil"> ({{ item.data | numeral('0,0') }})</span>
                       </label>
                     </li>
                   </ul>
                   <div class="form-group" style="overflow-y: scroll; max-height: 130px;" v-if="zip_codes && zip_codes.invalidos.length !== 0 && !search_edit">
                     <p>Códigos no encontrados</p>
                     <span v-for="(item, key) in zip_codes.invalidos.slice(0, limitCodeInvalidos)" :key="key" class="label label-danger label-no-encontrados">{{ item }}</span>
-                    <a href="" v-on:click.stop.prevent="showAllInvalidos" v-if="zip_codes.invalidos.length >= limitCodeInvalidos" class="btn" style="display: block;">{{ (zip_codes.invalidos.length == limitCodeInvalidos) ? 'Ver menos' : 'Ver todos' }} </a>
+                    <a href="" v-on:click.stop.prevent="showAllInvalidos" v-if="zip_codes.invalidos.length >= limitCodeInvalidos" class="btn" style="display: block;">{{ (zip_codes.invalidos.length == limitCodeInvalidos) ? 'Ver menos' : `Ver todos (${zip_codes.invalidos.length})` }} </a>
                     <hr>
                   </div>
                 </div>
