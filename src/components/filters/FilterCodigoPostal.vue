@@ -35,9 +35,10 @@
           </div>
         </div>
       </div>
-      <div class="form-group" v-if="zip_codes && zip_codes.invalidos.length !== 0 && !search_edit">
+      <div class="form-group" style="overflow-y: scroll; max-height: 130px;" v-if="zip_codes && zip_codes.invalidos.length !== 0 && !search_edit">
         <p>Códigos no encontrados</p>
-        <span v-for="(item, key) in zip_codes.invalidos.slice(0, 8)" :key="key" class="label label-danger label-no-encontrados">{{ item }}</span>
+        <span v-for="(item, key) in zip_codes.invalidos.slice(0, limitCodeInvalidos)" :key="key" class="label label-danger label-no-encontrados">{{ item }}</span>
+        <a href="" v-on:click.stop.prevent="showAllInvalidos" v-if="zip_codes.invalidos.length >= limitCodeInvalidos" class="btn" style="display: block;">{{ (zip_codes.invalidos.length == limitCodeInvalidos) ? 'Ver menos' : 'Ver todos' }} </a>
         <hr>
       </div>
       <div class="form-group">
@@ -254,9 +255,10 @@
                       </label>
                     </li>
                   </ul>
-                  <div class="form-group" v-if="zip_codes && zip_codes.invalidos.length !== 0 && !search_edit">
+                  <div class="form-group" style="overflow-y: scroll; max-height: 130px;" v-if="zip_codes && zip_codes.invalidos.length !== 0 && !search_edit">
                     <p>Códigos no encontrados</p>
-                    <span v-for="(item, key) in zip_codes.invalidos.slice(0, 8)" :key="key" class="label label-danger label-no-encontrados">{{ item }}</span>
+                    <span v-for="(item, key) in zip_codes.invalidos.slice(0, limitCodeInvalidos)" :key="key" class="label label-danger label-no-encontrados">{{ item }}</span>
+                    <a href="" v-on:click.stop.prevent="showAllInvalidos" v-if="zip_codes.invalidos.length >= limitCodeInvalidos" class="btn" style="display: block;">{{ (zip_codes.invalidos.length == limitCodeInvalidos) ? 'Ver menos' : 'Ver todos' }} </a>
                     <hr>
                   </div>
                 </div>
@@ -301,6 +303,7 @@
       to_zip_code: '',
       loadingFile: false,
       innerVisible: false,
+      limitCodeInvalidos: 8,
       file: {},
     }),
     validations() {
@@ -494,6 +497,14 @@
         this.modalVisible = false
         this.$v.$reset()
       },
+      showAllInvalidos () {
+        if (this.limitCodeInvalidos === 8){
+          this.limitCodeInvalidos = this.zip_codes.invalidos.length
+        }else {
+          this.limitCodeInvalidos = 8
+        }
+        
+      }
     }
   }
 </script>

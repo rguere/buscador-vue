@@ -35,9 +35,10 @@
           </div>
         </div>
       </div>
-      <div class="form-group" v-if="list_nif && list_nif.invalidos.length !== 0 && !search_edit">
+      <div class="form-group" style="overflow-y: scroll; max-height: 130px;" v-if="list_nif && list_nif.invalidos.length !== 0 && !search_edit">
         <p>NIF no encontrados</p>
-        <span v-for="(item, key) in list_nif.invalidos" :key="key" class="label label-danger label-no-encontrados">{{ item }}</span>
+        <span v-for="(item, key) in list_nif.invalidos.slice(0, limitNifInvalidos)" :key="key" class="label label-danger label-no-encontrados">{{ item }}</span>
+        <a href="" v-on:click.stop.prevent="showAllInvalidos" v-if="list_nif.invalidos.length >= limitNifInvalidos" class="btn" style="display: block;">{{ (list_nif.invalidos.length == limitNifInvalidos) ? 'Ver menos' : 'Ver todos' }} </a>
         <hr>
       </div>
       <div class="form-group">
@@ -210,9 +211,10 @@
                       </label>
                     </li>
                   </ul>
-                  <div class="form-group" v-if="list_nif && list_nif.invalidos.length !== 0 && !search_edit">
+                  <div class="form-group" style="overflow-y: scroll; max-height: 130px;" v-if="list_nif && list_nif.invalidos.length !== 0 && !search_edit">
                     <p>NIF no encontrados</p>
-                    <span v-for="(item, key) in list_nif.invalidos" :key="key" class="label label-danger label-no-encontrados">{{ item }}</span>
+                    <span v-for="(item, key) in list_nif.invalidos.slice(0, limitNifInvalidos)" :key="key" class="label label-danger label-no-encontrados">{{ item }}</span>
+                    <a href="" v-on:click.stop.prevent="showAllInvalidos" v-if="list_nif.invalidos.length >= limitNifInvalidos" class="btn" style="display: block;">{{ (list_nif.invalidos.length == limitNifInvalidos) ? 'Ver menos' : 'Ver todos' }} </a>
                     <hr>
                   </div>
                 </div>
@@ -255,6 +257,7 @@
       loadingFile: false,
       innerVisible: false,
       file: {},
+      limitNifInvalidos: 8
     }),
     mounted() {
       this.$root.$on('clean_filter', (filter) => {
@@ -396,6 +399,13 @@
       hideModal () {
         this.modalVisible = false
       },
+      showAllInvalidos () {
+        if (this.limitNifInvalidos === 8){
+          this.limitNifInvalidos = this.list_nif.invalidos.length
+        }else {
+          this.limitNifInvalidos = 8
+        }
+      }
     }
   }
 </script>
