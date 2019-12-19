@@ -132,7 +132,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group" :class="{ 'has-error has-feedback': $v.employees_from.$error }">
-                              <label class="control-label" for="employees_from">De (incluido) <i class="fa fa-user-circle-o"></i></label>
+                              <label class="control-label" for="employees_from">De (incluido) <img src="./../../assets/images/user-tie.svg" style="width: 20px;" alt="user-tie"></label>
                               <input type="text"
                                 v-model.trim="$v.employees_from.$model"
                                 required
@@ -143,7 +143,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group" :class="{ 'has-error has-feedback': $v.employees_to.$error }">
-                              <label class="control-label" for="employees_to">Hasta (incluido) <i class="fa fa-user-circle-o"></i></label>
+                              <label class="control-label" for="employees_to">Hasta (incluido) <img src="./../../assets/images/user-tie.svg" style="width: 20px;" alt="user-tie"></label>
                               <input type="text"
                                 v-model.trim="$v.employees_to.$model"
                                 required
