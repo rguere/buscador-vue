@@ -252,7 +252,7 @@
         if (filter === this.title) { this.clean() }
       })
       this.$root.$on('show_modal_filter', (filter) => {
-        if (filter === this.title) { this.showModal() }
+        if (filter === this.title) { this.modalVisible = true }
       })
       this.$root.$on('empty_filter', (filter) => {
         if (filter === this.title) { this.emptyFilter() }
