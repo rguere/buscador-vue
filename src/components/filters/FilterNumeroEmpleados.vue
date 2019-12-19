@@ -156,9 +156,9 @@
                             <button
                                 type="button" 
                                 class="btn btn-info"
-                                @click="applyAhnos"
-                                :disabled="$v.$invalid || loadingAhnos">
-                                BUSCAR <i :class="(loadingAhnos)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
+                                @click="applyEmpleados"
+                                :disabled="$v.$invalid || loadingEmpleados">
+                                BUSCAR <i :class="(loadingEmpleados)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
                             </button>
                         </div>
                         <div class="col-md-12">
@@ -217,7 +217,7 @@
       modalVisible: false,
       daterange: [],
       loadingDaterange: false,
-      loadingAhnos: false,
+      loadingEmpleados: false,
       daterange_incluir_null: false,
       ahnos_to: '',
       ahnos_from: '',
@@ -325,13 +325,13 @@
           })
         }
       },
-      applyAhnos () {
+      applyEmpleados () {
         this.$v.$touch()
         if (!this.$v.$invalid) {
           this.hideModal()
-          this.loadingAhnos = true
+          this.loadingEmpleados = true
           this.form.empleados = []
-          this.form.empleados.push(`ahnos:${this.ahnos_from}|${this.ahnos_to}`)
+          this.form.empleados.push(`empleados:${this.ahnos_from}|${this.ahnos_to}`)
           if(this.daterange_incluir_null){
             this.form.empleados.push("incluir_null")
           }
@@ -343,9 +343,9 @@
             })
             this.areApplied = true
             this.reapply = false
-            this.loadingAhnos = false
+            this.loadingEmpleados = false
           }).catch(() => {
-            this.loadingAhnos = false
+            this.loadingEmpleados = false
           })
         }
       },
