@@ -131,25 +131,25 @@
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <div class="form-group" :class="{ 'has-error has-feedback': $v.ahnos_from.$error }">
-                              <label class="control-label" for="ahnos_from">De (incluido) <i class="fa fa-user-circle-o"></i></label>
+                            <div class="form-group" :class="{ 'has-error has-feedback': $v.employees_from.$error }">
+                              <label class="control-label" for="employees_from">De (incluido) <i class="fa fa-user-circle-o"></i></label>
                               <input type="text"
-                                v-model.trim="$v.ahnos_from.$model"
+                                v-model.trim="$v.employees_from.$model"
                                 required
                                 class="form-control"
-                                name="ahnos_from"
-                                id="ahnos_from">
+                                name="employees_from"
+                                id="employees_from">
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <div class="form-group" :class="{ 'has-error has-feedback': $v.ahnos_to.$error }">
-                              <label class="control-label" for="ahnos_to">Hasta (incluido) <i class="fa fa-user-circle-o"></i></label>
+                            <div class="form-group" :class="{ 'has-error has-feedback': $v.employees_to.$error }">
+                              <label class="control-label" for="employees_to">Hasta (incluido) <i class="fa fa-user-circle-o"></i></label>
                               <input type="text"
-                                v-model.trim="$v.ahnos_to.$model"
+                                v-model.trim="$v.employees_to.$model"
                                 required
                                 class="form-control"
-                                name="ahnos_to"
-                                id="ahnos_to">
+                                name="employees_to"
+                                id="employees_to">
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -219,18 +219,18 @@
       loadingDaterange: false,
       loadingEmpleados: false,
       daterange_incluir_null: false,
-      ahnos_to: '',
-      ahnos_from: '',
+      employees_to: '',
+      employees_from: '',
       incluir_null: false,
       all: false,
     }),
     validations() {
       return {
-        ahnos_from: {
+        employees_from: {
           required,
           between: maxLength(9)
         },
-        ahnos_to: {
+        employees_to: {
           required,
           between: maxLength(9)
         }
@@ -331,7 +331,18 @@
           this.hideModal()
           this.loadingEmpleados = true
           this.form.empleados = []
-          this.form.empleados.push(`empleados:${this.ahnos_from}|${this.ahnos_to}`)
+          let employees_from = parseInt(this.employees_from, 10),
+            employees_to = parseInt(this.employees_to, 10),
+            mayor = 0, menor = 0;
+            console.log(employees_to, employees_from);
+          if(employees_from > employees_to){
+            mayor = employees_from
+            menor = employees_to
+          }else {
+            mayor = employees_to
+            menor = employees_from
+          }
+          this.form.empleados.push(`empleados:${menor}|${mayor}`)
           if(this.daterange_incluir_null){
             this.form.empleados.push("incluir_null")
           }
