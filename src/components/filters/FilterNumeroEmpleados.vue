@@ -334,7 +334,6 @@
           let employees_from = parseInt(this.employees_from, 10),
             employees_to = parseInt(this.employees_to, 10),
             mayor = 0, menor = 0;
-            console.log(employees_to, employees_from);
           if(employees_from > employees_to){
             mayor = employees_from
             menor = employees_to
