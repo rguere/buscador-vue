@@ -169,6 +169,21 @@ span.num-fil { color: #2196f3; font-weight: bold; }
   margin-right: 5px;
 }
 
+.m-t-10 {
+  margin-top: 10px;
+}
+
+.checkboxs-resaldado {
+  background: #333;
+  color: #fff;
+  padding: 0 10px;
+  border-radius: 5px;
+}
+
+.checkboxs-resaldado.w-50-p {
+  width: 50%;
+}
+
 @media (max-width: 950px) {
 
   .grid-5-columns-1fr {

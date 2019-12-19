@@ -43,7 +43,7 @@
           <p class="text-help">* Puede elegir más de una opción</p>
         </div>
         <div>
-          <div class="float-right">
+          <div class="checkboxs-resaldado float-right">
             <label class="custon-checkboxs">
               <input type="checkbox" v-model="selected_empleados" :value="{id: 'incluir_null', label: 'incluir_null' }" name="">
               <span class="geekmark"></span>
@@ -102,7 +102,7 @@
                             </div>
                         </div>
                         <div class="col-md-12">
-                          <div class="float-right">
+                          <div class="checkboxs-resaldado float-right">
                             <label class="custon-checkboxs">
                               <input type="checkbox" v-model="selected_empleados" :value="{id: 'incluir_null', label: 'incluir_null' }" name="">
                               <span class="geekmark"></span>
@@ -162,13 +162,15 @@
                             </button>
                         </div>
                         <div class="col-md-12">
-                          <label class="custon-checkboxs">
-                            <input type="checkbox" v-model="selected_empleados" :value="{id: 'incluir_null', label: 'incluir_null' }" name="">
-                            <span class="geekmark"></span>
-                            <span class="title">
-                              Incluir aquellas empresas en las que se desconoce su número de empleados 
-                            </span>
-                          </label>
+                          <div class="checkboxs-resaldado w-50-p">
+                            <label class="custon-checkboxs">
+                              <input type="checkbox" v-model="selected_empleados" :value="{id: 'incluir_null', label: 'incluir_null' }" name="">
+                              <span class="geekmark"></span>
+                              <span class="title">
+                                Incluir aquellas empresas en las que se desconoce su número de empleados 
+                              </span>
+                            </label>
+                          </div>
                         </div>
                       </div>
                     </div>

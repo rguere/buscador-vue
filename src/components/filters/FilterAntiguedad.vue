@@ -43,7 +43,7 @@
           <p class="text-help">* Puede elegir más de una opción</p>
         </div>
         <div>
-          <div class=" float-right">
+          <div class="checkboxs-resaldado float-right">
             <label class="custon-checkboxs">
               <input type="checkbox" v-model="selected_antiguedad" :value="{id: 'incluir_null', label: 'incluir_null'}" name="">
               <span class="geekmark"></span>
@@ -142,7 +142,7 @@
                           </div>
                         </div>
                         <div class="col-md-12">
-                          <div class="">
+                          <div class="checkboxs-resaldado w-50-p">
                             <label class="custon-checkboxs">
                               <input type="checkbox" v-model="selected_antiguedad" :value="{id: 'incluir_null', label: 'incluir_null'}" name="">
                               <span class="geekmark"></span>
@@ -199,7 +199,7 @@
                           </button>
                         </div>
                         <div class="col-md-12">
-                          <div class="">
+                          <div class="checkboxs-resaldado w-50-p m-t-10">
                             <label class="custon-checkboxs">
                               <input type="checkbox" v-model="selected_antiguedad" :value="{id: 'incluir_null', label: 'incluir_null'}" name="">
                               <span class="geekmark"></span>
