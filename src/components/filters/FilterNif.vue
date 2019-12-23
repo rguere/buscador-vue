@@ -15,10 +15,16 @@
           <div class="div-scroll-200">
             <button
               type="button"        
-              v-if="list_nif && list_nif.validos.length !== 0 && !search_edit"
+              v-if="list_nif && list_nif.validos.length !== 0 && !search_edit && dataFrm.length !== 0"
               class="btn btn-xs btn-info pull-right" @click="editSearch" 
               :disabled="dataFrm.length === 0 || loadingValidar">
                 Editar búsqueda <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-edit'"></i>
+            </button>
+            <button
+              type="button"        
+              v-if="list_nif && list_nif.validos.length !== 0 && !search_edit && dataFrm.length === 0"
+              class="btn btn-xs btn-danger pull-right" @click="cleanFile">
+                Limpiar búsqueda <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-undo'"></i>
             </button>
             <div v-for="(item, key) in list_nif.validos" :key="key">
               <label class="custon-checkboxs">
@@ -194,21 +200,29 @@
                   </p>
                 </div>
                 <div class="panel-body">
-                  <ul class="ul_selected_provinces_localidad div-scroll-200"  id="ul_selected_provinces_localidad">
-                    <li v-for="(item, key) in list_nif.validos" :key="key">
-                      <label class="custon-checkboxs">
-                        <input type="checkbox"
-                          :name="`checkbox_list_${item.id}`"
-                          v-model="selected_list_nif"
-                          @change="handleChangeList(item, $event)"
-                          :id="`checkbox_list_${item.id}`"
-                          :value="item">
-                        <span class="geekmark"></span>
-                        <span class="name-checkbox">{{ item.label }}</span>
-                        <span class="num-fil"> ({{ item.data | numeral('0,0') }})</span>
-                      </label>
-                    </li>
-                  </ul>
+                  <div class="div-scroll-200">
+                    <button
+                      type="button"        
+                      v-if="list_nif && list_nif.validos.length !== 0 && !search_edit && dataFrm.length === 0"
+                      class="btn btn-xs btn-danger pull-right" @click="cleanFile">
+                        Limpiar búsqueda <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-undo'"></i>
+                    </button>
+                    <ul class="ul_selected_provinces_localidad"  id="ul_selected_provinces_localidad">
+                      <li v-for="(item, key) in list_nif.validos" :key="key">
+                        <label class="custon-checkboxs">
+                          <input type="checkbox"
+                            :name="`checkbox_list_${item.id}`"
+                            v-model="selected_list_nif"
+                            @change="handleChangeList(item, $event)"
+                            :id="`checkbox_list_${item.id}`"
+                            :value="item">
+                          <span class="geekmark"></span>
+                          <span class="name-checkbox">{{ item.label }}</span>
+                          <span class="num-fil"> ({{ item.data | numeral('0,0') }})</span>
+                        </label>
+                      </li>
+                    </ul>
+                  </div>
                   <div class="form-group" style="overflow-y: scroll; max-height: 130px;" v-if="list_nif && list_nif.invalidos.length !== 0 && !search_edit">
                     <p>NIF no encontrados</p>
                     <span v-for="(item, key) in list_nif.invalidos.slice(0, limitNifInvalidos)" :key="key" class="label label-danger label-no-encontrados">{{ item }}</span>
@@ -344,6 +358,13 @@
         this.areApplied = false
         this.search_edit = true
       },
+      cleanFile() {
+        this.form.listNIF = []
+        this.list_nif = { validos: [], invalidos: [] }
+        this.selected_by_list_nif = 0
+        this.areApplied = false
+        this.search_edit = true
+      },
       emptyFilter () {
         this.form.listNIF = []
         this.list_nif = { validos: [], invalidos: [] }
@@ -381,6 +402,7 @@
             this.list_nif.validos = (response.validos)? response.validos: []
             this.list_nif.invalidos = (response.invalidos)? response.invalidos: []
             this.selected_list_nif = this.list_nif.validos
+            this.dataFrm = ''
             this.loadingFile = false
             this.search_edit = false
           }).catch(() => {

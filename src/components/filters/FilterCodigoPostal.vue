@@ -15,10 +15,16 @@
           <div class="div-scroll-200">
             <button
               type="button"        
-              v-if="zip_codes && zip_codes.validos.length !== 0 && !search_edit"
+              v-if="zip_codes && zip_codes.validos.length !== 0 && !search_edit && dataFrm.length !== 0"
               class="btn btn-xs btn-info pull-right" @click="editSearch" 
               :disabled="dataFrm.length === 0 || loadingValidar">
                 Editar búsqueda <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-edit'"></i>
+            </button>
+            <button
+              type="button"        
+              v-if="zip_codes && zip_codes.validos.length !== 0 && !search_edit && dataFrm.length === 0"
+              class="btn btn-xs btn-danger pull-right" @click="cleanFile">
+                Limpiar búsqueda <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-undo'"></i>
             </button>
             <div v-for="(item, key) in zip_codes.validos" :key="key">
               <label class="custon-checkboxs">
@@ -238,21 +244,29 @@
                   </p>
                 </div>
                 <div class="panel-body">
-                  <ul class="ul_selected_provinces_localidad"  id="ul_selected_provinces_localidad">
-                    <li v-for="(item, key) in zip_codes.validos" :key="key">
-                      <label class="custon-checkboxs">
-                        <input type="checkbox"
-                          :name="`checkbox_list_${item.id}`"
-                          v-model="selected_zip_codes"
-                          @change="handleChangeList(item, $event)"
-                          :id="`checkbox_list_${item.id}`"
-                          :value="item">
-                        <span class="geekmark"></span>
-                        <span class="name-checkbox">{{ item.label }}</span>
-                        <span class="num-fil"> ({{ item.data | numeral('0,0') }})</span>
-                      </label>
-                    </li>
-                  </ul>
+                  <div class="div-scroll-200">
+                    <button
+                      type="button"        
+                      v-if="zip_codes && zip_codes.validos.length !== 0 && !search_edit && dataFrm.length === 0"
+                      class="btn btn-xs btn-danger pull-right" @click="cleanFile">
+                        Limpiar búsqueda <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-undo'"></i>
+                    </button>
+                    <ul class="ul_selected_provinces_localidad"  id="ul_selected_provinces_localidad">
+                      <li v-for="(item, key) in zip_codes.validos" :key="key">
+                        <label class="custon-checkboxs">
+                          <input type="checkbox"
+                            :name="`checkbox_list_${item.id}`"
+                            v-model="selected_zip_codes"
+                            @change="handleChangeList(item, $event)"
+                            :id="`checkbox_list_${item.id}`"
+                            :value="item">
+                          <span class="geekmark"></span>
+                          <span class="name-checkbox">{{ item.label }}</span>
+                          <span class="num-fil"> ({{ item.data | numeral('0,0') }})</span>
+                        </label>
+                      </li>
+                    </ul>
+                  </div>
                   <div class="form-group" style="overflow-y: scroll; max-height: 130px;" v-if="zip_codes && zip_codes.invalidos.length !== 0 && !search_edit">
                     <p>Códigos no encontrados</p>
                     <span v-for="(item, key) in zip_codes.invalidos.slice(0, limitCodeInvalidos)" :key="key" class="label label-danger label-no-encontrados">{{ item }}</span>
@@ -414,6 +428,13 @@
         this.areApplied = false
         this.search_edit = true
       },
+      cleanFile() {
+        this.form.codigosPostales = []
+        this.zip_codes = { validos: [], invalidos: [] }
+        this.selected_by_zip_codes = 0
+        this.areApplied = false
+        this.search_edit = true
+      },
       editSearch () {
         this.search_edit = true
         setTimeout(() => { document.getElementById('zip_codes').focus() }, 100)
@@ -477,6 +498,7 @@
             this.zip_codes.validos = (response.validos)? response.validos: []
             this.zip_codes.invalidos = (response.invalidos)? response.invalidos: []
             this.selected_zip_codes = this.zip_codes.validos
+            this.dataFrm = ''
             this.loadingFile = false
             this.search_edit = false
           }).catch(() => {
