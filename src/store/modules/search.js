@@ -124,7 +124,7 @@ export const actions = {
   },
   async validateRazonSocial({ commit }, razon_social){
     try{
-      const { data } = await axios.post('/buscador/razonSocial/buscar', {lista: razon_social})
+      const { data } = await axios.get(`/buscador/razonSocial/buscar?RazonSocial=${razon_social}&page=0&size=25`)
       return data
     } catch (e) {
      commit(types.LOADING_SEARCH, {

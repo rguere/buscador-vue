@@ -7,10 +7,10 @@
       </p>
     </div>
     <div class="panel-body">
-      <div class="form-group" v-if="(social_reasons && social_reasons.FichaEmpresas.length === 0) || (search_edit)">
+      <div class="form-group" v-if="(social_reasons && social_reasons.empresas.length === 0) || (search_edit)">
         <textarea v-model="dataFrm" id="social_reasons" class="form-control" placeholder="Escriba aqui el nombre o razón social de la empresa"></textarea>
       </div>
-      <div class="panel panel-default cd" v-if="social_reasons && social_reasons.FichaEmpresas.length !== 0 && !search_edit">
+      <div class="panel panel-default cd" v-if="social_reasons && social_reasons.empresas.length !== 0 && !search_edit">
         <div class="panel-body">
           <div class="row">
             <div class="col-md-6">
@@ -21,7 +21,7 @@
             <div class="col-md-6">
               <button
                 type="button"        
-                v-if="social_reasons && social_reasons.FichaEmpresas.length !== 0 && !search_edit"
+                v-if="social_reasons && social_reasons.empresas.length !== 0 && !search_edit"
                 class="btn btn-xs btn-info pull-right" @click="editSearch" 
                 :disabled="dataFrm.length === 0 || loadingValidar">
                   Editar búsqueda <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-edit'"></i>
@@ -29,15 +29,15 @@
             </div>
           </div>
           <div class="div-scroll-200">
-            <div v-for="(item, key) in social_reasons.FichaEmpresas" :key="key">
+            <div v-for="(item, key) in social_reasons.empresas" :key="key">
                 <label class="custon-checkboxs">
                     <input type="checkbox"
-                      :name="`checkbox_${item.id}`"
+                      :name="`checkbox_${item.IdEmpresa}`"
                       v-model="selected_social_reasons"
-                      :id="`checkbox_${item.id}`"
+                      :id="`checkbox_${item.IdEmpresa}`"
                       :value="item">
                     <span class="geekmark"></span>
-                    <span class="name-checkbox">{{ item.razonSocial }}</span>
+                    <span class="name-checkbox">{{ item.RazonSocial }}</span>
                 </label>
             </div>
           </div>
@@ -49,7 +49,7 @@
             Ver detalles <i class="fa fa-plus-circle"></i>
           </button>
           <button
-              v-if="social_reasons && social_reasons.FichaEmpresas.length !== 0 && !search_edit"
+              v-if="social_reasons && social_reasons.empresas.length !== 0 && !search_edit"
               :disabled="selected_social_reasons.length === 0 || loadingApply"
               type="button"
               class="btn btn-success m-r-5"
@@ -67,7 +67,7 @@
         <div>
           <button
             type="button"
-            v-if="social_reasons && social_reasons.FichaEmpresas.length === 0 || search_edit" 
+            v-if="social_reasons && social_reasons.empresas.length === 0 || search_edit" 
             class="btn btn-info" @click="validateRazonSocial" 
             :disabled="dataFrm.length === 0 || loadingValidar">
               BUSCAR <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
@@ -92,7 +92,7 @@
             </div>
             <div>
               <button
-                  v-if="social_reasons && social_reasons.FichaEmpresas.length !== 0 && !search_edit"
+                  v-if="social_reasons && social_reasons.empresas.length !== 0 && !search_edit"
                   :disabled="selected_social_reasons.length === 0 || loadingApply"
                   type="button"
                   class="btn btn-success"
@@ -120,7 +120,7 @@
                   <textarea v-model="dataFrm" id="social_reasons" class="form-control"></textarea>
                   <button
                     type="button"
-                    v-if="social_reasons && social_reasons.FichaEmpresas.length === 0 || search_edit" 
+                    v-if="social_reasons && social_reasons.empresas.length === 0 || search_edit" 
                     class="btn btn-info pull-right top-10" @click="validateRazonSocial" 
                     :disabled="dataFrm.length === 0 || loadingValidar">
                       BUSCAR <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
@@ -128,7 +128,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-12" v-if="social_reasons && social_reasons.FichaEmpresas.length !== 0 && !search_edit">
+            <div class="col-md-12" v-if="social_reasons && social_reasons.empresas.length !== 0 && !search_edit">
               <div class="panel panel-default cd">
                 <div class="panel-heading">
                   <p class="panel-title roboto white">
@@ -148,25 +148,28 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr v-for="(item, key) in social_reasons.FichaEmpresas" :key="key">
+                      <tr v-for="(item, key) in social_reasons.empresas" :key="key">
                         <th scope="row">
                           <div class="checkbox">
                             <label>
                               <input
                                 type="checkbox"
-                                :name="`checkbox_table_${item.id}`"
+                                :name="`checkbox_table_${item.IdEmpresa}`"
                                 v-model="selected_social_reasons"
-                                :id="`checkbox_table_${item.id}`"
+                                :id="`checkbox_table_${item.IdEmpresa}`"
                                 :value="item">
-                              {{ item.razonSocial }}
+                              {{ item.RazonSocial }}
                             </label>
                           </div>
                         </th>
-                        <td>{{ item.cif }}</td>
-                        <td>{{ item.provincia }}</td>
-                        <td>{{ item.localidad }}</td>
-                        <td>{{ item.fechaActoRegistro }}</td>
-                        <td>{{ item.fechaGeneracion }}</td>
+                        <td>{{ item.CIF }}</td>
+                        <td>{{ item.Provincia }}</td>
+                        <td>{{ item.Localidad }}</td>
+                        <td>{{ item.FechaGeneracion }}</td>
+                        <td>
+                          {{ (item.UltimaCuentaAnual)? item.UltimaCuentaAnual.Ejercicio : ''  }}
+                          {{ (item.UltimaCuentaAnual)? item.UltimaCuentaAnual.ResultadoEjercicio : '' }}
+                        </td>
                       </tr>
                     </tbody>
                   </table>
@@ -198,7 +201,9 @@
       search_edit: true,
       dataFrm: '',
       social_reasons: {
-        FichaEmpresas: [], 
+        total: 0,
+        cantidad: 0,
+        empresas: [],
       },
       selected_social_reasons: [],
       selected_by_social_reasons: 0,
@@ -230,13 +235,13 @@
       validateRazonSocial(){
         this.loadingValidar = true  
         this.$store.dispatch('search/validateRazonSocial', this.dataFrm).then((response) => {
-          this.social_reasons.FichaEmpresas = (response.FichaEmpresas)? response.FichaEmpresas: []
-          //this.selected_social_reasons = this.social_reasons.FichaEmpresas
+          this.social_reasons.empresas = (response.empresas)? response.empresas: []
+          //this.selected_social_reasons = this.social_reasons.empresas
           this.loadingValidar = false
           this.search_edit = false
         }).catch(() => {
           this.loadingValidar = false
-          this.social_reasons = { FichaEmpresas: [] }
+          this.social_reasons = { total: 0, cantidad: 0, empresas: [] }
           this.selected_social_reasons = []
         })
       },
@@ -282,7 +287,7 @@
         this.form.codigosPostales = []
         this.dataFrm = ''
         this.to_social_reason = ''
-        this.social_reasons = { FichaEmpresas: [] }
+        this.social_reasons = { total: 0, cantidad: 0, empresas: [] }
         if (this.applied_filters.length > 1) {
           this.$store.dispatch('search/filtrar', this.form).then((response) => {
             this.updateNumberSelectedCompanies(response.cantidad)
@@ -298,7 +303,7 @@
       },
       emptyFilter () {
         this.form.codigosPostales = []
-        this.social_reasons = { FichaEmpresas: [] }
+        this.social_reasons = { total: 0, cantidad: 0, empresas: [] }
         this.updateNumberSelectedCompanies(0)
         this.selected_by_social_reasons = 0
         this.$store.dispatch('filters/removeFilters', this.title)
