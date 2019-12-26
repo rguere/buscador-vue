@@ -81,7 +81,7 @@
                   </div>
                   <div class="panel-body">
                     <div class="row">
-                      <div class="col-md-8">
+                      <!-- <div class="col-md-8">
                         <div class="form-group">
                           <label class="control-label" for="SearchTheProvinceorTown">Selecciona la comunidad, provincia o localidad</label>
                           <input type="text"
@@ -116,8 +116,36 @@
                           style="margin-top: 23px;">
                             BUSCAR <i :class="(loadingSearchTheProvinceorTown)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
                         </button>
+                      </div> -->
+                      <div class="col-md-12">
+                        <label class="control-label" for="SearchTheProvinceorTown">Busca y selecciona localidades</label>
+                        <el-select
+                          id="SearchTheProvinceorTown"
+                          name="SearchTheProvinceorTown"
+                          v-model="valueSelect"
+                          multiple
+                          filterable
+                          remote
+                          reserve-keyword
+                          placeholder="Busca y selecciona localidades"
+                          :remote-method="remoteMethod"
+                          :loading="loadingSelect"
+                          @change="changeMethod">
+                          <el-option
+                            v-for="item in optionsSelect"
+                            :key="item.id"
+                            :label="item.label"
+                            :value="item.id">
+                          </el-option>
+                        </el-select>
+                        {{ valueSelect }}
+                        <br>
                       </div>
                       <div class="col-md-12">
+                        <el-input
+                        placeholder="Selecciona la comunidad, provincia o localidad"
+                        v-model="filterText">
+                        </el-input>
                         <div style="height: 400px; overflow-y: scroll;">
                           <el-tree
                             class="filter-tree"
@@ -243,7 +271,11 @@
         children: 'children',
         label: 'label',
         data: 'data'
-      }
+      },
+      optionsSelect: [],
+      valueSelect: [],
+      listSelect: [],
+      loadingSelect: false,
     }),
     watch: {
       selected_provinces_localidad: function (newProvincesLocalidad) {
@@ -257,6 +289,9 @@
       },
       search: function (newSearch) {
         this.options[0].children = (newSearch && newSearch.provincia_localidad) ? newSearch.provincia_localidad : []
+      },
+      filterText(val) {
+        this.$refs.tree.filter(val);
       }
     },
     mounted() {
@@ -404,15 +439,8 @@
         this.loadingSearchTheProvinceorTown = true
         this.ResultTheProvinceorTown = []
         this.$store.dispatch('search/searchLocalidades', this.SearchTheProvinceorTown).then((response) => {
-          if (response && Array.isArray(response)) {
-            this.ResultTheProvinceorTown = response.map((item) => {
-              return {
-                id: item.rutaLocalidad,
-                data: (item.data)? item.data : 0,
-                children: [],
-                label: item.localidad,
-              }
-            });
+          if (response.results && Array.isArray(response.results)) {
+            this.ResultTheProvinceorTown = response.results
           }
           this.loadingSearchTheProvinceorTown = false
         }).catch(() => {
@@ -463,6 +491,31 @@
       },
       handleCheckChange() {//data, checked, indeterminate
         console.log(this.$refs.tree.getCheckedNodes())
+      },
+      remoteMethod(query) {
+        if (query !== '') {
+          this.loadingSelect = true
+          this.$store.dispatch('search/searchLocalidades', query).then((response) => {
+            if (response.results && Array.isArray(response.results)) {
+              this.optionsSelect = response.results
+            }
+            this.loadingSelect = false
+          }).catch(() => {
+            this.loadingSelect = false
+            this.optionsSelect = []
+          })
+        } else {
+          this.optionsSelect = []
+        }
+      },
+      changeMethod (elements) {
+        console.log('changeMethod: ', elements)
+
+        elements.forEach((item) => {
+          let result = inArrayObjectTreeselect(this.search.provincia_localidad, item)
+          console.log(result, this.selected_provinces_localidad)
+        })
+
       }
     }
   }
@@ -470,4 +523,9 @@
 
 <style lang="scss" scoped>
   @import './../../sass/filters/filters';
+  
+  .el-select.el-select--medium {
+    width: 100%;
+  }
+
 </style>
