@@ -72,7 +72,7 @@ export const actions = {
   },
   async searchLocalidades({ commit }, search){
     try{
-      const { data } = await axios.get(`/buscador/ubicacion/localidades?buscar=${search}`)
+      const { data } = await axios.get(`/buscador/localidades?buscar=${search}`)
       return data
     } catch (e) {
      commit(types.LOADING_SEARCH, {
