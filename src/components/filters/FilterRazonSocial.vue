@@ -254,7 +254,7 @@
           this.loadingApply = true
           this.search_edit = false
           this.form.razonSocial = this.selected_social_reasons.map((item) => {
-            return item.razonSocial
+            return item.RazonSocial
           })
           this.$store.dispatch('search/filtrar', this.form).then((response) => {
             this.$store.dispatch('filters/addFilters', {
