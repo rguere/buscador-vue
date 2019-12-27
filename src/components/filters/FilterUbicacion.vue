@@ -142,7 +142,7 @@
                       </div>
                       <div class="col-md-12">
                         <div style="height: 400px; overflow-y: scroll; margin-top: 10px;">
-                          <el-tree
+                          <!-- <el-tree
                             class="filter-tree"
                             :data="options"
                             node-key="id"
@@ -155,8 +155,8 @@
                             accordion
                             @check-change="handleCheckChange"
                             @check="handleCheck">
-                            </el-tree>
-                          <!-- <treeselect
+                            </el-tree> -->
+                          <treeselect
                             valueFormat="object"
                             name="options"
                             id="options"
@@ -179,7 +179,7 @@
                               {{ node.label }} <span class="num-fil" v-if="node.raw.id != 'all'">({{ node.raw.data | numeral('0,0') }})</span>
                               <span v-if="shouldShowCount" :class="countClassName">({{ count }})</span>
                             </label>
-                          </treeselect> -->
+                          </treeselect>
                         </div>
                       </div>
                     </div>
@@ -445,7 +445,7 @@
           this.ResultTheProvinceorTown = []
         })
       },
-      handleCheck (data, checked) {
+      handleCheck () { //data, checked
         //console.log(data, checked)
       },
       inputTreeselect () { //values
@@ -489,7 +489,7 @@
         if (!value) return true;
         return data.label.toLowerCase().indexOf(value.toLowerCase()) !== -1;
       },
-      handleCheckChange(data, checked, indeterminate) {//data, checked, indeterminate
+      handleCheckChange(data, checked) {//data, checked, indeterminate
         //console.log(data, checked, indeterminate)
         if (checked) {
           let respalSelectedPL = [...this.selected_provinces_localidad]
