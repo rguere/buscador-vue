@@ -7938,6 +7938,11 @@ fieldset[disabled] .btn-yahoo.active {
     margin: 0;
     line-height: 1.1em;
 }
+.title_no_font {
+    font-weight: normal;
+    margin: 0;
+    line-height: 1.1em;
+}
 .title small {
     color: #777;
 }

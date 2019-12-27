@@ -140,7 +140,7 @@
 							<th>Provincia</th>
 							<th>Localidad</th>
 							<th>Último año cuentas disponibles</th>
-							<th>Ventas ultimo año disponible(en miles de €)</th>
+							<!--<th>Ventas ultimo año disponible(en miles de €)</th>-->
 							<th>Tipo de cuentas</th>
 						</tr>
 						</thead>

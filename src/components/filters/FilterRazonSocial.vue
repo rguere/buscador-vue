@@ -118,9 +118,9 @@
                 </div>
                 <div class="panel-body">
                   <textarea v-model="dataFrm" id="social_reasons" class="form-control"></textarea>
+                  <!--  v-if="social_reasons && social_reasons.empresas.length === 0 || search_edit"  -->
                   <button
-                    type="button"
-                    v-if="social_reasons && social_reasons.empresas.length === 0 || search_edit" 
+                    type="button"                   
                     class="btn btn-info pull-right top-10" @click="validateRazonSocial" 
                     :disabled="dataFrm.length === 0 || loadingValidar">
                       BUSCAR <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
@@ -144,7 +144,7 @@
                         <th scope="col">Provincia</th>
                         <th scope="col">Localidad</th>
                         <th scope="col">Último año cuentas disponibles</th>
-                        <th scope="col">Ventas último año disponible (miles de €)</th>
+                        <!--<th scope="col">Ventas último año disponible (miles de €)</th>-->
                       </tr>
                     </thead>
                     <tbody>
@@ -165,11 +165,14 @@
                         <td>{{ item.CIF }}</td>
                         <td>{{ item.Provincia }}</td>
                         <td>{{ item.Localidad }}</td>
-                        <td>{{ item.FechaGeneracion }}</td>
                         <td>
+                          <!--{{ item.FechaGeneracion }}-->
+                          {{ (item.UltimaCuentaAnual)? item.UltimaCuentaAnual.Ejercicio : ''  }}
+                        </td>
+                        <!-- <td>
                           {{ (item.UltimaCuentaAnual)? item.UltimaCuentaAnual.Ejercicio : ''  }}
                           {{ (item.UltimaCuentaAnual)? item.UltimaCuentaAnual.ResultadoEjercicio : '' }}
-                        </td>
+                        </td> -->
                       </tr>
                     </tbody>
                   </table>
