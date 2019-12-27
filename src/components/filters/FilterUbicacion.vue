@@ -124,6 +124,7 @@
                           name="SearchTheProvinceorTown"
                           v-model="valueSelect"
                           multiple
+                          clearable
                           filterable
                           remote
                           reserve-keyword
@@ -131,6 +132,7 @@
                           :remote-method="remoteMethod"
                           :loading="loadingSelect"
                           @change="changeMethod"
+                          @clear="changeClear"
                           @remove-tag="changeRemoveTag">
                           <el-option
                             v-for="item in optionsSelect"
@@ -289,6 +291,17 @@
       },
       filterText(val) {
         this.$refs.tree.filter(val);
+      },
+      valueSelect (elements) {
+        let respalSelectedPL = []
+        elements.forEach((item) => {
+          let result = inArrayObjectTreeselect(this.search.provincia_localidad, item)
+          if (result) {
+            respalSelectedPL.push(result)
+          }
+        })
+        respalSelectedPL = removeDuplicates(respalSelectedPL, 'id')
+        this.selected_provinces_localidad = [...respalSelectedPL]
       }
     },
     mounted() {
@@ -520,19 +533,14 @@
           this.optionsSelect = []
         }
       },
-      changeRemoveTag (id_elemet) {
-        this.selected_provinces_localidad = this.selected_provinces_localidad.filter(item => item.id !== id_elemet)
-      }, 
-      changeMethod (elements) {
-        let respalSelectedPL = [...this.selected_provinces_localidad]
-        elements.forEach((item) => {
-          let result = inArrayObjectTreeselect(this.search.provincia_localidad, item)
-          if (result) {
-            respalSelectedPL.push(result)
-          }
-        })
-        respalSelectedPL = removeDuplicates(respalSelectedPL, 'id')
-        this.selected_provinces_localidad = [...respalSelectedPL]
+      changeRemoveTag () {
+        //this.selected_provinces_localidad = this.selected_provinces_localidad.filter(item => item.id !== id_elemet)
+      },
+      changeClear (element, checked) {
+        //console.log(element, checked)
+      },
+      changeMethod () {
+        
       }
     }
   }
