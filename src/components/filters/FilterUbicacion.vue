@@ -142,10 +142,10 @@
                         <br>
                       </div>
                       <div class="col-md-12">
-                        <el-input
+                        <!-- <el-input
                         placeholder="Selecciona la comunidad, provincia o localidad"
                         v-model="filterText">
-                        </el-input>
+                        </el-input> -->
                         <div style="height: 400px; overflow-y: scroll;">
                           <el-tree
                             class="filter-tree"
@@ -236,7 +236,7 @@
 <script>
   import { mapGetters } from 'vuex'
   import swal from 'sweetalert2'
-  import { inArrayObjectTreeselect, howAnimation } from './../../utils'
+  import { inArrayObjectTreeselect, howAnimation, removeDuplicates } from './../../utils'
   export default {
     name: 'filter-ubicacion',
     computed: mapGetters({
@@ -490,7 +490,7 @@
         return data.label.toLowerCase().indexOf(value.toLowerCase()) !== -1;
       },
       handleCheckChange() {//data, checked, indeterminate
-        console.log(this.$refs.tree.getCheckedNodes())
+        //console.log(this.$refs.tree.getCheckedNodes())
       },
       remoteMethod(query) {
         if (query !== '') {
@@ -509,13 +509,15 @@
         }
       },
       changeMethod (elements) {
-        console.log('changeMethod: ', elements)
-
+        let respalSelectedPL = [...this.selected_provinces_localidad];
         elements.forEach((item) => {
           let result = inArrayObjectTreeselect(this.search.provincia_localidad, item)
-          console.log(result, this.selected_provinces_localidad)
+          if (result) {
+            respalSelectedPL.push(result)
+          }
         })
-
+        respalSelectedPL = removeDuplicates(respalSelectedPL, 'id')
+        this.selected_provinces_localidad = [...respalSelectedPL]
       }
     }
   }
