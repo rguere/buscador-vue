@@ -130,7 +130,8 @@
                           placeholder="Busca y selecciona localidades"
                           :remote-method="remoteMethod"
                           :loading="loadingSelect"
-                          @change="changeMethod">
+                          @change="changeMethod"
+                          @remove-tag="changeRemoveTag">
                           <el-option
                             v-for="item in optionsSelect"
                             :key="item.id"
@@ -138,7 +139,6 @@
                             :value="item.id">
                           </el-option>
                         </el-select>
-                        {{ valueSelect }}
                         <br>
                       </div>
                       <div class="col-md-12">
@@ -508,8 +508,11 @@
           this.optionsSelect = []
         }
       },
+      changeRemoveTag (id_elemet) {
+        this.selected_provinces_localidad = this.selected_provinces_localidad.filter(item => item.id !== id_elemet)
+      }, 
       changeMethod (elements) {
-        let respalSelectedPL = [...this.selected_provinces_localidad];
+        let respalSelectedPL = [...this.selected_provinces_localidad]
         elements.forEach((item) => {
           let result = inArrayObjectTreeselect(this.search.provincia_localidad, item)
           if (result) {
