@@ -139,14 +139,9 @@
                             :value="item.id">
                           </el-option>
                         </el-select>
-                        <br>
                       </div>
                       <div class="col-md-12">
-                        <!-- <el-input
-                        placeholder="Selecciona la comunidad, provincia o localidad"
-                        v-model="filterText">
-                        </el-input> -->
-                        <div style="height: 400px; overflow-y: scroll;">
+                        <div style="height: 400px; overflow-y: scroll; margin-top: 10px;">
                           <el-tree
                             class="filter-tree"
                             :data="options"
@@ -157,7 +152,9 @@
                             :default-expand-all="false"
                             :default-expanded-keys="['all']"
                             ref="tree"
-                            @check-change="handleCheckChange">
+                            accordion
+                            @check-change="handleCheckChange"
+                            @check="handleCheck">
                             </el-tree>
                           <!-- <treeselect
                             valueFormat="object"
@@ -448,6 +445,9 @@
           this.ResultTheProvinceorTown = []
         })
       },
+      handleCheck (data, checked) {
+        //console.log(data, checked)
+      },
       inputTreeselect () { //values
       },
       selectTreeselect () {
@@ -489,7 +489,19 @@
         if (!value) return true;
         return data.label.toLowerCase().indexOf(value.toLowerCase()) !== -1;
       },
-      handleCheckChange() {//data, checked, indeterminate
+      handleCheckChange(data, checked, indeterminate) {//data, checked, indeterminate
+        //console.log(data, checked, indeterminate)
+        if (checked) {
+          let respalSelectedPL = [...this.selected_provinces_localidad]
+          let result = inArrayObjectTreeselect(this.search.provincia_localidad, data.id)
+          if (result) {
+            respalSelectedPL.push(result)
+          }
+          respalSelectedPL = removeDuplicates(respalSelectedPL, 'id')
+          this.selected_provinces_localidad = [...respalSelectedPL]
+        }else {
+          this.changeRemoveTag(data.id)
+        }
         //console.log(this.$refs.tree.getCheckedNodes())
       },
       remoteMethod(query) {
