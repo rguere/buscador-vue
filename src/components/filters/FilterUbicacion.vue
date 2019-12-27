@@ -536,7 +536,7 @@
       changeRemoveTag () {
         //this.selected_provinces_localidad = this.selected_provinces_localidad.filter(item => item.id !== id_elemet)
       },
-      changeClear (element, checked) {
+      changeClear () { //element, checked
         //console.log(element, checked)
       },
       changeMethod () {
