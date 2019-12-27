@@ -14,8 +14,19 @@
 @import 'transitions';
 /* @import 'estilosres.css'; */
 
+.vue-treeselect{
+  
+  .vue-treeselect__control  {
+    display: none;
+  }
+}
+
 .margin-top-20 {
   margin-top: 20px;
+}
+
+.margin-top-10 {
+  margin-top: 10px;
 }
 
 .btn-action-search {

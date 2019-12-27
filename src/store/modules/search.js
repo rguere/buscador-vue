@@ -70,6 +70,16 @@ export const actions = {
       })
     }
   },
+  async searchLocalidades({ commit }, search){
+    try{
+      const { data } = await axios.get(`/buscador/localidades?buscar=${search}`)
+      return data
+    } catch (e) {
+     commit(types.LOADING_SEARCH, {
+        loading: false
+      })
+    }
+  },
   async validateZipCodes({ commit }, zip_codes){
     try{
       const { data } = await axios.post('/buscador/codigoPostal/validar', {lista: zip_codes})

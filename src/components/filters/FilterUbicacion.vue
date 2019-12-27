@@ -79,32 +79,110 @@
                       CCAA, Provincia o Localidad encontradas en base a el (los) nombre(s) introducido(s).
                     </p>
                   </div>
-                  <div style="height: 400px;">
-                    <label class="control-label" for="options">Selecciona la comunidad, provincia o localidad </label>
-                    <treeselect
-                      valueFormat="object"
-                      name="options"
-                      id="options"
-                      :multiple="true"
-                      :options="options"
-                      :always-open="true"
-                      :default-expand-level="1"
-                      :load-options="fetchSearch"
-                      :limit="0"
-                      :limitText="t => ''"
-                      :disableFuzzyMatching="true"
-                      @input="inputTreeselect"
-                      @select="selectTreeselect"
-                      @deselect="deselectTreeselect"
-                      placeholder="Seleccionar"
-                      search-nested
-                      v-model="selected_provinces_localidad"
-                      >
-                      <label slot="option-label" slot-scope="{ node, shouldShowCount, count, labelClassName, countClassName }" :class="labelClassName">
-                        {{ node.label }} <span class="num-fil" v-if="node.raw.id != 'all'">({{ node.raw.data | numeral('0,0') }})</span>
-                        <span v-if="shouldShowCount" :class="countClassName">({{ count }})</span>
-                      </label>
-                    </treeselect>
+                  <div class="panel-body">
+                    <div class="row">
+                      <!-- <div class="col-md-8">
+                        <div class="form-group">
+                          <label class="control-label" for="SearchTheProvinceorTown">Selecciona la comunidad, provincia o localidad</label>
+                          <input type="text"
+                            v-model="SearchTheProvinceorTown"
+                            required
+                            class="form-control"
+                            name="SearchTheProvinceorTown"
+                            placeholder="Selecciona la comunidad, provincia o localidad" 
+                            id="SearchTheProvinceorTown">
+                        </div>
+                        <div class="form-group" v-if="ResultTheProvinceorTown.length != 0">
+                          <div v-for="(item, key) in ResultTheProvinceorTown" :key="key">
+                            <label class="custon-checkboxs">
+                              <input type="checkbox"
+                                :name="`checkbox_${item.id}`"
+                                v-model="selected_provinces_localidad"
+                                @change="handleChange(item, $event)"
+                                :id="`checkbox_${item.id}`"
+                                :value="item">
+                              <span class="geekmark"></span>
+                              <span class="name-checkbox">{{ item.label }}</span>
+                              <span class="num-fil"> ({{ item.data | numeral('0,0') }})</span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <button
+                          type="button"
+                          class="btn btn-info" @click="searchProvinceorTown" 
+                          :disabled="SearchTheProvinceorTown.length === 0 || loadingSearchTheProvinceorTown"
+                          style="margin-top: 23px;">
+                            BUSCAR <i :class="(loadingSearchTheProvinceorTown)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
+                        </button>
+                      </div> -->
+                      <div class="col-md-12">
+                        <label class="control-label" for="SearchTheProvinceorTown">Busca y selecciona localidades</label>
+                        <el-select
+                          id="SearchTheProvinceorTown"
+                          name="SearchTheProvinceorTown"
+                          v-model="valueSelect"
+                          multiple
+                          filterable
+                          remote
+                          reserve-keyword
+                          placeholder="Busca y selecciona localidades"
+                          :remote-method="remoteMethod"
+                          :loading="loadingSelect"
+                          @change="changeMethod"
+                          @remove-tag="changeRemoveTag">
+                          <el-option
+                            v-for="item in optionsSelect"
+                            :key="item.id"
+                            :label="item.label"
+                            :value="item.id">
+                          </el-option>
+                        </el-select>
+                      </div>
+                      <div class="col-md-12">
+                        <div style="height: 400px; overflow-y: scroll; margin-top: 10px;">
+                          <!-- <el-tree
+                            class="filter-tree"
+                            :data="options"
+                            node-key="id"
+                            :props="defaultProps"
+                            show-checkbox
+                            :filter-node-method="filterNode"
+                            :default-expand-all="false"
+                            :default-expanded-keys="['all']"
+                            ref="tree"
+                            accordion
+                            @check-change="handleCheckChange"
+                            @check="handleCheck">
+                            </el-tree> -->
+                          <treeselect
+                            valueFormat="object"
+                            name="options"
+                            id="options"
+                            :multiple="true"
+                            :options="options"
+                            :always-open="true"
+                            :default-expand-level="1"
+                            :load-options="fetchSearch"
+                            :limit="0"
+                            :limitText="t => ''"
+                            :disableFuzzyMatching="true"
+                            @input="inputTreeselect"
+                            @select="selectTreeselect"
+                            @deselect="deselectTreeselect"
+                            placeholder="Seleccionar"
+                            search-nested
+                            v-model="selected_provinces_localidad"
+                            >
+                            <label slot="option-label" slot-scope="{ node, shouldShowCount, count, labelClassName, countClassName }" :class="labelClassName">
+                              {{ node.label }} <span class="num-fil" v-if="node.raw.id != 'all'">({{ node.raw.data | numeral('0,0') }})</span>
+                              <span v-if="shouldShowCount" :class="countClassName">({{ count }})</span>
+                            </label>
+                          </treeselect>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -155,7 +233,7 @@
 <script>
   import { mapGetters } from 'vuex'
   import swal from 'sweetalert2'
-  import { inArrayObjectTreeselect, howAnimation } from './../../utils'
+  import { inArrayObjectTreeselect, howAnimation, removeDuplicates } from './../../utils'
   export default {
     name: 'filter-ubicacion',
     computed: mapGetters({
@@ -177,11 +255,24 @@
         isDefaultExpanded: true,
         children: []
       }],
+      SearchTheProvinceorTown: 'madrid',
+      ResultTheProvinceorTown: [],
+      loadingSearchTheProvinceorTown: false,
       areApplied: false,
       reapply: false,
       showBtnApply: false,
       loadingFrm: false,
-      modalVisible: false
+      modalVisible: false,
+      filterText: '',
+      defaultProps: {
+        children: 'children',
+        label: 'label',
+        data: 'data'
+      },
+      optionsSelect: [],
+      valueSelect: [],
+      listSelect: [],
+      loadingSelect: false,
     }),
     watch: {
       selected_provinces_localidad: function (newProvincesLocalidad) {
@@ -195,6 +286,9 @@
       },
       search: function (newSearch) {
         this.options[0].children = (newSearch && newSearch.provincia_localidad) ? newSearch.provincia_localidad : []
+      },
+      filterText(val) {
+        this.$refs.tree.filter(val);
       }
     },
     mounted() {
@@ -310,6 +404,9 @@
         this.$store.dispatch('filters/removeFilters', this.title)
         this.areApplied = false
         this.reapply = false
+        this.loadingSearchTheProvinceorTown = false
+        this.ResultTheProvinceorTown = []
+        this.SearchTheProvinceorTown = ''
       },
       emptyFilter () {
         this.selected_children = []
@@ -321,6 +418,9 @@
         this.$store.dispatch('filters/removeFilters', this.title)
         this.areApplied = false
         this.reapply = false
+        this.loadingSearchTheProvinceorTown = false
+        this.ResultTheProvinceorTown = []
+        this.SearchTheProvinceorTown = ''
       },
       handleChange () { //province, event
         this.reapply = (this.areApplied)? true: this.areApplied
@@ -331,6 +431,22 @@
         checkboxs.forEach((item) => {
           item.checked = true
         })
+      },
+      searchProvinceorTown () {
+        this.loadingSearchTheProvinceorTown = true
+        this.ResultTheProvinceorTown = []
+        this.$store.dispatch('search/searchLocalidades', this.SearchTheProvinceorTown).then((response) => {
+          if (response.results && Array.isArray(response.results)) {
+            this.ResultTheProvinceorTown = response.results
+          }
+          this.loadingSearchTheProvinceorTown = false
+        }).catch(() => {
+          this.loadingSearchTheProvinceorTown = false
+          this.ResultTheProvinceorTown = []
+        })
+      },
+      handleCheck () { //data, checked
+        //console.log(data, checked)
       },
       inputTreeselect () { //values
       },
@@ -368,6 +484,55 @@
         }
         })
         return this.form
+      },
+      filterNode(value, data) {
+        if (!value) return true;
+        return data.label.toLowerCase().indexOf(value.toLowerCase()) !== -1;
+      },
+      handleCheckChange(data, checked) {//data, checked, indeterminate
+        //console.log(data, checked, indeterminate)
+        if (checked) {
+          let respalSelectedPL = [...this.selected_provinces_localidad]
+          let result = inArrayObjectTreeselect(this.search.provincia_localidad, data.id)
+          if (result) {
+            respalSelectedPL.push(result)
+          }
+          respalSelectedPL = removeDuplicates(respalSelectedPL, 'id')
+          this.selected_provinces_localidad = [...respalSelectedPL]
+        }else {
+          this.changeRemoveTag(data.id)
+        }
+        //console.log(this.$refs.tree.getCheckedNodes())
+      },
+      remoteMethod(query) {
+        if (query !== '') {
+          this.loadingSelect = true
+          this.$store.dispatch('search/searchLocalidades', query).then((response) => {
+            if (response.results && Array.isArray(response.results)) {
+              this.optionsSelect = response.results
+            }
+            this.loadingSelect = false
+          }).catch(() => {
+            this.loadingSelect = false
+            this.optionsSelect = []
+          })
+        } else {
+          this.optionsSelect = []
+        }
+      },
+      changeRemoveTag (id_elemet) {
+        this.selected_provinces_localidad = this.selected_provinces_localidad.filter(item => item.id !== id_elemet)
+      }, 
+      changeMethod (elements) {
+        let respalSelectedPL = [...this.selected_provinces_localidad]
+        elements.forEach((item) => {
+          let result = inArrayObjectTreeselect(this.search.provincia_localidad, item)
+          if (result) {
+            respalSelectedPL.push(result)
+          }
+        })
+        respalSelectedPL = removeDuplicates(respalSelectedPL, 'id')
+        this.selected_provinces_localidad = [...respalSelectedPL]
       }
     }
   }
@@ -375,4 +540,9 @@
 
 <style lang="scss" scoped>
   @import './../../sass/filters/filters';
+  
+  .el-select.el-select--medium {
+    width: 100%;
+  }
+
 </style>

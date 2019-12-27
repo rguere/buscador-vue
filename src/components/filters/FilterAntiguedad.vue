@@ -40,24 +40,20 @@
             </button>
             <button type="button" class="btn btn-info" v-if="areApplied" @click="confirmClean">Limpiar <i class="fa fa-undo"></i></button>
           </div>
-        </div>
-        <div>
-          <div class="checkboxs-resaldado float-right">
-            <label class="custon-checkboxs">
-              <input type="checkbox" v-model="selected_antiguedad" :value="{id: 'incluir_null', label: 'incluir_null'}" name="">
-              <span class="geekmark"></span>
-              <span class="title_no_font">
-                Incluir aquellas empresas en las que se desconoce su antigüedad
-              </span>
-            </label>
+          <div>
+            <div class="checkboxs-resaldado float-right">
+              <label class="custon-checkboxs">
+                <input type="checkbox" v-model="selected_antiguedad" :value="{id: 'incluir_null', label: 'incluir_null'}" name="">
+                <span class="geekmark"></span>
+                <span class="title">
+                  Incluir aquellas empresas en las que se desconoce su antigüedad
+                </span>
+              </label>
+            </div>
           </div>
         </div>
-        <div class="flex-space-between-flex-end col-md-12" style="text-align: right;"> 
-          <div class="col-md-8">
-          </div>
-          <div class="col-md-4" style="padding-right: 0px;">
-            <p class="text-help" style="padding-top: 5px;">* Puede elegir más de una opción</p>
-          </div>          
+        <div class="float-right margin-top-10">
+          <p class="text-help">* Puede elegir más de una opción</p>
         </div>
         <el-dialog :visible.sync="modalVisible"
           width="95%"
