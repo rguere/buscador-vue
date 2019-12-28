@@ -81,42 +81,6 @@
                   </div>
                   <div class="panel-body">
                     <div class="row">
-                      <!-- <div class="col-md-8">
-                        <div class="form-group">
-                          <label class="control-label" for="SearchTheProvinceorTown">Selecciona la comunidad, provincia o localidad</label>
-                          <input type="text"
-                            v-model="SearchTheProvinceorTown"
-                            required
-                            class="form-control"
-                            name="SearchTheProvinceorTown"
-                            placeholder="Selecciona la comunidad, provincia o localidad" 
-                            id="SearchTheProvinceorTown">
-                        </div>
-                        <div class="form-group" v-if="ResultTheProvinceorTown.length != 0">
-                          <div v-for="(item, key) in ResultTheProvinceorTown" :key="key">
-                            <label class="custon-checkboxs">
-                              <input type="checkbox"
-                                :name="`checkbox_${item.id}`"
-                                v-model="selected_provinces_localidad"
-                                @change="handleChange(item, $event)"
-                                :id="`checkbox_${item.id}`"
-                                :value="item">
-                              <span class="geekmark"></span>
-                              <span class="name-checkbox">{{ item.label }}</span>
-                              <span class="num-fil"> ({{ item.data | numeral('0,0') }})</span>
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <button
-                          type="button"
-                          class="btn btn-info" @click="searchProvinceorTown" 
-                          :disabled="SearchTheProvinceorTown.length === 0 || loadingSearchTheProvinceorTown"
-                          style="margin-top: 23px;">
-                            BUSCAR <i :class="(loadingSearchTheProvinceorTown)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
-                        </button>
-                      </div> -->
                       <div class="col-md-12">
                         <label class="control-label" for="SearchTheProvinceorTown">Busca y selecciona localidades</label>
                         <el-select
@@ -144,20 +108,6 @@
                       </div>
                       <div class="col-md-12">
                         <div style="height: 400px; overflow-y: scroll; margin-top: 10px;">
-                          <!-- <el-tree
-                            class="filter-tree"
-                            :data="options"
-                            node-key="id"
-                            :props="defaultProps"
-                            show-checkbox
-                            :filter-node-method="filterNode"
-                            :default-expand-all="false"
-                            :default-expanded-keys="['all']"
-                            ref="tree"
-                            accordion
-                            @check-change="handleCheckChange"
-                            @check="handleCheck">
-                            </el-tree> -->
                           <treeselect
                             valueFormat="object"
                             name="options"
