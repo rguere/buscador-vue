@@ -26,12 +26,12 @@
         <div class="selected_children" v-if="areApplied && (form.Provincias && form.Provincias.length !== 0) || (form.Localidades && form.Localidades.length !== 0)">
           <hr>
           <ul class="grid-4-columns-1fr">
-            <li v-for="(item, key) in selected_children.slice(0, limitCodeInvalidos)" :key="key">
+            <li v-for="(item, key) in selected_children.slice(0, limitChildren)" :key="key">
               <span class="name-checkbox">- {{ formatearLabel(item) }} </span>
               <span class="num-fil"> ({{ item.data | numeral('0,0') }})</span>
             </li>
           </ul>
-          <a href="" v-on:click.stop.prevent="showAllInvalidos" v-if="selected_children.length >= limitCodeInvalidos" class="btn" style="display: block;">{{ (selected_children.length == limitCodeInvalidos) ? 'Ver menos' : `Ver todos (${selected_children.length})` }} </a>
+          <a href="" v-on:click.stop.prevent="showAllInvalidos" v-if="selected_children.length >= limitChildren" class="btn" style="display: block;">{{ (selected_children.length == limitChildren) ? 'Ver menos' : `Ver todos (${selected_children.length})` }} </a>
         </div>
         <div class="flex-space-between-flex-end">
           <div class="btns">
@@ -227,7 +227,7 @@
       valueSelect: [],
       listSelect: [],
       loadingSelect: false,
-      limitCodeInvalidos: 3,
+      limitChildren: 3,
     }),
     watch: {
       selected_provinces_localidad: function (newProvincesLocalidad) {
@@ -494,10 +494,10 @@
       },
       changeMethod () { },
       showAllInvalidos () {
-        if (this.limitCodeInvalidos === 3){
-          this.limitCodeInvalidos = this.selected_children.length
+        if (this.limitChildren === 3){
+          this.limitChildren = this.selected_children.length
         }else {
-          this.limitCodeInvalidos = 3
+          this.limitChildren = 3
         }
         
       }
