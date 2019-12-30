@@ -26,7 +26,7 @@
         <div class="selected_children" v-if="areApplied && (form.Provincias && form.Provincias.length !== 0) || (form.Localidades && form.Localidades.length !== 0)">
           <hr>
           <ul class="grid-4-columns-1fr">
-            <li v-for="(item, key) in selected_children.slice(0, limitChildren)" :key="key">
+            <li v-for="(item, key) in selected_children.slice(0, limitChildren)" :key="key" class="pa-3">
               <span class="name-checkbox">- {{ formatearLabel(item) }} </span>
               <span class="num-fil"> ({{ item.data | numeral('0,0') }})</span>
             </li>
