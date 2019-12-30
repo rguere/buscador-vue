@@ -189,6 +189,7 @@
 <script>
   import { mapGetters } from 'vuex'
   import swal from 'sweetalert2'
+  import { beforeOrderFilters } from './../../utils'
   export default {
     name: 'filter-razon-social',
     computed: mapGetters({
@@ -197,6 +198,7 @@
       form: 'filters/form',
       selected_companies: 'filters/selected_companies',
       applied_filters: 'filters/applied_filters',
+      filters: 'filters/filters',
     }),
     data: () => ({
       title: 'Nombre o razón social',
@@ -256,6 +258,7 @@
           this.form.razonSocial = this.selected_social_reasons.map((item) => {
             return item.RazonSocial
           })
+          beforeOrderFilters(this.filters, this.applied_filters, this.form, this.title)
           this.$store.dispatch('search/filtrar', this.form).then((response) => {
             this.$store.dispatch('filters/addFilters', {
               name: this.title,

@@ -187,7 +187,7 @@
 <script>
   import { mapGetters } from 'vuex'
   import swal from 'sweetalert2'
-  import { inArrayObjectTreeselect, howAnimation, removeDuplicates } from './../../utils'
+  import { inArrayObjectTreeselect, howAnimation, removeDuplicates, beforeOrderFilters } from './../../utils'
   export default {
     name: 'filter-ubicacion',
     computed: mapGetters({
@@ -196,6 +196,7 @@
       form: 'filters/form',
       selected_companies: 'filters/selected_companies',
       applied_filters: 'filters/applied_filters',
+      filters: 'filters/filters',
     }),
     data: () => ({
       title: 'Ubicación',
@@ -321,6 +322,7 @@
           this.hideModal()
           this.loadingFrm = true
           this.formatearDataPOST()
+          beforeOrderFilters(this.filters, this.applied_filters, this.form, this.title)
           this.$store.dispatch('search/filtrar', this.form).then((response) => {
             //this.options[0].children = (this.search && this.search.provincia_localidad) ? this.search.provincia_localidad : []
             this.updateNumberSelectedCompanies(response.cantidad)

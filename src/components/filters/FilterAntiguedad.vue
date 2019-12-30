@@ -230,7 +230,7 @@
   import { mapGetters } from 'vuex'
   import swal from 'sweetalert2'
   import { required, maxLength } from 'vuelidate/lib/validators'
-  import { inArrayObjectTreeselect, howAnimation } from './../../utils'
+  import { inArrayObjectTreeselect, howAnimation, beforeOrderFilters } from './../../utils'
   export default {
     name: 'filter-antiguedad',
     computed: {
@@ -240,6 +240,7 @@
         form: 'filters/form',
         selected_companies: 'filters/selected_companies',
         applied_filters: 'filters/applied_filters',
+        filters: 'filters/filters',
       }),
       itemIncluirNull: function () {
         let include = this.search.antiguedad.filter(function (item) { return item.label === 'incluir_null' })
@@ -358,6 +359,7 @@
           this.hideModal()
           this.loadingFrm = true
           this.formatearDataPOST()
+          beforeOrderFilters(this.filters, this.applied_filters, this.form, this.title)
           this.$store.dispatch('search/filtrar', this.form).then((response) => {
             this.updateNumberSelectedCompanies(response.cantidad)
             this.$store.dispatch('filters/addFilters', {
@@ -378,6 +380,7 @@
           this.loadingDaterange = true
           this.form.antiguedad = []
           this.form.antiguedad.push(`fechas:${this.daterange.join("|")}`)
+          beforeOrderFilters(this.filters, this.applied_filters, this.form, this.title)
           this.$store.dispatch('search/filtrar', this.form).then((response) => {
             this.updateNumberSelectedCompanies(response.cantidad)
             this.$store.dispatch('filters/addFilters', {
@@ -399,6 +402,7 @@
           this.loadingAhnos = true
           this.form.antiguedad = []
           this.form.antiguedad.push(`ahnos:${this.ahnos_from}|${this.ahnos_to}`)
+          beforeOrderFilters(this.filters, this.applied_filters, this.form, this.title)
           this.$store.dispatch('search/filtrar', this.form).then((response) => {
             this.updateNumberSelectedCompanies(response.cantidad)
             this.$store.dispatch('filters/addFilters', {

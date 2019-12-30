@@ -193,7 +193,7 @@
   import { mapGetters } from 'vuex'
   import swal from 'sweetalert2'
   import { required, maxLength } from 'vuelidate/lib/validators'
-  import { inArrayObjectTreeselect, howAnimation } from './../../utils'
+  import { inArrayObjectTreeselect, howAnimation, beforeOrderFilters } from './../../utils'
   export default {
     name: 'filter-numero-empleados',
     computed: {
@@ -203,6 +203,7 @@
         form: 'filters/form',
         selected_companies: 'filters/selected_companies',
         applied_filters: 'filters/applied_filters',
+        filters: 'filters/filters',
       }),
       itemIncluirNull: function () {
         let include = this.search.empleados.filter(function (item) { return item.label === 'incluir_null' })
@@ -321,6 +322,7 @@
           this.hideModal()
           this.loadingFrm = true
           this.formatearDataPOST()
+          beforeOrderFilters(this.filters, this.applied_filters, this.form, this.title)
           this.$store.dispatch('search/filtrar', this.form).then((response) => {
             this.updateNumberSelectedCompanies(response.cantidad)
             this.$store.dispatch('filters/addFilters', {
@@ -352,6 +354,7 @@
             menor = employees_from
           }
           this.form.empleados.push(`empleados:${menor}|${mayor}`)
+          beforeOrderFilters(this.filters, this.applied_filters, this.form, this.title)
           this.$store.dispatch('search/filtrar', this.form).then((response) => {
             this.updateNumberSelectedCompanies(response.cantidad)
             this.$store.dispatch('filters/addFilters', {

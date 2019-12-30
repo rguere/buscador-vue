@@ -154,7 +154,7 @@
 </template>
 
 <script>
-	import { handleScroll, howAnimation, inArrayObject } from './../utils'
+	import { handleScroll, howAnimation, orderFilters } from './../utils'
 	import { mapGetters } from 'vuex'
 	import swal from 'sweetalert2'
 	export default {
@@ -166,19 +166,18 @@
     },
     computed: {
       ...mapGetters({
-        applied_filters: 'filters/applied_filters',
         selected_companies: 'filters/selected_companies',
+        applied_filters: 'filters/applied_filters',
         filters: 'filters/filters',
+        form: 'filters/form',
       }),
       orderFilters: function () {
-        let arrayResult = this.applied_filters.map((item) => {
-          return inArrayObject(this.filters, item, `name`)
-        })
-        return arrayResult
+        let order = orderFilters(this.filters, this.applied_filters, this.form)
+        return order
       }
     },
     mounted() {
-      window.addEventListener('scroll', handleScroll); 
+      window.addEventListener('scroll', handleScroll);
     },
     watch: {},
     destroyed () {

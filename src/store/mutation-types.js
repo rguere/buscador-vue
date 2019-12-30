@@ -11,6 +11,7 @@ export const RESET_FILTER = 'RESET_FILTER'
 export const ADD_FILTER = 'ADD_FILTER'
 export const REMOVE_FILTER = 'REMOVE_FILTER'
 export const SET_SELECTED_COMPANIES = 'SET_SELECTED_COMPANIES'
+export const ORDER_FILTERS = 'ORDER_FILTERS'
 
 //search.js
 export const FETCH_SEARCH = 'FETCH_SEARCH'

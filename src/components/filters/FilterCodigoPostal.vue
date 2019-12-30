@@ -286,7 +286,7 @@
 <script>
   import { mapGetters } from 'vuex'
   import { required, maxLength } from 'vuelidate/lib/validators'
-  import { spacesByDashes } from './../../utils'
+  import { spacesByDashes, beforeOrderFilters } from './../../utils'
   import swal from 'sweetalert2'
   export default {
     name: 'filter-codigo-postal',
@@ -296,6 +296,7 @@
       form: 'filters/form',
       selected_companies: 'filters/selected_companies',
       applied_filters: 'filters/applied_filters',
+      filters: 'filters/filters',
     }),
     data: () => ({
       title: 'Código Postal',
@@ -370,6 +371,7 @@
           this.form.codigosPostales = this.selected_zip_codes.map((item) => {
             return item.id
           })
+          beforeOrderFilters(this.filters, this.applied_filters, this.form, this.title)
           this.$store.dispatch('search/filtrar', this.form).then((response) => {
             this.$store.dispatch('filters/addFilters', {
               name: this.title,
