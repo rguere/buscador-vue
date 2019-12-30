@@ -10,7 +10,7 @@
       <div v-if="search.empleados && search.empleados.length !== 0">
         <div class="grid-2-columns-1fr">
           <div v-for="(item, key) in search.empleados" :key="key">
-            <label class="custon-checkboxs">
+            <label class="custon-checkboxs" v-if="item.label !== 'incluir_null'">
               <input type="checkbox"
                 :name="`checkbox_empleados_${item.id}`"
                 v-model="selected_empleados"
@@ -41,9 +41,9 @@
             <button type="button" class="btn btn-info" v-if="areApplied" @click="confirmClean">Limpiar <i class="fa fa-undo"></i></button>
           </div>
           <div>
-            <div class="checkboxs-resaldado float-right">
+            <div class="checkboxs-resaldado float-right" v-if="itemIncluirNull">
               <label class="custon-checkboxs">
-                <input type="checkbox" v-model="selected_empleados" :value="{id: 'incluir_null', label: 'incluir_null' }" name="">
+                <input type="checkbox" v-model="selected_empleados" :value="itemIncluirNull" name="">
                 <span class="geekmark"></span>
                 <span class="title">
                   Incluir aquellas empresas en las que se desconoce su número de empleados
@@ -89,7 +89,7 @@
                         <div class="col-md-12">
                             <div v-if="search.empleados.length !== 0">
                                 <div v-for="(item, key) in search.empleados" :key="key" class="checkbox">
-                                    <label class="custon-checkboxs">
+                                    <label class="custon-checkboxs" v-if="item.label !== 'incluir_null'">
                                         <input type="checkbox"
                                             :name="`checkbox_empleados_${item.id}`"
                                             v-model="selected_empleados"
@@ -104,9 +104,9 @@
                             </div>
                         </div>
                         <div class="col-md-12">
-                          <div class="checkboxs-resaldado float-right">
+                          <div class="checkboxs-resaldado float-right" v-if="itemIncluirNull">
                             <label class="custon-checkboxs">
-                              <input type="checkbox" v-model="selected_empleados" :value="{id: 'incluir_null', label: 'incluir_null' }" name="">
+                              <input type="checkbox" v-model="selected_empleados" :value="itemIncluirNull" name="">
                               <span class="geekmark"></span>
                               <span class="title">
                                 Incluir aquellas empresas en las que se desconoce su número de empleados 
@@ -164,9 +164,9 @@
                             </button>
                         </div>
                         <div class="col-md-12">
-                          <div class="checkboxs-resaldado w-50-p">
+                          <div class="checkboxs-resaldado w-50-p" v-if="itemIncluirNull">
                             <label class="custon-checkboxs">
-                              <input type="checkbox" v-model="selected_empleados" :value="{id: 'incluir_null', label: 'incluir_null' }" name="">
+                              <input type="checkbox" v-model="selected_empleados" :value="itemIncluirNull" name="">
                               <span class="geekmark"></span>
                               <span class="title">
                                 Incluir aquellas empresas en las que se desconoce su número de empleados 
@@ -196,13 +196,19 @@
   import { inArrayObjectTreeselect, howAnimation } from './../../utils'
   export default {
     name: 'filter-numero-empleados',
-    computed: mapGetters({
-      search: 'search/search',
-      loading: 'search/loading',
-      form: 'filters/form',
-      selected_companies: 'filters/selected_companies',
-      applied_filters: 'filters/applied_filters',
-    }),
+    computed: {
+      ...mapGetters({
+        search: 'search/search',
+        loading: 'search/loading',
+        form: 'filters/form',
+        selected_companies: 'filters/selected_companies',
+        applied_filters: 'filters/applied_filters',
+      }),
+      itemIncluirNull: function () {
+        let include = this.search.empleados.filter(function (item) { return item.label === 'incluir_null' })
+        return (include)? include[0]: null;
+      }
+    },
     data: () => ({
       title: 'Número de empleados',
       selected_empleados: [],
@@ -346,9 +352,6 @@
             menor = employees_from
           }
           this.form.empleados.push(`empleados:${menor}|${mayor}`)
-          if(this.daterange_incluir_null){
-            this.form.empleados.push("incluir_null")
-          }
           this.$store.dispatch('search/filtrar', this.form).then((response) => {
             this.updateNumberSelectedCompanies(response.cantidad)
             this.$store.dispatch('filters/addFilters', {
@@ -412,9 +415,6 @@
         this.selected_empleados.forEach((item) => {
           this.form.empleados.push(item.id)
         })
-        if (this.incluir_null) {
-          this.form.empleados.push("incluir_null")
-        }
         return this.form
       },
       selectAll () {

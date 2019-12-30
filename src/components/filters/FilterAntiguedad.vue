@@ -10,7 +10,7 @@
       <div v-if="search.antiguedad && search.antiguedad.length !== 0">
         <div class="grid-3-columns-1fr">
           <div v-for="(item, key) in search.antiguedad" :key="key">
-            <label class="custon-checkboxs">
+            <label class="custon-checkboxs" v-if="item.label !== 'incluir_null'">
               <input type="checkbox"
                 :name="`checkbox_antiguedad_${item.id}`"
                 v-model="selected_antiguedad"
@@ -41,9 +41,9 @@
             <button type="button" class="btn btn-info" v-if="areApplied" @click="confirmClean">Limpiar <i class="fa fa-undo"></i></button>
           </div>
           <div>
-            <div class="checkboxs-resaldado float-right">
+            <div class="checkboxs-resaldado float-right" v-if="itemIncluirNull">
               <label class="custon-checkboxs">
-                <input type="checkbox" v-model="selected_antiguedad" :value="{id: 'incluir_null', label: 'incluir_null'}" name="">
+                <input type="checkbox" v-model="selected_antiguedad" :value="itemIncluirNull" name="">
                 <span class="geekmark"></span>
                 <span class="title">
                   Incluir aquellas empresas en las que se desconoce su antigüedad
@@ -127,7 +127,7 @@
                             <div class="panel-body">
                               <div v-if="search.antiguedad.length !== 0">
                                 <div v-for="(item, key) in search.antiguedad" :key="key" class="checkbox">
-                                  <label class="custon-checkboxs">
+                                  <label class="custon-checkboxs" v-if="item.label !== 'incluir_null'">
                                       <input type="checkbox"
                                           :name="`checkbox_empleados_${item.id}`"
                                           v-model="selected_antiguedad"
@@ -144,9 +144,9 @@
                           </div>
                         </div>
                         <div class="col-md-12">
-                          <div class="checkboxs-resaldado w-50-p">
+                          <div class="checkboxs-resaldado w-50-p" v-if="itemIncluirNull">
                             <label class="custon-checkboxs">
-                              <input type="checkbox" v-model="selected_antiguedad" :value="{id: 'incluir_null', label: 'incluir_null'}" name="">
+                              <input type="checkbox" v-model="selected_antiguedad" :value="itemIncluirNull" name="">
                               <span class="geekmark"></span>
                               <span class="title">
                                 Incluir aquellas empresas en las que se desconoce su antigüedad
@@ -201,9 +201,9 @@
                           </button>
                         </div>
                         <div class="col-md-12">
-                          <div class="checkboxs-resaldado w-50-p m-t-10">
+                          <div class="checkboxs-resaldado w-50-p m-t-10" v-if="itemIncluirNull">
                             <label class="custon-checkboxs">
-                              <input type="checkbox" v-model="selected_antiguedad" :value="{id: 'incluir_null', label: 'incluir_null'}" name="">
+                              <input type="checkbox" v-model="selected_antiguedad" :value="itemIncluirNull" name="">
                               <span class="geekmark"></span>
                               <span class="title">
                                 Incluir aquellas empresas en las que se desconoce su antigüedad
@@ -233,13 +233,19 @@
   import { inArrayObjectTreeselect, howAnimation } from './../../utils'
   export default {
     name: 'filter-antiguedad',
-    computed: mapGetters({
-      search: 'search/search',
-      loading: 'search/loading',
-      form: 'filters/form',
-      selected_companies: 'filters/selected_companies',
-      applied_filters: 'filters/applied_filters',
-    }),
+    computed: {
+      ...mapGetters({
+        search: 'search/search',
+        loading: 'search/loading',
+        form: 'filters/form',
+        selected_companies: 'filters/selected_companies',
+        applied_filters: 'filters/applied_filters',
+      }),
+      itemIncluirNull: function () {
+        let include = this.search.antiguedad.filter(function (item) { return item.label === 'incluir_null' })
+        return (include)? include[0]: null;
+      }
+    },
     data: () => ({
       title: 'Antigüedad',
       selected_antiguedad: [],
