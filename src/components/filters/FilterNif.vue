@@ -316,7 +316,8 @@
           this.$store.dispatch('search/filtrar', this.form).then((response) => {
             this.$store.dispatch('filters/addFilters', {
               name: this.title,
-              quantity: this.selected_by_list_nif
+              quantity: this.selected_by_list_nif,
+              cantidades: response
             })
             this.updateNumberSelectedCompanies(response.cantidad)
             this.areApplied = true

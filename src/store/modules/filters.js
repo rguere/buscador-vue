@@ -115,7 +115,8 @@ const initialState = () => {
         quantity: 0,
         key: 'vinculaciones',
       }
-    ]
+    ],
+    cantidades: {}
   }
 }
 
@@ -128,6 +129,7 @@ export const getters = {
   applied_filters: state => state.applied_filters,
   selected_companies: state => state.selected_companies,
   filters: state => state.filters,
+  cantidades: state => state.cantidades,
 }
 
 // mutations
@@ -138,7 +140,8 @@ export const mutations = {
     }
   },
 
-  [types.ADD_FILTER](state, { name, quantity }) {
+  [types.ADD_FILTER](state, { name, quantity, cantidades }) {
+    state.cantidades = cantidades
     state.applied_filters.push(name)
     state.filters = state.filters.map((elem) => {
       if (elem.name === name) {
@@ -172,11 +175,12 @@ export const actions = {
       initial: initialState() 
     })
   },
-  addFilters({ commit }, { name, quantity }) {
+  addFilters({ commit }, { name, quantity, cantidades }) {
     if (!state.applied_filters.includes(name)) {
       commit(types.ADD_FILTER, {
         name: name,
-        quantity: quantity
+        quantity: quantity,
+        cantidades: cantidades
       })
     }
   },

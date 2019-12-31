@@ -324,11 +324,11 @@
           this.formatearDataPOST()
           beforeOrderFilters(this.filters, this.applied_filters, this.form, this.title)
           this.$store.dispatch('search/filtrar', this.form).then((response) => {
-            //this.options[0].children = (this.search && this.search.provincia_localidad) ? this.search.provincia_localidad : []
             this.updateNumberSelectedCompanies(response.cantidad)
             this.$store.dispatch('filters/addFilters', {
               name: this.title,
-              quantity: this.selected_by_location
+              quantity: this.selected_by_location,
+              cantidades: response
             })
             this.areApplied = true
             this.reapply = false

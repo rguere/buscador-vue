@@ -364,7 +364,8 @@
             this.updateNumberSelectedCompanies(response.cantidad)
             this.$store.dispatch('filters/addFilters', {
               name: this.title,
-              quantity: this.selected_by_antiguedad
+              quantity: this.selected_by_antiguedad,
+              cantidades: response
             })
             this.areApplied = true
             this.reapply = false
@@ -385,7 +386,8 @@
             this.updateNumberSelectedCompanies(response.cantidad)
             this.$store.dispatch('filters/addFilters', {
               name: this.title,
-              quantity: this.selected_by_antiguedad
+              quantity: this.selected_by_antiguedad,
+              cantidades: response
             })
             this.areApplied = true
             this.reapply = false
@@ -407,7 +409,8 @@
             this.updateNumberSelectedCompanies(response.cantidad)
             this.$store.dispatch('filters/addFilters', {
               name: this.title,
-              quantity: this.selected_by_antiguedad
+              quantity: this.selected_by_antiguedad,
+              cantidades: response
             })
             this.areApplied = true
             this.reapply = false
