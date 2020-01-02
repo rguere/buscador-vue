@@ -173,7 +173,7 @@
         cantidades: 'filters/cantidades',
       }),
       orderFilters: function () {
-        let order = orderFilters(this.filters, this.applied_filters, this.form)
+        let order = orderFilters(this.filters, this.applied_filters)
         let cantidades = {...this.cantidades}
         for (const prop in cantidades) {
           let split = prop.split('.')

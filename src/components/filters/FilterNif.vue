@@ -312,8 +312,8 @@
           this.form.listNIF = this.selected_list_nif.map((item) => {
             return item.id
           })
-          beforeOrderFilters(this.filters, this.applied_filters, this.form, this.title)
-          this.$store.dispatch('search/filtrar', this.form).then((response) => {
+          let beforeForm = beforeOrderFilters(this.filters, this.applied_filters, this.form, this.title)
+          this.$store.dispatch('search/filtrar', beforeForm).then((response) => {
             this.$store.dispatch('filters/addFilters', {
               name: this.title,
               quantity: this.selected_by_list_nif,

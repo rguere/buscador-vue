@@ -322,8 +322,8 @@
           this.hideModal()
           this.loadingFrm = true
           this.formatearDataPOST()
-          beforeOrderFilters(this.filters, this.applied_filters, this.form, this.title)
-          this.$store.dispatch('search/filtrar', this.form).then((response) => {
+          let beforeForm = beforeOrderFilters(this.filters, this.applied_filters, this.form, this.title)
+          this.$store.dispatch('search/filtrar', beforeForm).then((response) => {
             this.updateNumberSelectedCompanies(response.cantidad)
             this.$store.dispatch('filters/addFilters', {
               name: this.title,

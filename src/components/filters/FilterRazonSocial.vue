@@ -258,8 +258,8 @@
           this.form.razonSocial = this.selected_social_reasons.map((item) => {
             return item.RazonSocial
           })
-          beforeOrderFilters(this.filters, this.applied_filters, this.form, this.title)
-          this.$store.dispatch('search/filtrar', this.form).then((response) => {
+          let beforeForm = beforeOrderFilters(this.filters, this.applied_filters, this.form, this.title)
+          this.$store.dispatch('search/filtrar', beforeForm).then((response) => {
             this.$store.dispatch('filters/addFilters', {
               name: this.title,
               quantity: this.selected_by_social_reasons,

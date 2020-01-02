@@ -371,8 +371,8 @@
           this.form.codigosPostales = this.selected_zip_codes.map((item) => {
             return item.id
           })
-          beforeOrderFilters(this.filters, this.applied_filters, this.form, this.title)
-          this.$store.dispatch('search/filtrar', this.form).then((response) => {
+          let beforeForm = beforeOrderFilters(this.filters, this.applied_filters, this.form, this.title)
+          this.$store.dispatch('search/filtrar', beforeForm).then((response) => {
             this.$store.dispatch('filters/addFilters', {
               name: this.title,
               quantity: this.selected_by_zip_codes,

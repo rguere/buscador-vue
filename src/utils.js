@@ -123,17 +123,10 @@ export const spacesByDashes = (value) => {
 //     {comunidades: ["Andalucía", "Comunidad de Madrid", "Comunidad de Madrid", "Cataluña"], "empleados": ["rango.2"], "antiguedad": ["rango.0"]}
 // ]
 
-export const orderFilters = (filters, applied_filters, form) => {
+export const orderFilters = (filters, applied_filters) => {
     let arrayResult = applied_filters.map((item) => {
       return inArrayObject(filters, item, `name`)
     })
-    if (arrayResult && arrayResult.length !== 0) {
-        arrayResult.map((item, key) => {
-            form.filtros[key] = {
-                [item.key]: form[item.key]
-            }
-        })
-    }
     return arrayResult
 }
 
@@ -141,9 +134,23 @@ export const beforeOrderFilters = (filters, applied_filters, form, title) => {
     let before_applied_filters = [...applied_filters]
     let before_filters = [...filters]
     let before_form = {...form}
+
     if (!before_applied_filters.includes(title)) {
       before_applied_filters.push(title)
     }
-    orderFilters(before_filters, before_applied_filters, before_form)
+
+    let arrayResult = orderFilters(before_filters, before_applied_filters)
+    
+    if (arrayResult && arrayResult.length !== 0) {
+        let arr = {}
+        before_form.filtros = []
+        arrayResult.map((item) => {
+            arr[item.key] = before_form[item.key] 
+            let aux = {...arr}
+            before_form.filtros.push(aux)
+        })
+    }
+
+    return before_form
 }
 
