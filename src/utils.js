@@ -117,12 +117,6 @@ export const spacesByDashes = (value) => {
     return value
 }
 
-// filtros: [
-//     {comunidades: ["Andalucía", "Comunidad de Madrid", "Comunidad de Madrid", "Cataluña"]},
-//     {comunidades: ["Andalucía", "Comunidad de Madrid", "Comunidad de Madrid", "Cataluña"], "empleados": ["rango.2"]},
-//     {comunidades: ["Andalucía", "Comunidad de Madrid", "Comunidad de Madrid", "Cataluña"], "empleados": ["rango.2"], "antiguedad": ["rango.0"]}
-// ]
-
 export const orderFilters = (filters, applied_filters) => {
     let arrayResult = applied_filters.map((item) => {
       return inArrayObject(filters, item, `name`)
@@ -143,9 +137,15 @@ export const beforeOrderFilters = (filters, applied_filters, form, title) => {
     
     if (arrayResult && arrayResult.length !== 0) {
         let arr = {}
+        let comunidades = []
         before_form.filtros = []
         arrayResult.map((item) => {
-            arr[item.key] = before_form[item.key] 
+            if (item.key === 'comunidades') {
+                comunidades = before_form[item.key].concat(before_form.Provincias, before_form.Localidades)
+                arr[item.key] = comunidades
+            }else {
+                arr[item.key] = before_form[item.key] 
+            }
             let aux = {...arr}
             before_form.filtros.push(aux)
         })

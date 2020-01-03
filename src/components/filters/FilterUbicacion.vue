@@ -434,6 +434,9 @@
       },
       formatearDataPOST (){
       this.selected_children = []
+      this.form.comunidades = []
+      this.form.Provincias = []
+      this.form.Localidades = []
       this.selected_provinces_localidad.forEach((item) => {
         let result = inArrayObjectTreeselect(this.search.provincia_localidad, item.id)
         if (result && result.id) {
