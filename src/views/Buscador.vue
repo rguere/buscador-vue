@@ -1,7 +1,12 @@
 <template>
 	<div class="home" id="page-wrapper">
 		<banner-top></banner-top>
-    <div class="container"><div v-if="loading" class="loading">Loading&#8230;</div><filter-list-checkboxs :search="search"></filter-list-checkboxs></div>
+    <div class="container">
+      <div v-if="loading" class="loading">
+        Loading&#8230;
+      </div>
+      <filter-list-checkboxs :search="search"></filter-list-checkboxs>
+    </div>
 	</div>
 </template>
 
@@ -34,7 +39,18 @@ export default {
   },
   methods: {
     fetchSearch (){
-      this.$store.dispatch('search/fetchSearch').then(() => {})
+      /*console.log(
+        this.search.antiguedad.length,
+        this.search.empleados.length,
+        this.search.provincia.length,
+        this.search.provincia_localidad.length,
+        this.search.auditor.length,
+        this.search.cnae.length,
+        this.search.industria.length,
+      )*/
+      if (this.search && this.search.provincia_localidad && this.search.provincia_localidad.length === 0) {
+        this.$store.dispatch('search/fetchSearch').then(() => {})
+      }
     }
   }
 }

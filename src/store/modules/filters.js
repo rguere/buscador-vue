@@ -141,7 +141,6 @@ export const mutations = {
   },
 
   [types.ADD_FILTER](state, { name, quantity, cantidades }) {
-    state.cantidades = cantidades
     state.applied_filters.push(name)
     state.filters = state.filters.map((elem) => {
       if (elem.name === name) {
@@ -150,6 +149,18 @@ export const mutations = {
       }
       return elem;
     })
+    state.cantidades = cantidades
+  },
+
+  [types.SET_QUANTITIES](state, {name, quantity, cantidades }) {
+    state.filters = state.filters.map((elem) => {
+      if (elem.name === name) {
+        elem.apply = true
+        elem.quantity = quantity
+      }
+      return elem;
+    })
+    state.cantidades = cantidades
   },
   
   [types.REMOVE_FILTER](state, { filter }) {
@@ -178,6 +189,12 @@ export const actions = {
   addFilters({ commit }, { name, quantity, cantidades }) {
     if (!state.applied_filters.includes(name)) {
       commit(types.ADD_FILTER, {
+        name: name,
+        quantity: quantity,
+        cantidades: cantidades
+      })
+    }else {
+      commit(types.SET_QUANTITIES, {
         name: name,
         quantity: quantity,
         cantidades: cantidades
