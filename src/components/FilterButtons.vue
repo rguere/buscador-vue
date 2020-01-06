@@ -14,7 +14,7 @@
 							<router-link
 								to="/visualizar-resultados"
 								:disabled="applied_filters.length === 0"
-								class="btn btn-orange btn-lg">
+								class="btn btn-orange btn-lg link-disabled">
 								<i class="fa fa-list-alt"></i>
 								Visualizar
 								<span class="hidden-xs hidden-sm">resultados</span>

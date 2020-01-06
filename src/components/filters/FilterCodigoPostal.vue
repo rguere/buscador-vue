@@ -287,9 +287,11 @@
   import { mapGetters } from 'vuex'
   import { required, maxLength } from 'vuelidate/lib/validators'
   import { spacesByDashes, beforeOrderFilters } from './../../utils'
+  import { persistentData } from './../../mixins/persistent-data'
   import swal from 'sweetalert2'
   export default {
     name: 'filter-codigo-postal',
+    mixins: [persistentData],
     computed: mapGetters({
       search: 'search/search',
       loading: 'search/loading',

@@ -231,8 +231,10 @@
   import swal from 'sweetalert2'
   import { required, maxLength } from 'vuelidate/lib/validators'
   import { inArrayObjectTreeselect, howAnimation, beforeOrderFilters } from './../../utils'
+  import { persistentData } from './../../mixins/persistent-data'
   export default {
     name: 'filter-antiguedad',
+    mixins: [persistentData],
     computed: {
       ...mapGetters({
         search: 'search/search',

@@ -190,8 +190,10 @@
   import { mapGetters } from 'vuex'
   import swal from 'sweetalert2'
   import { beforeOrderFilters } from './../../utils'
+  import { persistentData } from './../../mixins/persistent-data'
   export default {
     name: 'filter-razon-social',
+    mixins: [persistentData],
     computed: mapGetters({
       search: 'search/search',
       loading: 'search/loading',

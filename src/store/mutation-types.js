@@ -19,3 +19,7 @@ export const LOADING_SEARCH = 'LOADING_SEARCH'
 
 //layout.js
 export const SET_LAYOUT = 'SET_LAYOUT'
+
+
+//localDatas.js
+export const SET_LOCAL_DATAS = 'SET_LOCAL_DATAS'

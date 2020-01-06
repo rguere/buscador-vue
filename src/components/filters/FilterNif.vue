@@ -243,8 +243,10 @@
   import { mapGetters } from 'vuex'
   import { spacesByDashes, beforeOrderFilters } from './../../utils'
   import swal from 'sweetalert2'
+  import { persistentData } from './../../mixins/persistent-data'
   export default {
     name: 'filter-nif',
+    mixins: [persistentData],
     computed: mapGetters({
       search: 'search/search',
       loading: 'search/loading',
