@@ -63,16 +63,27 @@
 						<div class="col-md-12">
 						<table class="table">
 							<thead>
-							<tr>
-								<th>Razón social de la empresa</th>
-								<th>NIF</th>
-								<th>Provincia</th>
-								<th>Localidad</th>
-								<th>Último año cuentas disponibles</th>
-								<!--<th>Ventas ultimo año disponible(en miles de €)</th>-->
-								<th>Tipo de cuentas</th>
-							</tr>
+                <tr>
+                  <th>Razón social de la empresa</th>
+                  <th>NIF</th>
+                  <th>Provincia</th>
+                  <th>Localidad</th>
+                  <th>Último año cuentas disponibles</th>
+                  <!--<th>Ventas ultimo año disponible(en miles de €)</th>-->
+                  <th>Tipo de cuentas</th>
+                </tr>
 							</thead>
+              <tbody v-if="results && results.empresas">
+                <tr v-for="(item, key) in results.empresas" :key="key">
+                  <td>{{ item.RazonSocial }}</td>
+                  <td>{{ item.CIF }}</td>
+                  <td>{{ item.Provincia }}</td>
+                  <td>{{ item.Localidad }}</td>
+                  <td>{{ (item.UltimaCuentaAnual)? item.UltimaCuentaAnual.Ejercicio : ''  }}</td>
+                  <!--<td>Ventas ultimo año disponible(en miles de €)</td>-->
+                  <td>{{ item.FechaGeneracion }}</td>
+                </tr>
+              </tbody>
 						</table>
 						</div>
 					</div>
@@ -100,6 +111,11 @@ export default {
   },
   data: () => ({
       loadingExcel: false,
+      results: {
+        cantidad: 0,
+        total: 0,
+        empresas: []
+      }
     }),
   computed: mapGetters({
     loading: 'search/loading',
@@ -119,7 +135,10 @@ export default {
           data[key] = this.form[key]
         }
       }
-      this.$store.dispatch('search/visualizarResultados', data)
+      this.$store.dispatch('search/visualizarResultados', data).then((response) => {
+        this.results = response;
+      }).catch(() => {
+      })
     },
     descargarExcel () {
       this.loadingExcel = true
