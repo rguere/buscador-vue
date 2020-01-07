@@ -4,6 +4,7 @@ import MenuInfocif from './MenuInfocif.vue'
 import FilterListCheckboxs from './FilterListCheckboxs.vue'
 import BannerTop from './BannerTop.vue'
 import FilterButtons from './FilterButtons.vue'
+import LoadingFullPage from './LoadingFullPage.vue'
 
 import FilterUbicacion from './filters/FilterUbicacion.vue'
 import FilterCodigoPostal from './filters/FilterCodigoPostal.vue'
@@ -39,6 +40,7 @@ import FilterAniosCuentasDisponibles from './filters/FilterAniosCuentasDisponibl
   FilterInformacionFinanciera,
   FilterAniosCuentasDisponibles,
   FilterButtons,
+  LoadingFullPage,
 ].forEach(Component => {
   Vue.component(Component.name, Component)
 })

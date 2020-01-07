@@ -2,9 +2,7 @@
 	<div class="home" id="page-wrapper">
 		<banner-top></banner-top>
     <div class="container">
-      <div v-if="loading" class="loading">
-        Loading&#8230;
-      </div>
+      <loading-full-page></loading-full-page>
       <filter-list-checkboxs :search="search"></filter-list-checkboxs>
     </div>
 	</div>
@@ -27,7 +25,6 @@ export default {
   },
   computed: mapGetters({
     search: 'search/search',
-    loading: 'search/loading',
   }),
   data: () => ({
   }),
@@ -57,5 +54,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-	@import './../sass/loading';
 </style>

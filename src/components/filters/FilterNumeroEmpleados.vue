@@ -14,7 +14,7 @@
               <input type="checkbox"
                 :name="`checkbox_empleados_${item.id}`"
                 v-model="selected_empleados"
-                @change="handleChange(item, $event)"
+                @change="handleChange()"
                 :id="`checkbox_empleados_${item.id}`"
                 :value="item">
               <span class="geekmark"></span>
@@ -43,7 +43,7 @@
           <div>
             <div class="checkboxs-resaldado float-right" v-if="itemIncluirNull">
               <label class="custon-checkboxs">
-                <input type="checkbox" v-model="selected_empleados" :value="itemIncluirNull" name="">
+                <input type="checkbox" v-model="selected_empleados" :value="itemIncluirNull" @change="handleChange()" name="">
                 <span class="geekmark"></span>
                 <span class="title">
                   Incluir aquellas empresas en las que se desconoce su número de empleados
@@ -93,7 +93,7 @@
                                         <input type="checkbox"
                                             :name="`checkbox_empleados_${item.id}`"
                                             v-model="selected_empleados"
-                                            @change="handleChange(item, $event)"
+                                            @change="handleChange()"
                                             :id="`checkbox_empleados_${item.id}`"
                                             :value="item">
                                         <span class="geekmark"></span>
@@ -106,7 +106,7 @@
                         <div class="col-md-12">
                           <div class="checkboxs-resaldado float-right" v-if="itemIncluirNull">
                             <label class="custon-checkboxs">
-                              <input type="checkbox" v-model="selected_empleados" :value="itemIncluirNull" name="">
+                              <input type="checkbox" v-model="selected_empleados" :value="itemIncluirNull" @change="handleChange()" name="">
                               <span class="geekmark"></span>
                               <span class="title">
                                 Incluir aquellas empresas en las que se desconoce su número de empleados 
@@ -166,7 +166,7 @@
                         <div class="col-md-12">
                           <div class="checkboxs-resaldado w-50-p" v-if="itemIncluirNull">
                             <label class="custon-checkboxs">
-                              <input type="checkbox" v-model="selected_empleados" :value="itemIncluirNull" name="">
+                              <input type="checkbox" v-model="selected_empleados" :value="itemIncluirNull" @change="handleChange()" name="">
                               <span class="geekmark"></span>
                               <span class="title">
                                 Incluir aquellas empresas en las que se desconoce su número de empleados 

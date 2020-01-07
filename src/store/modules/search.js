@@ -141,5 +141,28 @@ export const actions = {
         loading: false
       })
     }
+  },
+  async archivoExcel({ commit }, filters){
+    try{
+      const { data } = await axios.post(`/buscador/empresas/excel`, filters)
+      return data
+    } catch (e) {
+      commit(types.LOADING_SEARCH, {
+        loading: false
+      })
+    }
+  },
+  async visualizarResultados({ commit }, filters){
+    try{
+      commit(types.LOADING_SEARCH, {
+        loading: true
+      })
+      const { data } = await axios.post(`/buscador/empresas`, filters)
+      return data
+    } catch (e) {
+      commit(types.LOADING_SEARCH, {
+        loading: false
+      })
+    }
   }
 }

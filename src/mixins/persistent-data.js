@@ -20,7 +20,6 @@ export const persistentData = {
   },
   methods: {
     setLocalDatas: function () {
-      //let data = (this.localDatas[this.$options.name])? this.localDatas[this.$options.name]: this.$data
       this.$store.dispatch('localDatas/setLocalDatas', {
         key: this.$options.name,
         data: this.$data,
