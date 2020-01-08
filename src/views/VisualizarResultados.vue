@@ -90,6 +90,7 @@
                 <el-pagination
                   layout="prev, pager, next"
                   :total="results.total"
+                  :page-size="10"
                   @current-change="handleCurrentChange">
                 </el-pagination>
               </div>

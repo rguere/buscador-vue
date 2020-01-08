@@ -167,7 +167,7 @@ export const actions = {
       commit(types.LOADING_SEARCH, {
         loading: true
       })
-      const { data } = await axios.post(`/buscador/empresas/filtrar?page=${page}&size=${size}`, filters)
+      const { data } = await axios.post(`/buscador/empresas/filtrar?pag=${page}&size=${size}`, filters)
       commit(types.LOADING_SEARCH, {
         loading: false
       })
