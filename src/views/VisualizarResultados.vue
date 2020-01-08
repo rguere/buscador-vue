@@ -88,10 +88,12 @@
                   </el-table-column>
                 </el-table>
                 <el-pagination
-                  layout="prev, pager, next"
+                  layout="total, prev, pager, next"
                   :total="results.total"
-                  :page-size="10"
-                  @current-change="pageChange">
+                  :page-size="size"
+                  :current-page.sync="currentPage"
+                  @current-change="pageChange"
+                  @size-change="sizeChange">
                 </el-pagination>
               </div>
             </div>
@@ -121,6 +123,8 @@ export default {
       loadingExcel: false,
       loadingCorreo: false,
       correo: '',
+      currentPage: 1,
+      size: 25,
       results: {
         cantidad: 0,
         total: 0,
@@ -138,7 +142,9 @@ export default {
     this.visualizarResultados()
   },
   methods: {
-    visualizarResultados (page = 1, size = 10){
+    visualizarResultados (){
+      let size = this.size
+      let page = this.currentPage
       let filters = this.formatearData()
       this.$store.dispatch('search/visualizarResultados', {filters, page, size}).then((response) => {
         this.results = response
@@ -179,8 +185,11 @@ export default {
       }
       return data
     },
-    pageChange(val) {
-      this.visualizarResultados(val, 10)
+    pageChange() {
+      this.visualizarResultados()
+    },
+    sizeChange (val) {
+      console.log(val)
     }
   }
 }
