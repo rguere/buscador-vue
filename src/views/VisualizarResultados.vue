@@ -91,7 +91,7 @@
                   layout="prev, pager, next"
                   :total="results.total"
                   :page-size="10"
-                  @current-change="handleCurrentChange">
+                  @current-change="pageChange">
                 </el-pagination>
               </div>
             </div>
@@ -179,7 +179,7 @@ export default {
       }
       return data
     },
-    handleCurrentChange(val) {
+    pageChange(val) {
       this.visualizarResultados(val, 10)
     }
   }
