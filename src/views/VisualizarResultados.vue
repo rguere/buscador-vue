@@ -4,86 +4,96 @@
 		<div class="container">
       <loading-full-page></loading-full-page>
 			<div class="banner">
-				<div>
-					<div class="btns-modal-header">
-					<div class="m-b-10">
-						<router-link
-							to="/"
-							class="btn btn-warning">
-							<i class="fa fa-arrow-left"></i> Vover
-						</router-link>
-						<button class="btn btn-orange m-l-5">
-							<i class="fa fa-list-alt"></i>
-							Visualizar
-							<span class="hidden-xs hidden-sm">resultados</span>
-						</button>
-					</div>
-					<div class="row m-b-10">
-						<div class="col-md-6">
-						<button class="btn btn-primary">
-							<i class="fa fa-print"></i>
-							Imprimir
-						</button>
-						</div>
-						<div class="col-md-6">
-						<div class="pull-right">
-							<button
-                @click="enviarResultadosCorreo"
-                :disabled="loadingCorreo"
-                class="btn btn-info">
-                <i :class="(loadingCorreo)?'fa  fa-spinner fa-spin':'fa  fa-envelope'"></i>
-								Enviar al correo
-							</button>
-							<button
-                @click="descargarExcel"
-                :disabled="loadingExcel"
-                class="btn btn-success m-l-5">
-                <i :class="(loadingExcel)?'fa  fa-spinner fa-spin':'fa  fa-file-excel-o'"></i>
-								Descargar en excel
-							</button>
-						</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-12">
-						<div class="text-center">
-							<button class="btn btn-warning">
-								<i class="fa fa-save"></i>
-								Guardar Columnas
-							</button>
-							<button class="btn btn-warning m-l-5">
-								<i class="fa fa-save"></i>
-								Listados Columnas Guardados
-							</button>
-							<button class="btn btn-warning m-l-5">
-								<i class="fa fa-list"></i>
-								Seleccionar Columnas
-							</button>
-						</div>
-						</div>
-						<div class="col-md-12">
-						<table class="table">
-							<thead>
-                <tr>
-                  <th>Razón social de la empresa</th>
-                  <th>NIF</th>
-                  <th>Provincia</th>
-                  <th>Localidad</th>
-                  <th>Último año cuentas disponibles</th>
-                </tr>
-							</thead>
-              <tbody v-if="results && results.empresas">
-                <tr v-for="(item, key) in results.empresas" :key="key">
-                  <td>{{ item.RazonSocial }}</td>
-                  <td>{{ item.CIF }}</td>
-                  <td>{{ item.Provincia }}</td>
-                  <td>{{ item.Localidad }}</td>
-                  <td>{{ (item.UltimaCuentaAnual)? item.UltimaCuentaAnual.Ejercicio : ''  }}</td>
-                </tr>
-              </tbody>
-						</table>
-						</div>
-					</div>
+				<div class="panel panel-default cd min-height-200">
+					<div class="panel-body">
+            <div class="m-b-10">
+              <router-link
+                to="/"
+                class="btn btn-warning">
+                <i class="fa fa-arrow-left"></i> Vover
+              </router-link>
+              <button class="btn btn-orange m-l-5">
+                <i class="fa fa-list-alt"></i>
+                Visualizar
+                <span class="hidden-xs hidden-sm">resultados</span>
+              </button>
+            </div>
+            <div class="row m-b-10">
+              <div class="col-md-6">
+              <button class="btn btn-primary">
+                <i class="fa fa-print"></i>
+                Imprimir
+              </button>
+              </div>
+              <div class="col-md-6">
+              <div class="pull-right">
+                <button
+                  @click="enviarResultadosCorreo"
+                  :disabled="loadingCorreo"
+                  class="btn btn-info">
+                  <i :class="(loadingCorreo)?'fa  fa-spinner fa-spin':'fa  fa-envelope'"></i>
+                  Enviar al correo
+                </button>
+                <button
+                  @click="descargarExcel"
+                  :disabled="loadingExcel"
+                  class="btn btn-success m-l-5">
+                  <i :class="(loadingExcel)?'fa  fa-spinner fa-spin':'fa  fa-file-excel-o'"></i>
+                  Descargar en excel
+                </button>
+              </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="text-center m-b-10">
+                  <button class="btn btn-warning">
+                    <i class="fa fa-save"></i>
+                    Guardar Columnas
+                  </button>
+                  <button class="btn btn-warning m-l-5">
+                    <i class="fa fa-save"></i>
+                    Listados Columnas Guardados
+                  </button>
+                  <button class="btn btn-warning m-l-5">
+                    <i class="fa fa-list"></i>
+                    Seleccionar Columnas
+                  </button>
+                </div>
+              </div>
+              <div class="col-md-12" v-if="results && results.empresas">
+                <el-table
+                  border
+                  :data="results.empresas"
+                  style="width: 100%">
+                  <el-table-column
+                    prop="RazonSocial"
+                    label="Razón social de la empresa">
+                  </el-table-column>
+                  <el-table-column
+                    prop="CIF"
+                    label="NIF">
+                  </el-table-column>
+                  <el-table-column
+                    prop="Provincia"
+                    label="Provincia">
+                  </el-table-column>
+                  <el-table-column
+                    prop="Localidad"
+                    label="Localidad">
+                  </el-table-column>
+                  <el-table-column
+                    :prop="('UltimaCuentaAnual' && 'UltimaCuentaAnual.Ejercicio')? 'UltimaCuentaAnual.Ejercicio': ''"
+                    label="Último año cuentas disponibles">
+                  </el-table-column>
+                </el-table>
+                <el-pagination
+                  layout="prev, pager, next"
+                  :total="results.total"
+                  @current-change="handleCurrentChange">
+                </el-pagination>
+              </div>
+            </div>
 					</div>
 				</div>
 			</div>
@@ -127,10 +137,10 @@ export default {
     this.visualizarResultados()
   },
   methods: {
-    visualizarResultados (){
-      let data = this.formatearData()
-      this.$store.dispatch('search/visualizarResultados', data).then((response) => {
-        this.results = response;
+    visualizarResultados (page = 1, size = 10){
+      let filters = this.formatearData()
+      this.$store.dispatch('search/visualizarResultados', {filters, page, size}).then((response) => {
+        this.results = response
       }).catch(() => {
       })
     },
@@ -167,6 +177,9 @@ export default {
         }
       }
       return data
+    },
+    handleCurrentChange(val) {
+      this.visualizarResultados(val, 10)
     }
   }
 }

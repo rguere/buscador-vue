@@ -162,12 +162,12 @@ export const actions = {
       })
     }
   },
-  async visualizarResultados({ commit }, filters){
+  async visualizarResultados({ commit }, {filters, page, size}){
     try{
       commit(types.LOADING_SEARCH, {
         loading: true
       })
-      const { data } = await axios.post(`/buscador/empresas/filtrar`, filters)
+      const { data } = await axios.post(`/buscador/empresas/filtrar?page=${page}&size=${size}`, filters)
       commit(types.LOADING_SEARCH, {
         loading: false
       })
