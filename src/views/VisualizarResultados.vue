@@ -1,6 +1,6 @@
 <template>
 	<div class="home" id="page-wrapper">
-    <banner-top></banner-top>
+    <banner-top banner-title="Buscador de Empresas" banner-subtitle="Visualizar resultados"></banner-top>
 		<div class="container">
       <loading-full-page></loading-full-page>
 			<div class="banner">

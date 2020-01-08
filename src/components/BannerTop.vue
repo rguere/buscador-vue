@@ -3,7 +3,7 @@
     <div id="page" class="clearfix container">
       <div class="pt20 pb20 dottedbottom">
         <div id="bloquetxtizquierda" class="col-md-4">
-          <h1 id="supertituloranking" class="fs20"><strong class="title-lg">Buscador de Empresas</strong><br> Buscador de Empresas</h1>
+          <h1 id="supertituloranking" class="fs20"><strong class="title-lg">{{ bannerTitle }}</strong><br> {{ bannerSubtitle }}</h1>
         </div>
         <div class="col-md-8">
           <p class="title-md mnone tipo_link tipo_link_25">¿Le gustaría poder acceder a la <span class="fwb">información más completa y reciente de todas las empresas que operan en España</span> que sean de su interés?</p>
@@ -55,6 +55,16 @@
 <script>
     export default {
       name: 'banner-top',
+      props: {
+        bannerTitle: {
+          type: String,
+          required: true
+        },
+        bannerSubtitle: {
+          type: String,
+          required: true
+        }
+      },
       data: () => ({
         show: false
       }),
