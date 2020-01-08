@@ -152,6 +152,16 @@ export const actions = {
       })
     }
   },
+  async enviarResultadosCorreo({ commit }, filters, email){
+    try{
+      const { data } = await axios.post(`buscador/empresas/email?to=${email}`, filters)
+      return data
+    } catch (e) {
+      commit(types.LOADING_SEARCH, {
+        loading: false
+      })
+    }
+  },
   async visualizarResultados({ commit }, filters){
     try{
       commit(types.LOADING_SEARCH, {

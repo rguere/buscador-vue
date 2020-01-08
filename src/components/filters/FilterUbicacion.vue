@@ -256,7 +256,7 @@
           }
         })
         respalSelectedPL = removeDuplicates(respalSelectedPL, 'id')
-        //this.selected_provinces_localidad = [...respalSelectedPL]
+        this.selected_provinces_localidad = [...respalSelectedPL]
         //console.log(this.selected_provinces_localidad, respalSelectedPL)
       }
     },

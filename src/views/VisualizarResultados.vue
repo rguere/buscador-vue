@@ -1,11 +1,9 @@
 <template>
-	<div class="home">
+	<div class="home" id="page-wrapper">
+    <banner-top></banner-top>
 		<div class="container">
       <loading-full-page></loading-full-page>
 			<div class="banner">
-				<div class="text-center">
-					<h2>Visualizar resultados</h2>
-				</div>
 				<div>
 					<div class="btns-modal-header">
 					<div class="m-b-10">
@@ -29,8 +27,11 @@
 						</div>
 						<div class="col-md-6">
 						<div class="pull-right">
-							<button class="btn btn-info">
-								<i class="fa fa-envelope"></i>
+							<button
+                @click="enviarResultadosCorreo"
+                :disabled="loadingCorreo"
+                class="btn btn-info">
+                <i :class="(loadingCorreo)?'fa  fa-spinner fa-spin':'fa  fa-envelope'"></i>
 								Enviar al correo
 							</button>
 							<button
@@ -69,8 +70,6 @@
                   <th>Provincia</th>
                   <th>Localidad</th>
                   <th>Último año cuentas disponibles</th>
-                  <!--<th>Ventas ultimo año disponible(en miles de €)</th>-->
-                  <th>Tipo de cuentas</th>
                 </tr>
 							</thead>
               <tbody v-if="results && results.empresas">
@@ -80,8 +79,6 @@
                   <td>{{ item.Provincia }}</td>
                   <td>{{ item.Localidad }}</td>
                   <td>{{ (item.UltimaCuentaAnual)? item.UltimaCuentaAnual.Ejercicio : ''  }}</td>
-                  <!--<td>Ventas ultimo año disponible(en miles de €)</td>-->
-                  <td>{{ item.FechaGeneracion }}</td>
                 </tr>
               </tbody>
 						</table>
@@ -111,6 +108,8 @@ export default {
   },
   data: () => ({
       loadingExcel: false,
+      loadingCorreo: false,
+      correo: '',
       results: {
         cantidad: 0,
         total: 0,
@@ -129,12 +128,7 @@ export default {
   },
   methods: {
     visualizarResultados (){
-      let data = {}
-      for (let key in this.form) {
-        if(key !== 'filtros' && this.form[key].length !== 0){
-          data[key] = this.form[key]
-        }
-      }
+      let data = this.formatearData()
       this.$store.dispatch('search/visualizarResultados', data).then((response) => {
         this.results = response;
       }).catch(() => {
@@ -142,30 +136,42 @@ export default {
     },
     descargarExcel () {
       this.loadingExcel = true
-      let data = {}
-      for (let key in this.form) {
-        if(key !== 'filtros' && this.form[key].length !== 0){
-          data[key] = this.form[key]
-        }
-      }
+      let data = this.formatearData()
       this.$store.dispatch('search/archivoExcel', data).then((response) => {
         this.loadingExcel = false
-        const url = window.URL.createObjectURL(new Blob([response], {
-          type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-        }))
         const link = document.createElement('a')
-        link.href = url
+        link.href = `http://dev.infocif.info/api/buscador/archivos/${response}`
         link.setAttribute('download', 'resultados.xlsx')
         document.body.appendChild(link)
         link.click()
       }).catch(() => {
         this.loadingExcel = false
       })
+    },
+    enviarResultadosCorreo () {
+      if (this.correo.length !== 0) {
+        this.loadingCorreo = true
+        let data = this.formatearData()
+        this.$store.dispatch('search/enviarResultadosCorreo', data).then(() => {
+          this.loadingCorreo = false
+        }).catch(() => {
+          this.loadingCorreo = false
+        })
+      }
+    },
+    formatearData () {
+      let data = {}
+      for (let key in this.form) {
+        if(key !== 'filtros' && this.form[key].length !== 0){
+          data[key] = this.form[key]
+        }
+      }
+      return data
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-	.banner { padding: 95px 0 0 0; }
+	.banner { padding: 15px 0 0 0; }
 </style>
