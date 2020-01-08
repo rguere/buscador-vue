@@ -88,7 +88,7 @@
                   </el-table-column>
                 </el-table>
                 <el-pagination
-                  layout="total, prev, pager, next"
+                  layout="total, prev, pager, next, sizes"
                   :total="results.total"
                   :page-size="size"
                   :current-page.sync="currentPage"
@@ -124,7 +124,7 @@ export default {
       loadingCorreo: false,
       correo: '',
       currentPage: 1,
-      size: 25,
+      size: 10,
       results: {
         cantidad: 0,
         total: 0,
@@ -155,12 +155,12 @@ export default {
       this.loadingExcel = true
       let data = this.formatearData()
       this.$store.dispatch('search/archivoExcel', data).then((response) => {
-        this.loadingExcel = false
         const link = document.createElement('a')
         link.href = `http://dev.infocif.info/api/buscador/archivos/${response}`
         link.setAttribute('download', 'resultados.xlsx')
         document.body.appendChild(link)
         link.click()
+        this.loadingExcel = false
       }).catch(() => {
         this.loadingExcel = false
       })
@@ -188,8 +188,9 @@ export default {
     pageChange() {
       this.visualizarResultados()
     },
-    sizeChange (val) {
-      console.log(val)
+    sizeChange (val) { 
+      this.size = val
+      this.visualizarResultados()
     }
   }
 }
