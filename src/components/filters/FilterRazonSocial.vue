@@ -243,9 +243,15 @@
         this.loadingValidar = true  
         this.$store.dispatch('search/validateRazonSocial', this.dataFrm).then((response) => {
           this.social_reasons.empresas = (response.empresas)? response.empresas: []
-          //this.selected_social_reasons = this.social_reasons.empresas
           this.loadingValidar = false
           this.search_edit = false
+          if(this.social_reasons.empresas.length === 0) {
+            swal.fire(
+              'Advertencia',
+              'Nombre o razón social no existe',
+              'warning'
+            )
+          }
         }).catch(() => {
           this.loadingValidar = false
           this.social_reasons = { total: 0, cantidad: 0, empresas: [] }
