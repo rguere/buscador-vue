@@ -243,8 +243,10 @@
   import { mapGetters } from 'vuex'
   import { spacesByDashes, beforeOrderFilters } from './../../utils'
   import swal from 'sweetalert2'
+  import { persistentData } from './../../mixins/persistent-data'
   export default {
     name: 'filter-nif',
+    mixins: [persistentData],
     computed: mapGetters({
       search: 'search/search',
       loading: 'search/loading',
@@ -349,12 +351,12 @@
         this.dataFrm = ''
         this.list_nif = { validos: [], invalidos: [] }
         if (this.applied_filters.length > 1) {
-          this.$store.dispatch('search/filtrar', this.form).then((response) => {
+          let beforeForm = beforeOrderFilters(this.filters, this.applied_filters, this.form, this.title)
+          this.$store.dispatch('search/filtrar', beforeForm).then((response) => {
             this.updateNumberSelectedCompanies(response.cantidad)
           })
         }else {
-          let resta = (this.selected_list_nif.length === 0)? 0 : this.selected_companies - this.selected_by_list_nif
-          this.updateNumberSelectedCompanies((resta < 0)? 0: resta)
+          this.updateNumberSelectedCompanies(0)
         }
         this.selected_by_list_nif = 0
         this.$store.dispatch('filters/removeFilters', this.title)

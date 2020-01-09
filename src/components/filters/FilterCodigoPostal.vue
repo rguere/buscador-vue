@@ -287,9 +287,11 @@
   import { mapGetters } from 'vuex'
   import { required, maxLength } from 'vuelidate/lib/validators'
   import { spacesByDashes, beforeOrderFilters } from './../../utils'
+  import { persistentData } from './../../mixins/persistent-data'
   import swal from 'sweetalert2'
   export default {
     name: 'filter-codigo-postal',
+    mixins: [persistentData],
     computed: mapGetters({
       search: 'search/search',
       loading: 'search/loading',
@@ -410,12 +412,12 @@
         this.to_zip_code = ''
         this.zip_codes = { validos: [], invalidos: [] }
         if (this.applied_filters.length > 1) {
-          this.$store.dispatch('search/filtrar', this.form).then((response) => {
+          let beforeForm = beforeOrderFilters(this.filters, this.applied_filters, this.form, this.title)
+          this.$store.dispatch('search/filtrar', beforeForm).then((response) => {
             this.updateNumberSelectedCompanies(response.cantidad)
           })
         }else {
-          let resta = (this.selected_zip_codes.length === 0)? 0 : this.selected_companies - this.selected_by_zip_codes
-          this.updateNumberSelectedCompanies((resta < 0)? 0: resta)
+          this.updateNumberSelectedCompanies(0)
         }
         this.selected_by_zip_codes = 0
         this.$store.dispatch('filters/removeFilters', this.title)

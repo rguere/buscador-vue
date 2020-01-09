@@ -142,6 +142,26 @@ export const actions = {
       })
     }
   },
+  async archivoExcel({ commit }, filters){
+    try{
+      const { data } = await axios.post(`/buscador/empresas/excel`, filters)
+      return data
+    } catch (e) {
+      commit(types.LOADING_SEARCH, {
+        loading: false
+      })
+    }
+  },
+  async enviarResultadosCorreo({ commit }, {filters, email}){
+    try{
+      const { data } = await axios.post(`buscador/empresas/email?to=${email}`, filters)
+      return data
+    } catch (e) {
+      commit(types.LOADING_SEARCH, {
+        loading: false
+      })
+    }
+  },
   async saveFilter({ commit }, idUser, tipo, filter){
     try{
       const { data } = await axios.post('/filtrousuario/' + idUser + '/' + tipo, filter,{
@@ -151,7 +171,7 @@ export const actions = {
       })
       return data
     } catch (e) {
-     commit(types.LOADING_SEARCH, {
+      commit(types.LOADING_SEARCH, {
         loading: false
       })
     }
@@ -164,6 +184,23 @@ export const actions = {
     } catch (e) {
       console.debug('Error:', e);
      commit(types.LOADING_SEARCH, {
+      loading: false
+    })
+  }
+},
+  async visualizarResultados({ commit }, {filters, page, size}){
+    try{
+      commit(types.LOADING_SEARCH, {
+        loading: true
+      })
+      const { data } = await axios.post(`/buscador/empresas/filtrar?pag=${page}&size=${size}`, filters)
+      commit(types.LOADING_SEARCH, {
+        loading: false
+      })
+      return data
+    } catch (e) {
+      commit(types.LOADING_SEARCH, {
+
         loading: false
       })
     }

@@ -184,8 +184,16 @@ span.num-fil { color: #2196f3; font-weight: bold; }
   margin-right: 5px;
 }
 
+.m-l-5 {
+  margin-left: 5px;
+}
+
 .m-t-10 {
   margin-top: 10px;
+}
+
+.m-b-10 {
+  margin-bottom: 10px;
 }
 
 .checkboxs-resaldado {
@@ -197,6 +205,10 @@ span.num-fil { color: #2196f3; font-weight: bold; }
 
 .checkboxs-resaldado.w-50-p {
   width: 50%;
+}
+
+.link-disabled {
+  color: #fff!important;
 }
 
 @media (max-width: 950px) {

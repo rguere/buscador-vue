@@ -14,7 +14,7 @@
               <input type="checkbox"
                 :name="`checkbox_antiguedad_${item.id}`"
                 v-model="selected_antiguedad"
-                @change="handleChange(item, $event)"
+                @change="handleChange()"
                 :id="`checkbox_antiguedad_${item.id}`"
                 :value="item">
               <span class="geekmark"></span>
@@ -43,7 +43,7 @@
           <div>
             <div class="checkboxs-resaldado float-right" v-if="itemIncluirNull">
               <label class="custon-checkboxs">
-                <input type="checkbox" v-model="selected_antiguedad" :value="itemIncluirNull" name="">
+                <input type="checkbox" v-model="selected_antiguedad" :value="itemIncluirNull" @change="handleChange()" name="">
                 <span class="geekmark"></span>
                 <span class="title">
                   Incluir aquellas empresas en las que se desconoce su antigüedad
@@ -131,7 +131,7 @@
                                       <input type="checkbox"
                                           :name="`checkbox_empleados_${item.id}`"
                                           v-model="selected_antiguedad"
-                                          @change="handleChange(item, $event)"
+                                          @change="handleChange()"
                                           :id="`checkbox_empleados_${item.id}`"
                                           :value="item">
                                       <span class="geekmark"></span>
@@ -146,7 +146,7 @@
                         <div class="col-md-12">
                           <div class="checkboxs-resaldado w-50-p" v-if="itemIncluirNull">
                             <label class="custon-checkboxs">
-                              <input type="checkbox" v-model="selected_antiguedad" :value="itemIncluirNull" name="">
+                              <input type="checkbox" v-model="selected_antiguedad" :value="itemIncluirNull" @change="handleChange()" name="">
                               <span class="geekmark"></span>
                               <span class="title">
                                 Incluir aquellas empresas en las que se desconoce su antigüedad
@@ -203,7 +203,7 @@
                         <div class="col-md-12">
                           <div class="checkboxs-resaldado w-50-p m-t-10" v-if="itemIncluirNull">
                             <label class="custon-checkboxs">
-                              <input type="checkbox" v-model="selected_antiguedad" :value="itemIncluirNull" name="">
+                              <input type="checkbox" v-model="selected_antiguedad" :value="itemIncluirNull" @change="handleChange()" name="">
                               <span class="geekmark"></span>
                               <span class="title">
                                 Incluir aquellas empresas en las que se desconoce su antigüedad
@@ -231,8 +231,10 @@
   import swal from 'sweetalert2'
   import { required, maxLength } from 'vuelidate/lib/validators'
   import { inArrayObjectTreeselect, howAnimation, beforeOrderFilters } from './../../utils'
+  import { persistentData } from './../../mixins/persistent-data'
   export default {
     name: 'filter-antiguedad',
+    mixins: [persistentData],
     computed: {
       ...mapGetters({
         search: 'search/search',
@@ -440,7 +442,8 @@
       clean () {
         this.form.antiguedad = []
         if (this.applied_filters.length > 1) {
-          this.$store.dispatch('search/filtrar', this.form).then((response) => {
+          let beforeForm = beforeOrderFilters(this.filters, this.applied_filters, this.form, this.title)
+          this.$store.dispatch('search/filtrar', beforeForm).then((response) => {
             this.updateNumberSelectedCompanies(response.cantidad)
           })
         }else {

@@ -190,8 +190,10 @@
   import { mapGetters } from 'vuex'
   import swal from 'sweetalert2'
   import { beforeOrderFilters } from './../../utils'
+  import { persistentData } from './../../mixins/persistent-data'
   export default {
     name: 'filter-razon-social',
+    mixins: [persistentData],
     computed: mapGetters({
       search: 'search/search',
       loading: 'search/loading',
@@ -241,9 +243,15 @@
         this.loadingValidar = true  
         this.$store.dispatch('search/validateRazonSocial', this.dataFrm).then((response) => {
           this.social_reasons.empresas = (response.empresas)? response.empresas: []
-          //this.selected_social_reasons = this.social_reasons.empresas
           this.loadingValidar = false
           this.search_edit = false
+          if(this.social_reasons.empresas.length === 0) {
+            swal.fire(
+              'Advertencia',
+              'Nombre o razón social no existe',
+              'warning'
+            )
+          }
         }).catch(() => {
           this.loadingValidar = false
           this.social_reasons = { total: 0, cantidad: 0, empresas: [] }
@@ -296,12 +304,12 @@
         this.to_social_reason = ''
         this.social_reasons = { total: 0, cantidad: 0, empresas: [] }
         if (this.applied_filters.length > 1) {
-          this.$store.dispatch('search/filtrar', this.form).then((response) => {
+          let beforeForm = beforeOrderFilters(this.filters, this.applied_filters, this.form, this.title)
+          this.$store.dispatch('search/filtrar', beforeForm).then((response) => {
             this.updateNumberSelectedCompanies(response.cantidad)
           })
         }else {
-          let resta = (this.selected_social_reasons.length === 0)? 0 : this.selected_companies - this.selected_by_social_reasons
-          this.updateNumberSelectedCompanies((resta < 0)? 0: resta)
+          this.updateNumberSelectedCompanies(0)
         }
         this.selected_by_social_reasons = 0
         this.$store.dispatch('filters/removeFilters', this.title)

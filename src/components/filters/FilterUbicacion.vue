@@ -188,8 +188,10 @@
   import { mapGetters } from 'vuex'
   import swal from 'sweetalert2'
   import { inArrayObjectTreeselect, howAnimation, removeDuplicates, beforeOrderFilters } from './../../utils'
+  import { persistentData } from './../../mixins/persistent-data'
   export default {
     name: 'filter-ubicacion',
+    mixins: [persistentData],
     computed: mapGetters({
       search: 'search/search',
       loading: 'search/loading',
@@ -234,8 +236,7 @@
       selected_provinces_localidad: function (newProvincesLocalidad) {
         this.selected_by_location = this.numberCompaniesSelected((this.isAllProvincesLocalidad(newProvincesLocalidad))? this.search.provincia_localidad : newProvincesLocalidad)
       },
-      selected_by_location: function(newValue) {
-      if (newValue === 0) this.selected_provinces_localidad = []
+      selected_by_location: function() {
       },
       selected_companies: function () {
         howAnimation(document.querySelector('.selected_companies'))
@@ -256,6 +257,7 @@
         })
         respalSelectedPL = removeDuplicates(respalSelectedPL, 'id')
         this.selected_provinces_localidad = [...respalSelectedPL]
+        //console.log(this.selected_provinces_localidad, respalSelectedPL)
       }
     },
     mounted() {
@@ -360,13 +362,14 @@
         this.form.comunidades = []
         this.form.Provincias = []
         this.form.Localidades = []
+        this.selected_provinces_localidad = []
         if (this.applied_filters.length > 1) {
-          this.$store.dispatch('search/filtrar', this.form).then((response) => {
+          let beforeForm = beforeOrderFilters(this.filters, this.applied_filters, this.form, this.title)
+          this.$store.dispatch('search/filtrar', beforeForm).then((response) => {
             this.updateNumberSelectedCompanies(response.cantidad)
           })
         }else {
-          let resta = (this.selected_provinces_localidad.length === 0)? 0 : this.selected_companies - this.selected_by_location
-          this.updateNumberSelectedCompanies((resta < 0)? 0: resta)
+          this.updateNumberSelectedCompanies(0)
         }
         this.selected_by_location = 0
         this.$store.dispatch('filters/removeFilters', this.title)
