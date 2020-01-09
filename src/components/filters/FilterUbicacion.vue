@@ -369,8 +369,7 @@
             this.updateNumberSelectedCompanies(response.cantidad)
           })
         }else {
-          let resta = (this.selected_provinces_localidad.length === 0)? 0 : this.selected_companies - this.selected_by_location
-          this.updateNumberSelectedCompanies((resta < 0)? 0: resta)
+          this.updateNumberSelectedCompanies(0)
         }
         this.selected_by_location = 0
         this.$store.dispatch('filters/removeFilters', this.title)

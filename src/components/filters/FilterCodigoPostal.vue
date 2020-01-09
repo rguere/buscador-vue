@@ -417,8 +417,7 @@
             this.updateNumberSelectedCompanies(response.cantidad)
           })
         }else {
-          let resta = (this.selected_zip_codes.length === 0)? 0 : this.selected_companies - this.selected_by_zip_codes
-          this.updateNumberSelectedCompanies((resta < 0)? 0: resta)
+          this.updateNumberSelectedCompanies(0)
         }
         this.selected_by_zip_codes = 0
         this.$store.dispatch('filters/removeFilters', this.title)
