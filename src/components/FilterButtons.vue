@@ -52,10 +52,12 @@
 								</button>
 								<button
 									class="btn btn-primary"
-									:disabled="applied_filters.length === 0">
+									:disabled="applied_filters.length === 0"
+									@click="saveFilter">
 									<i class="fa fa-save"></i> Guardar <span class="hidden-xs hidden-sm"> búsqueda</span>
 								</button>
-								<button class="btn btn-primary">
+								<button class="btn btn-primary"
+									@click="getFilter">
 									<i class="fa fa-history"></i> Historial
 								</button>
 							</div>
@@ -143,7 +145,33 @@
             this.$root.$emit('clean_filter', filter.name)
           }
         })
-      },
+	},
+	saveFilter() {
+		this.loadingFrm = true;
+		var userId = 1;
+		var type = 1;
+		console.debug(this.form);
+		//let beforeForm = beforeOrderFilters(this.filters, this.applied_filters, this.form, 'Save Filter')
+		this.$store.dispatch('search/saveFilter', userId, type, this.form).then((response) => {
+			console.debug(response);
+            this.loadingFrm = false
+          }).catch(() => {
+			this.loadingFrm = false;
+			console.debug('fail');
+          })
+	},
+	getFilter() {
+		this.loadingFrm = true;
+		var userId = 1;
+		var type = 1;
+		this.$store.dispatch('search/getFilter',{userId, type} ).then((data) => {
+			console.debug(data);
+            this.loadingFrm = false
+          }).catch(() => {
+			this.loadingFrm = false;
+			console.debug('fail');
+          })
+	},
       emptyFilter(){
         swal.fire({
           icon: 'question',

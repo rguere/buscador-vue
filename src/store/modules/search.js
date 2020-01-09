@@ -141,5 +141,31 @@ export const actions = {
         loading: false
       })
     }
+  },
+  async saveFilter({ commit }, idUser, tipo, filter){
+    try{
+      const { data } = await axios.post('/filtrousuario/' + idUser + '/' + tipo, filter,{
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+      return data
+    } catch (e) {
+     commit(types.LOADING_SEARCH, {
+        loading: false
+      })
+    }
+  },
+  async getFilter({ commit }, {idUser, tipo}){
+    try{
+      const { data } = await axios.get('/filtrousuario/' + idUser + '/' + tipo)
+      console.debug(data);
+      return data
+    } catch (e) {
+      console.debug('Error:', e);
+     commit(types.LOADING_SEARCH, {
+        loading: false
+      })
+    }
   }
 }
