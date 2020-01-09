@@ -152,7 +152,7 @@ export const actions = {
       })
     }
   },
-  async enviarResultadosCorreo({ commit }, filters, email){
+  async enviarResultadosCorreo({ commit }, {filters, email}){
     try{
       const { data } = await axios.post(`buscador/empresas/email?to=${email}`, filters)
       return data

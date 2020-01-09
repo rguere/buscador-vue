@@ -12,28 +12,47 @@
                 class="btn btn-warning">
                 <i class="fa fa-arrow-left"></i> Vover
               </router-link>
-              <button class="btn btn-orange m-l-5">
-                <i class="fa fa-list-alt"></i>
-                Visualizar
-                <span class="hidden-xs hidden-sm">resultados</span>
+              <button class="btn btn-primary m-l-5">
+                <i class="fa fa-print"></i>
+                Imprimir
               </button>
             </div>
             <div class="row m-b-10">
               <div class="col-md-6">
-              <button class="btn btn-primary">
-                <i class="fa fa-print"></i>
-                Imprimir
-              </button>
               </div>
               <div class="col-md-6">
               <div class="pull-right">
                 <button
-                  @click="enviarResultadosCorreo"
+                  @click="dialogCorreoVisible = true"
                   :disabled="loadingCorreo"
                   class="btn btn-info">
                   <i :class="(loadingCorreo)?'fa  fa-spinner fa-spin':'fa  fa-envelope'"></i>
                   Enviar al correo
                 </button>
+                <el-dialog
+                  title="Enviar al correo"
+                  :visible.sync="dialogCorreoVisible"
+                  width="30%">
+                    <el-alert
+                      title="Ingrese el correo al que se enviaran los resultados, esto es a manera de prueba hasta que tengamos la información del usuario autenticado."
+                      type="info"
+                      center
+                      show-icon>
+                    </el-alert>
+                    <br>
+                    <input type="email" class="form-control" placeholder="Ingresa un correo" v-model="correo" ref="correo" required>
+                  <span slot="footer" class="dialog-footer">
+                    <button @click="dialogCorreoVisible = false"
+                      class="btn btn-danger">Cancel</button>
+                    <button
+                      @click="enviarResultadosCorreo"
+                      :disabled="loadingCorreo"
+                      class="btn btn-info m-l-5">
+                      <i :class="(loadingCorreo)?'fa  fa-spinner fa-spin':'fa  fa-envelope'"></i>
+                      Enviar al correo
+                    </button>
+                  </span>
+                </el-dialog>
                 <button
                   @click="descargarExcel"
                   :disabled="loadingExcel"
@@ -108,6 +127,7 @@
 // @ is an alias to /src
 
 import { mapGetters } from 'vuex'
+import swal from 'sweetalert2'
 
 export default {
 	/*middleware: 'guest',*/
@@ -120,6 +140,7 @@ export default {
     }
   },
   data: () => ({
+      dialogCorreoVisible: false,
       loadingExcel: false,
       loadingCorreo: false,
       correo: '',
@@ -166,11 +187,18 @@ export default {
       })
     },
     enviarResultadosCorreo () {
-      if (this.correo.length !== 0) {
+      if (this.$refs["correo"].checkValidity()) {
         this.loadingCorreo = true
-        let data = this.formatearData()
-        this.$store.dispatch('search/enviarResultadosCorreo', data).then(() => {
+        let filters = this.formatearData()
+        this.$store.dispatch('search/enviarResultadosCorreo', { filters, email: this.correo }).then(() => {
           this.loadingCorreo = false
+          this.dialogCorreoVisible = false
+          this.correo = ''
+          swal.fire(
+            'Éxito',
+            'Correo enviado',
+            'success'
+          )
         }).catch(() => {
           this.loadingCorreo = false
         })
