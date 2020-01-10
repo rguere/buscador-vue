@@ -179,10 +179,8 @@ export const actions = {
   async getFilter({ commit }, {idUser, type}){
     try{
       const { data } = await axios.get(`/filtrousuario/${idUser}/${type}`)
-      console.debug(data);
       return data
     } catch (e) {
-      console.debug('Error:', e);
     commit(types.LOADING_SEARCH, {
         loading: false
     })

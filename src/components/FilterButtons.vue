@@ -150,14 +150,14 @@
 		this.loadingFrm = true;
 		var idUser = 1;
 		var type = 1;
-		console.debug(this.form);
+		//console.debug(this.form);
 		//let beforeForm = beforeOrderFilters(this.filters, this.applied_filters, this.form, 'Save Filter')
 		this.$store.dispatch('search/saveFilter', { idUser, type, filter :this.form}).then((response) => {
-			console.debug(response);
+			//console.debug(response);
             this.loadingFrm = false
           }).catch(() => {
 			this.loadingFrm = false;
-			console.debug('fail');
+			//console.debug('fail');
           })
 	},
 	getFilter() {
@@ -165,11 +165,11 @@
 		var idUser = 1;
 		var type = 1;
 		this.$store.dispatch('search/getFilter',{ idUser, type } ).then((data) => {
-			console.debug(data);
+			//console.debug(data);
             this.loadingFrm = false
           }).catch(() => {
 			this.loadingFrm = false;
-			console.debug('fail');
+			//console.debug('fail');
           })
 	},
       emptyFilter(){
