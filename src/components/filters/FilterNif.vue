@@ -311,7 +311,7 @@
           this.hideModal()
           this.loadingApply = true
           this.search_edit = false
-          this.form.listNIF = this.selected_list_nif.map((item) => {
+          this.form.cif = this.selected_list_nif.map((item) => {
             return item.id
           })
           let beforeForm = beforeOrderFilters(this.filters, this.applied_filters, this.form, this.title)
@@ -347,7 +347,7 @@
         })
       },
       clean (){
-        this.form.listNIF = []
+        this.form.cif = []
         this.dataFrm = ''
         this.list_nif = { validos: [], invalidos: [] }
         if (this.applied_filters.length > 1) {
@@ -364,14 +364,14 @@
         this.search_edit = true
       },
       cleanFile() {
-        this.form.listNIF = []
+        this.form.cif = []
         this.list_nif = { validos: [], invalidos: [] }
         this.selected_by_list_nif = 0
         this.areApplied = false
         this.search_edit = true
       },
       emptyFilter () {
-        this.form.listNIF = []
+        this.form.cif = []
         this.list_nif = { validos: [], invalidos: [] }
         this.updateNumberSelectedCompanies(0)
         this.selected_by_list_nif = 0
