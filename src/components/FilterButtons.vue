@@ -152,7 +152,7 @@
 		var type = 1;
 		//console.debug(this.form);
 		//let beforeForm = beforeOrderFilters(this.filters, this.applied_filters, this.form, 'Save Filter')
-		this.$store.dispatch('search/saveFilter', { idUser, type, filter :this.form}).then((response) => {
+		this.$store.dispatch('search/saveFilter', { idUser, type, filter :this.form}).then(() => {
 			//console.debug(response);
             this.loadingFrm = false
           }).catch(() => {
@@ -164,7 +164,7 @@
 		this.loadingFrm = true;
 		var idUser = 1;
 		var type = 1;
-		this.$store.dispatch('search/getFilter',{ idUser, type } ).then((data) => {
+		this.$store.dispatch('search/getFilter',{ idUser, type } ).then(() => {
 			//console.debug(data);
             this.loadingFrm = false
           }).catch(() => {
