@@ -5,7 +5,7 @@ const initialState = () => {
   return {
     form: {
       codigosPostales: [],
-      listNIF: [],
+      cif: [],
       comunidades: [],
       Provincias: [],
       Localidades: [],
@@ -85,7 +85,7 @@ const initialState = () => {
         slug: "filter_nif",
         apply: false,
         quantity: 0,
-        key: 'listNIF',
+        key: 'cif',
       },
       {
         name: "Años con cuentas disponibles",
