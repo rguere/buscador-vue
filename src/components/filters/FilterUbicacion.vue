@@ -380,7 +380,6 @@
         this.SearchTheProvinceorTown = ''
       },
       emptyFilter () {
-        console.log('emptyFilter')
         this.selected_children = []
         this.form.comunidades = []
         this.form.Provincias = []
