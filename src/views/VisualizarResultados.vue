@@ -106,13 +106,17 @@
                     label="Código Postal">
                   </el-table-column>
                   <el-table-column
+                    prop="FechaConstitucionOrigen"
+                    label="Fecha Constitución">
+                  </el-table-column>
+                  <el-table-column
                     :prop="('UltimaCuentaAnual' && 'UltimaCuentaAnual.SumTotalEmpleados')? 'UltimaCuentaAnual.SumTotalEmpleados': ''"
                     label="Número de empleados">
                   </el-table-column>
-                  <el-table-column
+                  <!-- <el-table-column
                     :prop="('UltimaCuentaAnual' && 'UltimaCuentaAnual.Ejercicio')? 'UltimaCuentaAnual.Ejercicio': ''"
                     label="Último año cuentas disponibles">
-                  </el-table-column>
+                  </el-table-column> -->
                 </el-table>
                 <el-pagination
                   layout="total, prev, sizes, pager, next"
