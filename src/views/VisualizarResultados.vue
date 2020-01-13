@@ -90,10 +90,6 @@
                     label="Razón social de la empresa">
                   </el-table-column>
                   <el-table-column
-                    prop="CIF"
-                    label="NIF">
-                  </el-table-column>
-                  <el-table-column
                     prop="Provincia"
                     label="Provincia">
                   </el-table-column>
@@ -102,12 +98,24 @@
                     label="Localidad">
                   </el-table-column>
                   <el-table-column
+                    prop="CIF"
+                    label="NIF">
+                  </el-table-column>
+                  <el-table-column
+                    prop="Codigo_Postal"
+                    label="Código Postal">
+                  </el-table-column>
+                  <el-table-column
+                    :prop="('UltimaCuentaAnual' && 'UltimaCuentaAnual.SumTotalEmpleados')? 'UltimaCuentaAnual.SumTotalEmpleados': ''"
+                    label="Número de empleados">
+                  </el-table-column>
+                  <el-table-column
                     :prop="('UltimaCuentaAnual' && 'UltimaCuentaAnual.Ejercicio')? 'UltimaCuentaAnual.Ejercicio': ''"
                     label="Último año cuentas disponibles">
                   </el-table-column>
                 </el-table>
                 <el-pagination
-                  layout="total, prev, pager, next, sizes"
+                  layout="total, prev, sizes, pager, next"
                   :total="results.total"
                   :page-size="size"
                   :current-page.sync="currentPage"
