@@ -107,7 +107,7 @@
                   </el-table-column>
                   <el-table-column
                     prop="FechaConstitucionOrigen"
-                    label="Fecha Constitución">
+                    label="Antigüedad">
                   </el-table-column>
                   <el-table-column
                     :prop="('UltimaCuentaAnual' && 'UltimaCuentaAnual.SumTotalEmpleados')? 'UltimaCuentaAnual.SumTotalEmpleados': ''"
