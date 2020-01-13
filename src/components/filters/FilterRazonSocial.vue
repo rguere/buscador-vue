@@ -299,7 +299,7 @@
         })
       },
       clean (){
-        this.form.codigosPostales = []
+        this.form.razonSocial = []
         this.dataFrm = ''
         this.to_social_reason = ''
         this.social_reasons = { total: 0, cantidad: 0, empresas: [] }
@@ -317,7 +317,9 @@
         this.search_edit = true
       },
       emptyFilter () {
-        this.form.codigosPostales = []
+        this.form.razonSocial = []
+        this.dataFrm = ''
+        this.to_social_reason = ''
         this.social_reasons = { total: 0, cantidad: 0, empresas: [] }
         this.updateNumberSelectedCompanies(0)
         this.selected_by_social_reasons = 0

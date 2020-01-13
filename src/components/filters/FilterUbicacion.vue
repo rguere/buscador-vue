@@ -380,10 +380,12 @@
         this.SearchTheProvinceorTown = ''
       },
       emptyFilter () {
+        console.log('emptyFilter')
         this.selected_children = []
         this.form.comunidades = []
         this.form.Provincias = []
         this.form.Localidades = []
+        this.selected_provinces_localidad = []
         this.updateNumberSelectedCompanies(0)
         this.selected_by_location = 0
         this.$store.dispatch('filters/removeFilters', this.title)
