@@ -8,7 +8,7 @@
     </div>
     <div class="panel-body">
       <div v-if="search.provincia_localidad && search.provincia_localidad.length != 0">
-        <div class="grid-3-columns-1fr" v-if="!areApplied || !(form.Provincias && form.Provincias.length !== 0) || (form.Localidades && form.Localidades.length !== 0)">
+        <div class="grid-3-columns-1fr" v-if="!(form.Provincias && form.Provincias.length !== 0) || (form.Localidades && form.Localidades.length !== 0)">
           <div v-for="(item, key) in search.provincia_localidad" :key="key">
             <label class="custon-checkboxs">
               <input type="checkbox"
