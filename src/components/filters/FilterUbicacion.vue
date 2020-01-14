@@ -44,7 +44,7 @@
             <button
               type="button"
               class="btn btn-success"
-              v-if="(selected_provinces_localidad.length !== 0 && !areApplied) || (selected_provinces_localidad.length !== 0 && reapply)"
+              v-if="(selected_provinces_localidad.length !== 0 && !areApplied) || (selected_provinces_localidad.length !== 0 && !compareWithNewtoApply)"
               @click="apply">
                 Aplicar <i :class="(loadingFrm)?'fa  fa-spinner fa-spin':'fa  fa-send'"></i>
             </button>
@@ -192,16 +192,24 @@
   export default {
     name: 'filter-ubicacion',
     mixins: [persistentData],
-    computed: mapGetters({
-      search: 'search/search',
-      loading: 'search/loading',
-      form: 'filters/form',
-      selected_companies: 'filters/selected_companies',
-      applied_filters: 'filters/applied_filters',
-      filters: 'filters/filters',
-    }),
+    computed: {
+      ...mapGetters({
+        search: 'search/search',
+        loading: 'search/loading',
+        form: 'filters/form',
+        selected_companies: 'filters/selected_companies',
+        applied_filters: 'filters/applied_filters',
+        filters: 'filters/filters',
+      }),
+      compareWithNewtoApply: function () {
+        let stg = this.selected_provinces_localidad_string
+        let obj = JSON.stringify(this.selected_provinces_localidad)
+        return (stg === obj)
+      }
+    },
     data: () => ({
       title: 'Ubicación',
+      selected_provinces_localidad_string: '',
       selected_provinces_localidad: [],
       list_provinces_localidad: [],
       selected_children: [],
@@ -335,6 +343,7 @@
             this.areApplied = true
             this.reapply = false
             this.loadingFrm = false
+            this.selected_provinces_localidad_string = JSON.stringify(this.selected_provinces_localidad);
           }).catch(() => {
             this.loadingFrm = false
           })
@@ -363,6 +372,7 @@
         this.form.Provincias = []
         this.form.Localidades = []
         this.selected_provinces_localidad = []
+        this.selected_provinces_localidad_string = ''
         if (this.applied_filters.length > 1) {
           let beforeForm = beforeOrderFilters(this.filters, this.applied_filters, this.form, this.title)
           this.$store.dispatch('search/filtrar', beforeForm).then((response) => {
@@ -385,6 +395,7 @@
         this.form.Provincias = []
         this.form.Localidades = []
         this.selected_provinces_localidad = []
+        this.selected_provinces_localidad_string = ''
         this.updateNumberSelectedCompanies(0)
         this.selected_by_location = 0
         this.$store.dispatch('filters/removeFilters', this.title)
