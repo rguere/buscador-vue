@@ -246,8 +246,6 @@
       selected_provinces_localidad: function (newProvincesLocalidad) {
         this.selected_by_location = this.numberCompaniesSelected((this.isAllProvincesLocalidad(newProvincesLocalidad))? this.search.provincia_localidad : newProvincesLocalidad)
       },
-      selected_by_location: function() {
-      },
       selected_companies: function () {
         howAnimation(document.querySelector('.selected_companies'))
       },
@@ -314,7 +312,7 @@
         if (Array.isArray(newSelectedCompanies)) {
           newSelectedCompanies.forEach((item) => {
             let result = inArrayObjectTreeselect(this.search.provincia_localidad, item.id)
-            if (result && result.data && result.data) {
+            if (result && result.data) {
               business_accountant = business_accountant + result.data
             }
           })
@@ -327,7 +325,7 @@
        * @return {Boolean}                         [description]
        */
       isAllProvincesLocalidad (arrayProvincesLocalidad){
-      return (arrayProvincesLocalidad[0] && arrayProvincesLocalidad[0].id === 'all')? true: false
+        return (arrayProvincesLocalidad[0] && arrayProvincesLocalidad[0].id === 'all')? true: false
       },
       apply () {
         if (this.selected_provinces_localidad && this.selected_provinces_localidad.length !== 0) {
