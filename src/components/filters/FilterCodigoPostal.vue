@@ -350,6 +350,12 @@
       }
     },
     methods: {
+      deleteInvalid (validos) {
+        this.dataFrm = ''
+        validos.map((item) => {
+          this.dataFrm += `${item.id}\n`
+        })
+      },
       validateZipCodes(){
         this.loadingValidar = true  
         let sin_salto = spacesByDashes(this.dataFrm)
@@ -359,6 +365,7 @@
           this.selected_zip_codes = this.zip_codes.validos
           this.loadingValidar = false
           this.search_edit = false
+          this.deleteInvalid(this.zip_codes.validos)
         }).catch(() => {
           this.loadingValidar = false
           this.zip_codes = { validos: [], invalidos: [] }
@@ -487,6 +494,7 @@
             this.selected_zip_codes = this.zip_codes.validos
             this.loadingValidar = false
             this.search_edit = false
+            this.deleteInvalid(this.zip_codes.validos)
           }).catch(() => {
             this.loadingValidar = false
             this.zip_codes = { validos: [], invalidos: [] }
