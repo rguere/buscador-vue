@@ -8,30 +8,32 @@
     </div>
     <div class="panel-body">
       <div v-if="search.provincia_localidad && search.provincia_localidad.length != 0">
-        <div class="grid-3-columns-1fr" v-if="!(form.Provincias && form.Provincias.length !== 0) || (form.Localidades && form.Localidades.length !== 0)">
-          <div v-for="(item, key) in search.provincia_localidad" :key="key">
-            <label class="custon-checkboxs">
-              <input type="checkbox"
-                :name="`checkbox_${item.id}`"
-                v-model="selected_provinces_localidad"
-                @change="handleChange(item, $event)"
-                :id="`checkbox_${item.id}`"
-                :value="item">
-              <span class="geekmark"></span>
-              <span class="name-checkbox">{{ item.label }}</span>
-              <span class="num-fil"> ({{ item.data | numeral('0,0') }})</span>
-            </label>
+        <div class="max-height-400-overflow">
+          <div class="grid-3-columns-1fr" v-if="!(form.Provincias && form.Provincias.length !== 0) || (form.Localidades && form.Localidades.length !== 0)">
+            <div v-for="(item, key) in search.provincia_localidad" :key="key">
+              <label class="custon-checkboxs">
+                <input type="checkbox"
+                  :name="`checkbox_${item.id}`"
+                  v-model="selected_provinces_localidad"
+                  @change="handleChange(item, $event)"
+                  :id="`checkbox_${item.id}`"
+                  :value="item">
+                <span class="geekmark"></span>
+                <span class="name-checkbox">{{ item.label }}</span>
+                <span class="num-fil"> ({{ item.data | numeral('0,0') }})</span>
+              </label>
+            </div>
           </div>
-        </div>
-        <div class="selected_children" v-if="areApplied && (form.Provincias && form.Provincias.length !== 0) || (form.Localidades && form.Localidades.length !== 0)">
-          <hr>
-          <ul class="grid-4-columns-1fr">
-            <li v-for="(item, key) in selected_children.slice(0, limitChildren)" :key="key" class="pa-3">
-              <span class="name-checkbox">- {{ formatearLabel(item) }} </span>
-              <span class="num-fil"> ({{ item.data | numeral('0,0') }})</span>
-            </li>
-          </ul>
-          <a href="" v-on:click.stop.prevent="showAllInvalidos" v-if="selected_children.length >= limitChildren" class="btn" style="display: block;">{{ (selected_children.length == limitChildren) ? 'Ver menos' : `Ver todos (${selected_children.length})` }} </a>
+          <div class="selected_children" v-if="areApplied && (form.Provincias && form.Provincias.length !== 0) || (form.Localidades && form.Localidades.length !== 0)">
+            <hr>
+            <ul class="grid-4-columns-1fr">
+              <li v-for="(item, key) in selected_children.slice(0, limitChildren)" :key="key" class="pa-3">
+                <span class="name-checkbox">- {{ formatearLabel(item) }} </span>
+                <span class="num-fil"> ({{ item.data | numeral('0,0') }})</span>
+              </li>
+            </ul>
+            <a href="" v-on:click.stop.prevent="showAllInvalidos" v-if="selected_children.length >= limitChildren" class="btn" style="display: block;">{{ (selected_children.length == limitChildren) ? 'Ver menos' : `Ver todos (${selected_children.length})` }} </a>
+          </div>
         </div>
         <div class="flex-space-between-flex-end">
           <div class="btns">
@@ -530,6 +532,11 @@
   
   .el-select.el-select--medium {
     width: 100%;
+  }
+
+  .max-height-400-overflow {
+    overflow-y: auto;
+    max-height: 400px;
   }
 
 </style>
