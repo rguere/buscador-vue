@@ -241,11 +241,11 @@
       return {
         employees_from: {
           required,
-          between: maxLength(9)
+          between: maxLength(7)
         },
         employees_to: {
           required,
-          between: maxLength(9)
+          between: maxLength(7)
         }
       }
     },
