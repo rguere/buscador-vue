@@ -58,7 +58,7 @@
             Ver detalles <i class="fa fa-plus-circle"></i>
           </button>
           <button
-              v-if="zip_codes && zip_codes.validos.length !== 0 && !search_edit"
+              v-if="zip_codes && zip_codes.validos.length !== 0 && !search_edit && !compareWithNewtoApply"
               :disabled="selected_zip_codes.length === 0 || loadingApply"
               type="button"
               class="btn btn-success m-r-2"
@@ -292,14 +292,21 @@
   export default {
     name: 'filter-codigo-postal',
     mixins: [persistentData],
-    computed: mapGetters({
-      search: 'search/search',
-      loading: 'search/loading',
-      form: 'filters/form',
-      selected_companies: 'filters/selected_companies',
-      applied_filters: 'filters/applied_filters',
-      filters: 'filters/filters',
-    }),
+    computed: {
+      ...mapGetters({
+        search: 'search/search',
+        loading: 'search/loading',
+        form: 'filters/form',
+        selected_companies: 'filters/selected_companies',
+        applied_filters: 'filters/applied_filters',
+        filters: 'filters/filters',
+      }),
+      compareWithNewtoApply: function () {
+        let stg = this.selected_zip_codes_string
+        let obj = JSON.stringify(this.selected_zip_codes)
+        return (stg === obj)
+      }
+    },
     data: () => ({
       title: 'Código Postal',
       loadingValidar: false,
@@ -309,6 +316,7 @@
         validos: [],
         invalidos: []
       },
+      selected_zip_codes_string: '',
       selected_zip_codes: [],
       selected_by_zip_codes: 0,
       areApplied: false,
@@ -390,6 +398,7 @@
             this.updateNumberSelectedCompanies(response.cantidad)
             this.areApplied = true
             this.loadingApply = false
+            this.selected_zip_codes_string = JSON.stringify(this.selected_zip_codes)
           }).catch(() => {
             this.loadingApply = false
           })
@@ -414,6 +423,8 @@
       },
       clean (){
         this.form.codigosPostales = []
+        this.selected_zip_codes = []
+        this.selected_zip_codes_string = ''
         this.dataFrm = ''
         this.from_zip_code = ''
         this.to_zip_code = ''
@@ -433,6 +444,8 @@
       },
       emptyFilter () {
         this.form.codigosPostales = []
+        this.selected_zip_codes = []
+        this.selected_zip_codes_string = ''
         this.zip_codes = { validos: [], invalidos: [] }
         this.updateNumberSelectedCompanies(0)
         this.selected_by_zip_codes = 0

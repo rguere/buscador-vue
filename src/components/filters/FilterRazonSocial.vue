@@ -49,7 +49,7 @@
             Ver detalles <i class="fa fa-plus-circle"></i>
           </button>
           <button
-              v-if="social_reasons && social_reasons.empresas.length !== 0 && !search_edit"
+              v-if="social_reasons && social_reasons.empresas.length !== 0 && !search_edit && !compareWithNewtoApply"
               :disabled="selected_social_reasons.length === 0 || loadingApply"
               type="button"
               class="btn btn-success m-r-5"
@@ -194,14 +194,21 @@
   export default {
     name: 'filter-razon-social',
     mixins: [persistentData],
-    computed: mapGetters({
-      search: 'search/search',
-      loading: 'search/loading',
-      form: 'filters/form',
-      selected_companies: 'filters/selected_companies',
-      applied_filters: 'filters/applied_filters',
-      filters: 'filters/filters',
-    }),
+    computed: {
+      ...mapGetters({
+        search: 'search/search',
+        loading: 'search/loading',
+        form: 'filters/form',
+        selected_companies: 'filters/selected_companies',
+        applied_filters: 'filters/applied_filters',
+        filters: 'filters/filters',
+      }),
+      compareWithNewtoApply: function () {
+        let stg = this.selected_social_reasons_string
+        let obj = JSON.stringify(this.selected_social_reasons)
+        return (stg === obj)
+      }
+    },
     data: () => ({
       title: 'Nombre o razón social',
       loadingValidar: false,
@@ -212,6 +219,7 @@
         cantidad: 0,
         empresas: [],
       },
+      selected_social_reasons_string: '',
       selected_social_reasons: [],
       selected_by_social_reasons: 0,
       areApplied: false,
@@ -276,6 +284,7 @@
             this.updateNumberSelectedCompanies(response.cantidad)
             this.areApplied = true
             this.loadingApply = false
+            this.selected_social_reasons_string = JSON.stringify(this.selected_social_reasons)
           }).catch(() => {
             this.loadingApply = false
           })
@@ -302,6 +311,8 @@
         this.form.razonSocial = []
         this.dataFrm = ''
         this.to_social_reason = ''
+        this.selected_social_reasons = []
+        this.selected_social_reasons_string = ''
         this.social_reasons = { total: 0, cantidad: 0, empresas: [] }
         if (this.applied_filters.length > 1) {
           let beforeForm = beforeOrderFilters(this.filters, this.applied_filters, this.form, this.title)
@@ -318,6 +329,8 @@
       },
       emptyFilter () {
         this.form.razonSocial = []
+        this.selected_social_reasons = []
+        this.selected_social_reasons_string = ''
         this.dataFrm = ''
         this.to_social_reason = ''
         this.social_reasons = { total: 0, cantidad: 0, empresas: [] }

@@ -343,7 +343,7 @@
             this.areApplied = true
             this.reapply = false
             this.loadingFrm = false
-            this.selected_provinces_localidad_string = JSON.stringify(this.selected_provinces_localidad);
+            this.selected_provinces_localidad_string = JSON.stringify(this.selected_provinces_localidad)
           }).catch(() => {
             this.loadingFrm = false
           })

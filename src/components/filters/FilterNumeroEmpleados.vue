@@ -34,7 +34,7 @@
             <button
               type="button"
               class="btn btn-success"
-              v-if="(selected_empleados.length !== 0 && !areApplied) || (selected_empleados.length !== 0 && reapply)"
+              v-if="(selected_empleados.length !== 0 && !areApplied) || (selected_empleados.length !== 0 && !compareWithNewtoApply)"
               @click="apply">
                 Aplicar <i :class="(loadingFrm)?'fa  fa-spinner fa-spin':'fa  fa-send'"></i>
             </button>
@@ -210,10 +210,16 @@
       itemIncluirNull: function () {
         let include = this.search.empleados.filter(function (item) { return item.label === 'incluir_null' })
         return (include)? include[0]: null;
+      },
+      compareWithNewtoApply: function () {
+        let stg = this.selected_empleados_string
+        let obj = JSON.stringify(this.selected_empleados)
+        return (stg === obj)
       }
     },
     data: () => ({
       title: 'Número de empleados',
+      selected_empleados_string: '',
       selected_empleados: [],
       list_empleados: [],
       selected_by_empleados: 0,
@@ -335,6 +341,7 @@
             this.areApplied = true
             this.reapply = false
             this.loadingFrm = false
+            this.selected_empleados_string = JSON.stringify(this.selected_empleados)
           }).catch(() => {
             this.loadingFrm = false
           })
@@ -392,6 +399,8 @@
       },
       clean () {
         this.form.empleados = []
+        this.selected_empleados = []
+        this.selected_empleados_string = ''
         if (this.applied_filters.length > 1) {
           let beforeForm = beforeOrderFilters(this.filters, this.applied_filters, this.form, this.title)
           this.$store.dispatch('search/filtrar', beforeForm).then((response) => {
@@ -408,6 +417,8 @@
       },
       emptyFilter () {
         this.form.empleados = []
+        this.selected_empleados = []
+        this.selected_empleados_string = ''
         this.updateNumberSelectedCompanies(0)
         this.selected_by_empleados = 0
         this.$store.dispatch('filters/removeFilters', this.title)

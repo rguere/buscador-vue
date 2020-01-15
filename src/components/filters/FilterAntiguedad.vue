@@ -34,7 +34,7 @@
             <button
               type="button"
               class="btn btn-success"
-              v-if="(selected_antiguedad.length !== 0 && !areApplied) || (selected_antiguedad.length !== 0 && reapply)"
+              v-if="(selected_antiguedad.length !== 0 && !areApplied) || (selected_antiguedad.length !== 0 && !compareWithNewtoApply)"
               @click="apply">
                 Aplicar <i :class="(loadingFrm)?'fa  fa-spinner fa-spin':'fa  fa-send'"></i>
             </button>
@@ -247,10 +247,16 @@
       itemIncluirNull: function () {
         let include = this.search.antiguedad.filter(function (item) { return item.label === 'incluir_null' })
         return (include)? include[0]: null;
+      },
+      compareWithNewtoApply: function () {
+        let stg = this.selected_antiguedad_string
+        let obj = JSON.stringify(this.selected_antiguedad)
+        return (stg === obj)
       }
     },
     data: () => ({
       title: 'Antigüedad',
+      selected_antiguedad_string: '',
       selected_antiguedad: [],
       list_antiguedad: [],
       selected_by_antiguedad: 0,
@@ -372,6 +378,7 @@
             this.areApplied = true
             this.reapply = false
             this.loadingFrm = false
+            this.selected_antiguedad_string = JSON.stringify(this.selected_antiguedad)
           }).catch(() => {
             this.loadingFrm = false
           })
@@ -441,6 +448,8 @@
       },
       clean () {
         this.form.antiguedad = []
+        this.selected_antiguedad = []
+        this.selected_antiguedad_string = ''
         if (this.applied_filters.length > 1) {
           let beforeForm = beforeOrderFilters(this.filters, this.applied_filters, this.form, this.title)
           this.$store.dispatch('search/filtrar', beforeForm).then((response) => {
@@ -458,6 +467,8 @@
       },
       emptyFilter () {
         this.form.antiguedad = []
+        this.selected_antiguedad = []
+        this.selected_antiguedad_string = ''
         this.updateNumberSelectedCompanies(0)
         this.selected_by_antiguedad = 0
         this.daterange = [null, null],

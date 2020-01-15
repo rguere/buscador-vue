@@ -58,7 +58,7 @@
             Ver detalles <i class="fa fa-plus-circle"></i>
           </button>
           <button
-              v-if="list_nif && list_nif.validos.length !== 0 && !search_edit"
+              v-if="list_nif && list_nif.validos.length !== 0 && !search_edit && !compareWithNewtoApply"
               :disabled="selected_list_nif.length === 0 || loadingApply"
               type="button"
               class="btn btn-success m-r-2"
@@ -247,14 +247,21 @@
   export default {
     name: 'filter-nif',
     mixins: [persistentData],
-    computed: mapGetters({
-      search: 'search/search',
-      loading: 'search/loading',
-      form: 'filters/form',
-      selected_companies: 'filters/selected_companies',
-      applied_filters: 'filters/applied_filters',
-      filters: 'filters/filters',
-    }),
+    computed: {
+      ...mapGetters({
+        search: 'search/search',
+        loading: 'search/loading',
+        form: 'filters/form',
+        selected_companies: 'filters/selected_companies',
+        applied_filters: 'filters/applied_filters',
+        filters: 'filters/filters',
+      }),
+      compareWithNewtoApply: function () {
+        let stg = this.selected_list_nif_string
+        let obj = JSON.stringify(this.selected_list_nif)
+        return (stg === obj)
+      }
+    },
     data: () => ({
       title: 'NIF',
       loadingValidar: false,
@@ -264,6 +271,7 @@
         validos: [],
         invalidos: []
       },
+      selected_list_nif_string: '',
       selected_list_nif: [],
       selected_by_list_nif: 0,
       areApplied: false,
@@ -324,6 +332,7 @@
             this.updateNumberSelectedCompanies(response.cantidad)
             this.areApplied = true
             this.loadingApply = false
+            this.selected_list_nif_string = JSON.stringify(this.selected_list_nif)
           }).catch(() => {
             this.loadingApply = false
           })
@@ -349,6 +358,8 @@
       clean (){
         this.form.cif = []
         this.dataFrm = ''
+        this.selected_list_nif = []
+        this.selected_list_nif_string = ''
         this.list_nif = { validos: [], invalidos: [] }
         if (this.applied_filters.length > 1) {
           let beforeForm = beforeOrderFilters(this.filters, this.applied_filters, this.form, this.title)
@@ -365,6 +376,8 @@
       },
       cleanFile() {
         this.form.cif = []
+        this.selected_list_nif = []
+        this.selected_list_nif_string = ''
         this.list_nif = { validos: [], invalidos: [] }
         this.selected_by_list_nif = 0
         this.areApplied = false
@@ -372,6 +385,8 @@
       },
       emptyFilter () {
         this.form.cif = []
+        this.selected_list_nif = []
+        this.selected_list_nif_string = ''
         this.list_nif = { validos: [], invalidos: [] }
         this.updateNumberSelectedCompanies(0)
         this.selected_by_list_nif = 0
