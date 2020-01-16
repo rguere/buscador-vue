@@ -26,12 +26,21 @@
           </div>
           <div class="selected_children" v-if="areApplied && (form.Provincias && form.Provincias.length !== 0) || (form.Localidades && form.Localidades.length !== 0)">
             <hr>
-            <ul class="grid-4-columns-1fr">
-              <li v-for="(item, key) in selected_children.slice(0, limitChildren)" :key="key" class="pa-3">
-                <span class="name-checkbox">- {{ formatearLabel(item) }} </span>
-                <span class="num-fil"> ({{ item.data | numeral('0,0') }})</span>
-              </li>
-            </ul>
+            <div class="grid-4-columns-1fr">
+              <div v-for="(item, key) in selected_children.slice(0, limitChildren)" :key="key" class="pa-3">
+                <label class="custon-checkboxs">
+                  <input type="checkbox"
+                    :name="`checkbox_sons${item.id}`"
+                    v-model="selected_provinces_localidad"
+                    @change="handleChange(item, $event)"
+                    :id="`checkbox_sons${item.id}`"
+                    :value="item">
+                  <span class="geekmark"></span>
+                  <span class="name-checkbox">- {{ formatearLabel(item) }}</span>
+                  <span class="num-fil"> ({{ item.data | numeral('0,0') }})</span>
+                </label>
+              </div>
+            </div>
             <a href="" v-on:click.stop.prevent="showAllInvalidos" v-if="selected_children.length >= limitChildren" class="btn" style="display: block;">{{ (selected_children.length == limitChildren) ? 'Ver menos' : `Ver todos (${selected_children.length})` }} </a>
           </div>
         </div>

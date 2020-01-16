@@ -378,6 +378,7 @@
             this.areApplied = true
             this.reapply = false
             this.loadingEmpleados = false
+            this.selected_empleados_string = JSON.stringify(this.selected_empleados)
           }).catch(() => {
             this.loadingEmpleados = false
           })
