@@ -134,7 +134,7 @@ export const actions = {
   },
   async validateRazonSocial({ commit }, razon_social){
     try{
-      const { data } = await axios.get(`/buscador/razonSocial/buscar?RazonSocial=${razon_social}&page=0&size=25`)
+      const { data } = await axios.get(`/buscador/razonSocial/buscar?RazonSocial=${razon_social}&page=0&size=500`)
       return data
     } catch (e) {
      commit(types.LOADING_SEARCH, {

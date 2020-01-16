@@ -347,8 +347,8 @@
       numberRazonSocial(newRazonSocial) {
         let business_accountant = 0
         if (Array.isArray(newRazonSocial)) {
-          newRazonSocial.forEach((item) => {
-            business_accountant = business_accountant + item.data
+          newRazonSocial.forEach(() => {
+            business_accountant = business_accountant + 1
           })
         }
         return business_accountant
