@@ -187,7 +187,8 @@
                               format="dd/MM/yyyy"
                               value-format="yyyy-MM-dd"
                               type="date"
-                              placeholder="(Introducir, en formato dd/mm/aaaa, la fecha de constitución)">
+                              placeholder="(Introducir, en formato dd/mm/aaaa, la fecha de constitución)"
+                              :picker-options="pickerOptions">
                             </el-date-picker>
                           </div>
                         </div>
@@ -279,16 +280,21 @@
       ahnos_from: '',
       incluir_null: false,
       all: false,
+      pickerOptions: {
+        disabledDate(time) {
+          return time.getTime() > Date.now();
+        },
+      },
     }),
     validations() {
       return {
         ahnos_from: {
           required,
-          between: maxLength(9)
+          between: maxLength(3)
         },
         ahnos_to: {
           required,
-          between: maxLength(9)
+          between: maxLength(3)
         }
       }
     },
