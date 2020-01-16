@@ -258,6 +258,9 @@
     watch: {
       selected_empleados: function (newProvincesLocalidad) {
         this.selected_by_empleados = this.numberCompaniesSelected((this.isAllProvincesLocalidad(newProvincesLocalidad))? this.search.empleados : newProvincesLocalidad)
+        if (this.reapply && newProvincesLocalidad.length === 0) {
+          this.clean()
+        }
       },
       selected_by_empleados: function(newValue) {
       if (newValue === 0) this.selected_empleados = []

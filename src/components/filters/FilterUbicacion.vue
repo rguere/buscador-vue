@@ -245,6 +245,9 @@
     watch: {
       selected_provinces_localidad: function (newProvincesLocalidad) {
         this.selected_by_location = this.numberCompaniesSelected((this.isAllProvincesLocalidad(newProvincesLocalidad))? this.search.provincia_localidad : newProvincesLocalidad)
+        if (this.reapply && newProvincesLocalidad.length === 0) {
+          this.clean()
+        }
       },
       selected_companies: function () {
         howAnimation(document.querySelector('.selected_companies'))

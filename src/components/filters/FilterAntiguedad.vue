@@ -295,6 +295,9 @@
     watch: {
       selected_antiguedad: function (newProvincesLocalidad) {
         this.selected_by_antiguedad = this.numberCompaniesSelected((this.isAllProvincesLocalidad(newProvincesLocalidad))? this.search.antiguedad : newProvincesLocalidad)
+        if (this.reapply && newProvincesLocalidad.length === 0) {
+          this.clean()
+        }
       },
       selected_by_antiguedad: function(newValue) {
       if (newValue === 0) this.selected_antiguedad = []
@@ -401,6 +404,7 @@
             this.areApplied = true
             this.reapply = false
             this.loadingDaterange = false
+            this.selected_antiguedad_string = JSON.stringify(this.selected_antiguedad)
           }).catch(() => {
             this.loadingDaterange = false
           })
@@ -424,6 +428,7 @@
             this.areApplied = true
             this.reapply = false
             this.loadingAhnos = false
+            this.selected_antiguedad_string = JSON.stringify(this.selected_antiguedad)
           }).catch(() => {
             this.loadingAhnos = false
           })
