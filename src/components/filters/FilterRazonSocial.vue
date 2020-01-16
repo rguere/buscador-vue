@@ -34,6 +34,7 @@
                     <input type="checkbox"
                       :name="`checkbox_${item.IdEmpresa}`"
                       v-model="selected_social_reasons"
+                      @change="handleChange(item, $event)"
                       :id="`checkbox_${item.IdEmpresa}`"
                       :value="item">
                     <span class="geekmark"></span>
@@ -156,6 +157,7 @@
                                 type="checkbox"
                                 :name="`checkbox_table_${item.IdEmpresa}`"
                                 v-model="selected_social_reasons"
+                                @change="handleChange(item, $event)"
                                 :id="`checkbox_table_${item.IdEmpresa}`"
                                 :value="item">
                               {{ item.RazonSocial }}
@@ -223,6 +225,7 @@
       selected_social_reasons: [],
       selected_by_social_reasons: 0,
       areApplied: false,
+      reapply: false,
       loadingApply: false,
       modalVisible: false,
       from_social_reasons: '',
@@ -244,6 +247,9 @@
     watch: {
       selected_social_reasons: function (newRazonSocial) {
         this.selected_by_social_reasons = this.numberRazonSocial(newRazonSocial)
+        if (this.reapply && newRazonSocial.length === 0) {
+          this.clean()
+        }
       }
     },
     methods: {
@@ -283,6 +289,7 @@
             })
             this.updateNumberSelectedCompanies(response.cantidad)
             this.areApplied = true
+            this.reapply = false
             this.loadingApply = false
             this.selected_social_reasons_string = JSON.stringify(this.selected_social_reasons)
           }).catch(() => {
@@ -325,6 +332,7 @@
         this.selected_by_social_reasons = 0
         this.$store.dispatch('filters/removeFilters', this.title)
         this.areApplied = false
+        this.reapply = false
         this.search_edit = true
       },
       emptyFilter () {
@@ -338,6 +346,7 @@
         this.selected_by_social_reasons = 0
         this.$store.dispatch('filters/removeFilters', this.title)
         this.areApplied = false
+        this.reapply = false
         this.search_edit = true
       },
       editSearch () {
@@ -357,6 +366,11 @@
         this.$store.dispatch('filters/updateNumberSelectedCompanies', {
           quantity
         })
+      },
+      handleChange () { //province, event
+        this.reapply = (this.areApplied)? true: this.areApplied
+      },
+      handleChangeList (){ //province, event
       },
       showModal () {
         this.modalVisible = true

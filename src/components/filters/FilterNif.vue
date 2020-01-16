@@ -31,6 +31,7 @@
                   <input type="checkbox"
                     :name="`checkbox_${item.id}`"
                     v-model="selected_list_nif"
+                    @change="handleChange(item, $event)"
                     :id="`checkbox_${item.id}`"
                     :value="item">
                   <span class="geekmark"></span>
@@ -275,6 +276,7 @@
       selected_list_nif: [],
       selected_by_list_nif: 0,
       areApplied: false,
+      reapply: false,
       loadingApply: false,
       modalVisible: false,
       loadingFile: false,
@@ -296,6 +298,9 @@
     watch: {
       selected_list_nif: function (newSelectedZipCodes) {
         this.selected_by_list_nif = this.numberSelectedNif(newSelectedZipCodes)
+        if (this.reapply && newSelectedZipCodes.length === 0) {
+          this.clean()
+        }
       }
     },
     methods: {
@@ -331,6 +336,7 @@
             })
             this.updateNumberSelectedCompanies(response.cantidad)
             this.areApplied = true
+            this.reapply = false
             this.loadingApply = false
             this.selected_list_nif_string = JSON.stringify(this.selected_list_nif)
           }).catch(() => {
@@ -372,6 +378,7 @@
         this.selected_by_list_nif = 0
         this.$store.dispatch('filters/removeFilters', this.title)
         this.areApplied = false
+        this.reapply = false
         this.search_edit = true
       },
       cleanFile() {
@@ -381,6 +388,7 @@
         this.list_nif = { validos: [], invalidos: [] }
         this.selected_by_list_nif = 0
         this.areApplied = false
+        this.reapply = false
         this.search_edit = true
       },
       emptyFilter () {
@@ -392,6 +400,7 @@
         this.selected_by_list_nif = 0
         this.$store.dispatch('filters/removeFilters', this.title)
         this.areApplied = false
+        this.reapply = false
         this.search_edit = true
       },
       editSearch () {
@@ -411,6 +420,9 @@
         this.$store.dispatch('filters/updateNumberSelectedCompanies', {
           quantity
         })
+      },
+      handleChange () { //province, event
+        this.reapply = (this.areApplied)? true: this.areApplied
       },
       handleChangeList (){ //province, event
       },

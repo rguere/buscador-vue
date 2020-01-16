@@ -31,6 +31,7 @@
                   <input type="checkbox"
                     :name="`checkbox_${item.id}`"
                     v-model="selected_zip_codes"
+                    @change="handleChange(item, $event)"
                     :id="`checkbox_${item.id}`"
                     :value="item">
                   <span class="geekmark"></span>
@@ -320,6 +321,7 @@
       selected_zip_codes: [],
       selected_by_zip_codes: 0,
       areApplied: false,
+      reapply: false,
       loadingApply: false,
       modalVisible: false,
       from_zip_code: '',
@@ -355,6 +357,9 @@
     watch: {
       selected_zip_codes: function (newSelectedZipCodes) {
         this.selected_by_zip_codes = this.numberSelectedZipCodes(newSelectedZipCodes)
+        if (this.reapply && newSelectedZipCodes.length === 0) {
+          this.clean()
+        }
       }
     },
     methods: {
@@ -397,6 +402,7 @@
             })
             this.updateNumberSelectedCompanies(response.cantidad)
             this.areApplied = true
+            this.reapply = false
             this.loadingApply = false
             this.selected_zip_codes_string = JSON.stringify(this.selected_zip_codes)
           }).catch(() => {
@@ -440,6 +446,7 @@
         this.selected_by_zip_codes = 0
         this.$store.dispatch('filters/removeFilters', this.title)
         this.areApplied = false
+        this.reapply = false
         this.search_edit = true
       },
       emptyFilter () {
@@ -451,6 +458,7 @@
         this.selected_by_zip_codes = 0
         this.$store.dispatch('filters/removeFilters', this.title)
         this.areApplied = false
+        this.reapply = false
         this.search_edit = true
       },
       cleanFile() {
@@ -458,6 +466,7 @@
         this.zip_codes = { validos: [], invalidos: [] }
         this.selected_by_zip_codes = 0
         this.areApplied = false
+        this.reapply = false
         this.search_edit = true
       },
       editSearch () {
@@ -477,6 +486,9 @@
         this.$store.dispatch('filters/updateNumberSelectedCompanies', {
           quantity
         })
+      },
+      handleChange () { //province, event
+        this.reapply = (this.areApplied)? true: this.areApplied
       },
       handleChangeList (){ //province, event
       },
