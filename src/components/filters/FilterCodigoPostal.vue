@@ -204,7 +204,6 @@
                           name="from_zip_code"
                           id="from_zip_code">
                       </div>
-                      <!-- <div class="error" v-if="!$v.from_zip_code.required">el campo es requerido</div> -->
                     </div>
                     <div class="col-md-4">
                       <div class="form-group" :class="{ 'has-error has-feedback': $v.to_zip_code.$error }">

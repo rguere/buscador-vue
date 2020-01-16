@@ -19,13 +19,24 @@
               </div>
             </div>
             <div class="col-md-6">
-              <button
-                type="button"        
-                v-if="social_reasons && social_reasons.empresas.length !== 0 && !search_edit"
-                class="btn btn-xs btn-info pull-right" @click="editSearch" 
-                :disabled="dataFrm.length === 0 || loadingValidar">
-                  Editar búsqueda <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-edit'"></i>
-              </button>
+              <el-tooltip content="Agregar más nombre o razón social a la búsqueda" placement="top">
+                <button
+                  type="button"        
+                  v-if="social_reasons && social_reasons.empresas.length !== 0 && !search_edit"
+                  class="btn btn-success pull-right" @click="addSearch" 
+                  :disabled="dataFrm.length === 0 || loadingValidar">
+                    <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-plus'"></i>
+                </button>
+              </el-tooltip>
+              <el-tooltip content="Editar búsqueda" placement="top">
+                <button
+                  type="button"        
+                  v-if="social_reasons && social_reasons.empresas.length !== 0 && !search_edit"
+                  class="btn btn-info pull-right m-r-5" @click="editSearch" 
+                  :disabled="dataFrm.length === 0 || loadingValidar">
+                    <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-edit'"></i>
+                </button>
+              </el-tooltip>
             </div>
           </div>
           <div class="div-scroll-200">
@@ -168,13 +179,8 @@
                         <td>{{ item.Provincia }}</td>
                         <td>{{ item.Localidad }}</td>
                         <td>
-                          <!--{{ item.FechaGeneracion }}-->
                           {{ (item.UltimaCuentaAnual)? item.UltimaCuentaAnual.Ejercicio : ''  }}
                         </td>
-                        <!-- <td>
-                          {{ (item.UltimaCuentaAnual)? item.UltimaCuentaAnual.Ejercicio : ''  }}
-                          {{ (item.UltimaCuentaAnual)? item.UltimaCuentaAnual.ResultadoEjercicio : '' }}
-                        </td> -->
                       </tr>
                     </tbody>
                   </table>
@@ -191,7 +197,7 @@
 <script>
   import { mapGetters } from 'vuex'
   import swal from 'sweetalert2'
-  import { beforeOrderFilters } from './../../utils'
+  import { beforeOrderFilters, removeDuplicates } from './../../utils'
   import { persistentData } from './../../mixins/persistent-data'
   export default {
     name: 'filter-razon-social',
@@ -215,6 +221,7 @@
       title: 'Nombre o razón social',
       loadingValidar: false,
       search_edit: true,
+      search_add: false,
       dataFrm: '',
       social_reasons: {
         total: 0,
@@ -256,10 +263,18 @@
       validateRazonSocial(){
         this.loadingValidar = true  
         this.$store.dispatch('search/validateRazonSocial', this.dataFrm).then((response) => {
-          this.social_reasons.empresas = (response.empresas)? response.empresas: []
+          if(response && response.empresas && this.social_reasons.empresas.length !== 0 && this.search_add) {
+            response.empresas.map((item) => {
+              this.social_reasons.empresas.unshift(item)
+            })
+            this.social_reasons.empresas = removeDuplicates(this.social_reasons.empresas, 'RazonSocial')
+          }else {
+            this.social_reasons.empresas = (response.empresas)? response.empresas: []
+          }
           this.loadingValidar = false
           this.search_edit = false
-          if(this.social_reasons.empresas.length === 0) {
+          this.search_add = false
+          if(response.empresas.length === 0) {
             swal.fire(
               'Advertencia',
               'Nombre o razón social no existe',
@@ -277,6 +292,7 @@
           this.hideModal()
           this.loadingApply = true
           this.search_edit = false
+          this.search_add = false
           this.form.razonSocial = this.selected_social_reasons.map((item) => {
             return item.RazonSocial
           })
@@ -334,6 +350,7 @@
         this.areApplied = false
         this.reapply = false
         this.search_edit = true
+        this.search_add = false
       },
       emptyFilter () {
         this.form.razonSocial = []
@@ -348,9 +365,17 @@
         this.areApplied = false
         this.reapply = false
         this.search_edit = true
+        this.search_add = false
       },
       editSearch () {
         this.search_edit = true
+        this.search_add = false
+        setTimeout(() => { document.getElementById('social_reasons').focus() }, 100)
+      },
+      addSearch () {
+        this.search_edit = true
+        this.search_add = true
+        this.dataFrm = ''
         setTimeout(() => { document.getElementById('social_reasons').focus() }, 100)
       },
       numberRazonSocial(newRazonSocial) {
