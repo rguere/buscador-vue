@@ -46,7 +46,7 @@
                 <input type="checkbox" v-model="selected_antiguedad" :value="itemIncluirNull" @change="handleChange()" name="">
                 <span class="geekmark"></span>
                 <span class="title">
-                  Incluir aquellas empresas en las que se desconoce su antigüedad
+                  Incluir aquellas empresas en las que se desconoce su antigüedad <span> ({{ itemIncluirNull.data | numeral('0,0') }})</span>
                 </span>
               </label>
             </div>
@@ -149,7 +149,7 @@
                               <input type="checkbox" v-model="selected_antiguedad" :value="itemIncluirNull" @change="handleChange()" name="">
                               <span class="geekmark"></span>
                               <span class="title">
-                                Incluir aquellas empresas en las que se desconoce su antigüedad
+                                Incluir aquellas empresas en las que se desconoce su antigüedad <span> ({{ itemIncluirNull.data | numeral('0,0') }})</span>
                               </span>
                             </label>
                           </div>
@@ -207,7 +207,7 @@
                               <input type="checkbox" v-model="selected_antiguedad" :value="itemIncluirNull" @change="handleChange()" name="">
                               <span class="geekmark"></span>
                               <span class="title">
-                                Incluir aquellas empresas en las que se desconoce su antigüedad
+                                Incluir aquellas empresas en las que se desconoce su antigüedad <span> ({{ itemIncluirNull.data | numeral('0,0') }})</span>
                               </span>
                             </label>
                           </div>

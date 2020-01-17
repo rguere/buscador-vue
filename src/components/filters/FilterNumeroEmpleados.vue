@@ -46,7 +46,7 @@
                 <input type="checkbox" v-model="selected_empleados" :value="itemIncluirNull" @change="handleChange()" name="">
                 <span class="geekmark"></span>
                 <span class="title">
-                  Incluir aquellas empresas en las que se desconoce su número de empleados
+                  Incluir aquellas empresas en las que se desconoce su número de empleados <span> ({{ itemIncluirNull.data | numeral('0,0') }})</span>
                 </span>
               </label>
             </div>
@@ -109,7 +109,7 @@
                               <input type="checkbox" v-model="selected_empleados" :value="itemIncluirNull" @change="handleChange()" name="">
                               <span class="geekmark"></span>
                               <span class="title">
-                                Incluir aquellas empresas en las que se desconoce su número de empleados 
+                                Incluir aquellas empresas en las que se desconoce su número de empleados <span> ({{ itemIncluirNull.data | numeral('0,0') }})</span> 
                               </span>
                             </label>
                           </div>
@@ -169,7 +169,7 @@
                               <input type="checkbox" v-model="selected_empleados" :value="itemIncluirNull" @change="handleChange()" name="">
                               <span class="geekmark"></span>
                               <span class="title">
-                                Incluir aquellas empresas en las que se desconoce su número de empleados 
+                                Incluir aquellas empresas en las que se desconoce su número de empleados <span> ({{ itemIncluirNull.data | numeral('0,0') }})</span>
                               </span>
                             </label>
                           </div>

@@ -54,12 +54,29 @@
                   </span>
                 </el-dialog>
                 <button
-                  @click="descargarExcel"
+                  @click="dialogCorreoVisible2  = true"
                   :disabled="loadingExcel"
                   class="btn btn-success m-l-5">
                   <i :class="(loadingExcel)?'fa  fa-spinner fa-spin':'fa  fa-file-excel-o'"></i>
                   Descargar en excel
                 </button>
+                <el-dialog
+                  title="Ingrese el nombre del archivo para iniciar la descarga"
+                  :visible.sync="dialogCorreoVisible2"
+                  width="30%">
+                    <input type="text" class="form-control" placeholder="Nombre de archivo" v-model="nombreArchivo" ref="nombreArchivo" required>
+                  <span slot="footer" class="dialog-footer">
+                    <button @click="dialogCorreoVisible2 = false"
+                      class="btn btn-danger">Cancel</button>
+                    <button
+                      @click="descargarExcel"
+                      :disabled="loadingExcel"
+                      class="btn btn-success m-l-5">
+                      <i :class="(loadingExcel)?'fa  fa-spinner fa-spin':'fa  fa-file-excel-o'"></i>
+                      Iniciar la descarga
+                    </button>
+                  </span>
+                </el-dialog>
               </div>
               </div>
             </div>
@@ -113,10 +130,6 @@
                     :prop="('UltimaCuentaAnual' && 'UltimaCuentaAnual.SumTotalEmpleados')? 'UltimaCuentaAnual.SumTotalEmpleados': ''"
                     label="Número de empleados">
                   </el-table-column>
-                  <!-- <el-table-column
-                    :prop="('UltimaCuentaAnual' && 'UltimaCuentaAnual.Ejercicio')? 'UltimaCuentaAnual.Ejercicio': ''"
-                    label="Último año cuentas disponibles">
-                  </el-table-column> -->
                 </el-table>
                 <el-pagination
                   layout="total, prev, sizes, pager, next"
@@ -153,9 +166,11 @@ export default {
   },
   data: () => ({
       dialogCorreoVisible: false,
+      dialogCorreoVisible2: false,
       loadingExcel: false,
       loadingCorreo: false,
       correo: '',
+      nombreArchivo: '',
       currentPage: 1,
       size: 10,
       results: {
@@ -185,18 +200,22 @@ export default {
       })
     },
     descargarExcel () {
-      this.loadingExcel = true
-      let data = this.formatearData()
-      this.$store.dispatch('search/archivoExcel', data).then((response) => {
-        const link = document.createElement('a')
-        link.href = `http://dev.infocif.info/api/buscador/archivos/${response}`
-        link.setAttribute('download', 'resultados.xlsx')
-        document.body.appendChild(link)
-        link.click()
-        this.loadingExcel = false
-      }).catch(() => {
-        this.loadingExcel = false
-      })
+      if (this.nombreArchivo && this.nombreArchivo.length != 0) {
+        this.loadingExcel = true
+        let data = this.formatearData()
+        this.$store.dispatch('search/archivoExcel', { data, nombreArchivo: this.nombreArchivo }).then((response) => {
+          const link = document.createElement('a')
+          link.href = `http://dev.infocif.info/api/buscador/archivos/${response}`
+          link.setAttribute('download', 'resultados.xlsx')
+          document.body.appendChild(link)
+          link.click()
+          this.loadingExcel = false
+          this.dialogCorreoVisible2 = false
+          this.nombreArchivo = ''
+        }).catch(() => {
+          this.loadingExcel = false
+        })
+      }
     },
     enviarResultadosCorreo () {
       if (this.$refs["correo"].checkValidity()) {
