@@ -177,7 +177,7 @@ export default {
   methods: {
     visualizarResultados (){
       let size = this.size
-      let page = this.currentPage
+      let page = this.currentPage - 1
       let filters = this.formatearData()
       this.$store.dispatch('search/visualizarResultados', {filters, page, size}).then((response) => {
         this.results = response
