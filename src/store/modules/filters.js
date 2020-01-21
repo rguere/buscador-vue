@@ -23,6 +23,7 @@ const initialState = () => {
         apply: false,
         quantity: 0,
         key: 'comunidades',
+        disabled: false
       },
       {
         name: "Antigüedad",
@@ -30,6 +31,7 @@ const initialState = () => {
         apply: false,
         quantity: 0,
         key: 'antiguedad',
+        disabled: false
       },
       {
         name: "Número de empleados",
@@ -37,6 +39,7 @@ const initialState = () => {
         apply: false,
         quantity: 0,
         key: 'empleados',
+        disabled: false
       },
       {
         name: "Estado",
@@ -44,6 +47,7 @@ const initialState = () => {
         apply: false,
         quantity: 0,
         key: 'estado',
+        disabled: true
       },
       {
         name: "Tipo de cuentas",
@@ -51,6 +55,7 @@ const initialState = () => {
         apply: false,
         quantity: 0,
         key: 'tipo',
+        disabled: true
       },
       {
         name: "Sector/Actividad",
@@ -58,6 +63,7 @@ const initialState = () => {
         apply: false,
         quantity: 0,
         key: 'actividad',
+        disabled: true
       },
       {
         name: "Cargos",
@@ -65,6 +71,7 @@ const initialState = () => {
         apply: false,
         quantity: 0,
         key: 'cargos',
+        disabled: true
       },
       {
         name: "Código Postal",
@@ -72,6 +79,7 @@ const initialState = () => {
         apply: false,
         quantity: 0,
         key: 'codigosPostales',
+        disabled: false
       },
       {
         name: "Nombre o razón social",
@@ -79,6 +87,7 @@ const initialState = () => {
         apply: false,
         quantity: 0,
         key: 'razonSocial',
+        disabled: false
       },
       {
         name: "NIF",
@@ -86,6 +95,7 @@ const initialState = () => {
         apply: false,
         quantity: 0,
         key: 'cif',
+        disabled: false
       },
       {
         name: "Años con cuentas disponibles",
@@ -93,6 +103,7 @@ const initialState = () => {
         apply: false,
         quantity: 0,
         key: 'anios',
+        disabled: true
       },
       {
         name: "Información Financiera",
@@ -100,6 +111,7 @@ const initialState = () => {
         apply: false,
         quantity: 0,
         key: 'informacion',
+        disabled: true
       },
       {
         name: "Auditores",
@@ -107,6 +119,7 @@ const initialState = () => {
         apply: false,
         quantity: 0,
         key: 'auditores',
+        disabled: true
       },
       {
         name: "Directivos y Vinculaciones",
@@ -114,6 +127,7 @@ const initialState = () => {
         apply: false,
         quantity: 0,
         key: 'vinculaciones',
+        disabled: true
       }
     ],
     cantidades: {}

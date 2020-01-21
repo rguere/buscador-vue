@@ -27,8 +27,9 @@
 						<div class="col-md-9">
 							<div class="filter-btns">
 								<div v-for="(filter, key) in filters" :key="key">
-									<a href="" 
+									<a href=""
 										class="btn btn-default"
+										v-if="!filter.disabled"
 										:class="(filter.apply)? 'active': ''"
 										v-scroll-to="{
 											el: `#${filter.slug}`,
@@ -37,6 +38,14 @@
 										}">
 										{{ filter.name }}
 									</a>
+									<el-tooltip
+										v-if="filter.disabled"
+										content="Próximamente" placement="top">
+										<div
+											class="btn btn_disabled">
+											{{ filter.name }}
+										</div>
+									</el-tooltip>
 									<span
 										class="fa fa-close"
 										v-if="filter.apply"
@@ -234,7 +243,7 @@
 			width: 14%;
 			display: flex;
 			justify-content: flex-end;
-			a.btn {
+			.btn {
 				width: 100%;
 				justify-content: center;
 				align-items: center;
@@ -252,6 +261,22 @@
 					color: #0071BC;
 					border-color: #1b4973;
 				}
+			}
+			.btn_disabled, .btn_disabled:hover, .btn_disabled:active {
+				width: 100%;
+				color: -internal-light-dark-color(graytext, rgb(170, 170, 170));
+				justify-content: center;
+				align-items: center;
+				white-space: pre-wrap!important;
+				font-size: 12px;
+				display: flex;
+				padding: 6px 4px;
+				font-weight: bold;
+				background-color: #dddddd;
+				color: #555;
+				border: 2px solid #ffffff;
+				margin: 1px;
+				cursor: initial;
 			}
 			span.fa-close {
 				position: absolute;

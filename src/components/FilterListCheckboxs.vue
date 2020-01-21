@@ -11,15 +11,15 @@
 
             <filter-numero-empleados></filter-numero-empleados>
 
-            <filter-estado></filter-estado>
+            <!-- <filter-estado></filter-estado> -->
 
-            <filter-anios-cuentas-disponibles></filter-anios-cuentas-disponibles>
+            <!-- <filter-anios-cuentas-disponibles></filter-anios-cuentas-disponibles> -->
 
-            <filter-informacion-financiera></filter-informacion-financiera>
+            <!-- <filter-informacion-financiera></filter-informacion-financiera> -->
 
-            <filter-auditores :search="search"></filter-auditores>
+            <!-- <filter-auditores :search="search"></filter-auditores> -->
 
-            <filter-cargos></filter-cargos>
+            <!-- <filter-cargos></filter-cargos> -->
           </div>
           <div class="col-md-4">
             <filter-codigo-postal></filter-codigo-postal>
@@ -28,11 +28,11 @@
 
             <filter-nif></filter-nif>
 
-            <filter-tipo-cuentas></filter-tipo-cuentas>
+            <!-- <filter-tipo-cuentas></filter-tipo-cuentas> -->
 
-            <filter-sector-actividad></filter-sector-actividad>
+            <!-- <filter-sector-actividad></filter-sector-actividad> -->
 
-            <filter-directivos-vinculaciones></filter-directivos-vinculaciones>
+            <!-- <filter-directivos-vinculaciones></filter-directivos-vinculaciones> -->
           </div>
         </div>
       </div>
