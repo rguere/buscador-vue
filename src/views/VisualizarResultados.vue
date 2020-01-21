@@ -40,7 +40,12 @@
                       show-icon>
                     </el-alert>
                     <br>
-                    <input type="email" class="form-control" placeholder="Ingresa un correo" v-model="correo" ref="correo" required>
+                    <div class="form-group">
+                      <input type="email" class="form-control" placeholder="Ingresa un correo" v-model="correo" ref="correo" required>
+                    </div>
+                    <div class="form-group">
+                      <input type="text" class="form-control" placeholder="Nombre de archivo" v-model="nombreArchivo" ref="nombreArchivoEmail" required>
+                    </div>
                   <span slot="footer" class="dialog-footer">
                     <button @click="dialogCorreoVisible = false"
                       class="btn btn-danger">Cancel</button>
@@ -64,7 +69,9 @@
                   title="Ingrese el nombre del archivo para iniciar la descarga"
                   :visible.sync="dialogCorreoVisible2"
                   width="30%">
-                    <input type="text" class="form-control" placeholder="Nombre de archivo" v-model="nombreArchivo" ref="nombreArchivo" required>
+                    <div class="form-group">
+                      <input type="text" class="form-control" placeholder="Nombre de archivo" v-model="nombreArchivo" ref="nombreArchivo" required>
+                    </div>
                   <span slot="footer" class="dialog-footer">
                     <button @click="dialogCorreoVisible2 = false"
                       class="btn btn-danger">Cancel</button>
@@ -203,7 +210,7 @@ export default {
       if (this.nombreArchivo && this.nombreArchivo.length != 0) {
         this.loadingExcel = true
         let data = this.formatearData()
-        this.$store.dispatch('search/archivoExcel', { data, nombreArchivo: this.nombreArchivo }).then((response) => {
+        this.$store.dispatch('search/archivoExcel', { filters: data, nombreArchivo: this.nombreArchivo }).then((response) => {
           const link = document.createElement('a')
           link.href = `http://dev.infocif.info/api/buscador/archivos/${response}`
           link.setAttribute('download', 'resultados.xlsx')
@@ -218,10 +225,10 @@ export default {
       }
     },
     enviarResultadosCorreo () {
-      if (this.$refs["correo"].checkValidity()) {
+      if (this.$refs["correo"].checkValidity() && this.$refs["nombreArchivoEmail"].checkValidity()) {
         this.loadingCorreo = true
         let filters = this.formatearData()
-        this.$store.dispatch('search/enviarResultadosCorreo', { filters, email: this.correo }).then(() => {
+        this.$store.dispatch('search/enviarResultadosCorreo', { filters, email: this.correo, nombreArchivo: this.nombreArchivo }).then(() => {
           this.loadingCorreo = false
           this.dialogCorreoVisible = false
           this.correo = ''

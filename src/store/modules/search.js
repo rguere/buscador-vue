@@ -142,9 +142,9 @@ export const actions = {
       })
     }
   },
-  async archivoExcel({ commit }, filters){
+  async archivoExcel({ commit }, {filters, nombreArchivo}){
     try{
-      const { data } = await axios.post(`/buscador/empresas/excel`, filters)
+      const { data } = await axios.post(`/buscador/empresas/excel?nombreArchivo=${nombreArchivo}`, filters)
       return data
     } catch (e) {
       commit(types.LOADING_SEARCH, {
@@ -152,9 +152,9 @@ export const actions = {
       })
     }
   },
-  async enviarResultadosCorreo({ commit }, {filters, email}){
+  async enviarResultadosCorreo({ commit }, {filters, email, nombreArchivo}){
     try{
-      const { data } = await axios.post(`buscador/empresas/email?to=${email}`, filters)
+      const { data } = await axios.post(`buscador/empresas/email?to=${email}&nombreArchivo=${nombreArchivo}`, filters)
       return data
     } catch (e) {
       commit(types.LOADING_SEARCH, {
