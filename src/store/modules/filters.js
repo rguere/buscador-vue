@@ -193,7 +193,6 @@ export const mutations = {
   },
 
   [types.SET_CANTIDADES](state, { cantidades }) {
-    console.log(cantidades)
     state.cantidades = cantidades 
   }
 }
