@@ -109,11 +109,10 @@
       }),
       orderFilters: function () {
         let order = orderFilters(this.filters, this.applied_filters, this.form)
-        let cantidades = {...this.cantidades}
-        for (const prop in cantidades) {
+        for (const prop in this.cantidades) {
           let split = prop.split('.')
           if(split && split[0] === 'filtro' && split[1] && order && order[split[1]]) {
-            order[split[1]].quantity = cantidades[prop].cantidad
+			order[split[1]].quantity = this.cantidades[prop].cantidad
           } 
         }
         return order

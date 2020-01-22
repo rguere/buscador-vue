@@ -190,6 +190,11 @@ export const mutations = {
 
   [types.SET_SELECTED_COMPANIES](state, { quantity }) {
     state.selected_companies = quantity 
+  },
+
+  [types.SET_CANTIDADES](state, { cantidades }) {
+    console.log(cantidades)
+    state.cantidades = cantidades 
   }
 }
 
@@ -225,6 +230,11 @@ export const actions = {
   updateNumberSelectedCompanies({ commit }, { quantity }) {
     commit(types.SET_SELECTED_COMPANIES, {
       quantity
+    })
+  },
+  setCantidades({ commit }, { cantidades }) {
+    commit(types.SET_CANTIDADES, {
+      cantidades
     })
   },
 }

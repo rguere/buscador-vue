@@ -341,6 +341,7 @@
           let beforeForm = beforeOrderFilters(this.filters, this.applied_filters, this.form, this.title)
           this.$store.dispatch('search/filtrar', beforeForm).then((response) => {
             this.updateNumberSelectedCompanies(response.cantidad)
+            this.$store.dispatch('filters/setCantidades', { cantidades: response })
           })
         }else {
           this.updateNumberSelectedCompanies(0)
