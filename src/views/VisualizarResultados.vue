@@ -107,11 +107,12 @@
               <div class="col-md-12" v-if="results && results.empresas">
                 <el-table
                   border
+                  stripe
                   :data="results.empresas"
                   style="width: 100%">
                   <el-table-column
                     prop="RazonSocial"
-                    label="Razón social de la empresa">
+                    label="Razón social">
                   </el-table-column>
                   <el-table-column
                     prop="Provincia"

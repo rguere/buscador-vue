@@ -279,15 +279,14 @@
           respalSelectedPL = removeDuplicates(respalSelectedPL, 'id')
           this.selected_provinces_localidad = this.selected_provinces_localidad.concat(respalSelectedPL)
           this.selected_provinces_localidad = removeDuplicates(this.selected_provinces_localidad, 'id')
-        } /* else {
-          newValueSelect.map((item) => {
-            attValueSelect.map((_item)=> {
-              if (item === _item){
-                this.selected_provinces_localidad = this.selected_provinces_localidad.filter(item => item.id !== _item)
-              }
-            })
+        } else {
+          let eliminadas = attValueSelect.filter((item) => {
+            return (!newValueSelect.includes(item))? item: null
+          });
+          eliminadas.map((_item) => {
+            this.selected_provinces_localidad = this.selected_provinces_localidad.filter(item => item.id !== _item)
           })
-        } */
+        }
       }
     },
     mounted() {

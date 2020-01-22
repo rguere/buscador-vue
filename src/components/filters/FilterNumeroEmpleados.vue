@@ -247,11 +247,11 @@
       return {
         employees_from: {
           required,
-          between: maxLength(7)
+          between: maxLength(6)
         },
         employees_to: {
           required,
-          between: maxLength(7)
+          between: maxLength(6)
         }
       }
     },

@@ -211,6 +211,13 @@ span.num-fil { color: #2196f3; font-weight: bold; }
   color: #fff!important;
 }
 
+.el-table__header-wrapper table thead th{
+  background-color: #333;
+  color: #fff;
+  border: none;
+  padding: 15px 0;
+}
+
 @media (max-width: 950px) {
 
   .grid-5-columns-1fr {
