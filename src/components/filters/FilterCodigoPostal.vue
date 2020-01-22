@@ -180,7 +180,7 @@
                     </div>
                     <div class="col-md-12">
                       <p>
-                        Introduce o pega un máximo de 1.000 códigos postales. En caso de querer incluir una mayor cantidad, adjunte un archivo con un máximo de 1.000.000 de códigos postales clicando en “Adjuntar Archivo”
+                        Introduce o pega de los códigos postales que desees, también puedes adjuntar un archivo con códigos postales clicando en “Adjuntar Archivo”
                       </p>
                     </div>
                   </div>

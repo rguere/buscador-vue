@@ -267,17 +267,27 @@
       filterText(val) {
         this.$refs.tree.filter(val);
       },
-      valueSelect (elements) {
-        let respalSelectedPL = []
-        elements.forEach((item) => {
-          let result = inArrayObjectTreeselect(this.search.provincia_localidad, item)
-          if (result) {
-            respalSelectedPL.push(result)
-          }
-        })
-        respalSelectedPL = removeDuplicates(respalSelectedPL, 'id')
-        this.selected_provinces_localidad = [...respalSelectedPL]
-        //console.log(this.selected_provinces_localidad, respalSelectedPL)
+      valueSelect (newValueSelect, attValueSelect) {
+        if(!(newValueSelect.length < attValueSelect.length)){
+          let respalSelectedPL = []
+          newValueSelect.forEach((item) => {
+            let result = inArrayObjectTreeselect(this.search.provincia_localidad, item)
+            if (result) {
+              respalSelectedPL.push(result)
+            }
+          })
+          respalSelectedPL = removeDuplicates(respalSelectedPL, 'id')
+          this.selected_provinces_localidad = this.selected_provinces_localidad.concat(respalSelectedPL)
+          this.selected_provinces_localidad = removeDuplicates(this.selected_provinces_localidad, 'id')
+        } /* else {
+          newValueSelect.map((item) => {
+            attValueSelect.map((_item)=> {
+              if (item === _item){
+                this.selected_provinces_localidad = this.selected_provinces_localidad.filter(item => item.id !== _item)
+              }
+            })
+          })
+        } */
       }
     },
     mounted() {
@@ -519,13 +529,14 @@
           this.optionsSelect = []
         }
       },
-      changeRemoveTag () {
-        //this.selected_provinces_localidad = this.selected_provinces_localidad.filter(item => item.id !== id_elemet)
+      changeRemoveTag (id_elemet) {
+        this.selected_provinces_localidad = this.selected_provinces_localidad.filter(item => item.id !== id_elemet)
       },
       changeClear () { //element, checked
-        //console.log(element, checked)
+        //console.log('changeClear', element, checked)
       },
-      changeMethod () { },
+      changeMethod () {
+      },
       showAllInvalidos () {
         if (this.limitChildren === 3){
           this.limitChildren = this.selected_children.length

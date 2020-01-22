@@ -175,7 +175,8 @@
                               format="dd/MM/yyyy"
                               value-format="yyyy-MM-dd"
                               type="date"
-                              placeholder="(Introducir, en formato dd/mm/aaaa, la fecha de constitución)">
+                              placeholder="(Introducir, en formato dd/mm/aaaa, la fecha de constitución)"
+                              :picker-options="pickerOptions">
                             </el-date-picker>
                           </div>
                         </div>

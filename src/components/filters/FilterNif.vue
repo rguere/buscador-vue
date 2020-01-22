@@ -179,7 +179,7 @@
                     </div>
                     <div class="col-md-12">
                       <p>
-                        Introduce o pega un máximo de 1.000 NIF. En caso de querer incluir una mayor cantidad, adjunte un archivo con un máximo de 1.000.000 de NIF clicando en “Adjuntar Archivo”
+                        Introduce o pega de los NIF que desees, también puedes adjuntar un archivo con NIF clicando en “Adjuntar Archivo”
                       </p>
                     </div>
                   </div>
