@@ -215,6 +215,7 @@
       compareWithNewtoApply: function () {
         let stg = this.selected_provinces_localidad_string
         let obj = JSON.stringify(this.selected_provinces_localidad)
+        console.log((stg === obj))
         return (stg === obj)
       }
     },

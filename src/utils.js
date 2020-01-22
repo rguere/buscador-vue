@@ -140,16 +140,18 @@ export const beforeOrderFilters = (filters, applied_filters, form, title) => {
         let comunidades = []
         before_form.filtros = []
         arrayResult.map((item) => {
-            if(before_form[item.key].length !== 0) {
-                if (item.key === 'comunidades') {
-                    comunidades = before_form[item.key].concat(before_form.Provincias, before_form.Localidades)
+            if (item.key === 'comunidades') {
+                comunidades = before_form[item.key].concat(before_form.Provincias, before_form.Localidades)
+                if(comunidades.length !== 0) {
                     arr[item.key] = comunidades
-                }else {
-                    arr[item.key] = before_form[item.key] 
                 }
-                let aux = {...arr}
-                before_form.filtros.push(aux)
+            }else {
+                if(before_form[item.key].length !== 0) {
+                    arr[item.key] = before_form[item.key]
+                }
             }
+            let aux = {...arr}
+            before_form.filtros.push(aux)
         })
     }
 
