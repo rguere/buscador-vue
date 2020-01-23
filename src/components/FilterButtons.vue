@@ -41,10 +41,15 @@
 									<el-tooltip
 										v-if="filter.disabled"
 										content="Próximamente" placement="top">
-										<div
-											class="btn btn_disabled">
+										<a href=""
+											class="btn btn_disabled"
+											v-scroll-to="{
+											el: `#${filter.slug}`,
+												offset: -290,
+												onDone: onDone
+											}">
 											{{ filter.name }}
-										</div>
+										</a>
 									</el-tooltip>
 									<span
 										class="fa fa-close"
@@ -275,7 +280,8 @@
 				color: #555;
 				border: 2px solid #ffffff;
 				margin: 1px;
-				cursor: initial;
+				cursor: pointer;
+				opacity: 0.5;
 			}
 			span.fa-close {
 				position: absolute;

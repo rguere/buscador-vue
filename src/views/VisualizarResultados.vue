@@ -7,88 +7,89 @@
 				<div class="panel panel-default cd min-height-200">
 					<div class="panel-body">
             <div class="m-b-10">
-              <router-link
-                to="/"
-                class="btn btn-warning">
-                <i class="fa fa-arrow-left"></i> Vover
-              </router-link>
-              <button class="btn btn-primary m-l-5">
-                <i class="fa fa-print"></i>
-                Imprimir
-              </button>
+              <!-- botones -->
             </div>
             <div class="row m-b-10">
               <div class="col-md-6">
+                <router-link
+                  to="/"
+                  class="btn btn-warning">
+                  <i class="fa fa-arrow-left"></i> Vover
+                </router-link>
+                <button class="btn btn-primary m-l-5">
+                  <i class="fa fa-print"></i>
+                  Imprimir
+                </button>
               </div>
               <div class="col-md-6">
-              <div class="pull-right">
-                <button
-                  @click="dialogCorreoVisible = true"
-                  :disabled="loadingCorreo"
-                  class="btn btn-info">
-                  <i :class="(loadingCorreo)?'fa  fa-spinner fa-spin':'fa  fa-envelope'"></i>
-                  Enviar al correo
-                </button>
-                <el-dialog
-                  title="Enviar al correo"
-                  :visible.sync="dialogCorreoVisible"
-                  width="30%">
-                    <el-alert
-                      title="Ingrese el correo al que se enviaran los resultados, esto es a manera de prueba hasta que tengamos la información del usuario autenticado."
-                      type="info"
-                      center
-                      show-icon>
-                    </el-alert>
-                    <br>
-                    <div class="form-group">
-                      <input type="email" class="form-control" placeholder="Ingresa un correo" v-model="correo" ref="correo" required>
-                    </div>
-                    <div class="form-group">
-                      <input type="text" class="form-control" placeholder="Nombre de archivo" v-model="nombreArchivo" ref="nombreArchivoEmail" required>
-                    </div>
-                  <span slot="footer" class="dialog-footer">
-                    <button @click="dialogCorreoVisible = false"
-                      class="btn btn-danger">Cancel</button>
-                    <button
-                      @click="enviarResultadosCorreo"
-                      :disabled="loadingCorreo"
-                      class="btn btn-info m-l-5">
-                      <i :class="(loadingCorreo)?'fa  fa-spinner fa-spin':'fa  fa-envelope'"></i>
-                      Enviar al correo
-                    </button>
-                  </span>
-                </el-dialog>
-                <button
-                  @click="dialogCorreoVisible2  = true"
-                  :disabled="loadingExcel"
-                  class="btn btn-success m-l-5">
-                  <i :class="(loadingExcel)?'fa  fa-spinner fa-spin':'fa  fa-file-excel-o'"></i>
-                  Descargar en excel
-                </button>
-                <el-dialog
-                  title="Ingrese el nombre del archivo para iniciar la descarga"
-                  :visible.sync="dialogCorreoVisible2"
-                  width="30%">
-                    <div class="form-group">
-                      <input type="text" class="form-control" placeholder="Nombre de archivo" v-model="nombreArchivo" ref="nombreArchivo" required>
-                    </div>
-                  <span slot="footer" class="dialog-footer">
-                    <button @click="dialogCorreoVisible2 = false"
-                      class="btn btn-danger">Cancel</button>
-                    <button
-                      @click="descargarExcel"
-                      :disabled="loadingExcel"
-                      class="btn btn-success m-l-5">
-                      <i :class="(loadingExcel)?'fa  fa-spinner fa-spin':'fa  fa-file-excel-o'"></i>
-                      Iniciar la descarga
-                    </button>
-                  </span>
-                </el-dialog>
-              </div>
+                <div class="pull-right">
+                  <button
+                    @click="dialogCorreoVisible = true"
+                    :disabled="loadingCorreo"
+                    class="btn btn-info">
+                    <i :class="(loadingCorreo)?'fa  fa-spinner fa-spin':'fa  fa-envelope'"></i>
+                    Enviar al correo
+                  </button>
+                  <el-dialog
+                    title="Enviar al correo"
+                    :visible.sync="dialogCorreoVisible"
+                    width="30%">
+                      <el-alert
+                        title="Ingrese el correo al que se enviaran los resultados, esto es a manera de prueba hasta que tengamos la información del usuario autenticado."
+                        type="info"
+                        center
+                        show-icon>
+                      </el-alert>
+                      <br>
+                      <div class="form-group">
+                        <input type="email" class="form-control" placeholder="Ingresa un correo" v-model="correo" ref="correo" required>
+                      </div>
+                      <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Nombre de archivo" v-model="nombreArchivo" ref="nombreArchivoEmail" required>
+                      </div>
+                    <span slot="footer" class="dialog-footer">
+                      <button @click="dialogCorreoVisible = false"
+                        class="btn btn-danger">Cerrar</button>
+                      <button
+                        @click="enviarResultadosCorreo"
+                        :disabled="loadingCorreo"
+                        class="btn btn-info m-l-5">
+                        <i :class="(loadingCorreo)?'fa  fa-spinner fa-spin':'fa  fa-envelope'"></i>
+                        Enviar al correo
+                      </button>
+                    </span>
+                  </el-dialog>
+                  <button
+                    @click="dialogCorreoVisible2  = true"
+                    :disabled="loadingExcel"
+                    class="btn btn-success m-l-5">
+                    <i :class="(loadingExcel)?'fa  fa-spinner fa-spin':'fa  fa-file-excel-o'"></i>
+                    Descargar en excel
+                  </button>
+                  <el-dialog
+                    title="Ingrese el nombre del archivo para iniciar la descarga"
+                    :visible.sync="dialogCorreoVisible2"
+                    width="30%">
+                      <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Nombre de archivo" v-model="nombreArchivo" ref="nombreArchivo" required>
+                      </div>
+                    <span slot="footer" class="dialog-footer">
+                      <button @click="dialogCorreoVisible2 = false"
+                        class="btn btn-danger">Cerrar</button>
+                      <button
+                        @click="descargarExcel"
+                        :disabled="loadingExcel"
+                        class="btn btn-success m-l-5">
+                        <i :class="(loadingExcel)?'fa  fa-spinner fa-spin':'fa  fa-file-excel-o'"></i>
+                        Iniciar la descarga
+                      </button>
+                    </span>
+                  </el-dialog>
+                </div>
               </div>
             </div>
             <div class="row">
-              <div class="col-md-12">
+              <!-- <div class="col-md-12">
                 <div class="text-center m-b-10">
                   <button class="btn btn-warning">
                     <i class="fa fa-save"></i>
@@ -103,6 +104,9 @@
                     Seleccionar Columnas
                   </button>
                 </div>
+              </div> -->
+              <div class="col-md-12">
+                <h2 class="text-center">Resultados de la búsqueda</h2>
               </div>
               <div class="col-md-12" v-if="results && results.empresas">
                 <el-table
