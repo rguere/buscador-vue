@@ -46,7 +46,7 @@
                 <input type="checkbox" v-model="selected_antiguedad" :value="itemIncluirNull" @change="handleChange()" name="">
                 <span class="geekmark"></span>
                 <span class="title">
-                  Incluir aquellas empresas en las que se desconoce su antigüedad <span> ({{ itemIncluirNull.data | numeral('0,0') }})</span>
+                  Incluir aquellas empresas en las que se desconoce su antigüedad
                 </span>
               </label>
             </div>
@@ -81,6 +81,7 @@
                     <div class="panel-heading">
                       <p class="panel-title roboto white">
                         Seleccionar empresas por años de antigüedad.
+                        <span class="span-info-right" v-if="selected_by_antiguedad !== 0"> ({{ selected_by_antiguedad | numeral('0,0') }} empresas seleccionadas)</span>
                       </p>
                     </div>
                     <div class="panel-body">
@@ -149,7 +150,7 @@
                               <input type="checkbox" v-model="selected_antiguedad" :value="itemIncluirNull" @change="handleChange()" name="">
                               <span class="geekmark"></span>
                               <span class="title">
-                                Incluir aquellas empresas en las que se desconoce su antigüedad <span> ({{ itemIncluirNull.data | numeral('0,0') }})</span>
+                                Incluir aquellas empresas en las que se desconoce su antigüedad
                               </span>
                             </label>
                           </div>
@@ -163,6 +164,7 @@
                     <div class="panel-heading">
                       <p class="panel-title roboto white">
                         Seleccionar empresas por años de antigüedad.
+                        <span class="span-info-right" v-if="selected_by_antiguedad !== 0"> ({{ selected_by_antiguedad | numeral('0,0') }} empresas seleccionadas)</span>
                       </p>
                     </div>
                     <div class="panel-body">
@@ -208,7 +210,7 @@
                               <input type="checkbox" v-model="selected_antiguedad" :value="itemIncluirNull" @change="handleChange()" name="">
                               <span class="geekmark"></span>
                               <span class="title">
-                                Incluir aquellas empresas en las que se desconoce su antigüedad <span> ({{ itemIncluirNull.data | numeral('0,0') }})</span>
+                                Incluir aquellas empresas en las que se desconoce su antigüedad
                               </span>
                             </label>
                           </div>
