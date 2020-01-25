@@ -163,16 +163,18 @@
                   <div class="panel panel-default cd">
                     <div class="panel-heading">
                       <p class="panel-title roboto white">
-                        Seleccionar empresas por años de antigüedad.
+                        Seleccionar empresas por años de constitución.
                         <span class="span-info-right" v-if="selected_by_antiguedad !== 0"> ({{ selected_by_antiguedad | numeral('0,0') }} empresas seleccionadas)</span>
                       </p>
                     </div>
                     <div class="panel-body">
                       <div class="row">
                         <div class="col-md-4">
-                          <div class="block">
+                          <div class="block" @click="clickPicker($event, 'desdePicker')">
                             <label class="demonstration">Desde (incluido)</label>
                             <el-date-picker
+                              id="desdePicker"
+                              ref="desdePicker"
                               v-model="daterange[0]"
                               format="dd/MM/yyyy"
                               value-format="yyyy-MM-dd"
@@ -183,9 +185,11 @@
                           </div>
                         </div>
                         <div class="col-md-4">
-                          <div class="block">
+                          <div class="block" @click="clickPicker($event, 'hastaPicker')">
                             <label class="demonstration">Hasta (incluido)</label>
                             <el-date-picker
+                              id="hastaPicker"
+                              ref="hastaPicker"
                               v-model="daterange[1]"
                               format="dd/MM/yyyy"
                               value-format="yyyy-MM-dd"
@@ -288,6 +292,8 @@
           return time.getTime() > Date.now();
         },
       },
+      desdePicker: 0,
+      hastaPicker: 0,
     }),
     validations() {
       return {
@@ -327,6 +333,18 @@
       })
     },
     methods: {
+      clickPicker (event, elementRefs){
+        let target = event.target
+        if (target.classList.contains('el-icon-date')) {
+          this[elementRefs]++
+          if(this[elementRefs] == 2){
+            this.$refs[elementRefs].pickerVisible = false
+          }
+        }
+        if ( this[elementRefs] >=2 ){
+          this[elementRefs] = 0
+        }
+      },
       fetchSearch (){
         this.$store.dispatch('search/fetchSearch').then(() => {
           this.options[0].children = (this.search && this.search.antiguedad) ? this.search.antiguedad : []
