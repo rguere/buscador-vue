@@ -36,15 +36,6 @@ export default {
   },
   methods: {
     fetchSearch (){
-      /*console.log(
-        this.search.antiguedad.length,
-        this.search.empleados.length,
-        this.search.provincia.length,
-        this.search.provincia_localidad.length,
-        this.search.auditor.length,
-        this.search.cnae.length,
-        this.search.industria.length,
-      )*/
       if (this.search && this.search.provincia_localidad && this.search.provincia_localidad.length === 0) {
         this.$store.dispatch('search/fetchSearch').then(() => {})
       }

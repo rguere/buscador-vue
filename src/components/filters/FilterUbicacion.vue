@@ -451,7 +451,6 @@
         })
       },
       handleCheck () { //data, checked
-        //console.log(data, checked)
       },
       inputTreeselect () { //values
       },
@@ -498,7 +497,6 @@
         return data.label.toLowerCase().indexOf(value.toLowerCase()) !== -1;
       },
       handleCheckChange(data, checked) {//data, checked, indeterminate
-        //console.log(data, checked, indeterminate)
         if (checked) {
           let respalSelectedPL = [...this.selected_provinces_localidad]
           let result = inArrayObjectTreeselect(this.search.provincia_localidad, data.id)
@@ -510,7 +508,6 @@
         }else {
           this.changeRemoveTag(data.id)
         }
-        //console.log(this.$refs.tree.getCheckedNodes())
       },
       remoteMethod(query) {
         if (query !== '') {
@@ -532,7 +529,6 @@
         this.selected_provinces_localidad = this.selected_provinces_localidad.filter(item => item.id !== id_elemet)
       },
       changeClear () { //element, checked
-        //console.log('changeClear', element, checked)
       },
       changeMethod () {
       },
