@@ -1,6 +1,10 @@
 import axios from 'axios'
 import * as types from '../mutation-types'
 
+import buscadorData from '../../assets/buscador-data.json'
+
+const isLocal = false 
+
 // state
 export const state = {
   loading: false,
@@ -40,11 +44,19 @@ export const actions = {
       commit(types.LOADING_SEARCH, {
         loading: true
       })
-      const { data } = await axios.get('/buscador/resumen')
+      if (!isLocal) {
+        const { data } = await axios.get('/buscador/resumen')  
 
-      commit(types.FETCH_SEARCH, {
-        search: data
-      })
+        commit(types.FETCH_SEARCH, {
+          search: data
+        })
+      
+      }else {
+        commit(types.FETCH_SEARCH, {
+          search: buscadorData
+        })
+      }
+
     } catch (e) {
       commit(types.FETCH_SEARCH, {
         search: state.search

@@ -147,7 +147,7 @@
                     Selecciona una o varias empresas y clique en “Aplicar” para incorporarlas a su búsqueda.
                   </p>
                 </div>
-                <div class="panel-body">
+                <div class="panel-body div-scroll-200">
                   <table class="table table-hover">
                     <thead>
                       <tr>
@@ -169,6 +169,54 @@
                                 :name="`checkbox_table_${item.IdEmpresa}`"
                                 v-model="selected_social_reasons"
                                 @change="handleChange(item, $event)"
+                                :id="`checkbox_table_${item.IdEmpresa}`"
+                                :value="item">
+                              {{ item.RazonSocial }}
+                            </label>
+                          </div>
+                        </th>
+                        <td>{{ item.CIF }}</td>
+                        <td>{{ item.Provincia }}</td>
+                        <td>{{ item.Localidad }}</td>
+                        <td>
+                          {{ (item.UltimaCuentaAnual)? item.UltimaCuentaAnual.Ejercicio : ''  }}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="panel panel-default cd">
+                <div class="panel-heading">
+                  <p class="panel-title roboto white">
+                    Lista de empresas seleccionadas.
+                    <span class="span-info-right" v-if="selected_by_social_reasons !== 0"> ({{ selected_by_social_reasons | numeral('0,0') }} empresas seleccionadas)</span>
+                  </p>
+                </div>
+                <div class="panel-body div-scroll-200">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col">Razón social de la empresa</th>
+                        <th scope="col">NIF</th>
+                        <th scope="col">Provincia</th>
+                        <th scope="col">Localidad</th>
+                        <th scope="col">Último año cuentas disponibles</th>
+                        <!--<th scope="col">Ventas último año disponible (miles de €)</th>-->
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="(item, key) in list_selected_social_reasons" :key="key">
+                        <th scope="row">
+                          <div class="checkbox" id="selected_em">
+                            <label>
+                              <input
+                                type="checkbox"
+                                :name="`checkbox_table_${item.IdEmpresa}`"
+                                v-model="selected_social_reasons"
+                                @change="handleChangeList(item, $event)"
                                 :id="`checkbox_table_${item.IdEmpresa}`"
                                 :value="item">
                               {{ item.RazonSocial }}
@@ -230,6 +278,7 @@
       },
       selected_social_reasons_string: '',
       selected_social_reasons: [],
+      list_selected_social_reasons: [],
       selected_by_social_reasons: 0,
       areApplied: false,
       reapply: false,
@@ -254,6 +303,7 @@
     watch: {
       selected_social_reasons: function (newRazonSocial) {
         this.selected_by_social_reasons = this.numberRazonSocial(newRazonSocial)
+        this.list_selected_social_reasons = [...this.selected_social_reasons]
         if (this.reapply && newRazonSocial.length === 0) {
           this.clean()
         }
@@ -370,7 +420,8 @@
       },
       editSearch () {
         this.search_edit = true
-        this.search_add = false
+        this.search_add = true
+        this.dataFrm =  (this.areApplied)? '': this.dataFrm
         setTimeout(() => { document.getElementById('social_reasons').focus() }, 100)
       },
       addSearch () {
@@ -396,7 +447,13 @@
       handleChange () { //province, event
         this.reapply = (this.areApplied)? true: this.areApplied
       },
-      handleChangeList (){ //province, event
+      handleChangeList (province, event){
+        event.preventDefault()
+        this.reapply = (this.areApplied)? true: this.areApplied
+        let checkboxs = document.querySelectorAll('#selected_em input[type="checkbox"]')
+        checkboxs.forEach((item) => {
+          item.checked = true
+        })
       },
       showModal () {
         this.modalVisible = true
