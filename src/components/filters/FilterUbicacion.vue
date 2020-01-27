@@ -26,7 +26,7 @@
           </div>
           <div class="selected_children" v-if="areApplied && (form.Provincias && form.Provincias.length !== 0) || (form.Localidades && form.Localidades.length !== 0)">
             <hr>
-            <div class="grid-4-columns-1fr">
+            <div class="grid-3-columns-1fr">
               <div v-for="(item, key) in selected_children.slice(0, limitChildren)" :key="key" class="pa-3">
                 <label class="custon-checkboxs">
                   <input type="checkbox"

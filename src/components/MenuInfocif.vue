@@ -116,7 +116,7 @@
           Informes <span class="hidden-xs hidden-sm hidden-md ">de empresas</span>
         </a>
         <router-link to="/" class="btn btn-noborder" role="button" title="Buscardor de Empresas">
-          <!-- <img src="./../assets/images/buscador_de_empresas.png" style="width: 35px; height: 35px;" class="alignmiddle" alt="Informes de Empresas"> -->
+          <img src="./../assets/images/buscador.png" style="width: 35px; height: 35px;" class="alignmiddle" alt="Informes de Empresas">
           Buscardor <span class="hidden-xs hidden-sm hidden-md ">de empresas</span>
         </router-link>
         <a href="http://www.infocif.es/ranking/ventas-empresas/espana" class="btn btn-noborder" role="button" title="Ranking de empresas">
