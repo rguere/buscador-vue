@@ -145,6 +145,7 @@
                 <div class="panel-heading">
                   <p class="panel-title roboto white">
                     Selecciona una o varias empresas y clique en “Aplicar” para incorporarlas a su búsqueda.
+                    <span class="span-info-right" v-if="selected_by_social_reasons !== 0"> ({{ selected_by_social_reasons | numeral('0,0') }} empresas seleccionadas)</span>
                   </p>
                 </div>
                 <div class="panel-body div-scroll-200">

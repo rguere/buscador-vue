@@ -31,6 +31,13 @@ export const persistentData = {
           this.$set(this.$data, key, this.localDatas[this.$options.name][key])
         }
       }
+    },
+    sortData(elements) {
+      let _elements = [...elements]
+      let array = _elements.map(item => {
+        return item.id
+      })
+      return array.sort()
     }
   }
 }

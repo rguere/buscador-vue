@@ -214,7 +214,7 @@
       }),
       compareWithNewtoApply: function () {
         let stg = this.selected_provinces_localidad_string
-        let obj = JSON.stringify(this.selected_provinces_localidad)
+        let obj = JSON.stringify(this.sortData(this.selected_provinces_localidad))
         return (stg === obj)
       }
     },
@@ -364,7 +364,7 @@
             this.areApplied = true
             this.reapply = false
             this.loadingFrm = false
-            this.selected_provinces_localidad_string = JSON.stringify(this.selected_provinces_localidad)
+            this.selected_provinces_localidad_string = JSON.stringify(this.sortData(this.selected_provinces_localidad))
           }).catch(() => {
             this.loadingFrm = false
           })
@@ -459,14 +459,16 @@
       deselectTreeselect () {
       },
       formatearLabel (item){
-      let arr = item.id.split('|');
-      arr.reverse();
-      if (arr.length === 1) {
-      return item.label
-      }else if (arr.length > 1){
-      let primero = arr[0]
-      arr.shift()
-      return `${primero} (${arr.join(',')})`}
+        let _item = {...item}
+        let arr = _item.id.split('|');
+        arr.reverse();
+        if (arr.length === 1) {
+          return _item.label
+        } else if (arr.length > 1){
+          let primero = arr[0]
+          arr.shift()
+          return `${primero} (${arr.join(',')})`
+        }
       },
       formatearDataPOST (){
       this.selected_children = []
