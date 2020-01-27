@@ -1,5 +1,5 @@
 <template>
-  <div class="panel panel-default cd" id="filter_sector_actividad">
+  <div class="panel panel-default cd div_capa_superpuesta" id="filter_sector_actividad">
     <div class="panel-heading">
       <p class="panel-title roboto white">
         Sector/Actividad

@@ -1,5 +1,5 @@
 <template>
-  <div class="panel panel-default cd" id="filter_anios_con_cuentas_disponibles">
+  <div class="panel panel-default cd div_capa_superpuesta" id="filter_anios_con_cuentas_disponibles">
     <div class="panel-heading">
       <p class="panel-title roboto white">
         Años con cuentas disponibles
