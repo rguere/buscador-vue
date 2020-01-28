@@ -234,6 +234,22 @@ span.num-fil { color: #2196f3; font-weight: bold; }
   }
 }
 
+.ul_filtros_aplicados {
+  margin-left: 20px;
+  li{
+    margin-top: 10px;
+    font-weight: bold;
+    list-style: disc;
+  }
+  ul {
+    li {
+      margin-left: 20px;
+      font-weight: initial;
+      list-style: circle;
+    }
+  }
+}
+
 .el-badge {
   width: 100%!important;
 }

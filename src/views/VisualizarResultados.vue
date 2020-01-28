@@ -108,8 +108,37 @@
               <div class="col-md-12">
                 <h5 class="flex_div">
                   <b>Resultados de la búsqueda</b>
-                  <filter-tree></filter-tree>
+                  <el-tooltip content="Ver resumen de los filtros aplicados" placement="top">
+                    <span @click="showModal">
+                      <filter-tree></filter-tree>
+                    </span>
+                  </el-tooltip>
                 </h5>
+                <el-dialog
+                  :visible.sync="modalVisible"
+                  width="45%"
+                  :close-on-click-modal="true"
+                  :show-close="true"
+                  :destroy-on-close="true"
+                  :center="true"
+                  top="5vh">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <h2 class="text-center">Resumen de los filtros aplicados </h2>
+                        <el-divider></el-divider>
+                        <ul class="ul_filtros_aplicados">
+                          <li v-for="(item, key) in filtros_aplicados" :key="key">
+                            {{ item.title }}
+                            <ul v-if="item.datas">
+                              <li v-for="(_item, _key) in item.datas" :key="_key">
+                                {{ _item.label }}
+                              </li>
+                            </ul> 
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                </el-dialog>
               </div>
               <div class="col-md-12" v-if="results && results.empresas">
                 <el-table
@@ -182,6 +211,7 @@ export default {
   data: () => ({
       dialogCorreoVisible: false,
       dialogCorreoVisible2: false,
+      modalVisible: false,
       loadingExcel: false,
       loadingCorreo: false,
       correo: '',
@@ -192,12 +222,15 @@ export default {
         cantidad: 0,
         total: 0,
         empresas: []
-      }
+      },
+      filtros_aplicados: []
     }),
   computed: mapGetters({
     loading: 'search/loading',
     form: 'filters/form',
     applied_filters: 'filters/applied_filters',
+    localDatas: 'localDatas/localDatas',
+    filters: 'filters/filters',
   }),
   created () {
     this.$store.dispatch('layout/setLayout', 'default-layout')
@@ -211,6 +244,47 @@ export default {
         'warning'
       )
       this.$router.push({ name: 'buscador'})
+    }else {
+      this.applied_filters.forEach(item => {
+        for (const key in this.localDatas) {
+          if (this.localDatas.hasOwnProperty(key)) {
+            const element = this.localDatas[key];
+            if(element.title === item) {
+              if(element.title === "Antigüedad"){
+                this.filtros_aplicados.push({
+                  title: element.title,
+                  datas: element.selected_antiguedad
+                })
+              }else if(element.title === "Ubicación"){
+                this.filtros_aplicados.push({
+                  title: element.title,
+                  datas: element.selected_provinces_localidad
+                })
+              }else if(element.title === "Número de empleados"){
+                this.filtros_aplicados.push({
+                  title: element.title,
+                  datas: element.selected_empleados
+                })
+              }else if(element.title === "Código Postal"){
+                this.filtros_aplicados.push({
+                  title: element.title,
+                  datas: element.selected_zip_codes
+                })
+              }else if(element.title === "Nombre o razón social"){
+                this.filtros_aplicados.push({
+                  title: element.title,
+                  datas: element.selected_social_reasons
+                })
+              }else if(element.title === "NIF"){
+                this.filtros_aplicados.push({
+                  title: element.title,
+                  datas: element.selected_list_nif
+                })
+              }
+            }
+          }
+        }
+      })
     }
   },
   methods: {
@@ -274,6 +348,12 @@ export default {
     sizeChange (val) { 
       this.size = val
       this.visualizarResultados()
+    },
+    showModal () {
+      this.modalVisible = true
+    },
+    hideModal () {
+      this.modalVisible = false
     }
   }
 }
