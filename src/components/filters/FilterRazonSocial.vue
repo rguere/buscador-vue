@@ -61,7 +61,7 @@
             Ver detalles <i class="fa fa-plus-circle"></i>
           </button>
           <button
-              v-if="social_reasons && social_reasons.empresas.length !== 0 && !search_edit && !compareWithNewtoApply"
+              v-if="selected_social_reasons && selected_social_reasons.length !== 0 && !search_edit && !compareWithNewtoApply"
               :disabled="selected_social_reasons.length === 0 || loadingApply"
               type="button"
               class="btn btn-success m-r-5"
@@ -104,7 +104,7 @@
             </div>
             <div>
               <button
-                  v-if="social_reasons && social_reasons.empresas.length !== 0 && !search_edit"
+                  v-if="selected_social_reasons && selected_social_reasons.length !== 0 && !search_edit && !compareWithNewtoApply"
                   :disabled="selected_social_reasons.length === 0 || loadingApply"
                   type="button"
                   class="btn btn-success"
@@ -129,14 +129,19 @@
                   </p>
                 </div>
                 <div class="panel-body">
-                  <textarea v-model="dataFrm" id="social_reasons" class="form-control"></textarea>
-                  <!--  v-if="social_reasons && social_reasons.empresas.length === 0 || search_edit"  -->
-                  <button
-                    type="button"                   
-                    class="btn btn-info pull-right top-10" @click="validateRazonSocial" 
-                    :disabled="dataFrm.length === 0 || loadingValidar">
-                      BUSCAR <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
-                  </button>
+                  <form v-on:submit.prevent="validateRazonSocial">
+                    <div class="input-group">
+                      <input type="text" v-model="dataFrm" id="social_reasons" class="form-control" placeholder="Escriba aqui el nombre o razón social de la empresa" title="Escriba aqui el nombre o razón social de la empresa">
+                      <span class="input-group-btn">
+                        <button
+                          type="button"                   
+                          class="btn btn-info" @click="validateRazonSocial" 
+                          :disabled="dataFrm.length === 0 || loadingValidar">
+                            BUSCAR <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
+                        </button>
+                      </span>
+                    </div>
+                  </form>
                 </div>
               </div>
             </div>
@@ -188,7 +193,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-12">
+            <div class="col-md-12" v-if="list_selected_social_reasons && list_selected_social_reasons.length !== 0">
               <div class="panel panel-default cd">
                 <div class="panel-heading">
                   <p class="panel-title roboto white">
@@ -312,35 +317,36 @@
     },
     methods: {
       validateRazonSocial(){
-        this.loadingValidar = true  
-        this.$store.dispatch('search/validateRazonSocial', this.dataFrm).then((response) => {
-          if(response && response.empresas && this.social_reasons.empresas.length !== 0 && this.search_add) {
-            response.empresas.map((item) => {
-              this.social_reasons.empresas.unshift(item)
-            })
-            this.social_reasons.empresas = removeDuplicates(this.social_reasons.empresas, 'RazonSocial')
-          }else {
-            this.social_reasons.empresas = (response.empresas)? response.empresas: []
-          }
-          this.loadingValidar = false
-          this.search_edit = false
-          this.search_add = false
-          if(response.empresas.length === 0) {
-            swal.fire(
-              'Advertencia',
-              'Nombre o razón social no existe',
-              'warning'
-            )
-          }
-        }).catch(() => {
-          this.loadingValidar = false
-          this.social_reasons = { total: 0, cantidad: 0, empresas: [] }
-          this.selected_social_reasons = []
-        })
+        if (this.dataFrm.length !== 0) {
+          this.loadingValidar = true  
+          this.$store.dispatch('search/validateRazonSocial', this.dataFrm).then((response) => {
+            if(response && response.empresas && this.social_reasons.empresas.length !== 0 && this.search_add) {
+              response.empresas.map((item) => {
+                this.social_reasons.empresas.unshift(item)
+              })
+              this.social_reasons.empresas = removeDuplicates(this.social_reasons.empresas, 'RazonSocial')
+            }else {
+              this.social_reasons.empresas = (response.empresas)? response.empresas: []
+            }
+            this.loadingValidar = false
+            this.search_edit = false
+            this.search_add = false
+            if(response.empresas.length === 0) {
+              swal.fire(
+                'Advertencia',
+                'Nombre o razón social no existe',
+                'warning'
+              )
+            }
+          }).catch(() => {
+            this.loadingValidar = false
+            this.social_reasons = { total: 0, cantidad: 0, empresas: [] }
+            this.selected_social_reasons = []
+          })
+        }
       },
       apply () {
         if (this.selected_social_reasons && this.selected_social_reasons.length !== 0) {
-          this.hideModal()
           this.loadingApply = true
           this.search_edit = false
           this.search_add = false
@@ -358,7 +364,9 @@
             this.areApplied = true
             this.reapply = false
             this.loadingApply = false
+            this.dataFrm = ''
             this.selected_social_reasons_string = JSON.stringify(this.selected_social_reasons)
+            this.social_reasons = { total: 0, cantidad: 0, empresas: [] }
           }).catch(() => {
             this.loadingApply = false
           })
