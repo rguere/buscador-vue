@@ -106,7 +106,10 @@
                 </div>
               </div> -->
               <div class="col-md-12">
-                <h2 class="text-center">Resultados de la búsqueda</h2>
+                <h5 class="flex_div">
+                  <b>Resultados de la búsqueda</b>
+                  <filter-tree></filter-tree>
+                </h5>
               </div>
               <div class="col-md-12" v-if="results && results.empresas">
                 <el-table
@@ -194,12 +197,21 @@ export default {
   computed: mapGetters({
     loading: 'search/loading',
     form: 'filters/form',
+    applied_filters: 'filters/applied_filters',
   }),
   created () {
     this.$store.dispatch('layout/setLayout', 'default-layout')
   },
   mounted () {
     this.visualizarResultados()
+    if(!(this.applied_filters && this.applied_filters.length !== 0)){
+      swal.fire(
+        'Advertencia',
+        'Aún no hay filtros aplicados',
+        'warning'
+      )
+      this.$router.push({ name: 'buscador'})
+    }
   },
   methods: {
     visualizarResultados (){
@@ -269,4 +281,8 @@ export default {
 
 <style lang="scss" scoped>
 	.banner { padding: 15px 0 0 0; }
+  .flex_div {
+    display: flex;
+    margin-left: 3px;
+  }
 </style>

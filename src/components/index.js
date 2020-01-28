@@ -20,6 +20,7 @@ import FilterCargos from './filters/FilterCargos.vue'
 import FilterAuditores from './filters/FilterAuditores.vue'
 import FilterInformacionFinanciera from './filters/FilterInformacionFinanciera.vue'
 import FilterAniosCuentasDisponibles from './filters/FilterAniosCuentasDisponibles.vue'
+import FilterTree from './FilterTree.vue'
 
 [
   MenuInfocif,
@@ -41,6 +42,7 @@ import FilterAniosCuentasDisponibles from './filters/FilterAniosCuentasDisponibl
   FilterAniosCuentasDisponibles,
   FilterButtons,
   LoadingFullPage,
+  FilterTree,
 ].forEach(Component => {
   Vue.component(Component.name, Component)
 })
