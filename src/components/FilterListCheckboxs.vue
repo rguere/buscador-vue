@@ -12,7 +12,7 @@
 
             <filter-numero-empleados></filter-numero-empleados>
 
-            <el-badge value="Próximamente" class="item">
+            <!-- <el-badge value="Próximamente" class="item">
               <filter-estado></filter-estado>
             </el-badge>
 
@@ -30,7 +30,7 @@
             
             <el-badge value="Próximamente" class="item">
               <filter-cargos></filter-cargos>
-            </el-badge>
+            </el-badge> -->
 
           </div>
           <div class="col-md-4">
@@ -40,7 +40,7 @@
 
             <filter-nif></filter-nif>
             
-            <el-badge value="Próximamente" class="item">
+            <!-- <el-badge value="Próximamente" class="item">
               <filter-tipo-cuentas></filter-tipo-cuentas>
             </el-badge>
             
@@ -50,7 +50,7 @@
             
             <el-badge value="Próximamente" class="item">
               <filter-directivos-vinculaciones></filter-directivos-vinculaciones>
-            </el-badge>
+            </el-badge> -->
 
           </div>
         </div>

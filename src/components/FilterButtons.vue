@@ -38,10 +38,11 @@
 										}">
 										{{ filter.name }}
 									</a>
-									<el-tooltip
+									<el-badge
 										v-if="filter.disabled"
-										content="Próximamente" placement="top">
-										<a href=""
+										value="Próximamente" 
+										class="item">
+										<div
 											class="btn btn_disabled"
 											v-scroll-to="{
 											el: `#${filter.slug}`,
@@ -49,8 +50,8 @@
 												onDone: onDone
 											}">
 											{{ filter.name }}
-										</a>
-									</el-tooltip>
+										</div>
+									</el-badge>
 									<span
 										class="fa fa-close"
 										v-if="filter.apply"
@@ -64,7 +65,7 @@
 									@click="emptyFilter">
 									<i class="fa fa-trash"></i> Vaciar <span class="hidden-xs hidden-sm"> resultados</span>
 								</button>
-								<button
+								<!-- <button
 									class="btn btn-primary"
 									:disabled="applied_filters.length === 0"
 									@click="saveFilter">
@@ -73,7 +74,7 @@
 								<button class="btn btn-primary"
 									@click="getFilter">
 									<i class="fa fa-history"></i> Historial
-								</button>
+								</button> -->
 							</div>
 						</div>
 						<div class="col-md-12">
