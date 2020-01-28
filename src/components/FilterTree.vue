@@ -41,9 +41,7 @@
     destroyed () {
     },
     methods: {
-      showModalFilter(filter) {
-        console.log(filter)
-      }
+      showModalFilter() {}
     }
 	}
 </script>
