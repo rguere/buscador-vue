@@ -220,9 +220,18 @@ span.num-fil { color: #2196f3; font-weight: bold; }
 }
 
 .el-badge__content, .el-badge__content.is-fixed {
+  opacity: 0;
   right: 73px!important;
+  top: 2px!important;
   font-size: 9px;
   line-height: 16px;
+}
+
+.el-badge.item:hover {
+  .el-badge__content, .el-badge__content.is-fixed {
+    opacity: 1;
+    transition: all 0.5s;
+  }
 }
 
 .el-badge {

@@ -43,12 +43,7 @@
 										value="Próximamente" 
 										class="item">
 										<div
-											class="btn btn_disabled"
-											v-scroll-to="{
-											el: `#${filter.slug}`,
-												offset: -290,
-												onDone: onDone
-											}">
+											class="btn btn_disabled">
 											{{ filter.name }}
 										</div>
 									</el-badge>
