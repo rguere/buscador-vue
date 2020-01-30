@@ -161,7 +161,7 @@
                               <td colspan="2"> 
                               </td>
                               <td>
-                                <b>Total: </b> <span class="num-fil"> ({{ filtros_aplicados[(filtros_aplicados.length - 1)].quantity | numeral('0,0') }})</span>
+                                <b>Total: </b> <span class="num-fil"> ({{ total | numeral('0,0') }})</span>
                               </td>
                             </tr>
                           </tbody>
@@ -254,7 +254,8 @@ export default {
         total: 0,
         empresas: []
       },
-      filtros_aplicados: []
+      filtros_aplicados: [],
+      total: 0
     }),
   computed: {
     ...mapGetters({
@@ -347,6 +348,9 @@ export default {
           }
         }
       })
+      if (this.filtros_aplicados.length > 0){
+        this.total = this.filtros_aplicados[(this.filtros_aplicados.length - 1)].quantity
+      }
     }
     this.visualizarResultados()
   },
