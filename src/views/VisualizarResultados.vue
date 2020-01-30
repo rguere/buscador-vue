@@ -116,7 +116,7 @@
                 </h5>
                 <el-dialog
                   :visible.sync="modalVisible"
-                  width="45%"
+                  width="95%"
                   :close-on-click-modal="true"
                   :show-close="true"
                   :destroy-on-close="true"
@@ -126,16 +126,46 @@
                       <div class="col-md-12">
                         <h2 class="text-center">Resumen de los filtros aplicados </h2>
                         <el-divider></el-divider>
-                        <ul class="ul_filtros_aplicados">
-                          <li v-for="(item, key) in filtros_aplicados" :key="key">
-                            {{ item.title }}
-                            <ul v-if="item.datas">
-                              <li v-for="(_item, _key) in item.datas" :key="_key">
-                                {{ _item.label }}
-                              </li>
-                            </ul> 
-                          </li>
-                        </ul>
+                        <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th>
+                                Estrategia de búsqueda
+                              </th>
+                              <th>
+                                Criterios aplicados 
+                              </th>
+                              <th>
+                                Cantidad resultante 
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr v-for="(item, key) in filtros_aplicados" :key="key">
+                              <td>
+                                {{ item.title }}
+                              </td>
+                              <td>
+                                <!-- <span class="num-fil"> ({{ item.data_quantity | numeral('0,0') }})</span> -->
+                                <ul v-if="item.datas">
+                                  <li v-for="(_item, _key) in item.datas" :key="_key">
+                                    {{ (_item.label !== 'incluir_null')? _item.label: `Empresas en las que se desconoce su ${item.title.toLowerCase()}` }}
+                                  </li>
+                                </ul>
+                              </td>
+                              <td>
+                                <span class="num-fil"> ({{ item.quantity | numeral('0,0') }})</span>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td colspan="2"> 
+                              </td>
+                              <td>
+                                <b>Total: </b> <span class="num-fil"> ({{ filtros_aplicados[(filtros_aplicados.length - 1)].quantity | numeral('0,0') }})</span>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </div>
                 </el-dialog>
@@ -196,6 +226,7 @@
 // @ is an alias to /src
 
 import { mapGetters } from 'vuex'
+import { orderFilters, inArrayObject, countByProperty } from './../utils'
 import swal from 'sweetalert2'
 
 export default {
@@ -225,18 +256,30 @@ export default {
       },
       filtros_aplicados: []
     }),
-  computed: mapGetters({
-    loading: 'search/loading',
-    form: 'filters/form',
-    applied_filters: 'filters/applied_filters',
-    localDatas: 'localDatas/localDatas',
-    filters: 'filters/filters',
-  }),
+  computed: {
+    ...mapGetters({
+      loading: 'search/loading',
+      form: 'filters/form',
+      applied_filters: 'filters/applied_filters',
+      localDatas: 'localDatas/localDatas',
+      filters: 'filters/filters',
+      cantidades: 'filters/cantidades',
+    }),
+    orderFilters: function () {
+      let order = orderFilters(this.filters, this.applied_filters, this.form)
+      for (const prop in this.cantidades) {
+        let split = prop.split('.')
+        if(split && split[0] === 'filtro' && split[1] && order && order[split[1]]) {
+          order[split[1]].quantity = this.cantidades[prop].cantidad
+        } 
+      }
+      return order
+    }
+  },
   created () {
     this.$store.dispatch('layout/setLayout', 'default-layout')
   },
   mounted () {
-    this.visualizarResultados()
     if(!(this.applied_filters && this.applied_filters.length !== 0)){
       swal.fire(
         'Advertencia',
@@ -249,36 +292,55 @@ export default {
         for (const key in this.localDatas) {
           if (this.localDatas.hasOwnProperty(key)) {
             const element = this.localDatas[key];
-            if(element.title === item) {
+            let result = inArrayObject(this.orderFilters, element.title, 'name')
+            if(element.title === item && result) {
               if(element.title === "Antigüedad"){
                 this.filtros_aplicados.push({
                   title: element.title,
-                  datas: element.selected_antiguedad
+                  quantity: result.quantity,
+                  key: result.key,
+                  datas: element.selected_antiguedad,
+                  data_quantity: countByProperty(element.selected_antiguedad, 'data')
                 })
               }else if(element.title === "Ubicación"){
                 this.filtros_aplicados.push({
                   title: element.title,
-                  datas: element.selected_provinces_localidad
+                  quantity: result.quantity,
+                  key: result.key,
+                  datas: element.selected_provinces_localidad,
+                  data_quantity: countByProperty(element.selected_provinces_localidad, 'data')
                 })
               }else if(element.title === "Número de empleados"){
                 this.filtros_aplicados.push({
                   title: element.title,
-                  datas: element.selected_empleados
+                  quantity: result.quantity,
+                  key: result.key,
+                  datas: element.selected_empleados,
+                  data_quantity: countByProperty(element.selected_empleados, 'data')
                 })
               }else if(element.title === "Código Postal"){
                 this.filtros_aplicados.push({
                   title: element.title,
-                  datas: element.selected_zip_codes
+                  quantity: result.quantity,
+                  key: result.key,
+                  datas: element.selected_zip_codes,
+                  data_quantity: countByProperty(element.selected_zip_codes, 'data')
                 })
               }else if(element.title === "Nombre o razón social"){
                 this.filtros_aplicados.push({
                   title: element.title,
-                  datas: element.selected_social_reasons
+                  quantity: result.quantity,
+                  key: result.key,
+                  datas: element.selected_social_reasons,
+                  data_quantity: countByProperty(element.selected_social_reasons, 'data')
                 })
               }else if(element.title === "NIF"){
                 this.filtros_aplicados.push({
                   title: element.title,
-                  datas: element.selected_list_nif
+                  quantity: result.quantity,
+                  key: result.key,
+                  datas: element.selected_list_nif,
+                  data_quantity: countByProperty(element.selected_list_nif, 'data')
                 })
               }
             }
@@ -286,6 +348,7 @@ export default {
         }
       })
     }
+    this.visualizarResultados()
   },
   methods: {
     visualizarResultados (){
@@ -334,10 +397,22 @@ export default {
       }
     },
     formatearData () {
-      let data = {}
+      let data = {
+        filtros: []
+      }
+      let arr = {}
       for (let key in this.form) {
         if(key !== 'filtros' && this.form[key].length !== 0){
           data[key] = this.form[key]
+          let result = inArrayObject(this.filtros_aplicados, key, 'key')
+          if (result) {
+            arr[key] = this.form[key]
+            let aux = {...arr}
+            data.filtros.push({
+              nombreFiltro: result.title,
+              ...aux
+            })
+          }
         }
       }
       return data
@@ -364,5 +439,15 @@ export default {
   .flex_div {
     display: flex;
     margin-left: 3px;
+  }
+  table {
+    thead {
+      background: #333;
+      color: #fff;
+      font-weight: bold;
+      th {
+        padding: 15px 10px!important;
+      }
+    }
   }
 </style>

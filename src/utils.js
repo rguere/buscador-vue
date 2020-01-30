@@ -158,3 +158,18 @@ export const beforeOrderFilters = (filters, applied_filters, form, title) => {
     return before_form
 }
 
+export const countByProperty = (array, property) => {
+    let count = 0
+    for (const key in array) {
+        if (array.hasOwnProperty(key)) {
+            const element = array[key];
+            if (element[property]) {
+                count += element[property]
+            }else if(element.hasOwnProperty('RazonSocial')) {
+                count++
+                element.label = element.RazonSocial
+            }
+        }
+    }
+    return count
+}
