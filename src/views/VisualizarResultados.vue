@@ -296,6 +296,9 @@ export default {
             let result = inArrayObject(this.orderFilters, element.title, 'name')
             if(element.title === item && result) {
               if(element.title === "Antigüedad"){
+                // if (element.selected_antiguedad.length === 0){
+
+                // }
                 this.filtros_aplicados.push({
                   title: element.title,
                   quantity: result.quantity,
@@ -416,6 +419,16 @@ export default {
               nombreFiltro: result.title,
               ...aux
             })
+            if (result.datas && result.datas.length === 0 && this.form[key][0]){
+              let _copy = [...this.form[key]]
+              let label = (_copy[0])? _copy[0]: ''
+              label = label.split(":")
+              label[0] = (label[0] === 'ahnos')? 'años': label[0]
+              label = label.join(': ').split("|").join(' | ')
+              result.datas.push({
+                label
+              })
+            }
           }
         }
       }

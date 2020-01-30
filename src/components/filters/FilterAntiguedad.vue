@@ -443,7 +443,7 @@
           this.hideModal()
           this.loadingAhnos = true
           this.form.antiguedad = []
-          this.form.antiguedad.push(`ahnos:${this.ahnos_from}|${this.ahnos_to}`)
+          this.form.antiguedad.push(`ahnos:${this.ahnos_to}|${this.ahnos_from}`)
           let beforeForm = beforeOrderFilters(this.filters, this.applied_filters, this.form, this.title)
           this.$store.dispatch('search/filtrar', beforeForm).then((response) => {
             this.updateNumberSelectedCompanies(response.cantidad)
