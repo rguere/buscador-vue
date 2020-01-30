@@ -372,14 +372,16 @@ export default {
         this.loadingExcel = true
         let data = this.formatearData()
         this.$store.dispatch('search/archivoExcel', { filters: data, nombreArchivo: this.nombreArchivo }).then((response) => {
-          const link = document.createElement('a')
-          link.href = `http://dev.infocif.info/api/buscador/archivos/${response}`
-          link.setAttribute('download', 'resultados.xlsx')
-          document.body.appendChild(link)
-          link.click()
-          this.loadingExcel = false
-          this.dialogCorreoVisible2 = false
-          this.nombreArchivo = ''
+          if(response){
+            const link = document.createElement('a')
+            link.href = `http://dev.infocif.info/api/buscador/archivos/${response}`
+            link.setAttribute('download', 'resultados.xlsx')
+            document.body.appendChild(link)
+            link.click()
+            this.loadingExcel = false
+            this.dialogCorreoVisible2 = false
+            this.nombreArchivo = ''
+          }
         }).catch(() => {
           this.loadingExcel = false
         })
@@ -389,15 +391,17 @@ export default {
       if (this.$refs["correo"].checkValidity() && this.$refs["nombreArchivoEmail"].checkValidity()) {
         this.loadingCorreo = true
         let filters = this.formatearData()
-        this.$store.dispatch('search/enviarResultadosCorreo', { filters, email: this.correo, nombreArchivo: this.nombreArchivo }).then(() => {
-          this.loadingCorreo = false
-          this.dialogCorreoVisible = false
-          this.correo = ''
-          swal.fire(
-            'Éxito',
-            'Correo enviado',
-            'success'
-          )
+        this.$store.dispatch('search/enviarResultadosCorreo', { filters, email: this.correo, nombreArchivo: this.nombreArchivo }).then((response) => {
+          if(response){
+            this.loadingCorreo = false
+            this.dialogCorreoVisible = false
+            this.correo = ''
+            swal.fire(
+              'Éxito',
+              'Correo enviado',
+              'success'
+            )
+          }
         }).catch(() => {
           this.loadingCorreo = false
         })
