@@ -20,6 +20,10 @@
                   <i class="fa fa-print"></i>
                   Imprimir
                 </button>
+                <button @click="showModal" class="btn btn-info m-l-5">
+                  <i class="fa fa-table"></i>
+                  Ficha Resumen
+                </button>
               </div>
               <div class="col-md-6">
                 <div class="pull-right">
@@ -108,11 +112,9 @@
               <div class="col-md-12">
                 <h5 class="flex_div">
                   <b>Resultados de la búsqueda</b>
-                  <el-tooltip content="Ver resumen de los filtros aplicados" placement="top">
-                    <span @click="showModal">
-                      <filter-tree></filter-tree>
-                    </span>
-                  </el-tooltip>
+                  <span @click="showModal">
+                    <filter-tree></filter-tree>
+                  </span>
                 </h5>
                 <el-dialog
                   :visible.sync="modalVisible"
@@ -126,7 +128,7 @@
                       <div class="col-md-12">
                         <h1 class="text-center fs20">
                           <strong class="title-lg">
-                            Resumen de los filtros aplicados
+                            Ficha Resumen de la Búsqueda
                           </strong>
                         </h1>
                         <div class="row">
@@ -140,15 +142,14 @@
                                     {{ (_item.label !== 'incluir_null')? _item.label: `Empresas en las que se desconoce su ${item.title.toLowerCase()}` }}
                                   </li>
                                 </ul>
-
                                 <el-divider></el-divider>
-                                <span class="num-fil _right"> ({{ item.quantity | numeral('0,0') }})</span>
+                                <span class=" _right"> {{ item.quantity | numeral('0,0') }}</span>
                               </li>
                             </ul>
                           </div>
-                          <div class="col-md-6">
+                          <div class="col-md-6 text-right">
                             <h4>Resultado Final de la búsqueda</h4>
-                            <p><span class="num-fil"> ({{ total | numeral('0,0') }})</span> <b>Empresas</b></p>
+                            <p class="f25"><b><span class=""> {{ total | numeral('0,0') }}</span> Empresas</b></p>
                           </div>
                         </div>
 
