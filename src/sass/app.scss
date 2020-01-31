@@ -235,19 +235,27 @@ span.num-fil { color: #2196f3; font-weight: bold; }
 }
 
 .ul_filtros_aplicados {
+  margin-top: 20px;
   margin-left: 20px;
+  margin-bottom: 40px;
   li{
-    margin-top: 10px;
     font-weight: bold;
-    list-style: disc;
-  }
-  ul {
-    li {
-      margin-left: 20px;
-      font-weight: initial;
-      list-style: circle;
+    list-style: decimal;
+    ul {
+      li {
+        margin-left: 20px;
+        font-weight: initial;
+        list-style: circle;
+      }
     }
   }
+  .el-divider {
+    margin: 5px 0;
+  }
+}
+
+.ul_filtros_aplicados > li {
+  margin-bottom: 50px;
 }
 
 .el-badge {

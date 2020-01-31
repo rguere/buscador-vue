@@ -116,7 +116,7 @@
                 </h5>
                 <el-dialog
                   :visible.sync="modalVisible"
-                  width="95%"
+                  width="65%"
                   :close-on-click-modal="true"
                   :show-close="true"
                   :destroy-on-close="true"
@@ -124,48 +124,34 @@
                   top="5vh">
                     <div class="row">
                       <div class="col-md-12">
-                        <h2 class="text-center">Resumen de los filtros aplicados </h2>
-                        <el-divider></el-divider>
-                        <table class="table table-striped">
-                          <thead>
-                            <tr>
-                              <th>
-                                Estrategia de búsqueda
-                              </th>
-                              <th>
-                                Criterios aplicados 
-                              </th>
-                              <th>
-                                Cantidad resultante 
-                              </th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr v-for="(item, key) in filtros_aplicados" :key="key">
-                              <td>
+                        <h1 class="text-center fs20">
+                          <strong class="title-lg">
+                            Resumen de los filtros aplicados
+                          </strong>
+                        </h1>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <h4>Estrategia de Búsqueda</h4>
+                            <ul class="ul_filtros_aplicados">
+                              <li v-for="(item, key) in filtros_aplicados" :key="key">
                                 {{ item.title }}
-                              </td>
-                              <td>
-                                <!-- <span class="num-fil"> ({{ item.data_quantity | numeral('0,0') }})</span> -->
                                 <ul v-if="item.datas">
                                   <li v-for="(_item, _key) in item.datas" :key="_key">
                                     {{ (_item.label !== 'incluir_null')? _item.label: `Empresas en las que se desconoce su ${item.title.toLowerCase()}` }}
                                   </li>
                                 </ul>
-                              </td>
-                              <td>
-                                <span class="num-fil"> ({{ item.quantity | numeral('0,0') }})</span>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td colspan="2"> 
-                              </td>
-                              <td>
-                                <b>Total: </b> <span class="num-fil"> ({{ total | numeral('0,0') }})</span>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
+
+                                <el-divider></el-divider>
+                                <span class="num-fil _right"> ({{ item.quantity | numeral('0,0') }})</span>
+                              </li>
+                            </ul>
+                          </div>
+                          <div class="col-md-6">
+                            <h4>Resultado Final de la búsqueda</h4>
+                            <p><span class="num-fil"> ({{ total | numeral('0,0') }})</span> <b>Empresas</b></p>
+                          </div>
+                        </div>
+
                       </div>
                     </div>
                 </el-dialog>
@@ -470,5 +456,8 @@ export default {
         padding: 15px 10px!important;
       }
     }
+  }
+  ._right {
+    float: right;
   }
 </style>
