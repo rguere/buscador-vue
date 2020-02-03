@@ -86,6 +86,31 @@
           </button>
         </div>
       </div>
+      <div class="row" v-if="list_selected_social_reasons && list_selected_social_reasons.length !== 0">
+        <div class="col-md-12">
+          <br/>
+          <el-collapse v-model="collapseResumen">
+            <el-collapse-item title="Resumen de empresas seleccionadas" name="1">
+              <div class="div-scroll-200">
+                <div v-for="(item, key) in list_selected_social_reasons" :key="key">
+                  <div class="checkbox" id="selected_em">
+                    <label>
+                      <input
+                        type="checkbox"
+                        :name="`checkbox_resumen${item.IdEmpresa}`"
+                        v-model="selected_social_reasons"
+                        @change="handleChangeList(item, $event)"
+                        :id="`checkbox_resumen${item.IdEmpresa}`"
+                        :value="item">
+                      {{ item.RazonSocial }}
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </el-collapse-item>
+          </el-collapse> 
+        </div>
+      </div>
       <el-dialog
         :visible.sync="modalVisible"
         width="95%"
@@ -197,7 +222,7 @@
               <div class="panel panel-default cd">
                 <div class="panel-heading">
                   <p class="panel-title roboto white">
-                    Lista de empresas seleccionadas.
+                    Resumen de empresas seleccionadas
                     <span class="span-info-right" v-if="selected_by_social_reasons !== 0"> ({{ selected_by_social_reasons | numeral('0,0') }} empresas seleccionadas)</span>
                   </p>
                 </div>
@@ -210,7 +235,6 @@
                         <th scope="col">Provincia</th>
                         <th scope="col">Localidad</th>
                         <th scope="col">Último año cuentas disponibles</th>
-                        <!--<th scope="col">Ventas último año disponible (miles de €)</th>-->
                       </tr>
                     </thead>
                     <tbody>
@@ -294,6 +318,7 @@
       to_social_reason: '',
       loadingFile: false,
       file: {},
+      collapseResumen: []
     }),
     mounted() {
       this.$root.$on('clean_filter', (filter) => {
