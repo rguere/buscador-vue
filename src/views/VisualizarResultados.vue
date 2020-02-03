@@ -126,11 +126,21 @@
                   top="5vh">
                     <div class="row">
                       <div class="col-md-12">
-                        <h1 class="text-center fs20">
-                          <strong class="title-lg">
-                            Ficha Resumen de la Búsqueda
-                          </strong>
-                        </h1>
+                        <div class="row">
+                          <div class="col-md-2">
+                            <img src="./../assets/images/infocif.png" class="img-responsive logo-head-modal" alt="infocif">
+                          </div>
+                          <div class="col-md-8">
+                            <h1 class="text-center fs20">
+                              <strong class="title-lg">
+                                Ficha Resumen de la Búsqueda
+                              </strong>
+                            </h1>
+                          </div>
+                          <div class="col-md-2">
+                            <img src="./../assets/images/buscador-logo.png" class="img-responsive logo-head-modal flex-end" alt="Buscador de Empresas">
+                          </div>
+                        </div>
                         <div class="row">
                           <div class="col-md-6">
                             <h4>Estrategia de Búsqueda</h4>
@@ -460,5 +470,13 @@ export default {
   }
   ._right {
     float: right;
+  }
+  img.logo-head-modal{
+    width: 100%;
+    height: 60px;
+  }
+  img.flex-end {
+    display: flex;
+    justify-content: flex-end;
   }
 </style>
