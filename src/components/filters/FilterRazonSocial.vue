@@ -102,7 +102,7 @@
                         @change="handleChangeList(item, $event)"
                         :id="`checkbox_resumen${item.IdEmpresa}`"
                         :value="item">
-                      {{ item.RazonSocial }}
+                      {{ item.RazonSocial }} - {{ item.CIF }}
                     </label>
                   </div>
                 </div>
