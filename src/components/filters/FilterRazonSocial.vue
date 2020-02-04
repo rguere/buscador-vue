@@ -154,19 +154,25 @@
                   </p>
                 </div>
                 <div class="panel-body">
-                  <form v-on:submit.prevent="validateRazonSocial">
-                    <div class="input-group">
-                      <input type="text" v-model="dataFrm" id="social_reasons" class="form-control" placeholder="Escriba aqui el nombre o razón social de la empresa" title="Escriba aqui el nombre o razón social de la empresa">
-                      <span class="input-group-btn">
-                        <button
-                          type="button"                   
-                          class="btn btn-info" @click="validateRazonSocial" 
-                          :disabled="dataFrm.length === 0 || loadingValidar">
-                            BUSCAR <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
-                        </button>
-                      </span>
+                  <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                      <form v-on:submit.prevent="validateRazonSocial">
+                        <div class="input-group">
+                          <input type="text" v-model="dataFrm" id="social_reasons" class="form-control" placeholder="Escriba aqui el nombre o razón social de la empresa" title="Escriba aqui el nombre o razón social de la empresa">
+                          <span class="input-group-btn">
+                            <button
+                              type="button"                   
+                              class="btn btn-info" @click="validateRazonSocial" 
+                              :disabled="dataFrm.length === 0 || loadingValidar">
+                                BUSCAR <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
+                            </button>
+                          </span>
+                        </div>
+                      </form>
                     </div>
-                  </form>
+                    <div class="col-md-3"></div>
+                  </div>
                 </div>
               </div>
             </div>
