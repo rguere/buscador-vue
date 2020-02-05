@@ -8,7 +8,7 @@
     </div>
     <div class="panel-body">
       <div class="form-group" v-if="(social_reasons && social_reasons.empresas.length === 0) || (search_edit)">
-        <textarea v-model="dataFrm" id="social_reasons" class="form-control" placeholder="Escriba aqui el nombre o razón social de la empresa"></textarea>
+        <input type="text" v-model="dataFrm" id="social_reasons1" class="form-control" placeholder="Escriba aqui el nombre o razón social de la empresa" title="Escriba aqui el nombre o razón social de la empresa">
       </div>
       <div class="panel panel-default cd" v-if="social_reasons && social_reasons.empresas.length !== 0 && !search_edit">
         <div class="panel-body">
@@ -155,8 +155,7 @@
                 </div>
                 <div class="panel-body">
                   <div class="row">
-                    <div class="col-md-3"></div>
-                    <div class="col-md-6">
+                    <div class="col-md-7">
                       <form v-on:submit.prevent="validateRazonSocial">
                         <div class="input-group">
                           <input type="text" v-model="dataFrm" id="social_reasons" class="form-control" placeholder="Escriba aqui el nombre o razón social de la empresa" title="Escriba aqui el nombre o razón social de la empresa">
@@ -171,7 +170,6 @@
                         </div>
                       </form>
                     </div>
-                    <div class="col-md-3"></div>
                   </div>
                 </div>
               </div>
