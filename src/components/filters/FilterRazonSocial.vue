@@ -7,9 +7,20 @@
       </p>
     </div>
     <div class="panel-body">
-      <div class="form-group" v-if="(social_reasons && social_reasons.empresas.length === 0) || (search_edit)">
-        <input type="text" v-model="dataFrm" id="social_reasons1" class="form-control" placeholder="Escriba aqui el nombre o razón social de la empresa" title="Escriba aqui el nombre o razón social de la empresa">
-      </div>
+      <form v-on:submit.prevent="validateRazonSocial" class="m-b-10">
+        <div class="input-group">
+          <input type="text" v-model="dataFrm" id="social_reasons1" class="form-control" placeholder="Escriba aqui el nombre o razón social de la empresa" title="Escriba aqui el nombre o razón social de la empresa">
+          <span class="input-group-btn">
+            <button
+              title="BUSCAR"
+              type="button"                   
+              class="btn btn-info" @click="validateRazonSocial" 
+              :disabled="dataFrm.length === 0 || loadingValidar">
+                BUSCAR <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
+            </button>
+          </span>
+        </div>
+      </form>
       <div class="panel panel-default cd" v-if="social_reasons && social_reasons.empresas.length !== 0 && !search_edit">
         <div class="panel-body">
           <div class="row">
@@ -77,13 +88,13 @@
           </button>
         </div>
         <div>
-          <button
+          <!-- <button
             type="button"
-            v-if="social_reasons && social_reasons.empresas.length === 0 || search_edit" 
+            v-if="dataFrm.length !== 0 || search_edit" 
             class="btn btn-info" @click="validateRazonSocial" 
             :disabled="dataFrm.length === 0 || loadingValidar">
               BUSCAR <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
-          </button>
+          </button> -->
         </div>
       </div>
       <div class="row" v-if="list_selected_social_reasons && list_selected_social_reasons.length !== 0">
