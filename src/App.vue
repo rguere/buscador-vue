@@ -14,7 +14,5 @@
 </script>
 
 <style lang="scss">
-  
   @import '@/sass/app';
-
 </style>
