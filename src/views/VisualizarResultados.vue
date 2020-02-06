@@ -388,17 +388,15 @@ export default {
       if (this.$refs["correo"].checkValidity() && this.$refs["nombreArchivoEmail"].checkValidity()) {
         this.loadingCorreo = true
         let filters = this.formatearData()
-        this.$store.dispatch('search/enviarResultadosCorreo', { filters, email: this.correo, nombreArchivo: this.nombreArchivo }).then((response) => {
-          if(response){
-            this.loadingCorreo = false
-            this.dialogCorreoVisible = false
-            this.correo = ''
-            swal.fire(
-              'Éxito',
-              'Correo enviado',
-              'success'
-            )
-          }
+        this.$store.dispatch('search/enviarResultadosCorreo', { filters, email: this.correo, nombreArchivo: this.nombreArchivo }).then(() => {
+          this.loadingCorreo = false
+          this.dialogCorreoVisible = false
+          this.correo = ''
+          swal.fire(
+            'Éxito',
+            'Correo enviado',
+            'success'
+          )
         }).catch(() => {
           this.loadingCorreo = false
         })

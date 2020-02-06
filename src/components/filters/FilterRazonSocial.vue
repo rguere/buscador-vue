@@ -87,15 +87,6 @@
               Limpiar <i class="fa fa-undo"></i>
           </button>
         </div>
-        <div>
-          <!-- <button
-            type="button"
-            v-if="dataFrm.length !== 0 || search_edit" 
-            class="btn btn-info" @click="validateRazonSocial" 
-            :disabled="dataFrm.length === 0 || loadingValidar">
-              BUSCAR <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
-          </button> -->
-        </div>
       </div>
       <div class="row" v-if="list_selected_social_reasons && list_selected_social_reasons.length !== 0">
         <div class="col-md-12">
