@@ -179,6 +179,7 @@
                               format="dd/MM/yyyy"
                               value-format="yyyy-MM-dd"
                               type="date"
+                              popper-class="desdePicker"
                               placeholder="(Introducir, en formato dd/mm/aaaa, la fecha de constitución)"
                               :picker-options="pickerOptions">
                             </el-date-picker>
@@ -194,6 +195,7 @@
                               format="dd/MM/yyyy"
                               value-format="yyyy-MM-dd"
                               type="date"
+                              popper-class="hastaPicker"
                               placeholder="(Introducir, en formato dd/mm/aaaa, la fecha de constitución)"
                               :picker-options="pickerOptions">
                             </el-date-picker>
