@@ -231,17 +231,20 @@ span.num-fil { color: #2196f3; font-weight: bold; }
   position: relative;
   top: -358px;
   right: -309px;
-  background: rgba(227, 22, 22, 0.6901960784313725);
-  color: #fff;
+  background: rgb(255, 255, 255);
+  color: #cacbcd;
   display: initial;
   padding: 3px 6px;
   border-radius: 50%;
   cursor: pointer;
-  font-weight: bold;
+  font-weight: 100;
+  border: 1px solid #e4e7ed;
   font-size: 13px;
 
   &:hover {
-    background: #e31616;
+    font-weight: 200;
+    color: #181818;
+    border-color: #777778;
   }
 
 }
