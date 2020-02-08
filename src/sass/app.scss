@@ -227,6 +227,25 @@ span.num-fil { color: #2196f3; font-weight: bold; }
   line-height: 16px;
 }
 
+._hastaPicker, ._desdePicker {
+  position: relative;
+  top: -358px;
+  right: -309px;
+  background: rgba(227, 22, 22, 0.6901960784313725);
+  color: #fff;
+  display: initial;
+  padding: 3px 6px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 13px;
+
+  &:hover {
+    background: #e31616;
+  }
+
+}
+
 .el-badge.item:hover {
   .el-badge__content, .el-badge__content.is-fixed {
     opacity: 1;

@@ -174,6 +174,7 @@
                             <label class="demonstration">Desde (incluido)</label>
                             <el-date-picker
                               id="desdePicker"
+                              @focus="focusPicker"
                               ref="desdePicker"
                               v-model="daterange[0]"
                               format="dd/MM/yyyy"
@@ -190,6 +191,7 @@
                             <label class="demonstration">Hasta (incluido)</label>
                             <el-date-picker
                               id="hastaPicker"
+                              @focus="focusPicker"
                               ref="hastaPicker"
                               v-model="daterange[1]"
                               format="dd/MM/yyyy"
@@ -346,6 +348,24 @@
         if ( this[elementRefs] >=2 ){
           this[elementRefs] = 0
         }
+      },
+      focusPicker (el){
+        setTimeout(() => {
+          let modal = document.querySelector(`.el-popper.${el.id}`)
+          let LI  = modal.querySelector(`._${el.id}`)
+          if (!LI){
+            let node = document.createElement("LI");
+            node.classList.add(`_${el.id}`)
+            let textnode = document.createTextNode("X");
+            node.appendChild(textnode);
+            node.addEventListener('click', (event) => {
+              let target = event.target
+              let _class = target.getAttribute("class")
+              this.$refs[_class.replace('_', '')].pickerVisible = false
+            })
+            modal.appendChild(node);
+          }
+        },100)
       },
       fetchSearch (){
         this.$store.dispatch('search/fetchSearch').then(() => {
