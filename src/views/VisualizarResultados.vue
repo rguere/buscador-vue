@@ -408,6 +408,11 @@ export default {
             this.loadingExcel = false
             this.dialogCorreoVisible2 = false
             this.nombreArchivo = ''
+            swal.fire(
+              'Éxito',
+              'Archivo descargado con éxito',
+              'success'
+            )
             this.$v.$reset()
           }
         }).catch(() => {
