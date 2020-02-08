@@ -408,6 +408,7 @@ export default {
             this.loadingExcel = false
             this.dialogCorreoVisible2 = false
             this.nombreArchivo = ''
+            this.$v.$reset()
           }
         }).catch(() => {
           this.loadingExcel = false
@@ -415,7 +416,6 @@ export default {
       }
     },
     enviarResultadosCorreo () {
-      console.log(this.$refs["correo"].checkValidity())
       if (this.$refs["correo"].checkValidity() && this.$refs["nombreArchivoEmail"].checkValidity()) {
         this.loadingCorreo = true
         let filters = this.formatearData()
@@ -428,6 +428,7 @@ export default {
             'Correo enviado',
             'success'
           )
+          this.$v.$reset()
         }).catch(() => {
           this.loadingCorreo = false
         })
