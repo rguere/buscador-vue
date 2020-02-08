@@ -45,11 +45,23 @@
                         show-icon>
                       </el-alert>
                       <br>
-                      <div class="form-group">
-                        <input type="email" class="form-control" placeholder="Ingresa un correo" v-model="correo" ref="correo" required>
+                      <div class="form-group anti-inputs" :class="{ 'has-error has-feedback': $v.correo.$error }">
+                        <input 
+                          type="email"
+                          class="form-control"
+                          placeholder="Ingresa un correo"
+                          v-model.trim="$v.correo.$model"
+                          ref="correo"
+                          required>
                       </div>
-                      <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Nombre de archivo" v-model="nombreArchivo" ref="nombreArchivoEmail" required>
+                      <div class="form-group anti-inputs" :class="{ 'has-error has-feedback': $v.nombreArchivo.$error }">
+                        <input 
+                          type="text"
+                          class="form-control"
+                          placeholder="Nombre de archivo"
+                          v-model.trim="$v.nombreArchivo.$model"
+                          ref="nombreArchivoEmail"
+                          required>
                       </div>
                     <span slot="footer" class="dialog-footer">
                       <button @click="dialogCorreoVisible = false"
@@ -74,8 +86,14 @@
                     title="Ingrese el nombre del archivo para iniciar la descarga"
                     :visible.sync="dialogCorreoVisible2"
                     width="30%">
-                      <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Nombre de archivo" v-model="nombreArchivo" ref="nombreArchivo" required>
+                      <div class="form-group anti-inputs" :class="{ 'has-error has-feedback': $v.nombreArchivo.$error }">
+                        <input 
+                          type="text"
+                          class="form-control"
+                          placeholder="Nombre de archivo"
+                          v-model.trim="$v.nombreArchivo.$model"
+                          ref="nombreArchivoEmail"
+                          required>
                       </div>
                     <span slot="footer" class="dialog-footer">
                       <button @click="dialogCorreoVisible2 = false"
@@ -225,6 +243,7 @@
 import { mapGetters } from 'vuex'
 import { orderFilters, inArrayObject, countByProperty } from './../utils'
 import swal from 'sweetalert2'
+import { required, email } from 'vuelidate/lib/validators'
 
 export default {
 	/*middleware: 'guest',*/
@@ -254,6 +273,17 @@ export default {
       filtros_aplicados: [],
       total: 0
     }),
+  validations() {
+    return {
+      correo: {
+        required,
+        email
+      },
+      nombreArchivo: {
+        required,
+      }
+    }
+  },
   computed: {
     ...mapGetters({
       loading: 'search/loading',
@@ -385,6 +415,7 @@ export default {
       }
     },
     enviarResultadosCorreo () {
+      console.log(this.$refs["correo"].checkValidity())
       if (this.$refs["correo"].checkValidity() && this.$refs["nombreArchivoEmail"].checkValidity()) {
         this.loadingCorreo = true
         let filters = this.formatearData()
