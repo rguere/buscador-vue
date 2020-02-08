@@ -423,6 +423,7 @@ export default {
           this.loadingCorreo = false
           this.dialogCorreoVisible = false
           this.correo = ''
+          this.nombreArchivo = ''
           swal.fire(
             'Éxito',
             'Correo enviado',
