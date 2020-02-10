@@ -282,9 +282,9 @@
     },
     methods: {
       fetchSearch (){
-        this.$store.dispatch('search/fetchSearch').then(() => {
-          this.options[0].children = (this.search && this.search.empleados) ? this.search.empleados : []
-        })
+        // this.$store.dispatch('search/fetchSearch').then(() => {
+        //   this.options[0].children = (this.search && this.search.empleados) ? this.search.empleados : []
+        // })
       },
       showModal () {
         this.$v.$reset()

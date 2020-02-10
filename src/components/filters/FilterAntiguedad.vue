@@ -368,9 +368,9 @@
         },100)
       },
       fetchSearch (){
-        this.$store.dispatch('search/fetchSearch').then(() => {
-          this.options[0].children = (this.search && this.search.antiguedad) ? this.search.antiguedad : []
-        })
+        // this.$store.dispatch('search/fetchSearch').then(() => {
+        //   this.options[0].children = (this.search && this.search.antiguedad) ? this.search.antiguedad : []
+        // })
       },
       showModal () {
         this.$v.$reset()

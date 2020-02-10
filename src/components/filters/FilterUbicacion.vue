@@ -302,9 +302,9 @@
     },
     methods: {
       fetchSearch (){
-        this.$store.dispatch('search/fetchSearch').then(() => {
-          this.options[0].children = (this.search && this.search.provincia_localidad) ? this.search.provincia_localidad : []
-        })
+        // this.$store.dispatch('search/fetchSearch').then(() => {
+        //   this.options[0].children = (this.search && this.search.provincia_localidad) ? this.search.provincia_localidad : []
+        // })
       },
       showModal () {
         this.modalVisible = true
