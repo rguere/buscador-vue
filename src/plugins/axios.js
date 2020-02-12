@@ -4,9 +4,9 @@ import swal from 'sweetalert2'
 import router from './../router'
 
 if (process.env.NODE_ENV === 'production') {
-  axios.defaults.baseURL = 'http://api.infocif.es/api'
+  axios.defaults.baseURL = 'https://api.infocif.es/api'
 } else {
-  axios.defaults.baseURL = 'http://api.infocif.es/api'
+  axios.defaults.baseURL = 'https://api.infocif.es/api'
 }
 
 // Request interceptor
