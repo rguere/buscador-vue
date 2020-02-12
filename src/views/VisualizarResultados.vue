@@ -219,7 +219,7 @@
                   </el-table-column>
                 </el-table>
                 <el-pagination
-                  layout="total, prev, sizes, pager, next"
+                  layout="total, sizes, next, pager, prev, jumper"
                   :total="results.total"
                   :page-size="size"
                   :current-page.sync="currentPage"
