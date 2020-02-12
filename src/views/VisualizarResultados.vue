@@ -145,22 +145,20 @@
                     <div class="row">
                       <div class="col-md-12">
                         <div class="row">
-                          <div class="col-md-2">
-                            <img src="./../assets/images/infocif.png" class="img-responsive logo-head-modal" alt="infocif">
-                          </div>
-                          <div class="col-md-8">
-                            <h1 class="text-center fs20">
-                              <strong class="title-lg">
-                                Ficha Resumen de la Búsqueda
-                              </strong>
-                            </h1>
-                          </div>
-                          <div class="col-md-2">
-                            <img src="./../assets/images/buscador-logo.png" class="img-responsive logo-head-modal flex-end" alt="Buscador de Empresas">
+                          <div class="col-md-12">
+                            <div class="img_title_img">
+                              <img src="./../assets/images/infocif.png" class="img-responsive infocif" alt="infocif">
+                              <h1 class="text-center fs20">
+                                <strong class="title-lg">
+                                  Ficha Resumen de la Búsqueda
+                                </strong>
+                              </h1>
+                              <img src="./../assets/images/buscador-logo.png" class="img-responsive buscador-logo" alt="Buscador de Empresas">
+                            </div>
                           </div>
                         </div>
                         <div class="row">
-                          <div class="col-md-6">
+                          <div class="col-md-8">
                             <h4>Estrategia de Búsqueda</h4>
                             <ul class="ul_filtros_aplicados">
                               <li v-for="(item, key) in filtros_aplicados" :key="key">
@@ -175,7 +173,7 @@
                               </li>
                             </ul>
                           </div>
-                          <div class="col-md-6 text-right">
+                          <div class="col-md-4 text-right">
                             <h4>Resultado Final de la búsqueda</h4>
                             <p class="f25"><b><span class=""> {{ total | numeral('0,0') }}</span> Empresas</b></p>
                           </div>
@@ -507,12 +505,19 @@ export default {
   ._right {
     float: right;
   }
-  img.logo-head-modal{
-    width: 100%;
-    height: 60px;
-  }
-  img.flex-end {
+
+  .img_title_img {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
+    align-items: center;
+    img.infocif {
+      width: 140px;
+      margin-right: 10px;
+    }
+    img.buscador-logo {
+      width: 120px;
+      margin-left: 10px;
+    }
   }
+
 </style>
