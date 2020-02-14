@@ -399,7 +399,7 @@ export default {
         this.$store.dispatch('search/archivoExcel', { filters: data, nombreArchivo: this.nombreArchivo }).then((response) => {
           if(response){
             const link = document.createElement('a')
-            link.href = `http://dev.infocif.info/api/buscador/archivos/${response}`
+            link.href = `http://api.infocif.es/api/buscador/archivos/${response}`
             link.setAttribute('download', 'resultados.xlsx')
             document.body.appendChild(link)
             link.click()
