@@ -238,6 +238,7 @@
 <script>
 // @ is an alias to /src
 
+import axios from 'axios'
 import { mapGetters } from 'vuex'
 import { orderFilters, inArrayObject, countByProperty } from './../utils'
 import swal from 'sweetalert2'
@@ -399,7 +400,7 @@ export default {
         this.$store.dispatch('search/archivoExcel', { filters: data, nombreArchivo: this.nombreArchivo }).then((response) => {
           if(response){
             const link = document.createElement('a')
-            link.href = `http://dev.infocif.info/api/buscador/archivos/${response}`
+            link.href = `${axios.defaults.baseURL}/buscador/archivos/${response}`
             link.setAttribute('download', 'resultados.xlsx')
             document.body.appendChild(link)
             link.click()
