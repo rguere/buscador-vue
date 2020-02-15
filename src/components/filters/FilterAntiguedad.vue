@@ -87,40 +87,42 @@
                     <div class="panel-body">
                       <div class="row">
                         <div class="col-md-6">
-                          <button
-                            type="button" 
-                            class="btn btn-info pull-right"
-                            @click="applyAhnos"
-                            :disabled="$v.$invalid || loadingAhnos">
-                              BUSCAR <i :class="(loadingAhnos)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
-                          </button>
-                          <div class="conten-epa">
-                            <div class="form-group">
-                              <label class="control-label">Insertar la antigüedad de la(s) empresa(s) en número de años</label>
+                          <form v-on:submit.prevent="applyAhnos">
+                            <button
+                              type="submit" 
+                              class="btn btn-info pull-right"
+                              @click="applyAhnos"
+                              :disabled="$v.$invalid || loadingAhnos">
+                                BUSCAR <i :class="(loadingAhnos)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
+                            </button>
+                            <div class="conten-epa">
+                              <div class="form-group">
+                                <label class="control-label">Insertar la antigüedad de la(s) empresa(s) en número de años</label>
+                              </div>
+                              <div class="form-group anti-inputs" :class="{ 'has-error has-feedback': $v.ahnos_from.$error }">
+                                <label class="control-label" for="ahnos_from">De (incluido)</label>
+                                <input type="text"
+                                  v-model.trim="$v.ahnos_from.$model"
+                                  required
+                                  class="form-control"
+                                  name="ahnos_from"
+                                  id="ahnos_from"
+                                  placeholder="(Introducir, en formato número, los años de antigüedad)">
+                                <label>años de antigüedad</label>
+                              </div>
+                              <div class="form-group anti-inputs" :class="{ 'has-error has-feedback': $v.ahnos_to.$error }">
+                                <label class="control-label" for="ahnos_to">Hasta (incluido)</label>
+                                <input type="text"
+                                  v-model.trim="$v.ahnos_to.$model"
+                                  required
+                                  class="form-control"
+                                  name="ahnos_to"
+                                  id="ahnos_to"
+                                  placeholder="(Introducir, en formato número, los años de antigüedad)">
+                                <label>años de antigüedad</label>
+                              </div>
                             </div>
-                            <div class="form-group anti-inputs" :class="{ 'has-error has-feedback': $v.ahnos_from.$error }">
-                              <label class="control-label" for="ahnos_from">De (incluido)</label>
-                              <input type="text"
-                                v-model.trim="$v.ahnos_from.$model"
-                                required
-                                class="form-control"
-                                name="ahnos_from"
-                                id="ahnos_from"
-                                placeholder="(Introducir, en formato número, los años de antigüedad)">
-                              <label>años de antigüedad</label>
-                            </div>
-                            <div class="form-group anti-inputs" :class="{ 'has-error has-feedback': $v.ahnos_to.$error }">
-                              <label class="control-label" for="ahnos_to">Hasta (incluido)</label>
-                              <input type="text"
-                                v-model.trim="$v.ahnos_to.$model"
-                                required
-                                class="form-control"
-                                name="ahnos_to"
-                                id="ahnos_to"
-                                placeholder="(Introducir, en formato número, los años de antigüedad)">
-                              <label>años de antigüedad</label>
-                            </div>
-                          </div>
+                          </form>
                         </div>
                         <div class="col-md-6">
                           <div class="panel panel-warning">
@@ -241,7 +243,7 @@
 <script>
   import { mapGetters } from 'vuex'
   import swal from 'sweetalert2'
-  import { required, maxLength } from 'vuelidate/lib/validators'
+  import { required, maxLength, numeric } from 'vuelidate/lib/validators'
   import { inArrayObjectTreeselect, howAnimation, beforeOrderFilters } from './../../utils'
   import { persistentData } from './../../mixins/persistent-data'
   export default {
@@ -303,11 +305,13 @@
       return {
         ahnos_from: {
           required,
-          between: maxLength(3)
+          between: maxLength(3),
+          numeric
         },
         ahnos_to: {
           required,
-          between: maxLength(3)
+          between: maxLength(3),
+          numeric
         }
       }
     },
@@ -465,7 +469,11 @@
           this.hideModal()
           this.loadingAhnos = true
           this.form.antiguedad = []
-          this.form.antiguedad.push(`ahnos:${this.ahnos_to}|${this.ahnos_from}`)
+          this.ahnos_to = Number.parseInt(this.ahnos_to)
+          this.ahnos_from = Number.parseInt(this.ahnos_from)
+          let major = (this.ahnos_to > this.ahnos_from)? this.ahnos_to: this.ahnos_from
+          let smaller = (this.ahnos_to > this.ahnos_from)? this.ahnos_from: this.ahnos_to
+          this.form.antiguedad.push(`ahnos:${smaller}|${major}`)
           let beforeForm = beforeOrderFilters(this.filters, this.applied_filters, this.form, this.title)
           this.$store.dispatch('search/filtrar', beforeForm).then((response) => {
             this.updateNumberSelectedCompanies(response.cantidad)
@@ -519,6 +527,9 @@
         this.areApplied = false
         this.reapply = false
         this.incluir_null = false
+        this.ahnos_from = ''
+        this.ahnos_to = ''
+        this.$v.$reset()
       },
       emptyFilter () {
         this.form.antiguedad = []
@@ -531,6 +542,9 @@
         this.areApplied = false
         this.reapply = false
         this.incluir_null = false
+        this.ahnos_from = ''
+        this.ahnos_to = ''
+        this.$v.$reset()
       },
       handleChange () { //province, event
         this.reapply = (this.areApplied)? true: this.areApplied

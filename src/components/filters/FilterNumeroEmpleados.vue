@@ -192,7 +192,7 @@
 <script>
   import { mapGetters } from 'vuex'
   import swal from 'sweetalert2'
-  import { required, maxLength } from 'vuelidate/lib/validators'
+  import { required, maxLength, numeric } from 'vuelidate/lib/validators'
   import { inArrayObjectTreeselect, howAnimation, beforeOrderFilters } from './../../utils'
   import { persistentData } from './../../mixins/persistent-data'
   export default {
@@ -247,11 +247,13 @@
       return {
         employees_from: {
           required,
-          between: maxLength(6)
+          between: maxLength(6),
+          numeric
         },
         employees_to: {
           required,
-          between: maxLength(6)
+          between: maxLength(6),
+          numeric
         }
       }
     },
@@ -419,6 +421,9 @@
         this.areApplied = false
         this.reapply = false
         this.incluir_null = false
+        this.employees_from = ''
+        this.employees_to = ''
+        this.$v.$reset()
       },
       emptyFilter () {
         this.form.empleados = []
@@ -430,6 +435,9 @@
         this.areApplied = false
         this.reapply = false
         this.incluir_null = false
+        this.employees_from = ''
+        this.employees_to = ''
+        this.$v.$reset()
       },
       handleChange () { //province, event
         this.reapply = (this.areApplied)? true: this.areApplied
