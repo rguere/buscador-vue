@@ -1,11 +1,11 @@
 <template>
-	<div class="home" id="page-wrapper">
+  <div class="home" id="page-wrapper">
     <banner-top banner-title="Buscador de Empresas" banner-subtitle="Visualizar resultados"></banner-top>
-		<div class="container">
+    <div class="container">
       <loading-full-page></loading-full-page>
-			<div class="banner">
-				<div class="panel panel-default cd min-height-200">
-					<div class="panel-body">
+      <div class="banner">
+        <div class="panel panel-default cd min-height-200">
+          <div class="panel-body">
             <div class="m-b-10">
               <!-- botones -->
             </div>
@@ -228,11 +228,11 @@
                 </el-pagination>
               </div>
             </div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -245,7 +245,7 @@ import swal from 'sweetalert2'
 import { required, email } from 'vuelidate/lib/validators'
 
 export default {
-	/*middleware: 'guest',*/
+  /*middleware: 'guest',*/
   name: 'visualizar-resultados',
   layout: 'basic',
   metaInfo () {
@@ -488,7 +488,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-	.banner { padding: 15px 0 0 0; }
+  .banner { padding: 15px 0 0 0; }
   .flex_div {
     display: flex;
     margin-left: 3px;
