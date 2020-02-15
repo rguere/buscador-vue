@@ -2,10 +2,12 @@
 import Cookies from 'js-cookie'
 import * as types from '../mutation-types'
 
+let dataJson = JSON.parse(localStorage.getItem("dataJson"))
+
 // state
 export const state = {
-  user: null,
-  token: Cookies.get('token')
+  user: (dataJson && dataJson.user && dataJson.user.length != 0) ? dataJson.user[0]: null,
+  token: (dataJson && dataJson.token)? dataJson.token: Cookies.get('token')
 }
 
 // getters
