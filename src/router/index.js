@@ -30,7 +30,7 @@ export default router
 function createRouter () {
   const router = new VueRouter({
     scrollBehavior,
-    mode: 'hash', //history
+    mode: 'history', //hash
     base: process.env.BASE_URL,
     routes
   })
