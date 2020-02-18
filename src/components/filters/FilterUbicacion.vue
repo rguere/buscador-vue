@@ -393,6 +393,7 @@
         this.form.Provincias = []
         this.form.Localidades = []
         this.selected_provinces_localidad = []
+        this.valueSelect = []
         this.selected_provinces_localidad_string = ''
         if (this.applied_filters.length > 1) {
           let beforeForm = beforeOrderFilters(this.filters, this.applied_filters, this.form, this.title)
@@ -417,6 +418,7 @@
         this.form.Provincias = []
         this.form.Localidades = []
         this.selected_provinces_localidad = []
+        this.valueSelect = []
         this.selected_provinces_localidad_string = ''
         this.updateNumberSelectedCompanies(0)
         this.selected_by_location = 0

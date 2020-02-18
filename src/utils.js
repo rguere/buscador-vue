@@ -145,6 +145,12 @@ export const beforeOrderFilters = (filters, applied_filters, form, title) => {
                 if(comunidades.length !== 0) {
                     arr[item.key] = comunidades
                 }
+                if (before_form.Localidades && before_form.Localidades.length !== 0){
+                    arr['Localidades'] = before_form.Localidades
+                }
+                if (before_form.Provincias && before_form.Provincias.length !== 0) {
+                    arr['Provincias'] = before_form.Provincias
+                }
             }else {
                 if(before_form[item.key].length !== 0) {
                     arr[item.key] = before_form[item.key]
