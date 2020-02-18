@@ -291,6 +291,7 @@ export default {
       localDatas: 'localDatas/localDatas',
       filters: 'filters/filters',
       cantidades: 'filters/cantidades',
+      user: 'auth/user',
     }),
     orderFilters: function () {
       let order = orderFilters(this.filters, this.applied_filters, this.form)
@@ -382,6 +383,9 @@ export default {
       }
     }
     this.visualizarResultados()
+    if (this.user && this.user.email) {
+      this.correo = this.user.email
+    }
   },
   methods: {
     visualizarResultados (){
