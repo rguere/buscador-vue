@@ -29,13 +29,14 @@
                 <div class="pull-right">
                   <button
                     @click="dialogCorreoVisible = true"
-                    :disabled="loadingCorreo"
+                    :disabled="loadingCorreo || !puedeEnviarCorreo"
                     class="btn btn-info">
                     <i :class="(loadingCorreo)?'fa  fa-spinner fa-spin':'fa  fa-envelope'"></i>
                     Enviar al correo
                   </button>
                   <el-dialog
                     title="Enviar al correo"
+                    v-if="puedeEnviarCorreo"
                     :visible.sync="dialogCorreoVisible"
                     width="30%">
                       <el-alert
@@ -77,12 +78,13 @@
                   </el-dialog>
                   <button
                     @click="dialogCorreoVisible2  = true"
-                    :disabled="loadingExcel"
+                    :disabled="loadingExcel || !puedeDescargar"
                     class="btn btn-success m-l-5">
                     <i :class="(loadingExcel)?'fa  fa-spinner fa-spin':'fa  fa-file-excel-o'"></i>
                     Descargar en excel
                   </button>
                   <el-dialog
+                    v-if="puedeDescargar"
                     title="Ingrese el nombre del archivo para iniciar la descarga"
                     :visible.sync="dialogCorreoVisible2"
                     width="30%">
@@ -270,7 +272,9 @@ export default {
         empresas: []
       },
       filtros_aplicados: [],
-      total: 0
+      total: 0,
+      puedeDescargar: false,
+      puedeEnviarCorreo: false,
     }),
   validations() {
     return {
@@ -385,6 +389,8 @@ export default {
     this.visualizarResultados()
     if (this.user && this.user.email) {
       this.correo = this.user.email
+      this.puedeDescargar = true
+      this.puedeEnviarCorreo = true
     }
   },
   methods: {
