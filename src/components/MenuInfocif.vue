@@ -52,7 +52,7 @@
               <span class="hidden-xs hidden-sm">Iniciar sesión</span>
             </a>
 
-            <a v-if="this.user && this.user.username" class="hidden-xs hidden-sm">
+            <a v-if="this.user && this.user.username" href="http://dev.infocif.info/gestion/micartera.asp" class="hidden-xs hidden-sm">
               <span class="glyphicon glyphicon-user"></span>
               <span class="hidden-xs hidden-sm">{{ user.username }}</span>
             </a>
