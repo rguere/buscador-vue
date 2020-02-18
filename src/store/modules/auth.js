@@ -6,7 +6,10 @@ let dataJson = JSON.parse(localStorage.getItem("dataJson"))
 
 // state
 export const state = {
-  user: (dataJson && dataJson.user && dataJson.user.length != 0) ? dataJson.user[0]: null,
+  user: (dataJson 
+    && dataJson.user
+    && dataJson.user.length != 0
+    && dataJson.user[0].username.length != 0) ? dataJson.user[0]: null,
   token: (dataJson && dataJson.token)? dataJson.token: Cookies.get('token')
 }
 
@@ -53,7 +56,7 @@ export const actions = {
 
   async fetchUser ({ commit }) {
     try {
-      const data = {email: 'test@example.app', username: 'test'} //await axios.get('/api/user')
+      const data = {email: '', username: ''} //await axios.get('/api/user')
 
       commit(types.FETCH_USER_SUCCESS, { user: data })
     } catch (e) {

@@ -47,9 +47,14 @@
           </div>
           <div class="sb-toggle login-header navbar-right" style="float: right">
 
-            <a class="hidden-xs hidden-sm" href="http://www.infocif.es/gestion/gestion-acceso.asp">
+            <a v-if="!this.user" class="hidden-xs hidden-sm" href="http://www.infocif.es/gestion/gestion-acceso.asp">
               <span class="glyphicon glyphicon-user"></span>
               <span class="hidden-xs hidden-sm">Iniciar sesión</span>
+            </a>
+
+            <a v-if="this.user && this.user.username" href="http://dev.infocif.info/gestion/micartera.asp" class="hidden-xs hidden-sm">
+              <span class="glyphicon glyphicon-user"></span>
+              <span class="hidden-xs hidden-sm">{{ user.username }}</span>
             </a>
 
           </div>
@@ -153,7 +158,7 @@
   export default {
     name: 'menu-infocif',
     computed: mapGetters({
-      user: 'auth/user'
+      user: 'auth/user',
     }),
     mounted() {
     },
