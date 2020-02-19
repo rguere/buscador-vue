@@ -194,7 +194,7 @@
                   <el-table-column
                     prop="RazonSocial"
                     label="Razón social"
-                    width="250">
+                    width="360">
                   </el-table-column>
                   <el-table-column
                     prop="Provincia"
@@ -207,27 +207,27 @@
                   <el-table-column
                     prop="CIF"
                     label="NIF"
-                    width="120">
+                    width="93">
                   </el-table-column>
                   <el-table-column
                     prop="Codigo_Postal"
                     label="Código Postal"
-                    width="105">
+                    width="95">
                   </el-table-column>
                   <el-table-column
                     prop="FechaConstitucionOrigen"
                     label="Fecha constitución"
-                    width="130">
+                    width="121">
                   </el-table-column>
                   <el-table-column
                     prop="anios_empresa"
-                    label="Años empresa"
-                    width="105">
+                    label="Antigüedad (en años)"
+                    width="135">
                   </el-table-column>
                   <el-table-column
                     :prop="('UltimaCuentaAnual' && 'UltimaCuentaAnual.SumTotalEmpleados')? 'UltimaCuentaAnual.SumTotalEmpleados': ''"
                     label="Número empleados"
-                    width="132">
+                    width="123">
                   </el-table-column>
                 </el-table>
                 <el-pagination
