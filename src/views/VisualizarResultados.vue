@@ -193,7 +193,8 @@
                   style="width: 100%">
                   <el-table-column
                     prop="RazonSocial"
-                    label="Razón social">
+                    label="Razón social"
+                    width="250">
                   </el-table-column>
                   <el-table-column
                     prop="Provincia"
@@ -205,19 +206,28 @@
                   </el-table-column>
                   <el-table-column
                     prop="CIF"
-                    label="NIF">
+                    label="NIF"
+                    width="120">
                   </el-table-column>
                   <el-table-column
                     prop="Codigo_Postal"
-                    label="Código Postal">
+                    label="Código Postal"
+                    width="105">
                   </el-table-column>
                   <el-table-column
                     prop="FechaConstitucionOrigen"
-                    label="Fecha de constitución">
+                    label="Fecha constitución"
+                    width="130">
+                  </el-table-column>
+                  <el-table-column
+                    prop="anios_empresa"
+                    label="Años empresa"
+                    width="105">
                   </el-table-column>
                   <el-table-column
                     :prop="('UltimaCuentaAnual' && 'UltimaCuentaAnual.SumTotalEmpleados')? 'UltimaCuentaAnual.SumTotalEmpleados': ''"
-                    label="Número de empleados">
+                    label="Número empleados"
+                    width="132">
                   </el-table-column>
                 </el-table>
                 <el-pagination
@@ -239,7 +249,7 @@
 
 <script>
 // @ is an alias to /src
-
+import moment from 'moment'
 import axios from 'axios'
 import { mapGetters } from 'vuex'
 import { orderFilters, inArrayObject, countByProperty } from './../utils'
@@ -395,11 +405,22 @@ export default {
   },
   methods: {
     visualizarResultados (){
+      let hoy = moment()
       let size = this.size
       let page = this.currentPage - 1
       let filters = this.formatearData()
       this.$store.dispatch('search/visualizarResultados', {filters, page, size}).then((response) => {
-        this.results = response
+        if(response && response.empresas) {
+          this.results.empresas = response.empresas.map(item => {
+            if(item.FechaConstitucion){
+              let FechaConstitucion = moment(item.FechaConstitucion);
+              item.anios_empresa = hoy.diff(FechaConstitucion, "years") + ' años';
+            }
+            return item
+          })
+          this.results.cantidad = response.cantidad
+          this.results.total = response.total
+        }
       }).catch(() => {
       })
     },
