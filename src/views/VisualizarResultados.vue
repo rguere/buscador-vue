@@ -29,85 +29,111 @@
                 <div class="pull-right">
                   <button
                     @click="dialogCorreoVisible = true"
-                    :disabled="loadingCorreo || !puedeEnviarCorreo"
+                    :disabled="loadingCorreo"
                     class="btn btn-info">
                     <i :class="(loadingCorreo)?'fa  fa-spinner fa-spin':'fa  fa-envelope'"></i>
                     Enviar al correo
                   </button>
                   <el-dialog
                     title="Enviar al correo"
-                    v-if="puedeEnviarCorreo"
                     :visible.sync="dialogCorreoVisible"
                     width="30%">
-                      <el-alert
-                        title="Ingrese el correo al que se enviaran los resultados, esto es a manera de prueba hasta que tengamos la información del usuario autenticado."
-                        type="info"
-                        center
-                        show-icon>
-                      </el-alert>
-                      <br>
-                      <div class="form-group anti-inputs" :class="{ 'has-error has-feedback': $v.correo.$error }">
-                        <input 
-                          type="email"
-                          class="form-control"
-                          placeholder="Ingresa un correo"
-                          v-model.trim="$v.correo.$model"
-                          ref="correo"
-                          required>
+                      <div v-if="puedeEnviarCorreo">
+                        <el-alert
+                          title="Ingrese el correo al que se enviaran los resultados, esto es a manera de prueba hasta que tengamos la información del usuario autenticado."
+                          type="info"
+                          center
+                          show-icon>
+                        </el-alert>
+                        <br>
+                        <div class="form-group anti-inputs" :class="{ 'has-error has-feedback': $v.correo.$error }">
+                          <input 
+                            type="email"
+                            class="form-control"
+                            placeholder="Ingresa un correo"
+                            v-model.trim="$v.correo.$model"
+                            ref="correo"
+                            required>
+                        </div>
+                        <div class="form-group anti-inputs" :class="{ 'has-error has-feedback': $v.nombreArchivo.$error }">
+                          <input 
+                            type="text"
+                            class="form-control"
+                            placeholder="Nombre de archivo"
+                            v-model.trim="$v.nombreArchivo.$model"
+                            ref="nombreArchivoEmail"
+                            required>
+                        </div>
+                        <span slot="footer" class="dialog-footer">
+                          <button @click="dialogCorreoVisible = false"
+                            class="btn btn-danger">Cerrar</button>
+                          <button
+                            @click="enviarResultadosCorreo"
+                            :disabled="loadingCorreo"
+                            class="btn btn-info m-l-5">
+                            <i :class="(loadingCorreo)?'fa  fa-spinner fa-spin':'fa  fa-envelope'"></i>
+                            Enviar al correo
+                          </button>
+                        </span>
                       </div>
-                      <div class="form-group anti-inputs" :class="{ 'has-error has-feedback': $v.nombreArchivo.$error }">
-                        <input 
-                          type="text"
-                          class="form-control"
-                          placeholder="Nombre de archivo"
-                          v-model.trim="$v.nombreArchivo.$model"
-                          ref="nombreArchivoEmail"
-                          required>
+                      <div v-if="!puedeEnviarCorreo">
+                        <div class="row">
+                          <div class="col-md-12">
+                            <p style="padding: 9px">
+                              Para poder disfrutar de esta funcionalidad del Buscador de Empresas de Infocif es necesario registrarse. Regístrese en Infocif, de manera rápida y sencilla, en el siguiente enlace:
+                              <a target="_blank" href="http://www.infocif.es/gestion/gestion-registro.asp">
+                                http://www.infocif.es/gestion/gestion-registro.asp
+                              </a>
+                            </p>
+                          </div>
+                        </div>
                       </div>
-                    <span slot="footer" class="dialog-footer">
-                      <button @click="dialogCorreoVisible = false"
-                        class="btn btn-danger">Cerrar</button>
-                      <button
-                        @click="enviarResultadosCorreo"
-                        :disabled="loadingCorreo"
-                        class="btn btn-info m-l-5">
-                        <i :class="(loadingCorreo)?'fa  fa-spinner fa-spin':'fa  fa-envelope'"></i>
-                        Enviar al correo
-                      </button>
-                    </span>
                   </el-dialog>
                   <button
                     @click="dialogCorreoVisible2  = true"
-                    :disabled="loadingExcel || !puedeDescargar"
+                    :disabled="loadingExcel"
                     class="btn btn-success m-l-5">
                     <i :class="(loadingExcel)?'fa  fa-spinner fa-spin':'fa  fa-file-excel-o'"></i>
                     Descargar en excel
                   </button>
                   <el-dialog
-                    v-if="puedeDescargar"
                     title="Ingrese el nombre del archivo para iniciar la descarga"
                     :visible.sync="dialogCorreoVisible2"
                     width="30%">
-                      <div class="form-group anti-inputs" :class="{ 'has-error has-feedback': $v.nombreArchivo.$error }">
-                        <input 
-                          type="text"
-                          class="form-control"
-                          placeholder="Nombre de archivo"
-                          v-model.trim="$v.nombreArchivo.$model"
-                          ref="nombreArchivoEmail"
-                          required>
+                      <div v-if="puedeDescargar">
+                        <div class="form-group anti-inputs" :class="{ 'has-error has-feedback': $v.nombreArchivo.$error }">
+                          <input 
+                            type="text"
+                            class="form-control"
+                            placeholder="Nombre de archivo"
+                            v-model.trim="$v.nombreArchivo.$model"
+                            ref="nombreArchivoEmail"
+                            required>
+                        </div>
+                        <span slot="footer" class="dialog-footer">
+                          <button @click="dialogCorreoVisible2 = false"
+                            class="btn btn-danger">Cerrar</button>
+                          <button
+                            @click="descargarExcel"
+                            :disabled="loadingExcel"
+                            class="btn btn-success m-l-5">
+                            <i :class="(loadingExcel)?'fa  fa-spinner fa-spin':'fa  fa-file-excel-o'"></i>
+                            Iniciar la descarga
+                          </button>
+                        </span>
                       </div>
-                    <span slot="footer" class="dialog-footer">
-                      <button @click="dialogCorreoVisible2 = false"
-                        class="btn btn-danger">Cerrar</button>
-                      <button
-                        @click="descargarExcel"
-                        :disabled="loadingExcel"
-                        class="btn btn-success m-l-5">
-                        <i :class="(loadingExcel)?'fa  fa-spinner fa-spin':'fa  fa-file-excel-o'"></i>
-                        Iniciar la descarga
-                      </button>
-                    </span>
+                      <div v-if="!puedeDescargar">
+                        <div class="row">
+                          <div class="col-md-12">
+                            <p style="padding: 9px">
+                              Para poder disfrutar de esta funcionalidad del Buscador de Empresas de Infocif es necesario registrarse. Regístrese en Infocif, de manera rápida y sencilla, en el siguiente enlace:
+                              <a target="_blank" href="http://www.infocif.es/gestion/gestion-registro.asp">
+                                http://www.infocif.es/gestion/gestion-registro.asp
+                              </a>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
                   </el-dialog>
                 </div>
               </div>
