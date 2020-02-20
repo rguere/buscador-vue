@@ -16,10 +16,29 @@
                   class="btn btn-warning">
                   <i class="fa fa-arrow-left"></i> Vover
                 </router-link>
-                <button class="btn btn-primary m-l-5">
+                <button class="btn btn-primary m-l-5"
+                  @click="dialogCorreoVisible3  = true">
                   <i class="fa fa-print"></i>
                   Imprimir
                 </button>
+                <el-dialog
+                  title="Imprimir archivo"
+                  :visible.sync="dialogCorreoVisible3"
+                  width="50%">
+                    <div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <img src="./../assets/images/en_proceso.jpeg" style="width: 100%;" alt="">
+                          <!-- <p style="padding: 9px">
+                            Para poder disfrutar de esta funcionalidad del Buscador de Empresas de Infocif es necesario registrarse. Regístrese en Infocif, de manera rápida y sencilla, en el siguiente enlace:
+                            <a target="_blank" href="http://www.infocif.es/gestion/gestion-registro.asp">
+                              http://www.infocif.es/gestion/gestion-registro.asp
+                            </a>
+                          </p> -->
+                        </div>
+                      </div>
+                    </div>
+                </el-dialog>
                 <button @click="showModal" class="btn btn-info m-l-5">
                   <i class="fa fa-table"></i>
                   Ficha Resumen
@@ -37,7 +56,7 @@
                   <el-dialog
                     title="Enviar al correo"
                     :visible.sync="dialogCorreoVisible"
-                    width="30%">
+                    width="50%">
                       <div v-if="puedeEnviarCorreo">
                         <el-alert
                           title="Ingrese el correo al que se enviaran los resultados, esto es a manera de prueba hasta que tengamos la información del usuario autenticado."
@@ -79,12 +98,13 @@
                       <div v-if="!puedeEnviarCorreo">
                         <div class="row">
                           <div class="col-md-12">
-                            <p style="padding: 9px">
+                            <img src="./../assets/images/en_proceso.jpeg" style="width: 100%;" alt="">
+                            <!-- <p style="padding: 9px">
                               Para poder disfrutar de esta funcionalidad del Buscador de Empresas de Infocif es necesario registrarse. Regístrese en Infocif, de manera rápida y sencilla, en el siguiente enlace:
                               <a target="_blank" href="http://www.infocif.es/gestion/gestion-registro.asp">
                                 http://www.infocif.es/gestion/gestion-registro.asp
                               </a>
-                            </p>
+                            </p> -->
                           </div>
                         </div>
                       </div>
@@ -99,7 +119,7 @@
                   <el-dialog
                     title="Ingrese el nombre del archivo para iniciar la descarga"
                     :visible.sync="dialogCorreoVisible2"
-                    width="30%">
+                    width="50%">
                       <div v-if="puedeDescargar">
                         <div class="form-group anti-inputs" :class="{ 'has-error has-feedback': $v.nombreArchivo.$error }">
                           <input 
@@ -125,12 +145,13 @@
                       <div v-if="!puedeDescargar">
                         <div class="row">
                           <div class="col-md-12">
-                            <p style="padding: 9px">
+                            <img src="./../assets/images/en_proceso.jpeg" style="width: 100%;" alt="">
+                            <!-- <p style="padding: 9px">
                               Para poder disfrutar de esta funcionalidad del Buscador de Empresas de Infocif es necesario registrarse. Regístrese en Infocif, de manera rápida y sencilla, en el siguiente enlace:
                               <a target="_blank" href="http://www.infocif.es/gestion/gestion-registro.asp">
                                 http://www.infocif.es/gestion/gestion-registro.asp
                               </a>
-                            </p>
+                            </p> -->
                           </div>
                         </div>
                       </div>
@@ -288,13 +309,14 @@ export default {
   layout: 'basic',
   metaInfo () {
     return { 
-      title: 'Visualizar resultados',
+      title: 'Buscador - Visualizar resultados',
       titleTemplate: `%s | Información GRATIS de Empresas Españolas` 
     }
   },
   data: () => ({
       dialogCorreoVisible: false,
       dialogCorreoVisible2: false,
+      dialogCorreoVisible3: false,
       modalVisible: false,
       loadingExcel: false,
       loadingCorreo: false,
@@ -427,6 +449,11 @@ export default {
       this.correo = this.user.email
       this.puedeDescargar = true
       this.puedeEnviarCorreo = true
+    }
+    if(window.ga){
+      window.ga('set', 'page', '/buscador/resultados');
+      window.ga('set', 'title', 'Buscador - Visualizar resultados');
+      window.ga('send', 'pageview');
     }
   },
   methods: {

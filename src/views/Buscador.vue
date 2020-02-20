@@ -19,7 +19,7 @@ export default {
   layout: 'basic',
   metaInfo () {
     return { 
-      title: 'Buscador de empresas',
+      title: 'Buscador - Filtros',
       titleTemplate: `%s | Información GRATIS de Empresas Españolas` 
     }
   },
@@ -30,6 +30,11 @@ export default {
   }),
   mounted() {
     this.fetchSearch()
+    if(window.ga){
+      window.ga('set', 'page', '/buscador');
+      window.ga('set', 'title', 'Buscador - Filtros');
+      window.ga('send', 'pageview');
+    }
   },
   created () {
     this.$store.dispatch('layout/setLayout', 'default-layout')
