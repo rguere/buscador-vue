@@ -441,7 +441,7 @@
           }).catch(() => {
             this.loadingFile = false
             this.list_nif = { validos: [], invalidos: [] }
-            this.this.selected_list_nif = []
+            this.selected_list_nif = []
           })
         }
         return false
