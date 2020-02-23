@@ -14,6 +14,11 @@
 @import 'transitions';
 /* @import 'estilosres.css'; */
 
+#filter-buttons {
+  background-color: #fff!important;
+  transition: all 0.5s;
+}
+
 .el-pagination {
   margin: 40px 0;
   .btn-prev, .btn-next, .el-pager, .el-pagination__jump {
@@ -314,60 +319,4 @@ span.num-fil { color: #2196f3; font-weight: bold; }
   }
 }
 
-@media (max-width: 950px) {
-
-  .grid-5-columns-1fr {
-    grid-template-columns: repeat(4, 1fr);
-  }
-
-  .grid-4-columns-1fr {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .grid-3-columns-1fr {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .grid-2-columns-1fr {
-    grid-template-columns: 100%;
-  }
-
-}
-
-@media (max-width: 750px) {
-  .grid-2-columns-1fr, .grid-3-columns-1fr, .grid-4-columns-1fr, .grid-5-columns-1fr {
-    grid-template-columns: 50% 50%;
-  }
-
-  .conten-flex-70-30>div:nth-child(odd), .conten-flex-70-30>div:nth-child(even) {
-    width: 100%;
-  }
-
-  .conten-flex-50-50>div:nth-child(odd), .conten-flex-50-50>div:nth-child(even) {
-    width: 100%;
-  }
-}
-
-@media (max-width: 550px) {
-  .grid-2-columns-1fr, .grid-3-columns-1fr, .grid-4-columns-1fr, .grid-5-columns-1fr {
-    grid-template-columns: 100%;
-  }
-}
-
-@media (max-width: 350px) {  
-}
-
-
-@media (min-width: 992px){
-  #bv-modal-filter-ubicacion, #bv-modal-filter-codigo-postal {
-    .modal-lg, .modal-xl {
-        width: 90%;
-    }
-  }
-}
-
-@media (min-width: 1200px) {
-  .container {
-    width: 1330px;
-  }
-}
+@import 'media_queries.scss';

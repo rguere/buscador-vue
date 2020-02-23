@@ -140,11 +140,12 @@
 		left: 0;
 		top: 96px;
 		width: 100%;
-		padding: 5px;
+		padding-top: 5px;
 		z-index: 1;
 		background: #ffffff;
 		-webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
 		box-shadow: 0 -2px 11px 0px rgba(0, 0, 0, 0.5);
+		transition: all 1s;
 		
 		.filter-buttons_description {
 			display: none;
