@@ -102,7 +102,7 @@
             </div>
             <div>
               <button
-                  v-if="zip_codes && zip_codes.validos.length !== 0 && !search_edit"
+                  v-if="zip_codes && zip_codes.validos.length !== 0 && !search_edit && !compareWithNewtoApply"
                   :disabled="selected_zip_codes.length === 0 || loadingApply"
                   type="button"
                   class="btn btn-success"

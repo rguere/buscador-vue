@@ -102,7 +102,7 @@
             </div>
             <div>
               <button
-                  v-if="list_nif && list_nif.validos.length !== 0 && !search_edit"
+                  v-if="list_nif && list_nif.validos.length !== 0 && !search_edit && !compareWithNewtoApply"
                   :disabled="selected_list_nif.length === 0 || loadingApply"
                   type="button"
                   class="btn btn-success"

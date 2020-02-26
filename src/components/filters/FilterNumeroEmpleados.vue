@@ -71,8 +71,12 @@
                   </button>
                 </div>
                 <div>
-                  <button type="button" class="btn btn-success" v-if="selected_empleados.length !== 0" @click="apply">Aplicar <i :class="(loadingFrm)?'fa  fa-spinner fa-spin':'fa  fa-send'"></i></button>
-                  <button type="button" class="btn btn-info" v-if="areApplied" @click="confirmClean">Limpiar <i class="fa fa-undo"></i></button>
+                  <button
+                    type="button"
+                    class="btn btn-success"
+                    v-if="(selected_empleados.length !== 0 && !areApplied) || (selected_empleados.length !== 0 && !compareWithNewtoApply)"
+                    @click="apply">Aplicar <i :class="(loadingFrm)?'fa  fa-spinner fa-spin':'fa  fa-send'"></i></button>
+                    <button type="button" class="btn btn-info" v-if="areApplied" @click="confirmClean">Limpiar <i class="fa fa-undo"></i></button>
                 </div>
               </div>
               <div class="row" v-if="search.empleados && search.empleados.length !== 0">
