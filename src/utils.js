@@ -186,13 +186,11 @@ export const sendPageView = (page,title) => {
         window.ga('set','page',`/buscador/${page}`)
         window.ga('set','title',title)
         window.ga('send','pageview')
-        console.log('sendPageView')
     }
 }
 
 export const sendEvent = (cat,name) => {
     if (window.ga) {
         window.ga('send','event',cat,name)
-        console.log('sendEvent')
     }
 }
