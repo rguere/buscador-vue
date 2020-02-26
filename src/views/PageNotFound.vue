@@ -16,16 +16,20 @@
 <script>
 // @ is an alias to /src
 
+import { sendPageView } from './../utils'
+
 export default {
 	/*middleware: 'guest',*/
   metaInfo () {
-    return { 
-      title: 'Page Not Found',
-      titleTemplate: `%s | Información GRATIS de Empresas Españolas` 
+    return {
+			title: 'Buscador - Page Not Found'
     }
   },
   name: 'page-not-found',
   layout: 'basic',
+	mounted() {
+    sendPageView(this.$route.path, 'Buscador - Page Not Found')
+  }
 }
 </script>
 

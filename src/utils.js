@@ -179,3 +179,20 @@ export const countByProperty = (array, property) => {
     }
     return count
 }
+
+
+export const sendPageView = (page,title) => {
+    if (window.ga) {
+        window.ga('set','page',`/buscador/${page}`)
+        window.ga('set','title',title)
+        window.ga('send','pageview')
+        console.log('sendPageView')
+    }
+}
+
+export const sendEvent = (cat,name) => {
+    if (window.ga) {
+        window.ga('send','event',cat,name)
+        console.log('sendEvent')
+    }
+}

@@ -299,7 +299,7 @@
 import moment from 'moment'
 import axios from 'axios'
 import { mapGetters } from 'vuex'
-import { orderFilters, inArrayObject, countByProperty } from './../utils'
+import { orderFilters, inArrayObject, countByProperty, sendPageView } from './../utils'
 import swal from 'sweetalert2'
 import { required, email } from 'vuelidate/lib/validators'
 
@@ -309,8 +309,7 @@ export default {
   layout: 'basic',
   metaInfo () {
     return { 
-      title: 'Buscador - Visualizar resultados',
-      titleTemplate: `%s | Información GRATIS de Empresas Españolas` 
+      title: 'Buscador - Visualizar resultados'
     }
   },
   data: () => ({
@@ -450,11 +449,7 @@ export default {
       this.puedeDescargar = true
       this.puedeEnviarCorreo = true
     }
-    if(window.ga){
-      window.ga('set', 'page', '/buscador/resultados');
-      window.ga('set', 'title', 'Buscador - Visualizar resultados');
-      window.ga('send', 'pageview');
-    }
+    sendPageView('resultados', 'Buscador - Visualizar resultados')
   },
   methods: {
     visualizarResultados (){
