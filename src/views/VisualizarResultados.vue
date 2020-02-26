@@ -472,6 +472,7 @@ export default {
             }else {
               item.SumTotalEmpleados = '-'
             }
+            item.FechaConstitucionOrigen = (item.FechaConstitucionOrigen.length)? item.FechaConstitucionOrigen: '-'
             return item
           })
           this.results.cantidad = response.cantidad
