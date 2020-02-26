@@ -5,7 +5,7 @@
       <div class="col-xs-6 col-sm-3 col-md-3">
 
         <div class="logo">
-          <a href="">
+          <a href="/">
             <img class="bloque fl ml15" src="./../assets/images/infocif-logo-126x28.png" alt="Infocif" width="126" height="28">
           </a>
           <span class="hidden-xs hidden-sm hidden-md slogan">La Red Social de Empresas</span>
@@ -54,7 +54,7 @@
 
             <a v-if="this.user && this.user.username" href="http://dev.infocif.info/gestion/micartera.asp" class="hidden-xs hidden-sm">
               <span class="glyphicon glyphicon-user"></span>
-              <span class="hidden-xs hidden-sm">{{ user.username }}</span>
+              <span class="hidden-xs hidden-sm" style="text-transform: capitalize;">{{ user.username }}</span>
             </a>
 
           </div>

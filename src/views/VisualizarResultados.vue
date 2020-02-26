@@ -272,7 +272,7 @@
                     width="135">
                   </el-table-column>
                   <el-table-column
-                    :prop="('UltimaCuentaAnual' && 'UltimaCuentaAnual.SumTotalEmpleados')? 'UltimaCuentaAnual.SumTotalEmpleados': ''"
+                    prop="SumTotalEmpleados"
                     label="Número empleados"
                     width="123">
                   </el-table-column>
@@ -462,7 +462,15 @@ export default {
           this.results.empresas = response.empresas.map(item => {
             if(item.FechaConstitucion){
               let FechaConstitucion = moment(item.FechaConstitucion);
-              item.anios_empresa = hoy.diff(FechaConstitucion, "years") + ' años';
+              let diff = hoy.diff(FechaConstitucion, "years")
+              item.anios_empresa = (diff !== 0)? `${diff} años`: '-';
+            }else {
+              item.anios_empresa = '-'
+            }
+            if(item.UltimaCuentaAnual && item.UltimaCuentaAnual.SumTotalEmpleados && item.UltimaCuentaAnual.SumTotalEmpleados !== 0) {
+              item.SumTotalEmpleados = item.UltimaCuentaAnual.SumTotalEmpleados
+            }else {
+              item.SumTotalEmpleados = '-'
             }
             return item
           })
