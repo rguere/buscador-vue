@@ -17,9 +17,9 @@
                   <i class="fa fa-arrow-left"></i> Vover
                 </router-link>
                 <button class="btn btn-primary m-l-5"
-                  @click="dialogCorreoVisible3  = true">
+                  @click="printSummary">
                   <i class="fa fa-print"></i>
-                  Imprimir
+                  Imprimir Resumen
                 </button>
                 <el-dialog
                   title="Imprimir archivo"
@@ -191,7 +191,7 @@
                   :destroy-on-close="true"
                   :center="true"
                   top="5vh">
-                    <div class="row">
+                    <div class="row" id="print">
                       <div class="col-md-12">
                         <div class="row">
                           <div class="col-md-12">
@@ -299,7 +299,7 @@
 import moment from 'moment'
 import axios from 'axios'
 import { mapGetters } from 'vuex'
-import { orderFilters, inArrayObject, countByProperty, sendPageView } from './../utils'
+import { orderFilters, inArrayObject, countByProperty, sendPageView } from './../utils' //printElem
 import swal from 'sweetalert2'
 import { required, email } from 'vuelidate/lib/validators'
 
@@ -569,6 +569,17 @@ export default {
     },
     hideModal () {
       this.modalVisible = false
+    },
+    printSummary () {
+      if (this.puedeDescargar) {
+        this.$storage.set("resumen", this.$data);
+        let routeData = this.$router.resolve({ name: 'ficha-resumen'});
+        if(routeData){
+          window.open(routeData.href, '_blank');
+        }
+      }else {
+        this.dialogCorreoVisible3 = true
+      }
     }
   }
 }
