@@ -369,6 +369,7 @@ export default {
     this.$store.dispatch('layout/setLayout', 'default-layout')
   },
   mounted () {
+    sendPageView('resultados', 'Buscador - Visualizar resultados')
     if(!(this.applied_filters && this.applied_filters.length !== 0)){
       swal.fire(
         'Advertencia',
@@ -384,9 +385,6 @@ export default {
             let result = inArrayObject(this.orderFilters, element.title, 'name')
             if(element.title === item && result) {
               if(element.title === "Antigüedad"){
-                // if (element.selected_antiguedad.length === 0){
-
-                // }
                 this.filtros_aplicados.push({
                   title: element.title,
                   quantity: result.quantity,
@@ -449,7 +447,6 @@ export default {
       this.puedeDescargar = true
       this.puedeEnviarCorreo = true
     }
-    sendPageView('resultados', 'Buscador - Visualizar resultados')
   },
   methods: {
     visualizarResultados (){
@@ -467,7 +464,9 @@ export default {
             }else {
               item.anios_empresa = '-'
             }
-            if(item.UltimaCuentaAnual && item.UltimaCuentaAnual.SumTotalEmpleados && item.UltimaCuentaAnual.SumTotalEmpleados !== 0) {
+            if(item.UltimaCuentaAnual && 
+              item.UltimaCuentaAnual.SumTotalEmpleados && 
+              item.UltimaCuentaAnual.SumTotalEmpleados !== 0) {
               item.SumTotalEmpleados = item.UltimaCuentaAnual.SumTotalEmpleados
             }else {
               item.SumTotalEmpleados = '-'
