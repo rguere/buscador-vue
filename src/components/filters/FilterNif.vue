@@ -307,7 +307,7 @@
       validateNif(){
         this.loadingValidar = true  
         let sin_salto = spacesByDashes(this.dataFrm)
-        this.$store.dispatch('search/validateNif', sin_salto).then((response) => {
+        this.$store.dispatch('search/validateNif', sin_salto.toUpperCase()).then((response) => {
           this.list_nif.validos = (response.validos)? response.validos: []
           this.list_nif.invalidos = (response.invalidos)? response.invalidos: []
           this.selected_list_nif = this.list_nif.validos
