@@ -28,13 +28,12 @@
                     <div>
                       <div class="row">
                         <div class="col-md-12">
-                          <img src="./../assets/images/en_proceso.jpeg" style="width: 100%;" alt="">
-                          <!-- <p style="padding: 9px">
+                          <p style="padding: 9px">
                             Para poder disfrutar de esta funcionalidad del Buscador de Empresas de Infocif es necesario registrarse. Regístrese en Infocif, de manera rápida y sencilla, en el siguiente enlace:
                             <a target="_blank" href="http://www.infocif.es/gestion/gestion-registro.asp">
                               http://www.infocif.es/gestion/gestion-registro.asp
                             </a>
-                          </p> -->
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -113,13 +112,12 @@
                       <div v-if="!puedeEnviarCorreo">
                         <div class="row">
                           <div class="col-md-12">
-                            <img src="./../assets/images/en_proceso.jpeg" style="width: 100%;" alt="">
-                            <!-- <p style="padding: 9px">
+                            <p style="padding: 9px">
                               Para poder disfrutar de esta funcionalidad del Buscador de Empresas de Infocif es necesario registrarse. Regístrese en Infocif, de manera rápida y sencilla, en el siguiente enlace:
                               <a target="_blank" href="http://www.infocif.es/gestion/gestion-registro.asp">
                                 http://www.infocif.es/gestion/gestion-registro.asp
                               </a>
-                            </p> -->
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -160,13 +158,12 @@
                       <div v-if="!puedeDescargar">
                         <div class="row">
                           <div class="col-md-12">
-                            <img src="./../assets/images/en_proceso.jpeg" style="width: 100%;" alt="">
-                            <!-- <p style="padding: 9px">
+                            <p style="padding: 9px">
                               Para poder disfrutar de esta funcionalidad del Buscador de Empresas de Infocif es necesario registrarse. Regístrese en Infocif, de manera rápida y sencilla, en el siguiente enlace:
                               <a target="_blank" href="http://www.infocif.es/gestion/gestion-registro.asp">
                                 http://www.infocif.es/gestion/gestion-registro.asp
                               </a>
-                            </p> -->
+                            </p>
                           </div>
                         </div>
                       </div>
