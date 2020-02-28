@@ -29,7 +29,7 @@
                       <div class="row">
                         <div class="col-md-12">
                           <p style="padding: 9px">
-                            Para poder disfrutar de esta funcionalidad del Buscador de Empresas de Infocif es necesario registrarse. Regístrese en Infocif, de manera rápida y sencilla, en el siguiente enlace:
+                            Para poder disfrutar de esta funcionalidad del Buscador de Empresas de Infocif es necesario registrarse. <br> Regístrese en Infocif, de manera rápida y sencilla, en el siguiente enlace: <br>
                             <a target="_blank" href="http://www.infocif.es/gestion/gestion-registro.asp">
                               http://www.infocif.es/gestion/gestion-registro.asp
                             </a>
@@ -72,13 +72,6 @@
                     :visible.sync="dialogCorreoVisible"
                     width="50%">
                       <div v-if="puedeEnviarCorreo">
-                        <el-alert
-                          title="Ingrese el correo al que se enviaran los resultados, esto es a manera de prueba hasta que tengamos la información del usuario autenticado."
-                          type="info"
-                          center
-                          show-icon>
-                        </el-alert>
-                        <br>
                         <div class="form-group anti-inputs" :class="{ 'has-error has-feedback': $v.correo.$error }">
                           <input 
                             type="email"
@@ -113,7 +106,7 @@
                         <div class="row">
                           <div class="col-md-12">
                             <p style="padding: 9px">
-                              Para poder disfrutar de esta funcionalidad del Buscador de Empresas de Infocif es necesario registrarse. Regístrese en Infocif, de manera rápida y sencilla, en el siguiente enlace:
+                              Para poder disfrutar de esta funcionalidad del Buscador de Empresas de Infocif es necesario registrarse. <br> Regístrese en Infocif, de manera rápida y sencilla, en el siguiente enlace: <br>
                               <a target="_blank" href="http://www.infocif.es/gestion/gestion-registro.asp">
                                 http://www.infocif.es/gestion/gestion-registro.asp
                               </a>
@@ -159,7 +152,7 @@
                         <div class="row">
                           <div class="col-md-12">
                             <p style="padding: 9px">
-                              Para poder disfrutar de esta funcionalidad del Buscador de Empresas de Infocif es necesario registrarse. Regístrese en Infocif, de manera rápida y sencilla, en el siguiente enlace:
+                              Para poder disfrutar de esta funcionalidad del Buscador de Empresas de Infocif es necesario registrarse. <br> Regístrese en Infocif, de manera rápida y sencilla, en el siguiente enlace: <br>
                               <a target="_blank" href="http://www.infocif.es/gestion/gestion-registro.asp">
                                 http://www.infocif.es/gestion/gestion-registro.asp
                               </a>
@@ -492,7 +485,11 @@ export default {
         this.$store.dispatch('search/enviarResultadosCorreo', { filters, email: this.correo, nombreArchivo: this.nombreArchivo }).then(() => {
           this.loadingCorreo = false
           this.dialogCorreoVisible = false
-          this.correo = ''
+          if (this.user && this.user.email) {
+            this.correo = this.user.email
+            this.puedeDescargar = true
+            this.puedeEnviarCorreo = true
+          }
           this.nombreArchivo = ''
           swal.fire(
             'Éxito',
