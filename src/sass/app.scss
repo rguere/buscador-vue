@@ -241,6 +241,13 @@ span.num-fil { color: #2196f3; font-weight: bold; }
   cursor: pointer;
 }
 
+.el-select .el-select__tags {
+  display: none!important;
+  width: 0!important;
+  height: 0!important;
+  opacity: 0!important;
+}
+
 ._hastaPicker, ._desdePicker {
   position: relative;
   top: -358px;

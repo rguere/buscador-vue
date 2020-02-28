@@ -194,3 +194,70 @@ export const sendEvent = (cat,name) => {
         window.ga('send','event',cat,name)
     }
 }
+
+
+export const getColumnsSummary = () => {
+    return [
+        {
+          prop: 'RazonSocial',
+          label: 'Razón social',
+          width: '360',
+          show: true
+        },
+        {
+          prop: 'Provincia',
+          label: 'Provincia',
+          width: 'auto',
+          show: true
+        },
+        {
+          prop: 'Localidad',
+          label: 'Localidad',
+          width: 'auto',
+          show: true
+        },
+        {
+          prop: 'CIF',
+          label: 'NIF',
+          width: '93',
+          show: true
+        },
+        {
+          prop: 'Codigo_Postal',
+          label: 'Código Postal',
+          width: '95',
+          show: true
+        },
+        {
+          prop: 'FechaConstitucionOrigen',
+          label: 'Fecha constitución',
+          width: '121',
+          show: true
+        },
+        {
+          prop: 'anios_empresa',
+          label: 'Antigüedad (en años)',
+          width: '135',
+          show: true
+        },
+        {
+          prop: 'SumTotalEmpleados',
+          label: 'Número empleados',
+          width: '123',
+          show: true
+        }
+      ]
+}
+
+export const showColumnsSummary = (newColumns) => {
+    let columns = getColumnsSummary()
+    let showColumns = []
+    for (const column of columns) {
+        for (const item of newColumns) {
+            if (item === column.prop) {
+                showColumns.push(column)
+            }
+        }
+    }
+    return showColumns
+}

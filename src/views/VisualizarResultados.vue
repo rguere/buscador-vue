@@ -10,7 +10,7 @@
               <!-- botones -->
             </div>
             <div class="row m-b-10">
-              <div class="col-md-6">
+              <div class="col-md-8">
                 <router-link
                   to="/"
                   class="btn btn-warning">
@@ -43,8 +43,23 @@
                   <i class="fa fa-table"></i>
                   Ficha Resumen
                 </button>
+                <el-select
+                  v-model="valueSelect"
+                  multiple
+                  collapse-tags
+                  style="margin-left: 20px;"
+                  placeholder="Seleccionar Columnas"
+                  @change="changeColumns"
+                  id="selectColumns">
+                  <el-option
+                      v-for="item in selectColumns"
+                      :key="item.prop"
+                      :label="item.label"
+                      :value="item.prop">
+                  </el-option>
+                </el-select>
               </div>
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <div class="pull-right">
                   <button
                     @click="dialogCorreoVisible = true"
@@ -160,22 +175,6 @@
               </div>
             </div>
             <div class="row">
-              <!-- <div class="col-md-12">
-                <div class="text-center m-b-10">
-                  <button class="btn btn-warning">
-                    <i class="fa fa-save"></i>
-                    Guardar Columnas
-                  </button>
-                  <button class="btn btn-warning m-l-5">
-                    <i class="fa fa-save"></i>
-                    Listados Columnas Guardados
-                  </button>
-                  <button class="btn btn-warning m-l-5">
-                    <i class="fa fa-list"></i>
-                    Seleccionar Columnas
-                  </button>
-                </div>
-              </div> -->
               <div class="col-md-12">
                 <h5 class="flex_div">
                   <b>Resultados de la búsqueda</b>
@@ -239,42 +238,11 @@
                   :data="results.empresas"
                   style="width: 100%">
                   <el-table-column
-                    prop="RazonSocial"
-                    label="Razón social"
-                    width="360">
-                  </el-table-column>
-                  <el-table-column
-                    prop="Provincia"
-                    label="Provincia">
-                  </el-table-column>
-                  <el-table-column
-                    prop="Localidad"
-                    label="Localidad">
-                  </el-table-column>
-                  <el-table-column
-                    prop="CIF"
-                    label="NIF"
-                    width="93">
-                  </el-table-column>
-                  <el-table-column
-                    prop="Codigo_Postal"
-                    label="Código Postal"
-                    width="95">
-                  </el-table-column>
-                  <el-table-column
-                    prop="FechaConstitucionOrigen"
-                    label="Fecha constitución"
-                    width="121">
-                  </el-table-column>
-                  <el-table-column
-                    prop="anios_empresa"
-                    label="Antigüedad (en años)"
-                    width="135">
-                  </el-table-column>
-                  <el-table-column
-                    prop="SumTotalEmpleados"
-                    label="Número empleados"
-                    width="123">
+                    v-for="(item, key) in columns" :key="key"
+                    :prop="item.prop"
+                    :label="item.label"
+                    :width="item.width"
+                    v-show="item.show">
                   </el-table-column>
                 </el-table>
                 <el-pagination
@@ -299,7 +267,7 @@
 import moment from 'moment'
 import axios from 'axios'
 import { mapGetters } from 'vuex'
-import { orderFilters, inArrayObject, countByProperty, sendPageView } from './../utils' //printElem
+import { orderFilters, inArrayObject, countByProperty, sendPageView, getColumnsSummary, showColumnsSummary } from './../utils' //printElem
 import swal from 'sweetalert2'
 import { required, email } from 'vuelidate/lib/validators'
 
@@ -332,6 +300,9 @@ export default {
       total: 0,
       puedeDescargar: false,
       puedeEnviarCorreo: false,
+      columns: [],
+      selectColumns: [],
+      valueSelect: []
     }),
   validations() {
     return {
@@ -370,6 +341,14 @@ export default {
   },
   mounted () {
     sendPageView('resultados', 'Buscador - Visualizar resultados')
+    this.columns = getColumnsSummary()
+    this.selectColumns = getColumnsSummary()
+    this.valueSelect = this.selectColumns.map(item => {
+      return item.prop
+    })
+    setTimeout(() => {
+      document.getElementById('selectColumns').placeholder = 'Seleccionar Columnas'
+    }, 100)
     if(!(this.applied_filters && this.applied_filters.length !== 0)){
       swal.fire(
         'Advertencia',
@@ -449,6 +428,9 @@ export default {
     }
   },
   methods: {
+    changeColumns (columns){
+      this.columns = showColumnsSummary(columns)
+    },
     visualizarResultados (){
       let hoy = moment()
       let size = this.size
