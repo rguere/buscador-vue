@@ -7,13 +7,25 @@
       </p>
     </div>
     <div class="panel-body">
-      <div class="form-group" v-if="(list_nif && list_nif.validos.length === 0) || (search_edit)">
+      <div class="form-group">
         <textarea v-model="dataFrm" id="list_nif" class="form-control"></textarea>
       </div>
+      <div class="flex-space-between-flex-end">
+        <div></div>
+        <div>
+          <button
+            type="button"
+            class="btn btn-info" @click="validateNif" 
+            :disabled="dataFrm.length === 0 || loadingValidar">
+              BUSCAR <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
+          </button>
+        </div>
+      </div>
+      <br>
       <div class="panel panel-default cd" v-if="list_nif && list_nif.validos.length !== 0 && !search_edit">
         <div class="panel-body">
           <div class="div-scroll-200">
-            <button
+            <!-- <button
               type="button"        
               v-if="list_nif && list_nif.validos.length !== 0 && !search_edit && dataFrm.length !== 0"
               class="btn btn-xs btn-info pull-right" @click="editSearch" 
@@ -25,7 +37,7 @@
               v-if="list_nif && list_nif.validos.length !== 0 && !search_edit && dataFrm.length === 0"
               class="btn btn-xs btn-danger pull-right" @click="cleanFile">
                 Limpiar búsqueda <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-undo'"></i>
-            </button>
+            </button> -->
             <div v-for="(item, key) in list_nif.validos" :key="key">
               <label class="custon-checkboxs">
                   <input type="checkbox"
@@ -75,13 +87,6 @@
           </button>
         </div>
         <div>
-          <button
-            type="button"
-            v-if="list_nif && list_nif.validos.length === 0 || search_edit" 
-            class="btn btn-info" @click="validateNif" 
-            :disabled="dataFrm.length === 0 || loadingValidar">
-              BUSCAR <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
-          </button>
         </div>
       </div>
       <div class="row" v-if="selected_list_nif && selected_list_nif.length !== 0">
@@ -363,6 +368,7 @@
           //this.selected_list_nif = this.list_nif.validos
           this.loadingValidar = false
           this.search_edit = false
+          this.dataFrm = ''
         }).catch(() => {
           this.loadingValidar = false
           this.list_nif = { validos: [], invalidos: [] }
@@ -388,6 +394,7 @@
             this.areApplied = true
             this.reapply = false
             this.loadingApply = false
+            this.dataFrm = ''
             this.selected_list_nif_string = JSON.stringify(this.selected_list_nif)
           }).catch(() => {
             this.loadingApply = false
@@ -441,6 +448,7 @@
         this.areApplied = false
         this.reapply = false
         this.search_edit = true
+        this.dataFrm = ''
       },
       emptyFilter () {
         this.form.cif = []
@@ -453,6 +461,7 @@
         this.areApplied = false
         this.reapply = false
         this.search_edit = true
+        this.dataFrm = ''
       },
       editSearch () {
         this.search_edit = true
