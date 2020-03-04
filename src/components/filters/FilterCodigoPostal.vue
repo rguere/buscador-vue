@@ -84,6 +84,30 @@
           </button>
         </div>
       </div>
+      <div class="row" v-if="selected_zip_codes && selected_zip_codes.length !== 0">
+        <div class="col-md-12">
+          <br/>
+          <el-collapse v-model="collapseResumen">
+            <el-collapse-item title="Resumen de códigos postales seleccionadas" name="1">
+              <div class="div-scroll-200" id="selected_resumen_cp2">
+                <div v-for="(item, key) in selected_zip_codes" :key="key">
+                  <label class="custon-checkboxs">
+                    <input type="checkbox"
+                      :name="`checkbox___list__${item.id}`"
+                      v-model="selected_zip_codes"
+                      @change="handleChangeList(item, $event)"
+                      :id="`checkbox___list__${item.id}`"
+                      :value="item">
+                    <span class="geekmark"></span>
+                    <span class="name-checkbox">{{ item.label }}</span>
+                    <span class="num-fil"> ({{ item.data | numeral('0,0') }})</span>
+                  </label>
+                </div>
+              </div>
+            </el-collapse-item>
+          </el-collapse> 
+        </div>
+      </div>
       <el-dialog
         :visible.sync="modalVisible"
         width="95%"
@@ -118,8 +142,8 @@
               </button>
             </div>
           </div>
-          <div class="conten-flex-70-30">
-            <div>
+          <div class="row">
+            <div class="col-md-8">
               <div class="panel panel-default cd">
                 <div class="panel-heading">
                   <p class="panel-title roboto white">
@@ -229,7 +253,7 @@
                 </div>
               </div>
             </div>
-            <div>
+            <div class="col-md-4">
               <div class="panel panel-default cd">
                 <div class="panel-heading">
                   <p class="panel-title roboto white">
@@ -257,7 +281,7 @@
                           <input type="checkbox"
                             :name="`checkbox_list_${item.id}`"
                             v-model="selected_zip_codes"
-                            @change="handleChangeList(item, $event)"
+                            @change="handleChange(item, $event)"
                             :id="`checkbox_list_${item.id}`"
                             :value="item">
                           <span class="geekmark"></span>
@@ -272,6 +296,31 @@
                     <span v-for="(item, key) in zip_codes.invalidos.slice(0, limitCodeInvalidos)" :key="key" class="label label-danger label-no-encontrados">{{ item }}</span>
                     <a href="" v-on:click.stop.prevent="showAllInvalidos" v-if="zip_codes.invalidos.length >= limitCodeInvalidos" class="btn" style="display: block;">{{ (zip_codes.invalidos.length == limitCodeInvalidos) ? 'Ver menos' : `Ver todos (${zip_codes.invalidos.length})` }} </a>
                     <hr>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12" v-if="selected_zip_codes && selected_zip_codes.length !== 0">
+              <div class="panel panel-default cd">
+                <div class="panel-heading">
+                  <p class="panel-title roboto white">
+                    Resumen de códigos postales seleccionadas
+                    <span class="span-info-right" v-if="selected_zip_codes !== 0"> ({{ selected_zip_codes | numeral('0,0') }} empresas seleccionadas)</span>
+                  </p>
+                </div>
+                <div class="panel-body div-scroll-200" id="selected_resumen_cp1">
+                  <div v-for="(item, key) in selected_zip_codes" :key="key">
+                    <label class="custon-checkboxs">
+                      <input type="checkbox"
+                        :name="`checkbox____list___${item.id}`"
+                        v-model="selected_zip_codes"
+                        @change="handleChangeList(item, $event)"
+                        :id="`checkbox____list___${item.id}`"
+                        :value="item">
+                      <span class="geekmark"></span>
+                      <span class="name-checkbox">{{ item.label }}</span>
+                      <span class="num-fil"> ({{ item.data | numeral('0,0') }})</span>
+                    </label>
                   </div>
                 </div>
               </div>
@@ -329,6 +378,7 @@
       innerVisible: false,
       limitCodeInvalidos: 8,
       file: {},
+      collapseResumen: []
     }),
     validations() {
       return {
@@ -374,7 +424,7 @@
         this.$store.dispatch('search/validateZipCodes', sin_salto).then((response) => {
           this.zip_codes.validos = (response.validos)? response.validos: []
           this.zip_codes.invalidos = (response.invalidos)? response.invalidos: []
-          this.selected_zip_codes = this.zip_codes.validos
+          //this.selected_zip_codes = this.zip_codes.validos
           this.loadingValidar = false
           this.search_edit = false
           this.deleteInvalid(this.zip_codes.validos)
@@ -490,7 +540,13 @@
       handleChange () { //province, event
         this.reapply = (this.areApplied)? true: this.areApplied
       },
-      handleChangeList (){ //province, event
+      handleChangeList (elemet, event){
+        event.preventDefault()
+        this.reapply = (this.areApplied)? true: this.areApplied
+        let checkboxs = document.querySelectorAll('#selected_resumen_cp1 input[type="checkbox"], #selected_resumen_cp2 input[type="checkbox"]')
+        checkboxs.forEach((item) => {
+          item.checked = true
+        })
       },
       validateRankSearchZipCodes () {//event
         this.$v.$touch()
@@ -516,7 +572,7 @@
           this.$store.dispatch('search/validateZipCodes', sin_salto).then((response) => {
             this.zip_codes.validos = (response.validos)? response.validos: []
             this.zip_codes.invalidos = (response.invalidos)? response.invalidos: []
-            this.selected_zip_codes = this.zip_codes.validos
+            //this.selected_zip_codes = this.zip_codes.validos
             this.loadingValidar = false
             this.search_edit = false
             this.deleteInvalid(this.zip_codes.validos)
@@ -535,7 +591,7 @@
           this.$store.dispatch('search/validateZipCodesFile', file).then((response) => {
             this.zip_codes.validos = (response.validos)? response.validos: []
             this.zip_codes.invalidos = (response.invalidos)? response.invalidos: []
-            this.selected_zip_codes = this.zip_codes.validos
+            //this.selected_zip_codes = this.zip_codes.validos
             this.dataFrm = ''
             this.loadingFile = false
             this.search_edit = false
