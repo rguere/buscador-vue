@@ -546,6 +546,17 @@ export default {
     },
     sortChange ({prop, order}) {
       order = (order === 'ascending')? 'asc': 'desc'
+      if ((prop === 'CIF')) {
+        prop = 'cif' 
+      }else if ((prop === 'Codigo_Postal')){
+        prop = 'codigoPostal'
+      }else if ((prop === 'FechaConstitucionOrigen')){
+        prop = 'fechaCostitucion'
+      }else if ((prop === 'anios_empresa')){
+        prop = 'antiguedad'
+      }else if ((prop === 'SumTotalEmpleados')){
+        prop = 'empleados'
+      }
       this.sorttable = `&ord=${prop.charAt(0).toLowerCase() + prop.slice(1)}&dir=${order}`
       this.visualizarResultados()
     },
