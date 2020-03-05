@@ -226,13 +226,15 @@
                   border
                   stripe
                   :data="results.empresas"
-                  style="width: 100%">
+                  style="width: 100%"
+                  @sort-change="sortChange">
                   <el-table-column
                     v-for="(item, key) in columns" :key="key"
                     :prop="item.prop"
                     :label="item.label"
                     :width="item.width"
-                    v-show="item.show">
+                    v-show="item.show"
+                    sortable>
                   </el-table-column>
                 </el-table>
                 <el-pagination
@@ -292,7 +294,8 @@ export default {
       puedeEnviarCorreo: false,
       columns: [],
       selectColumns: [],
-      valueSelect: []
+      valueSelect: [],
+      sorttable: ''
     }),
   validations() {
     return {
@@ -345,7 +348,7 @@ export default {
         'Aún no hay filtros aplicados',
         'warning'
       )
-      this.$router.push({ name: 'buscador'})
+      //---this.$router.push({ name: 'buscador'})
     }else {
       this.applied_filters.forEach(item => {
         for (const key in this.localDatas) {
@@ -426,7 +429,8 @@ export default {
       let size = this.size
       let page = this.currentPage - 1
       let filters = this.formatearData()
-      this.$store.dispatch('search/visualizarResultados', {filters, page, size}).then((response) => {
+      let sort = this.sorttable
+      this.$store.dispatch('search/visualizarResultados', {filters, page, size, sort}).then((response) => {
         if(response && response.empresas) {
           this.results.empresas = response.empresas.map(item => {
             if(item.FechaConstitucion){
@@ -538,6 +542,11 @@ export default {
     },
     sizeChange (val) { 
       this.size = val
+      this.visualizarResultados()
+    },
+    sortChange ({prop, order}) {
+      order = (order === 'ascending')? 'asc': 'desc'
+      this.sorttable = `&ord=${prop.charAt(0).toLowerCase() + prop.slice(1)}&dir=${order}`
       this.visualizarResultados()
     },
     showModal () {
