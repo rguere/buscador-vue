@@ -7,13 +7,25 @@
       </p>
     </div>
     <div class="panel-body">
-      <div class="form-group" v-if="(list_nif && list_nif.validos.length === 0) || (search_edit)">
+      <div class="form-group">
         <textarea v-model="dataFrm" id="list_nif" class="form-control"></textarea>
       </div>
+      <div class="flex-space-between-flex-end">
+        <div></div>
+        <div>
+          <button
+            type="button"
+            class="btn btn-info" @click="validateNif" 
+            :disabled="dataFrm.length === 0 || loadingValidar">
+              BUSCAR <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
+          </button>
+        </div>
+      </div>
+      <br>
       <div class="panel panel-default cd" v-if="list_nif && list_nif.validos.length !== 0 && !search_edit">
         <div class="panel-body">
           <div class="div-scroll-200">
-            <button
+            <!-- <button
               type="button"        
               v-if="list_nif && list_nif.validos.length !== 0 && !search_edit && dataFrm.length !== 0"
               class="btn btn-xs btn-info pull-right" @click="editSearch" 
@@ -25,7 +37,7 @@
               v-if="list_nif && list_nif.validos.length !== 0 && !search_edit && dataFrm.length === 0"
               class="btn btn-xs btn-danger pull-right" @click="cleanFile">
                 Limpiar búsqueda <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-undo'"></i>
-            </button>
+            </button> -->
             <div v-for="(item, key) in list_nif.validos" :key="key">
               <label class="custon-checkboxs">
                   <input type="checkbox"
@@ -75,13 +87,30 @@
           </button>
         </div>
         <div>
-          <button
-            type="button"
-            v-if="list_nif && list_nif.validos.length === 0 || search_edit" 
-            class="btn btn-info" @click="validateNif" 
-            :disabled="dataFrm.length === 0 || loadingValidar">
-              BUSCAR <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
-          </button>
+        </div>
+      </div>
+      <div class="row" v-if="selected_list_nif && selected_list_nif.length !== 0">
+        <div class="col-md-12">
+          <br/>
+          <el-collapse v-model="collapseResumen">
+            <el-collapse-item title="Resumen de NIF seleccionadas" name="1">
+              <div class="div-scroll-200" id="selected_resumen_NIF1">
+                <div v-for="(item, key) in selected_list_nif" :key="key">
+                  <label class="custon-checkboxs">
+                    <input type="checkbox"
+                      :name="`checkbox____list___NIF${item.id}`"
+                      v-model="selected_list_nif"
+                      @change="handleChangeList(item, $event)"
+                      :id="`checkbox____list___NIF${item.id}`"
+                      :value="item">
+                    <span class="geekmark"></span>
+                    <span class="name-checkbox">{{ item.label }}</span>
+                    <span class="num-fil"> ({{ item.data | numeral('0,0') }})</span>
+                  </label>
+                </div>
+              </div>
+            </el-collapse-item>
+          </el-collapse> 
         </div>
       </div>
       <el-dialog
@@ -118,8 +147,8 @@
               </button>
             </div>
           </div>
-          <div class="conten-flex-70-30">
-            <div>
+          <div class="row">
+            <div class="col-md-8">
               <div class="panel panel-default cd">
                 <div class="panel-heading">
                   <p class="panel-title roboto white">
@@ -186,7 +215,7 @@
                 </div>
               </div>
             </div>
-            <div>
+            <div class="col-md-4">
               <div class="panel panel-default cd">
                 <div class="panel-heading">
                   <p class="panel-title roboto white">
@@ -214,7 +243,7 @@
                           <input type="checkbox"
                             :name="`checkbox_list_${item.id}`"
                             v-model="selected_list_nif"
-                            @change="handleChangeList(item, $event)"
+                            @change="handleChange(item, $event)"
                             :id="`checkbox_list_${item.id}`"
                             :value="item">
                           <span class="geekmark"></span>
@@ -229,6 +258,31 @@
                     <span v-for="(item, key) in list_nif.invalidos.slice(0, limitNifInvalidos)" :key="key" class="label label-danger label-no-encontrados">{{ item }}</span>
                     <a href="" v-on:click.stop.prevent="showAllInvalidos" v-if="list_nif.invalidos.length >= limitNifInvalidos" class="btn" style="display: block;">{{ (list_nif.invalidos.length == limitNifInvalidos) ? 'Ver menos' : `Ver todos (${list_nif.invalidos.length})` }} </a>
                     <hr>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12" v-if="selected_list_nif && selected_list_nif.length !== 0">
+              <div class="panel panel-default cd">
+                <div class="panel-heading">
+                  <p class="panel-title roboto white">
+                    Resumen de códigos postales seleccionadas
+                    <span class="span-info-right" v-if="selected_list_nif !== 0"> ({{ selected_list_nif | numeral('0,0') }} empresas seleccionadas)</span>
+                  </p>
+                </div>
+                <div class="panel-body div-scroll-200" id="selected_resumen_NIF2">
+                  <div v-for="(item, key) in selected_list_nif" :key="key">
+                    <label class="custon-checkboxs">
+                      <input type="checkbox"
+                        :name="`checkbox___list__${item.id}`"
+                        v-model="selected_list_nif"
+                        @change="handleChangeList(item, $event)"
+                        :id="`checkbox___list__${item.id}`"
+                        :value="item">
+                      <span class="geekmark"></span>
+                      <span class="name-checkbox">{{ item.label }}</span>
+                      <span class="num-fil"> ({{ item.data | numeral('0,0') }})</span>
+                    </label>
                   </div>
                 </div>
               </div>
@@ -282,7 +336,8 @@
       loadingFile: false,
       innerVisible: false,
       file: {},
-      limitNifInvalidos: 8
+      limitNifInvalidos: 8,
+      collapseResumen: []
     }),
     mounted() {
       this.$root.$on('clean_filter', (filter) => {
@@ -310,9 +365,10 @@
         this.$store.dispatch('search/validateNif', sin_salto.toUpperCase()).then((response) => {
           this.list_nif.validos = (response.validos)? response.validos: []
           this.list_nif.invalidos = (response.invalidos)? response.invalidos: []
-          this.selected_list_nif = this.list_nif.validos
+          //this.selected_list_nif = this.list_nif.validos
           this.loadingValidar = false
           this.search_edit = false
+          this.dataFrm = ''
         }).catch(() => {
           this.loadingValidar = false
           this.list_nif = { validos: [], invalidos: [] }
@@ -338,6 +394,7 @@
             this.areApplied = true
             this.reapply = false
             this.loadingApply = false
+            this.dataFrm = ''
             this.selected_list_nif_string = JSON.stringify(this.selected_list_nif)
           }).catch(() => {
             this.loadingApply = false
@@ -391,6 +448,7 @@
         this.areApplied = false
         this.reapply = false
         this.search_edit = true
+        this.dataFrm = ''
       },
       emptyFilter () {
         this.form.cif = []
@@ -403,6 +461,7 @@
         this.areApplied = false
         this.reapply = false
         this.search_edit = true
+        this.dataFrm = ''
       },
       editSearch () {
         this.search_edit = true
@@ -425,7 +484,13 @@
       handleChange () { //province, event
         this.reapply = (this.areApplied)? true: this.areApplied
       },
-      handleChangeList (){ //province, event
+      handleChangeList (elemet, event){
+        event.preventDefault()
+        this.reapply = (this.areApplied)? true: this.areApplied
+        let checkboxs = document.querySelectorAll('#selected_resumen_NIF1 input[type="checkbox"], #selected_resumen_NIF2 input[type="checkbox"]')
+        checkboxs.forEach((item) => {
+          item.checked = true
+        })
       },
       uploadFileNif (file) {
         if (file) {
@@ -434,7 +499,7 @@
           this.$store.dispatch('search/validateNifFile', file).then((response) => {
             this.list_nif.validos = (response.validos)? response.validos: []
             this.list_nif.invalidos = (response.invalidos)? response.invalidos: []
-            this.selected_list_nif = this.list_nif.validos
+            //this.selected_list_nif = this.list_nif.validos
             this.dataFrm = ''
             this.loadingFile = false
             this.search_edit = false

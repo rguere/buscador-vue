@@ -3,11 +3,7 @@ import store from './../store'
 import swal from 'sweetalert2'
 import router from './../router'
 
-if (process.env.NODE_ENV === 'production') {
-  axios.defaults.baseURL = 'https://api.infocif.es/api' //'http://dev.infocif.info/api'
-} else {
-  axios.defaults.baseURL = 'https://api.infocif.es/api' //'http://dev.infocif.info/api'
-}
+axios.defaults.baseURL = (window.location.host === 'www.infocif.es')? 'https://api.infocif.es/api': 'http://dev.infocif.info/api'
 
 // Request interceptor
 axios.interceptors.request.use(request => {

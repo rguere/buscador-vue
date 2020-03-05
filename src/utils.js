@@ -202,49 +202,57 @@ export const getColumnsSummary = () => {
           prop: 'RazonSocial',
           label: 'Razón social',
           width: '360',
-          show: true
+          show: true,
+          sortable: true
         },
         {
           prop: 'Provincia',
           label: 'Provincia',
           width: 'auto',
-          show: true
+          show: true,
+          sortable: true
         },
         {
           prop: 'Localidad',
           label: 'Localidad',
           width: 'auto',
-          show: true
+          show: true,
+          sortable: true
         },
         {
           prop: 'CIF',
           label: 'NIF',
           width: '93',
-          show: true
+          show: true,
+          sortable: true
         },
         {
           prop: 'Codigo_Postal',
           label: 'Código Postal',
-          width: '95',
-          show: true
+          width: '118',
+          show: true,
+          sortable: true
         },
         {
           prop: 'FechaConstitucionOrigen',
           label: 'Fecha constitución',
-          width: '121',
-          show: true
+          width: '145',
+          show: true,
+          sortable: true
         },
         {
           prop: 'anios_empresa',
           label: 'Antigüedad (en años)',
-          width: '135',
-          show: true
+          width: '157',
+          show: true,
+          sortable: true
         },
         {
           prop: 'SumTotalEmpleados',
           label: 'Número empleados',
-          width: '123',
-          show: true
+          width: '147',
+          show: true,
+          sortable: true
         }
       ]
 }

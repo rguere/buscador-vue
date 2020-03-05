@@ -28,13 +28,12 @@
                     <div>
                       <div class="row">
                         <div class="col-md-12">
-                          <img src="./../assets/images/en_proceso.jpeg" style="width: 100%;" alt="">
-                          <!-- <p style="padding: 9px">
-                            Para poder disfrutar de esta funcionalidad del Buscador de Empresas de Infocif es necesario registrarse. Regístrese en Infocif, de manera rápida y sencilla, en el siguiente enlace:
+                          <p style="padding: 9px">
+                            Para poder disfrutar de esta funcionalidad del Buscador de Empresas de Infocif es necesario registrarse. <br> Regístrese en Infocif, de manera rápida y sencilla, en el siguiente enlace: <br>
                             <a target="_blank" href="http://www.infocif.es/gestion/gestion-registro.asp">
                               http://www.infocif.es/gestion/gestion-registro.asp
                             </a>
-                          </p> -->
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -73,13 +72,6 @@
                     :visible.sync="dialogCorreoVisible"
                     width="50%">
                       <div v-if="puedeEnviarCorreo">
-                        <el-alert
-                          title="Ingrese el correo al que se enviaran los resultados, esto es a manera de prueba hasta que tengamos la información del usuario autenticado."
-                          type="info"
-                          center
-                          show-icon>
-                        </el-alert>
-                        <br>
                         <div class="form-group anti-inputs" :class="{ 'has-error has-feedback': $v.correo.$error }">
                           <input 
                             type="email"
@@ -113,13 +105,12 @@
                       <div v-if="!puedeEnviarCorreo">
                         <div class="row">
                           <div class="col-md-12">
-                            <img src="./../assets/images/en_proceso.jpeg" style="width: 100%;" alt="">
-                            <!-- <p style="padding: 9px">
-                              Para poder disfrutar de esta funcionalidad del Buscador de Empresas de Infocif es necesario registrarse. Regístrese en Infocif, de manera rápida y sencilla, en el siguiente enlace:
+                            <p style="padding: 9px">
+                              Para poder disfrutar de esta funcionalidad del Buscador de Empresas de Infocif es necesario registrarse. <br> Regístrese en Infocif, de manera rápida y sencilla, en el siguiente enlace: <br>
                               <a target="_blank" href="http://www.infocif.es/gestion/gestion-registro.asp">
                                 http://www.infocif.es/gestion/gestion-registro.asp
                               </a>
-                            </p> -->
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -160,13 +151,12 @@
                       <div v-if="!puedeDescargar">
                         <div class="row">
                           <div class="col-md-12">
-                            <img src="./../assets/images/en_proceso.jpeg" style="width: 100%;" alt="">
-                            <!-- <p style="padding: 9px">
-                              Para poder disfrutar de esta funcionalidad del Buscador de Empresas de Infocif es necesario registrarse. Regístrese en Infocif, de manera rápida y sencilla, en el siguiente enlace:
+                            <p style="padding: 9px">
+                              Para poder disfrutar de esta funcionalidad del Buscador de Empresas de Infocif es necesario registrarse. <br> Regístrese en Infocif, de manera rápida y sencilla, en el siguiente enlace: <br>
                               <a target="_blank" href="http://www.infocif.es/gestion/gestion-registro.asp">
                                 http://www.infocif.es/gestion/gestion-registro.asp
                               </a>
-                            </p> -->
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -236,13 +226,15 @@
                   border
                   stripe
                   :data="results.empresas"
-                  style="width: 100%">
+                  style="width: 100%"
+                  @sort-change="sortChange">
                   <el-table-column
                     v-for="(item, key) in columns" :key="key"
                     :prop="item.prop"
                     :label="item.label"
                     :width="item.width"
-                    v-show="item.show">
+                    v-show="item.show"
+                    sortable>
                   </el-table-column>
                 </el-table>
                 <el-pagination
@@ -302,7 +294,8 @@ export default {
       puedeEnviarCorreo: false,
       columns: [],
       selectColumns: [],
-      valueSelect: []
+      valueSelect: [],
+      sorttable: ''
     }),
   validations() {
     return {
@@ -436,7 +429,8 @@ export default {
       let size = this.size
       let page = this.currentPage - 1
       let filters = this.formatearData()
-      this.$store.dispatch('search/visualizarResultados', {filters, page, size}).then((response) => {
+      let sort = this.sorttable
+      this.$store.dispatch('search/visualizarResultados', {filters, page, size, sort}).then((response) => {
         if(response && response.empresas) {
           this.results.empresas = response.empresas.map(item => {
             if(item.FechaConstitucion){
@@ -477,8 +471,8 @@ export default {
             this.dialogCorreoVisible2 = false
             this.nombreArchivo = ''
             swal.fire(
-              'Éxito',
               'Archivo descargado con éxito',
+              'Por el momento, los usuarios de Infocif podrán disfrutar de una muestra (completamente gratuita) de 50 empresas cada vez que se descarguen en Excel o  envíen a su correo (cuenta de email asociada a su usuario de Infocif) los resultados de la búsquedas que realicen desde el Buscador de Empresas',
               'success'
             )
             this.$v.$reset()
@@ -495,11 +489,15 @@ export default {
         this.$store.dispatch('search/enviarResultadosCorreo', { filters, email: this.correo, nombreArchivo: this.nombreArchivo }).then(() => {
           this.loadingCorreo = false
           this.dialogCorreoVisible = false
-          this.correo = ''
+          if (this.user && this.user.email) {
+            this.correo = this.user.email
+            this.puedeDescargar = true
+            this.puedeEnviarCorreo = true
+          }
           this.nombreArchivo = ''
           swal.fire(
-            'Éxito',
-            'Correo enviado',
+            'Correo enviado ',
+            'Por el momento, los usuarios de Infocif podrán disfrutar de una muestra (completamente gratuita) de 50 empresas cada vez que se descarguen en Excel o  envíen a su correo (cuenta de email asociada a su usuario de Infocif) los resultados de la búsquedas que realicen desde el Buscador de Empresas',
             'success'
           )
           this.$v.$reset()
@@ -544,6 +542,11 @@ export default {
     },
     sizeChange (val) { 
       this.size = val
+      this.visualizarResultados()
+    },
+    sortChange ({prop, order}) {
+      order = (order === 'ascending')? 'asc': 'desc'
+      this.sorttable = `&ord=${prop.charAt(0).toLowerCase() + prop.slice(1)}&dir=${order}`
       this.visualizarResultados()
     },
     showModal () {

@@ -7,13 +7,25 @@
       </p>
     </div>
     <div class="panel-body">
-      <div class="form-group" v-if="(zip_codes && zip_codes.validos.length === 0) || (search_edit)">
+      <div class="form-group">
         <textarea v-model="dataFrm" id="zip_codes" class="form-control"></textarea>
       </div>
+      <div class="flex-space-between-flex-end">
+        <div></div>
+        <div>
+          <button
+            type="button"
+            class="btn btn-info" @click="validateZipCodes" 
+            :disabled="dataFrm.length === 0 || loadingValidar">
+              BUSCAR <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
+          </button>
+        </div>
+      </div>
+      <br>
       <div class="panel panel-default cd" v-if="zip_codes && zip_codes.validos.length !== 0 && !search_edit">
         <div class="panel-body">
           <div class="div-scroll-200">
-            <button
+            <!-- <button
               type="button"        
               v-if="zip_codes && zip_codes.validos.length !== 0 && !search_edit && dataFrm.length !== 0"
               class="btn btn-xs btn-info pull-right" @click="editSearch" 
@@ -25,7 +37,7 @@
               v-if="zip_codes && zip_codes.validos.length !== 0 && !search_edit && dataFrm.length === 0"
               class="btn btn-xs btn-danger pull-right" @click="cleanFile">
                 Limpiar búsqueda <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-undo'"></i>
-            </button>
+            </button> -->
             <div v-for="(item, key) in zip_codes.validos" :key="key">
               <label class="custon-checkboxs">
                   <input type="checkbox"
@@ -75,13 +87,30 @@
           </button>
         </div>
         <div>
-          <button
-            type="button"
-            v-if="zip_codes && zip_codes.validos.length === 0 || search_edit" 
-            class="btn btn-info" @click="validateZipCodes" 
-            :disabled="dataFrm.length === 0 || loadingValidar">
-              BUSCAR <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
-          </button>
+        </div>
+      </div>
+      <div class="row" v-if="selected_zip_codes && selected_zip_codes.length !== 0">
+        <div class="col-md-12">
+          <br/>
+          <el-collapse v-model="collapseResumen">
+            <el-collapse-item title="Resumen de códigos postales seleccionadas" name="1">
+              <div class="div-scroll-200" id="selected_resumen_cp2">
+                <div v-for="(item, key) in selected_zip_codes" :key="key">
+                  <label class="custon-checkboxs">
+                    <input type="checkbox"
+                      :name="`checkbox___list__${item.id}`"
+                      v-model="selected_zip_codes"
+                      @change="handleChangeList(item, $event)"
+                      :id="`checkbox___list__${item.id}`"
+                      :value="item">
+                    <span class="geekmark"></span>
+                    <span class="name-checkbox">{{ item.label }}</span>
+                    <span class="num-fil"> ({{ item.data | numeral('0,0') }})</span>
+                  </label>
+                </div>
+              </div>
+            </el-collapse-item>
+          </el-collapse> 
         </div>
       </div>
       <el-dialog
@@ -118,8 +147,8 @@
               </button>
             </div>
           </div>
-          <div class="conten-flex-70-30">
-            <div>
+          <div class="row">
+            <div class="col-md-8">
               <div class="panel panel-default cd">
                 <div class="panel-heading">
                   <p class="panel-title roboto white">
@@ -229,7 +258,7 @@
                 </div>
               </div>
             </div>
-            <div>
+            <div class="col-md-4">
               <div class="panel panel-default cd">
                 <div class="panel-heading">
                   <p class="panel-title roboto white">
@@ -257,7 +286,7 @@
                           <input type="checkbox"
                             :name="`checkbox_list_${item.id}`"
                             v-model="selected_zip_codes"
-                            @change="handleChangeList(item, $event)"
+                            @change="handleChange(item, $event)"
                             :id="`checkbox_list_${item.id}`"
                             :value="item">
                           <span class="geekmark"></span>
@@ -272,6 +301,31 @@
                     <span v-for="(item, key) in zip_codes.invalidos.slice(0, limitCodeInvalidos)" :key="key" class="label label-danger label-no-encontrados">{{ item }}</span>
                     <a href="" v-on:click.stop.prevent="showAllInvalidos" v-if="zip_codes.invalidos.length >= limitCodeInvalidos" class="btn" style="display: block;">{{ (zip_codes.invalidos.length == limitCodeInvalidos) ? 'Ver menos' : `Ver todos (${zip_codes.invalidos.length})` }} </a>
                     <hr>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12" v-if="selected_zip_codes && selected_zip_codes.length !== 0">
+              <div class="panel panel-default cd">
+                <div class="panel-heading">
+                  <p class="panel-title roboto white">
+                    Resumen de códigos postales seleccionadas
+                    <span class="span-info-right" v-if="selected_zip_codes !== 0"> ({{ selected_zip_codes | numeral('0,0') }} empresas seleccionadas)</span>
+                  </p>
+                </div>
+                <div class="panel-body div-scroll-200" id="selected_resumen_cp1">
+                  <div v-for="(item, key) in selected_zip_codes" :key="key">
+                    <label class="custon-checkboxs">
+                      <input type="checkbox"
+                        :name="`checkbox____list___${item.id}`"
+                        v-model="selected_zip_codes"
+                        @change="handleChangeList(item, $event)"
+                        :id="`checkbox____list___${item.id}`"
+                        :value="item">
+                      <span class="geekmark"></span>
+                      <span class="name-checkbox">{{ item.label }}</span>
+                      <span class="num-fil"> ({{ item.data | numeral('0,0') }})</span>
+                    </label>
                   </div>
                 </div>
               </div>
@@ -329,6 +383,7 @@
       innerVisible: false,
       limitCodeInvalidos: 8,
       file: {},
+      collapseResumen: []
     }),
     validations() {
       return {
@@ -374,7 +429,7 @@
         this.$store.dispatch('search/validateZipCodes', sin_salto).then((response) => {
           this.zip_codes.validos = (response.validos)? response.validos: []
           this.zip_codes.invalidos = (response.invalidos)? response.invalidos: []
-          this.selected_zip_codes = this.zip_codes.validos
+          //this.selected_zip_codes = this.zip_codes.validos
           this.loadingValidar = false
           this.search_edit = false
           this.deleteInvalid(this.zip_codes.validos)
@@ -403,6 +458,7 @@
             this.areApplied = true
             this.reapply = false
             this.loadingApply = false
+            this.dataFrm = ''
             this.selected_zip_codes_string = JSON.stringify(this.selected_zip_codes)
           }).catch(() => {
             this.loadingApply = false
@@ -460,6 +516,7 @@
         this.areApplied = false
         this.reapply = false
         this.search_edit = true
+        this.dataFrm = ''
       },
       cleanFile() {
         this.form.codigosPostales = []
@@ -468,6 +525,7 @@
         this.areApplied = false
         this.reapply = false
         this.search_edit = true
+        this.dataFrm = ''
       },
       editSearch () {
         this.search_edit = true
@@ -490,7 +548,13 @@
       handleChange () { //province, event
         this.reapply = (this.areApplied)? true: this.areApplied
       },
-      handleChangeList (){ //province, event
+      handleChangeList (elemet, event){
+        event.preventDefault()
+        this.reapply = (this.areApplied)? true: this.areApplied
+        let checkboxs = document.querySelectorAll('#selected_resumen_cp1 input[type="checkbox"], #selected_resumen_cp2 input[type="checkbox"]')
+        checkboxs.forEach((item) => {
+          item.checked = true
+        })
       },
       validateRankSearchZipCodes () {//event
         this.$v.$touch()
@@ -516,7 +580,7 @@
           this.$store.dispatch('search/validateZipCodes', sin_salto).then((response) => {
             this.zip_codes.validos = (response.validos)? response.validos: []
             this.zip_codes.invalidos = (response.invalidos)? response.invalidos: []
-            this.selected_zip_codes = this.zip_codes.validos
+            //this.selected_zip_codes = this.zip_codes.validos
             this.loadingValidar = false
             this.search_edit = false
             this.deleteInvalid(this.zip_codes.validos)
@@ -535,7 +599,7 @@
           this.$store.dispatch('search/validateZipCodesFile', file).then((response) => {
             this.zip_codes.validos = (response.validos)? response.validos: []
             this.zip_codes.invalidos = (response.invalidos)? response.invalidos: []
-            this.selected_zip_codes = this.zip_codes.validos
+            //this.selected_zip_codes = this.zip_codes.validos
             this.dataFrm = ''
             this.loadingFile = false
             this.search_edit = false

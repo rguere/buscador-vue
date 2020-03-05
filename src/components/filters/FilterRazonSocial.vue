@@ -29,7 +29,7 @@
                 <label class="">{{ dataFrm }}</label>
               </div>
             </div>
-            <div class="col-md-6">
+            <!-- <div class="col-md-6">
               <el-tooltip content="Agregar más nombre o razón social a la búsqueda" placement="top">
                 <button
                   type="button"        
@@ -48,7 +48,7 @@
                     <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-edit'"></i>
                 </button>
               </el-tooltip>
-            </div>
+            </div> -->
           </div>
           <div class="div-scroll-200">
             <div v-for="(item, key) in social_reasons.empresas" :key="key">
@@ -368,6 +368,8 @@
                 'Nombre o razón social no existe',
                 'warning'
               )
+            }else {
+              this.dataFrm = ''
             }
           }).catch(() => {
             this.loadingValidar = false
@@ -427,6 +429,7 @@
         this.selected_social_reasons = []
         this.selected_social_reasons_string = ''
         this.social_reasons = { total: 0, cantidad: 0, empresas: [] }
+        this.list_selected_social_reasons = []
         if (this.applied_filters.length > 1) {
           let beforeForm = beforeOrderFilters(this.filters, this.applied_filters, this.form, this.title)
           this.$store.dispatch('search/filtrar', beforeForm).then((response) => {
@@ -450,6 +453,7 @@
         this.dataFrm = ''
         this.to_social_reason = ''
         this.social_reasons = { total: 0, cantidad: 0, empresas: [] }
+        this.list_selected_social_reasons = []
         this.updateNumberSelectedCompanies(0)
         this.selected_by_social_reasons = 0
         this.$store.dispatch('filters/removeFilters', this.title)
@@ -484,10 +488,10 @@
           quantity
         })
       },
-      handleChange () { //province, event
+      handleChange () { //element, event
         this.reapply = (this.areApplied)? true: this.areApplied
       },
-      handleChangeList (province, event){
+      handleChangeList (element, event){
         event.preventDefault()
         this.reapply = (this.areApplied)? true: this.areApplied
         let checkboxs = document.querySelectorAll('#selected_em input[type="checkbox"]')
