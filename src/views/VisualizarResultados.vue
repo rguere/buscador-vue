@@ -348,7 +348,7 @@ export default {
         'Aún no hay filtros aplicados',
         'warning'
       )
-      //---this.$router.push({ name: 'buscador'})
+      this.$router.push({ name: 'buscador'})
     }else {
       this.applied_filters.forEach(item => {
         for (const key in this.localDatas) {
@@ -471,8 +471,8 @@ export default {
             this.dialogCorreoVisible2 = false
             this.nombreArchivo = ''
             swal.fire(
-              'Éxito',
               'Archivo descargado con éxito',
+              'Por el momento, los usuarios de Infocif podrán disfrutar de una muestra (completamente gratuita) de 50 empresas cada vez que se descarguen en Excel o  envíen a su correo (cuenta de email asociada a su usuario de Infocif) los resultados de la búsquedas que realicen desde el Buscador de Empresas',
               'success'
             )
             this.$v.$reset()
@@ -496,8 +496,8 @@ export default {
           }
           this.nombreArchivo = ''
           swal.fire(
-            'Éxito',
-            'Correo enviado',
+            'Correo enviado ',
+            'Por el momento, los usuarios de Infocif podrán disfrutar de una muestra (completamente gratuita) de 50 empresas cada vez que se descarguen en Excel o  envíen a su correo (cuenta de email asociada a su usuario de Infocif) los resultados de la búsquedas que realicen desde el Buscador de Empresas',
             'success'
           )
           this.$v.$reset()
