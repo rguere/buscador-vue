@@ -295,7 +295,10 @@ export default {
       columns: [],
       selectColumns: [],
       valueSelect: [],
-      sorttable: ''
+      sort: {
+        prop: 'razonSocial',
+        order: 'asc'
+      }
     }),
   validations() {
     return {
@@ -429,7 +432,7 @@ export default {
       let size = this.size
       let page = this.currentPage - 1
       let filters = this.formatearData()
-      let sort = this.sorttable
+      let sort = `&ord=${this.sort.prop}&dir=${this.sort.order}`
       this.$store.dispatch('search/visualizarResultados', {filters, page, size, sort}).then((response) => {
         if(response && response.empresas) {
           this.results.empresas = response.empresas.map(item => {
@@ -545,8 +548,15 @@ export default {
       this.visualizarResultados()
     },
     sortChange ({prop, order}) {
+      
       order = (order === 'ascending')? 'asc': 'desc'
-      if ((prop === 'CIF')) {
+      if ((prop === 'RazonSocial')){
+        prop = 'razonSocial'
+      }else if ((prop === 'Provincia')) {
+        prop = 'provincia' 
+      }else if ((prop === 'Localidad')) {
+        prop = 'localidad' 
+      }else if ((prop === 'CIF')) {
         prop = 'cif' 
       }else if ((prop === 'Codigo_Postal')){
         prop = 'codigoPostal'
@@ -557,7 +567,10 @@ export default {
       }else if ((prop === 'SumTotalEmpleados')){
         prop = 'empleados'
       }
-      this.sorttable = `&ord=${prop.charAt(0).toLowerCase() + prop.slice(1)}&dir=${order}`
+      this.sort = {
+        prop,
+        order
+      }
       this.visualizarResultados()
     },
     showModal () {
