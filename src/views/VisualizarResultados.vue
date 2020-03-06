@@ -235,6 +235,12 @@
                     :width="item.width"
                     v-show="item.show"
                     sortable>
+                    <template slot-scope="scope">
+                      <a :href="scope.row.urlInfocif" v-if="item.prop === 'RazonSocial'" target="_blank">{{ scope.row.RazonSocial }}</a>
+                      <p v-if="item.prop !== 'RazonSocial'">
+                        {{ scope.row[item.prop] }}
+                      </p>
+                    </template>
                   </el-table-column>
                 </el-table>
                 <el-pagination
@@ -259,8 +265,9 @@
 import moment from 'moment'
 import axios from 'axios'
 import { mapGetters } from 'vuex'
-import { orderFilters, inArrayObject, countByProperty, sendPageView, getColumnsSummary, showColumnsSummary } from './../utils' //printElem
+import { orderFilters, inArrayObject, countByProperty, sendPageView, getColumnsSummary, showColumnsSummary } from './../utils'
 import swal from 'sweetalert2'
+import slugify from 'slugify'
 import { required, email } from 'vuelidate/lib/validators'
 
 export default {
@@ -422,8 +429,30 @@ export default {
       this.puedeDescargar = true
       this.puedeEnviarCorreo = true
     }
+
+    setTimeout(() => {
+      let cells = document.querySelectorAll('.el-table__header th.is-sortable')
+      if (cells) {
+        for (const item of cells) {
+          item.addEventListener('click', this.isSortable)
+        }
+      }
+    }, 200);
+
+
   },
   methods: {
+    isSortable (event) {
+      event.stopPropagation();
+      // let target = event.target
+      // let order = (this.sort.order === 'asc')? 'ascending': 'descending'
+      // let element = target.querySelector(`.${order}`)
+      // if (element) {
+      //   target.querySelector(`.ascending`).style.borderBottomColor = '#C0C4CC'
+      //   target.querySelector(`.descending`).style.borderBottomColor = '#C0C4CC'
+      //   element.style.borderBottomColor = '#409EFF'
+      // }
+    },
     changeColumns (columns){
       this.columns = showColumnsSummary(columns)
     },
@@ -436,6 +465,12 @@ export default {
       this.$store.dispatch('search/visualizarResultados', {filters, page, size, sort}).then((response) => {
         if(response && response.empresas) {
           this.results.empresas = response.empresas.map(item => {
+            if (item.razonSocialNormalizadaURL301) {
+              item.urlInfocif = `http://www.infocif.es/ficha-empresa/${item.razonSocialNormalizadaURL301}`
+            }else {
+              let nameRazonSocial = slugify(item.RazonSocial.toLowerCase())
+              item.urlInfocif = `http://www.infocif.es/ficha-empresa/${nameRazonSocial}`
+            }
             if(item.FechaConstitucion){
               let FechaConstitucion = moment(item.FechaConstitucion);
               let diff = hoy.diff(FechaConstitucion, "years")
