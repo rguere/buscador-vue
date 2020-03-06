@@ -430,6 +430,7 @@
         this.selected_social_reasons_string = ''
         this.social_reasons = { total: 0, cantidad: 0, empresas: [] }
         this.list_selected_social_reasons = []
+        this.collapseResumen = []
         if (this.applied_filters.length > 1) {
           let beforeForm = beforeOrderFilters(this.filters, this.applied_filters, this.form, this.title)
           this.$store.dispatch('search/filtrar', beforeForm).then((response) => {
@@ -461,6 +462,7 @@
         this.reapply = false
         this.search_edit = true
         this.search_add = false
+        this.collapseResumen = []
       },
       editSearch () {
         this.search_edit = true

@@ -460,6 +460,7 @@
             this.loadingApply = false
             this.dataFrm = ''
             this.selected_zip_codes_string = JSON.stringify(this.selected_zip_codes)
+            this.zip_codes = { validos: [], invalidos: [] }
           }).catch(() => {
             this.loadingApply = false
           })

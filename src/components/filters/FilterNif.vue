@@ -396,6 +396,7 @@
             this.loadingApply = false
             this.dataFrm = ''
             this.selected_list_nif_string = JSON.stringify(this.selected_list_nif)
+            this.list_nif = { validos: [], invalidos: [] }
           }).catch(() => {
             this.loadingApply = false
           })

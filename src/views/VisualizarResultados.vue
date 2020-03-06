@@ -551,7 +551,7 @@ export default {
       }else if ((prop === 'Codigo_Postal')){
         prop = 'codigoPostal'
       }else if ((prop === 'FechaConstitucionOrigen')){
-        prop = 'fechaCostitucion'
+        prop = 'antiguedad'
       }else if ((prop === 'anios_empresa')){
         prop = 'antiguedad'
       }else if ((prop === 'SumTotalEmpleados')){
