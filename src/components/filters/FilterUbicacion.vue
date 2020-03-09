@@ -202,7 +202,7 @@
 <script>
   import { mapGetters } from 'vuex'
   import swal from 'sweetalert2'
-  import { inArrayObjectTreeselect, howAnimation, removeDuplicates, beforeOrderFilters } from './../../utils'
+  import { inArrayObjectTreeselect, howAnimation, removeDuplicates, beforeOrderFilters, sendPageView, sendEvent } from './../../utils'
   import { persistentData } from './../../mixins/persistent-data'
   export default {
     name: 'filter-ubicacion',
@@ -302,6 +302,7 @@
       })
       this.$root.$on('empty_filter', (filter) => {
         if (filter === this.title) { this.emptyFilter() }
+        sendEvent('filtro-vaciado','-');
       })
     },
     methods: {
@@ -311,9 +312,11 @@
         // })
       },
       showModal () {
+        sendPageView(`filtro-ubicacion`, `Buscador - Filtro de Ubicacion`)
         this.modalVisible = true
       },
       hideModal () {
+        sendPageView(``, `Buscador - Filtro`)
         this.modalVisible = false
         let treeselect__input = document.querySelector('#options input.vue-treeselect__input')
         if (treeselect__input) treeselect__input.value = ''
@@ -369,6 +372,7 @@
             this.reapply = false
             this.loadingFrm = false
             this.selected_provinces_localidad_string = JSON.stringify(this.sortData(this.selected_provinces_localidad))
+            sendEvent(`filtro-aplicado`, this.title)
           }).catch(() => {
             this.loadingFrm = false
           })
@@ -415,6 +419,7 @@
         this.loadingSearchTheProvinceorTown = false
         this.ResultTheProvinceorTown = []
         this.SearchTheProvinceorTown = ''
+        sendEvent('filtro-limpiado', this.title);
       },
       emptyFilter () {
         this.selected_children = []

@@ -281,7 +281,7 @@
 <script>
   import { mapGetters } from 'vuex'
   import swal from 'sweetalert2'
-  import { beforeOrderFilters, removeDuplicates } from './../../utils'
+  import { beforeOrderFilters, removeDuplicates, sendPageView, sendEvent } from './../../utils'
   import { persistentData } from './../../mixins/persistent-data'
   export default {
     name: 'filter-razon-social',
@@ -400,6 +400,7 @@
             this.dataFrm = ''
             this.selected_social_reasons_string = JSON.stringify(this.selected_social_reasons)
             this.social_reasons = { total: 0, cantidad: 0, empresas: [] }
+            sendEvent(`filtro-aplicado`, this.title)
           }).catch(() => {
             this.loadingApply = false
           })
@@ -446,6 +447,7 @@
         this.reapply = false
         this.search_edit = true
         this.search_add = false
+        sendEvent('filtro-limpiado', this.title);
       },
       emptyFilter () {
         this.form.razonSocial = []
@@ -502,9 +504,11 @@
         })
       },
       showModal () {
+        sendPageView(`filtro-razon-social`, `Buscador - Filtro de Razón Social`)
         this.modalVisible = true
       },
       hideModal () {
+        sendPageView(``, `Buscador - Filtro`)
         this.modalVisible = false
       },
     }

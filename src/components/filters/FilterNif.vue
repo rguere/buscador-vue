@@ -296,7 +296,7 @@
 
 <script>
   import { mapGetters } from 'vuex'
-  import { spacesByDashes, beforeOrderFilters } from './../../utils'
+  import { spacesByDashes, beforeOrderFilters, sendPageView, sendEvent } from './../../utils'
   import swal from 'sweetalert2'
   import { persistentData } from './../../mixins/persistent-data'
   export default {
@@ -397,6 +397,7 @@
             this.dataFrm = ''
             this.selected_list_nif_string = JSON.stringify(this.selected_list_nif)
             this.list_nif = { validos: [], invalidos: [] }
+            sendEvent(`filtro-aplicado`, this.title)
           }).catch(() => {
             this.loadingApply = false
           })
@@ -439,6 +440,7 @@
         this.areApplied = false
         this.reapply = false
         this.search_edit = true
+        sendEvent('filtro-limpiado', this.title);
       },
       cleanFile() {
         this.form.cif = []
@@ -450,6 +452,7 @@
         this.reapply = false
         this.search_edit = true
         this.dataFrm = ''
+        sendEvent('filtro-limpiado', this.title);
       },
       emptyFilter () {
         this.form.cif = []
@@ -513,9 +516,11 @@
         return false
       },
       showModal () {
+        sendPageView(`filtro-NIF`, `Buscador - Filtro de NIF`)
         this.modalVisible = true
       },
       hideModal () {
+        sendPageView(``, `Buscador - Filtro`)
         this.modalVisible = false
       },
       showAllInvalidos () {

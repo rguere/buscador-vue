@@ -11,11 +11,11 @@
             </div>
             <div class="row m-b-10">
               <div class="col-md-8">
-                <router-link
-                  to="/"
+                <button
+                  @click="goBack"
                   class="btn btn-warning">
                   <i class="fa fa-arrow-left"></i> Vover
-                </router-link>
+                </button>
                 <button class="btn btn-primary m-l-5"
                   @click="printSummary">
                   <i class="fa fa-print"></i>
@@ -265,7 +265,7 @@
 import moment from 'moment'
 import axios from 'axios'
 import { mapGetters } from 'vuex'
-import { orderFilters, inArrayObject, countByProperty, sendPageView, getColumnsSummary, showColumnsSummary } from './../utils'
+import { orderFilters, inArrayObject, countByProperty, sendPageView, sendEvent, getColumnsSummary, showColumnsSummary } from './../utils'
 import swal from 'sweetalert2'
 import slugify from 'slugify'
 import { required, email } from 'vuelidate/lib/validators'
@@ -513,6 +513,7 @@ export default {
               'Por el momento, los usuarios de Infocif podrán disfrutar de una muestra (completamente gratuita) de 50 empresas cada vez que se descarguen en Excel o  envíen a su correo (cuenta de email asociada a su usuario de Infocif) los resultados de la búsquedas que realicen desde el Buscador de Empresas',
               'success'
             )
+            sendEvent('resultados', 'descargar')
             this.$v.$reset()
           }
         }).catch(() => {
@@ -538,6 +539,7 @@ export default {
             'Por el momento, los usuarios de Infocif podrán disfrutar de una muestra (completamente gratuita) de 50 empresas cada vez que se descarguen en Excel o  envíen a su correo (cuenta de email asociada a su usuario de Infocif) los resultados de la búsquedas que realicen desde el Buscador de Empresas',
             'success'
           )
+          sendEvent('resultados', 'correo')
           this.$v.$reset()
         }).catch(() => {
           this.loadingCorreo = false
@@ -576,6 +578,7 @@ export default {
       return data
     },
     pageChange() {
+      sendEvent('resultados', 'paginar')
       this.visualizarResultados()
     },
     sizeChange (val) { 
@@ -619,11 +622,16 @@ export default {
         this.$storage.set("resumen", this.$data);
         let routeData = this.$router.resolve({ name: 'ficha-resumen'});
         if(routeData){
+          sendEvent('resultados', 'imprimir')
           window.open(routeData.href, '_blank');
         }
       }else {
         this.dialogCorreoVisible3 = true
       }
+    },
+    goBack () {
+      sendEvent('resultados', 'volver')
+      this.$router.push({ name: 'buscador'})
     }
   }
 }

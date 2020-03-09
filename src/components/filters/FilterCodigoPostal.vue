@@ -340,7 +340,7 @@
 <script>
   import { mapGetters } from 'vuex'
   import { required, maxLength } from 'vuelidate/lib/validators'
-  import { spacesByDashes, beforeOrderFilters } from './../../utils'
+  import { spacesByDashes, beforeOrderFilters, sendPageView, sendEvent } from './../../utils'
   import { persistentData } from './../../mixins/persistent-data'
   import swal from 'sweetalert2'
   export default {
@@ -461,6 +461,7 @@
             this.dataFrm = ''
             this.selected_zip_codes_string = JSON.stringify(this.selected_zip_codes)
             this.zip_codes = { validos: [], invalidos: [] }
+            sendEvent(`filtro-aplicado`, this.title)
           }).catch(() => {
             this.loadingApply = false
           })
@@ -505,6 +506,7 @@
         this.areApplied = false
         this.reapply = false
         this.search_edit = true
+        sendEvent('filtro-limpiado', this.title);
       },
       emptyFilter () {
         this.form.codigosPostales = []
@@ -613,10 +615,12 @@
         return false
       },
       showModal () {
+        sendPageView(`filtro-codigo-postal`, `Buscador - Código Postal`)
         this.modalVisible = true
         this.$v.$reset()
       },
       hideModal () {
+        sendPageView(``, `Buscador - Filtro`)
         this.modalVisible = false
         this.$v.$reset()
       },

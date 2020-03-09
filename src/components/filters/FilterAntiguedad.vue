@@ -248,7 +248,7 @@
   import { mapGetters } from 'vuex'
   import swal from 'sweetalert2'
   import { required, maxLength, numeric } from 'vuelidate/lib/validators'
-  import { inArrayObjectTreeselect, howAnimation, beforeOrderFilters } from './../../utils'
+  import { inArrayObjectTreeselect, howAnimation, beforeOrderFilters, sendPageView, sendEvent } from './../../utils'
   import { persistentData } from './../../mixins/persistent-data'
   export default {
     name: 'filter-antiguedad',
@@ -381,10 +381,12 @@
         // })
       },
       showModal () {
+        sendPageView(`filtro-antiguedad`, `Buscador - Antigüedad`)
         this.$v.$reset()
         this.modalVisible = true
       },
       hideModal () {
+        sendPageView(``, `Buscador - Filtro`)
         this.$v.$reset()
         this.modalVisible = false
       },
@@ -439,6 +441,7 @@
             this.reapply = false
             this.loadingFrm = false
             this.selected_antiguedad_string = JSON.stringify(this.selected_antiguedad)
+            sendEvent(`filtro-aplicado`, this.title)
           }).catch(() => {
             this.loadingFrm = false
           })
@@ -462,6 +465,7 @@
             this.reapply = false
             this.loadingDaterange = false
             this.selected_antiguedad_string = JSON.stringify(this.selected_antiguedad)
+            sendEvent(`filtro-aplicado`, this.title)
           }).catch(() => {
             this.loadingDaterange = false
           })
@@ -490,6 +494,7 @@
             this.reapply = false
             this.loadingAhnos = false
             this.selected_antiguedad_string = JSON.stringify(this.selected_antiguedad)
+            sendEvent(`filtro-aplicado`, this.title)
           }).catch(() => {
             this.loadingAhnos = false
           })
@@ -534,6 +539,7 @@
         this.ahnos_from = ''
         this.ahnos_to = ''
         this.$v.$reset()
+        sendEvent('filtro-limpiado', this.title);
       },
       emptyFilter () {
         this.form.antiguedad = []

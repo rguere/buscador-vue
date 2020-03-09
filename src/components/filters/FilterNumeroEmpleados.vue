@@ -197,7 +197,7 @@
   import { mapGetters } from 'vuex'
   import swal from 'sweetalert2'
   import { required, maxLength, numeric } from 'vuelidate/lib/validators'
-  import { inArrayObjectTreeselect, howAnimation, beforeOrderFilters } from './../../utils'
+  import { inArrayObjectTreeselect, howAnimation, beforeOrderFilters, sendPageView, sendEvent } from './../../utils'
   import { persistentData } from './../../mixins/persistent-data'
   export default {
     name: 'filter-numero-empleados',
@@ -294,10 +294,12 @@
       },
       showModal () {
         this.$v.$reset()
+        sendPageView(`filtro-numero-de-empleados`, `Buscador - Filtro de Número de empleados`)
         this.modalVisible = true
       },
       hideModal () {
         this.$v.$reset()
+        sendPageView(``, `Buscador - Filtro`)
         this.modalVisible = false
       },
       /**
@@ -351,6 +353,7 @@
             this.reapply = false
             this.loadingFrm = false
             this.selected_empleados_string = JSON.stringify(this.selected_empleados)
+            sendEvent(`filtro-aplicado`, this.title)
           }).catch(() => {
             this.loadingFrm = false
           })
@@ -428,6 +431,7 @@
         this.employees_from = ''
         this.employees_to = ''
         this.$v.$reset()
+        sendEvent('filtro-limpiado', this.title);
       },
       emptyFilter () {
         this.form.empleados = []
@@ -441,7 +445,6 @@
         this.incluir_null = false
         this.employees_from = ''
         this.employees_to = ''
-        this.$v.$reset()
       },
       handleChange () { //province, event
         this.reapply = (this.areApplied)? true: this.areApplied

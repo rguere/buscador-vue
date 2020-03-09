@@ -181,18 +181,18 @@ export const countByProperty = (array, property) => {
 }
 
 
-export const sendPageView = (page,title) => {
-    if (window.ga) {
-        window.ga('set','page',`/buscador/${page}`)
-        window.ga('set','title',title)
-        window.ga('send','pageview')
-    }
+export const sendPageView = (page, title) => {
+  if (window.ga) {
+    window.ga('set','page',`/buscador/${page}`)
+    window.ga('set','title',title)
+    window.ga('send','pageview')
+  }
 }
 
-export const sendEvent = (cat,name) => {
-    if (window.ga) {
-        window.ga('send','event',cat,name)
-    }
+export const sendEvent = (cat, name) => {
+  if (window.ga) {
+    window.ga('send', 'event', cat, name)
+  }
 }
 
 
