@@ -61,7 +61,7 @@
             </button>
             <button type="button" class="btn btn-info" v-if="areApplied" @click="confirmClean">Limpiar <i class="fa fa-undo"></i></button>
           </div>
-          <p class="text-help">* Puede elegir más de una opción</p>
+          <p class="text-help">* Puedes elegir más de una opción</p>
         </div>
         <el-dialog
           :visible.sync="modalVisible"

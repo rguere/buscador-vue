@@ -70,7 +70,7 @@
           </div>
         </div>
         <div class="float-right margin-top-10">
-          <p class="text-help">* Puede elegir más de una opción</p>
+          <p class="text-help">* Puedes elegir más de una opción</p>
         </div>
         <el-dialog :visible.sync="modalVisible"
           width="95%"

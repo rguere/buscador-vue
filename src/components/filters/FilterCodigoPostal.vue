@@ -62,7 +62,7 @@
       </div>
       <div class="form-group">
         <p class="text-help">
-          *Puede incluir uno o más códigos postales separados por coma o por salto de línea
+          *Puedes incluir uno o más códigos postales separados por coma o por salto de línea
         </p>
       </div>
       <div class="flex-space-between-flex-end">
@@ -209,7 +209,7 @@
                     </div>
                     <div class="col-md-12">
                       <p>
-                        Introduce o pega de los códigos postales que desees, también puedes adjuntar un archivo con códigos postales clicando en “Adjuntar Archivo”
+                        Introduce o pega de los códigos postales que desees, también Puedes adjuntar un archivo con códigos postales clicando en “Adjuntar Archivo”
                       </p>
                     </div>
                   </div>

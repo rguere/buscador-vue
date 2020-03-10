@@ -53,7 +53,7 @@
           </div>
         </div>
         <div class="float-right margin-top-10">
-          <p class="text-help">* Puede elegir más de una opción</p>
+          <p class="text-help">* Puedes elegir más de una opción</p>
         </div>
         <el-dialog :visible.sync="modalVisible"
           width="95%"
@@ -84,7 +84,7 @@
                   <div class="panel panel-default cd">
                     <div class="panel-heading">
                       <p class="panel-title roboto white">
-                        Seleccionar empresas por número de empleados (*Puede elegir más de una opción)
+                        Seleccionar empresas por número de empleados (*Puedes elegir más de una opción)
                         <span class="span-info-right" v-if="selected_by_empleados !== 0"> ({{ selected_by_empleados | numeral('0,0') }} empresas seleccionadas)</span>
                       </p>
                     </div>

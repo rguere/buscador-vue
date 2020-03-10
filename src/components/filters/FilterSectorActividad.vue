@@ -37,7 +37,7 @@
       <div class="flex-space-between-flex-end">
         <p></p>
         <p class="text-help">
-          * Puede elegir más de una opción
+          * Puedes elegir más de una opción
         </p>
       </div>
     </div>

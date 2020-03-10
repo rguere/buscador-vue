@@ -9,7 +9,7 @@
     <div class="panel-body">
       <form v-on:submit.prevent="validateRazonSocial" class="m-b-10">
         <div class="input-group">
-          <input type="text" v-model="dataFrm" id="social_reasons1" class="form-control" placeholder="Escriba aqui el nombre o razón social de la empresa" title="Escriba aqui el nombre o razón social de la empresa">
+          <input type="text" v-model="dataFrm" id="social_reasons1" class="form-control" placeholder="escribe aqui el nombre o razón social de la empresa" title="escribe aqui el nombre o razón social de la empresa">
           <span class="input-group-btn">
             <button
               title="BUSCAR"
@@ -160,7 +160,7 @@
                     <div class="col-md-7">
                       <form v-on:submit.prevent="validateRazonSocial">
                         <div class="input-group">
-                          <input type="text" v-model="dataFrm" id="social_reasons" class="form-control" placeholder="Escriba aqui el nombre o razón social de la empresa" title="Escriba aqui el nombre o razón social de la empresa">
+                          <input type="text" v-model="dataFrm" id="social_reasons" class="form-control" placeholder="escribe aqui el nombre o razón social de la empresa" title="escribe aqui el nombre o razón social de la empresa">
                           <span class="input-group-btn">
                             <button
                               type="button"                   

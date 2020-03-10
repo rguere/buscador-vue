@@ -8,7 +8,7 @@
     <div class="panel-body">
       <div class="form-group">
         <div class="form-group">
-          <textarea class="form-control" placeholder='Escriba aqui el nombre de la empresa o sociedad que pertenece al Organo de Administracion y clica en "Buscar"...'></textarea>
+          <textarea class="form-control" placeholder='escribe aqui el nombre de la empresa o sociedad que pertenece al Organo de Administracion y clica en "Buscar"...'></textarea>
         </div>
       </div>
 
