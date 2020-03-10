@@ -125,13 +125,30 @@
                                   placeholder="(Introducir, en formato número, los años de antigüedad)">
                                 <label>años de antigüedad</label>
                               </div>
+                              <div v-if="custom_antiquity.length !== 0">
+                                <hr>
+                                <p style="margin: 0 0 10px 19px;">Renglon personalizado</p>
+                                <div v-for="(item, key) in custom_antiquity" :key="key" class="checkbox">
+                                  <label class="custon-checkboxs" v-if="item.label !== 'incluir_null'">
+                                      <input type="checkbox"
+                                          :name="`_checkbox_empleados__${item.id}`"
+                                          v-model="selected_antiguedad"
+                                          @change="handleChange()"
+                                          :id="`_checkbox_empleados__${item.id}`"
+                                          :value="item">
+                                      <span class="geekmark"></span>
+                                      <span class="name-checkbox">{{ item.label }}</span>
+                                      <span class="num-fil"> ({{ item.data | numeral('0,0') }})</span>
+                                  </label>
+                                </div>
+                              </div>
                             </div>
                           </form>
                         </div>
                         <div class="col-md-6">
                           <div class="panel panel-warning">
                             <div class="panel-heading">Seleccionar años, por búsqueda estándar</div>
-                            <div class="panel-body">
+                            <div class="panel-body div-scroll-300">
                               <div v-if="search.antiguedad.length !== 0">
                                 <div v-for="(item, key) in search.antiguedad" :key="key" class="checkbox">
                                   <label class="custon-checkboxs" v-if="item.label !== 'incluir_null'">
@@ -304,6 +321,7 @@
       },
       desdePicker: 0,
       hastaPicker: 0,
+      custom_antiquity: []
     }),
     validations() {
       return {
@@ -474,7 +492,6 @@
       applyAhnos () {
         this.$v.$touch()
         if (!this.$v.$invalid) {
-          this.hideModal()
           this.loadingAhnos = true
           this.form.antiguedad = []
           this.ahnos_to = Number.parseInt(this.ahnos_to)
@@ -484,6 +501,17 @@
           this.form.antiguedad.push(`ahnos:${smaller}|${major}`)
           let beforeForm = beforeOrderFilters(this.filters, this.applied_filters, this.form, this.title)
           this.$store.dispatch('search/filtrar', beforeForm).then((response) => {
+            if (response && response.cantidad) {
+              this.custom_antiquity = []
+              this.selected_antiguedad = []
+              let item = {
+                id: `ahnos:${smaller}|${major}`,
+                data: response.cantidad,
+                label: `De ${smaller} a ${major} años`
+              }
+              this.custom_antiquity[0] = item
+              this.selected_antiguedad[0] = item
+            }
             this.updateNumberSelectedCompanies(response.cantidad)
             this.$store.dispatch('filters/addFilters', {
               name: this.title,
@@ -495,6 +523,7 @@
             this.loadingAhnos = false
             this.selected_antiguedad_string = JSON.stringify(this.selected_antiguedad)
             sendEvent(`filtro-aplicado`, this.title)
+            // this.hideModal()
           }).catch(() => {
             this.loadingAhnos = false
           })
@@ -538,6 +567,7 @@
         this.incluir_null = false
         this.ahnos_from = ''
         this.ahnos_to = ''
+        this.custom_antiquity = []
         this.$v.$reset()
         sendEvent('filtro-limpiado', this.title);
       },
@@ -554,6 +584,7 @@
         this.incluir_null = false
         this.ahnos_from = ''
         this.ahnos_to = ''
+        this.custom_antiquity = []
         this.$v.$reset()
       },
       handleChange () { //province, event
