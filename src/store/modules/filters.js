@@ -12,6 +12,7 @@ const initialState = () => {
       antiguedad: [],
       razonSocial: [],
       empleados: [],
+      cuentasDisponibles: [],
       filtros: [{}]
     },
     applied_filters: [],
@@ -102,8 +103,8 @@ const initialState = () => {
         slug: "filter_anios_con_cuentas_disponibles",
         apply: false,
         quantity: 0,
-        key: 'anios',
-        disabled: true
+        key: 'cuentasDisponibles',
+        disabled: false
       },
       {
         name: "Información Financiera",
