@@ -47,7 +47,7 @@
           </div>
           <div class="sb-toggle login-header navbar-right" style="float: right">
 
-            <a v-if="!this.user" class="hidden-xs hidden-sm" href="http://www.infocif.es/gestion/gestion-acceso.asp">
+            <a v-if="!this.user" class="hidden-xs hidden-sm" :href="url_acceso">
               <span class="glyphicon glyphicon-user"></span>
               <span class="hidden-xs hidden-sm">Iniciar sesión</span>
             </a>
@@ -106,7 +106,7 @@
 
         <li><a href="http://www.infocif.es/opiniones-empresas/"><i class="fa fa-chevron-left"></i> Opiniones</a></li>
 
-        <li><a href="http://www.infocif.es/gestion/gestion-acceso.asp"><i class="fa fa-chevron-left"></i> Iniciar sesión</a></li>
+        <li><a :href="url_acceso"><i class="fa fa-chevron-left"></i> Iniciar sesión</a></li>
 
       </ul>
     </div>
@@ -160,7 +160,11 @@
     computed: mapGetters({
       user: 'auth/user',
     }),
+    data: () => ({
+      url_acceso: 'http://www.infocif.es/gestion/gestion-acceso.asp?b=1'
+    }),
     mounted() {
+      this.url_acceso = (window.location.host === 'www.infocif.es')? 'http://www.infocif.es/gestion/gestion-acceso.asp?b=1': 'http://dev.infocif.info/gestion/gestion-acceso.asp?b=1'
     },
     methods: {
       showSlidebar(){

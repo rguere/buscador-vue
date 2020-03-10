@@ -6,7 +6,7 @@
 					<div class="row">
 						<div class="col-md-3"></div>
 						<div class="col-md-9">
-							<p class="filter-buttons_description text-center">¡Incorpore a sus búsqueda tantos filtros como quiera, dentro de nuestras múltiples posibilidades!</p>
+							<p class="filter-buttons_description text-center">¡Incorpora a tus búsquedas tantos filtros como quieras!. Hay múltiples posibilidades.</p>
 						</div>
 					</div>
 					<div class="row">
