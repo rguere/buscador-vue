@@ -52,6 +52,23 @@
             </div>
           </div>
         </div>
+        <div v-if="custom_antiquity.length !== 0">
+          <hr>
+          <p style="margin: 0 0 10px 19px;">Renglon personalizado</p>
+          <div v-for="(item, key) in custom_antiquity" :key="key" class="checkbox">
+            <label class="custon-checkboxs" v-if="item.label !== 'incluir_null'">
+                <input type="checkbox"
+                    :name="`__checkbox_empleados__${item.id}`"
+                    v-model="selected_custom_antiguedad"
+                    @change="handleChange()"
+                    :id="`__checkbox_empleados__${item.id}`"
+                    :value="item">
+                <span class="geekmark"></span>
+                <span class="name-checkbox">{{ item.label }}</span>
+                <span class="num-fil"> ({{ item.data | numeral('0,0') }})</span>
+            </label>
+          </div>
+        </div>
         <div class="float-right margin-top-10">
           <p class="text-help">* Puede elegir más de una opción</p>
         </div>
@@ -91,11 +108,11 @@
                     <div class="panel-body">
                       <div class="row">
                         <div class="col-md-6">
-                          <form v-on:submit.prevent="applyAhnos">
+                          <form v-on:submit.prevent="searchAhnos">
                             <button
                               type="submit" 
                               class="btn btn-info pull-right"
-                              @click="applyAhnos"
+                              @click="searchAhnos"
                               :disabled="$v.$invalid || loadingAhnos">
                                 BUSCAR <i :class="(loadingAhnos)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
                             </button>
@@ -132,7 +149,7 @@
                                   <label class="custon-checkboxs" v-if="item.label !== 'incluir_null'">
                                       <input type="checkbox"
                                           :name="`_checkbox_empleados__${item.id}`"
-                                          v-model="selected_antiguedad"
+                                          v-model="selected_custom_antiguedad"
                                           @change="handleChange()"
                                           :id="`_checkbox_empleados__${item.id}`"
                                           :value="item">
@@ -141,6 +158,12 @@
                                       <span class="num-fil"> ({{ item.data | numeral('0,0') }})</span>
                                   </label>
                                 </div>
+                                <button
+                                  type="button"
+                                  class="btn btn-success pull-right"
+                                  v-if="(selected_custom_antiguedad.length !== 0)"
+                                  title="Aplicar Renglon personalizado"
+                                  @click="applyAhnos">Aplicar Renglon personalizado <i :class="(loadingFrm)?'fa  fa-spinner fa-spin':'fa  fa-send'"></i></button>
                               </div>
                             </div>
                           </form>
@@ -321,7 +344,8 @@
       },
       desdePicker: 0,
       hastaPicker: 0,
-      custom_antiquity: []
+      custom_antiquity: [],
+      selected_custom_antiguedad: [],
     }),
     validations() {
       return {
@@ -342,6 +366,11 @@
         this.selected_by_antiguedad = this.numberCompaniesSelected((this.isAllProvincesLocalidad(newProvincesLocalidad))? this.search.antiguedad : newProvincesLocalidad)
         if (this.reapply && newProvincesLocalidad.length === 0) {
           this.clean()
+        }
+      },
+      selected_custom_antiguedad: function (selected_custom) {
+        if(selected_custom.length === 0) {
+          this.clean() 
         }
       },
       selected_by_antiguedad: function(newValue) {
@@ -459,6 +488,10 @@
             this.reapply = false
             this.loadingFrm = false
             this.selected_antiguedad_string = JSON.stringify(this.selected_antiguedad)
+            this.ahnos_from = ''
+            this.ahnos_to = ''
+            this.custom_antiquity = []
+            this.$v.$reset()
             sendEvent(`filtro-aplicado`, this.title)
           }).catch(() => {
             this.loadingFrm = false
@@ -483,6 +516,10 @@
             this.reapply = false
             this.loadingDaterange = false
             this.selected_antiguedad_string = JSON.stringify(this.selected_antiguedad)
+            this.ahnos_from = ''
+            this.ahnos_to = ''
+            this.custom_antiquity = []
+            this.$v.$reset()
             sendEvent(`filtro-aplicado`, this.title)
           }).catch(() => {
             this.loadingDaterange = false
@@ -490,6 +527,31 @@
         }
       },
       applyAhnos () {
+        if (this.custom_antiquity && this.custom_antiquity.length > 0) {
+          this.loadingAhnos = true
+          this.form.antiguedad = []
+          this.selected_antiguedad = []
+          this.form.antiguedad.push(this.custom_antiquity[0].id)
+          let beforeForm = beforeOrderFilters(this.filters, this.applied_filters, this.form, this.title)
+          this.$store.dispatch('search/filtrar', beforeForm).then((response) => {
+            this.updateNumberSelectedCompanies(response.cantidad)
+            this.$store.dispatch('filters/addFilters', {
+              name: this.title,
+              quantity: this.selected_by_antiguedad,
+              cantidades: response
+            })
+            this.areApplied = true
+            this.reapply = false
+            this.loadingAhnos = false
+            this.selected_antiguedad_string = JSON.stringify(this.selected_antiguedad)
+            this.hideModal()
+            sendEvent(`filtro-aplicado`, this.title)
+          }).catch(() => {
+            this.loadingAhnos = false
+          })
+        }
+      },
+      searchAhnos () {
         this.$v.$touch()
         if (!this.$v.$invalid) {
           this.loadingAhnos = true
@@ -503,27 +565,16 @@
           this.$store.dispatch('search/filtrar', beforeForm).then((response) => {
             if (response && response.cantidad) {
               this.custom_antiquity = []
-              this.selected_antiguedad = []
+              this.selected_custom_antiguedad = []
               let item = {
                 id: `ahnos:${smaller}|${major}`,
                 data: response.cantidad,
                 label: `De ${smaller} a ${major} años`
               }
               this.custom_antiquity[0] = item
-              this.selected_antiguedad[0] = item
+              this.selected_custom_antiguedad[0] = item
             }
-            this.updateNumberSelectedCompanies(response.cantidad)
-            this.$store.dispatch('filters/addFilters', {
-              name: this.title,
-              quantity: this.selected_by_antiguedad,
-              cantidades: response
-            })
-            this.areApplied = true
-            this.reapply = false
             this.loadingAhnos = false
-            this.selected_antiguedad_string = JSON.stringify(this.selected_antiguedad)
-            sendEvent(`filtro-aplicado`, this.title)
-            // this.hideModal()
           }).catch(() => {
             this.loadingAhnos = false
           })
