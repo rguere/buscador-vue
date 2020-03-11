@@ -33,7 +33,8 @@
                   :name="`checkbox___cuentas_disponibles__${item.id}`"
                   v-model="selected_cuentas_disponibles"
                   :id="`checkbox___cuentas_disponibles__${item.id}`"
-                  :value="item">
+                  :value="item"
+                  @click="takeIntoAccount(item, $event)">
                 <span class="geekmark"></span>
                 <span class="name-checkbox">{{ item.label }}</span>
               </label>
@@ -181,7 +182,8 @@
                                   :name="`checkbox_cuentas_disponibles__${item.id}`"
                                   v-model="selected_cuentas_disponibles"
                                   :id="`checkbox_cuentas_disponibles__${item.id}`"
-                                  :value="item">
+                                  :value="item"
+                                  @click="takeIntoAccount(item, $event)">
                                 <span class="geekmark"></span>
                                 <span class="name-checkbox">{{ item.label }}</span>
                               </label>
@@ -206,7 +208,7 @@
 <script>
   import { mapGetters } from 'vuex'
   import swal from 'sweetalert2'
-  import { inArrayObjectTreeselect, howAnimation, beforeOrderFilters, sendPageView, sendEvent } from './../../utils'
+  import { inArrayObjectTreeselect, howAnimation, beforeOrderFilters, sendPageView, sendEvent, removeDuplicates } from './../../utils'
   import { persistentData } from './../../mixins/persistent-data'
   export default {
     name: 'filter-anios-cuentas-disponibles',
@@ -405,6 +407,7 @@
       },
       handleChange () { //province, event
         this.reapply = (this.areApplied)? true: this.areApplied
+        this.takeIntoAccountDefault()
       },
       handleChangeList (elemet, event){
         event.preventDefault()
@@ -420,6 +423,27 @@
           this.form.cuentasDisponibles.push(item.id)
         })
         return this.form
+      },
+      takeIntoAccount (item, event = null) {
+        if (item.id === 'todos:true') {
+          this.selected_cuentas_disponibles = this.selected_cuentas_disponibles.filter(item => item.id !== 'todos:false')
+          this.selected_cuentas_disponibles.push(this.options_to_include[0])
+        }else if (item.id === 'todos:false') {
+          this.selected_cuentas_disponibles = this.selected_cuentas_disponibles.filter(item => item.id !== 'todos:true')
+          this.selected_cuentas_disponibles.push(this.options_to_include[1])
+        }
+        this.selected_cuentas_disponibles = removeDuplicates(this.selected_cuentas_disponibles, 'id')
+        if (event && event.target && event.target.tagName === 'INPUT'){
+          event.target.checked = true
+        }
+      },
+      takeIntoAccountDefault () {
+        if (this.selected_cuentas_disponibles && this.selected_cuentas_disponibles.length > 1 && this.options_to_include && this.options_to_include.length > 0) {
+          let tiene = this.selected_cuentas_disponibles.filter(item => (item.id === 'todos:false' || item.id === 'todos:true'))
+          if (tiene && tiene.length === 0) {
+            this.takeIntoAccount(this.options_to_include[0])
+          }
+        }
       }
     }
   }
