@@ -8,19 +8,36 @@
     </div>
     <div class="panel-body">
       <div v-if="search.cuentas_disponibles && search.cuentas_disponibles.length !== 0">
-        <div class="grid-4-columns-1fr">
-          <div v-for="(item, key) in search.cuentas_disponibles" :key="key">
-            <label class="custon-checkboxs" v-if="item.label !== 'incluir_null'">
-              <input type="checkbox"
-                :name="`checkbox_cuentas_disponibles_${item.id}`"
-                v-model="selected_cuentas_disponibles"
-                @change="handleChange()"
-                :id="`checkbox_cuentas_disponibles_${item.id}`"
-                :value="item">
-              <span class="geekmark"></span>
-              <span class="name-checkbox">{{ item.label }}</span>
-              <span class="num-fil"> ({{ item.data | numeral('0,0') }})</span>
-            </label>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="grid-3-columns-1fr">
+              <div v-for="(item, key) in search.cuentas_disponibles" :key="key">
+                <label class="custon-checkboxs" v-if="item.label !== 'incluir_null'">
+                  <input type="checkbox"
+                    :name="`checkbox_cuentas_disponibles_${item.id}`"
+                    v-model="selected_cuentas_disponibles"
+                    @change="handleChange()"
+                    :id="`checkbox_cuentas_disponibles_${item.id}`"
+                    :value="item">
+                  <span class="geekmark"></span>
+                  <span class="name-checkbox">{{ item.label }}</span>
+                  <span class="num-fil"> ({{ item.data | numeral('0,0') }})</span>
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div v-for="(item, key) in options_to_include" :key="key">
+              <label class="custon-checkboxs white" v-if="item.label !== 'incluir_null'">
+                <input type="checkbox"
+                  :name="`checkbox___cuentas_disponibles__${item.id}`"
+                  v-model="selected_cuentas_disponibles"
+                  :id="`checkbox___cuentas_disponibles__${item.id}`"
+                  :value="item">
+                <span class="geekmark"></span>
+                <span class="name-checkbox">{{ item.label }}</span>
+              </label>
+            </div>
           </div>
         </div>
         <div class="flex-space-between-flex-end">
@@ -90,7 +107,7 @@
                     <div class="panel-body">
                       <div class="row">
                         <div class="col-md-12">
-                            <div v-if="search.cuentas_disponibles.length !== 0">
+                            <div class="div-scroll-300" v-if="search.cuentas_disponibles.length !== 0">
                                 <div v-for="(item, key) in search.cuentas_disponibles" :key="key" class="checkbox">
                                     <label class="custon-checkboxs" v-if="item.label !== 'incluir_null'">
                                         <input type="checkbox"
@@ -141,23 +158,10 @@
                             <span class="span-info-right" v-if="selected_by_cuentas_disponibles !== 0"> ({{ selected_by_cuentas_disponibles | numeral('0,0') }} empresas seleccionadas)</span>
                           </p>
                         </div>
-                        <div class="panel-body" id="selected_cuentasDisponibles">
-                          <div v-for="(item, key) in selected_cuentas_disponibles" :key="key">
-                            <label class="custon-checkboxs" v-if="item.label !== 'incluir_null'">
-                              <input type="checkbox"
-                                :name="`checkbox_cuentas_disponibles__${item.id}`"
-                                v-model="selected_cuentas_disponibles"
-                                @change="handleChangeList(item, $event)"
-                                :id="`checkbox_cuentas_disponibles__${item.id}`"
-                                :value="item">
-                              <span class="geekmark"></span>
-                              <span class="name-checkbox">{{ item.label }}</span>
-                              <span class="num-fil"> ({{ item.data | numeral('0,0') }})</span>
-                            </label>
-                          </div>
-                          <div style="margin-top: 40px;">
-                            <div v-for="(item, key) in options_to_include" :key="key">
-                              <label class="custon-checkboxs" v-if="item.label !== 'incluir_null'">
+                        <div class="panel-body">
+                          <div class="div-scroll-200" id="selected_cuentasDisponibles">
+                            <div v-for="(item, key) in selected_cuentas_disponibles" :key="key">
+                              <label class="custon-checkboxs" v-if="item.label !== 'incluir_null' && item.id !== 'todos:true' && item.id !== 'todos:false'">
                                 <input type="checkbox"
                                   :name="`checkbox_cuentas_disponibles__${item.id}`"
                                   v-model="selected_cuentas_disponibles"
@@ -167,6 +171,19 @@
                                 <span class="geekmark"></span>
                                 <span class="name-checkbox">{{ item.label }}</span>
                                 <span class="num-fil"> ({{ item.data | numeral('0,0') }})</span>
+                              </label>
+                            </div>
+                          </div>
+                          <div style="margin-top: 40px;">
+                            <div v-for="(item, key) in options_to_include" :key="key">
+                              <label class="custon-checkboxs white" v-if="item.label !== 'incluir_null'">
+                                <input type="checkbox"
+                                  :name="`checkbox_cuentas_disponibles__${item.id}`"
+                                  v-model="selected_cuentas_disponibles"
+                                  :id="`checkbox_cuentas_disponibles__${item.id}`"
+                                  :value="item">
+                                <span class="geekmark"></span>
+                                <span class="name-checkbox">{{ item.label }}</span>
                               </label>
                             </div>
                           </div>
@@ -217,16 +234,17 @@
       title: 'Años con cuentas disponibles',
       selected_cuentas_disponibles_string: '',
       selected_cuentas_disponibles: [],
+      selected_to_include: [],
       list_cuentas_disponibles: [],
       selected_by_cuentas_disponibles: 0,
       options_to_include: [{
         id: 'todos:true',
         label: 'Tener en cuenta todos los años seleccionados',
-        data: 0
+        data: null
       },{
         id: 'todos:false',
         label: 'Tener en cuenta al menos uno de los años seleccionados',
-        data: 0
+        data: null
       }],
       areApplied: false,
       reapply: false,
