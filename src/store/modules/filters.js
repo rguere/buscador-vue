@@ -55,7 +55,7 @@ const initialState = () => {
         apply: false,
         quantity: 0,
         key: 'tipo',
-        disabled: true
+        disabled: false
       },
       {
         name: "Sector/Actividad",
