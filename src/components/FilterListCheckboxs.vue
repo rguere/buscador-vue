@@ -12,14 +12,12 @@
 
             <filter-numero-empleados></filter-numero-empleados>
 
+            <filter-anios-cuentas-disponibles></filter-anios-cuentas-disponibles>
+
             <!-- <el-badge value="Próximamente" class="item">
               <filter-estado></filter-estado>
             </el-badge>
 
-            <el-badge value="Próximamente" class="item">
-              <filter-anios-cuentas-disponibles></filter-anios-cuentas-disponibles>
-            </el-badge>
-            
             <el-badge value="Próximamente" class="item">
               <filter-informacion-financiera></filter-informacion-financiera>
             </el-badge>
