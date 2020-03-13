@@ -414,6 +414,22 @@ export default {
                   datas: element.selected_list_nif,
                   data_quantity: countByProperty(element.selected_list_nif, 'data')
                 })
+              }else if(element.title === "Años con cuentas disponibles"){
+                this.filtros_aplicados.push({
+                  title: element.title,
+                  quantity: result.quantity,
+                  key: result.key,
+                  datas: element.selected_cuentas_disponibles,
+                  data_quantity: countByProperty(element.selected_cuentas_disponibles, 'data')
+                })
+              }else if(element.title === "Tipo de cuentas"){
+                this.filtros_aplicados.push({
+                  title: element.title,
+                  quantity: result.quantity,
+                  key: result.key,
+                  datas: element.tipo_cuentas,
+                  data_quantity: countByProperty(element.tipo_cuentas, 'data')
+                })
               }
             }
           }

@@ -188,21 +188,7 @@
       showBtnApply: false,
       loadingFrm: false,
       modalVisible: false,
-      daterange: [null, null],
-      loadingDaterange: false,
-      loadingAhnos: false,
-      daterange_incluir_null: false,
-      ahnos_to: '',
-      ahnos_from: '',
-      incluir_null: false,
       all: false,
-      pickerOptions: {
-        disabledDate(time) {
-          return time.getTime() > Date.now();
-        },
-      },
-      desdePicker: 0,
-      hastaPicker: 0,
       custom_tipo_cuentas: [],
       selected_custom_tipo_cuentas: [],
     }),
