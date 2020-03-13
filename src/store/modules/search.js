@@ -1,5 +1,6 @@
 import axios from 'axios'
 import * as types from '../mutation-types'
+//import dataJSON from './../../assets/buscador-data.json'
 
 // state
 export const state = {
@@ -13,6 +14,8 @@ export const state = {
     auditor: [],
     cnae: [],
     industria: [],
+    tipo_cuentas: [],
+    cuentas_disponibles: [], 
   },
 }
 

@@ -13,6 +13,7 @@ const initialState = () => {
       razonSocial: [],
       empleados: [],
       cuentasDisponibles: [],
+      TipoCuentas: [],
       filtros: [{}]
     },
     applied_filters: [],
@@ -55,7 +56,7 @@ const initialState = () => {
         slug: "filter_tipo_de_cuentas",
         apply: false,
         quantity: 0,
-        key: 'tipo',
+        key: 'TipoCuentas',
         disabled: false
       },
       {

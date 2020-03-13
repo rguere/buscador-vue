@@ -8,10 +8,10 @@
     </div>
     <div class="panel-body">
       <div v-if="search.cuentas_disponibles && search.cuentas_disponibles.length !== 0">
-        <div class="row">
-          <div class="col-md-6">
+        <div class="grid-2-columns-1fr">
+          <div>
             <div class="grid-3-columns-1fr">
-              <div v-for="(item, key) in search.cuentas_disponibles" :key="key">
+              <div v-for="(item, key) in filterAvailableAccounts(search.cuentas_disponibles)" :key="key">
                 <label class="custon-checkboxs" v-if="item.label !== 'incluir_null'">
                   <input type="checkbox"
                     :name="`checkbox_cuentas_disponibles_${item.id}`"
@@ -26,7 +26,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-6">
+          <div>
             <div v-for="(item, key) in options_to_include" :key="key">
               <label class="custon-checkboxs white" v-if="item.label !== 'incluir_null'">
                 <input type="checkbox"
@@ -109,7 +109,7 @@
                       <div class="row">
                         <div class="col-md-12">
                             <div class="div-scroll-300" v-if="search.cuentas_disponibles.length !== 0">
-                                <div v-for="(item, key) in search.cuentas_disponibles" :key="key" class="checkbox">
+                                <div v-for="(item, key) in filterAvailableAccounts(search.cuentas_disponibles)" :key="key" class="checkbox">
                                     <label class="custon-checkboxs" v-if="item.label !== 'incluir_null'">
                                         <input type="checkbox"
                                             :name="`checkbox_cuentas_disponibles_${item.id}`"
@@ -198,9 +198,8 @@
             </div>
           </el-dialog>
       </div>
-      <div class="flex-space-between-flex-end">
-        <p></p>
-        <p class="text-help">* Puedes elegir más de una opción</p>
+      <div v-if="search.cuentas_disponibles && search.cuentas_disponibles.length === 0 && !loading" class="alert alert-dismissible alert-primary">
+        <strong>Oh!</strong> datos no encontrados.
       </div>
     </div>
   </div>
@@ -287,6 +286,22 @@
       })
     },
     methods: {
+      filterAvailableAccounts (availableAccounts) {
+        let validos = [
+          '2014',
+          '2015',
+          '2016',
+          '2017',
+          '2018',
+          '2019',
+          'incluir_null'
+        ]
+        return availableAccounts.filter(item => {
+          if (validos.includes(item.id)){
+            return item
+          }
+        })
+      },
       fetchSearch (){
       },
       showModal () {
