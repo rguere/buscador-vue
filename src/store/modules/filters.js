@@ -44,20 +44,20 @@ const initialState = () => {
         disabled: false
       },
       {
-        name: "Estado",
-        slug: "filter_estado",
-        apply: false,
-        quantity: 0,
-        key: 'estado',
-        disabled: true
-      },
-      {
         name: "Tipo de cuentas",
         slug: "filter_tipo_de_cuentas",
         apply: false,
         quantity: 0,
         key: 'TipoCuentas',
         disabled: false
+      },
+      {
+        name: "Estado",
+        slug: "filter_estado",
+        apply: false,
+        quantity: 0,
+        key: 'estado',
+        disabled: true
       },
       {
         name: "Sector/Actividad",
