@@ -229,7 +229,6 @@ export const actions = {
     }
   },
   updateNumberSelectedCompanies({ commit }, { quantity }) {
-    console.log('updateNumberSelectedCompanies', quantity)
     commit(types.SET_SELECTED_COMPANIES, {
       quantity
     })

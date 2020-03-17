@@ -200,7 +200,7 @@
         }
       },
       selected_custom_tipo_cuentas: function (selected_custom) {
-        if(selected_custom.length === 0) {
+        if(this.reapply && selected_custom.length === 0) {
           this.clean() 
         }
       },
@@ -241,7 +241,6 @@
        * @param  {[number]} quantity [cantidad de empresas selecionadas]
        */
       updateNumberSelectedCompanies(quantity){
-        console.log(this.title, 'updateNumberSelectedCompanies', quantity)
         this.$store.dispatch('filters/updateNumberSelectedCompanies', {
           quantity
         })

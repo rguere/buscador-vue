@@ -369,8 +369,8 @@
         }
       },
       selected_custom_antiguedad: function (selected_custom) {
-        if(selected_custom.length === 0) {
-          this.clean() 
+        if(this.reapply && selected_custom.length === 0) {
+          this.clean()
         }
       },
       selected_by_antiguedad: function(newValue) {
