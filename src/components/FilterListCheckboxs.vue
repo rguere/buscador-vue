@@ -12,7 +12,7 @@
 
             <filter-numero-empleados></filter-numero-empleados>
 
-            <filter-anios-cuentas-disponibles></filter-anios-cuentas-disponibles>
+            <!-- <filter-anios-cuentas-disponibles></filter-anios-cuentas-disponibles> -->
 
             <!-- <el-badge value="Próximamente" class="item">
               <filter-estado></filter-estado>
@@ -38,8 +38,8 @@
 
             <filter-nif></filter-nif>
             
-            <filter-tipo-cuentas></filter-tipo-cuentas>
             <!-- <el-badge value="Próximamente" class="item">
+            <filter-tipo-cuentas></filter-tipo-cuentas>
             </el-badge>
             
             <el-badge value="Próximamente" class="item">

@@ -241,6 +241,7 @@
        * @param  {[number]} quantity [cantidad de empresas selecionadas]
        */
       updateNumberSelectedCompanies(quantity){
+        console.log(this.title, 'updateNumberSelectedCompanies', quantity)
         this.$store.dispatch('filters/updateNumberSelectedCompanies', {
           quantity
         })
