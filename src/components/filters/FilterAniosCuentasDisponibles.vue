@@ -26,7 +26,7 @@
               </div>
             </div>
           </div>
-          <div>
+          <div v-if="selected_cuentas_disponibles.length > 1">
             <div v-for="(item, key) in options_to_include" :key="key">
               <label class="custon-checkboxs white" v-if="item.label !== 'incluir_null'">
                 <input type="checkbox"
@@ -459,6 +459,11 @@
           if (tiene && tiene.length === 0) {
             this.takeIntoAccount(this.options_to_include[0])
           }
+        }
+        if (this.selected_cuentas_disponibles && this.selected_cuentas_disponibles.length <= 2){
+          this.selected_cuentas_disponibles = this.selected_cuentas_disponibles.filter(item => item.id !== 'todos:false')
+          this.selected_cuentas_disponibles = this.selected_cuentas_disponibles.filter(item => item.id !== 'todos:true')
+          this.selected_cuentas_disponibles = removeDuplicates(this.selected_cuentas_disponibles, 'id')
         }
       }
     }
