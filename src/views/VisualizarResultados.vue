@@ -501,6 +501,9 @@ export default {
             }else {
               item.SumTotalEmpleados = '-'
             }
+            if (!item.Codigo_Postal) {
+              item.Codigo_Postal = '-'
+            }
             item.FechaConstitucionOrigen = (item.FechaConstitucionOrigen.length)? item.FechaConstitucionOrigen: '-'
             return item
           })
