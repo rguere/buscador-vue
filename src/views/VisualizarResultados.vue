@@ -350,7 +350,10 @@ export default {
       return item.prop
     })
     setTimeout(() => {
-      document.getElementById('selectColumns').placeholder = 'Seleccionar Columnas'
+      let selectColumns = document.getElementById('selectColumns')
+      if  (selectColumns) {
+        selectColumns.placeholder = 'Seleccionar Columnas'
+      }
     }, 100)
     if(!(this.applied_filters && this.applied_filters.length !== 0)){
       swal.fire(
@@ -503,6 +506,20 @@ export default {
             }
             if (!item.Codigo_Postal) {
               item.Codigo_Postal = '-'
+            }
+            if (item.CuentasDisponibles && Array.isArray(item.CuentasDisponibles)) {
+              item.CuentasDisponibles = item.CuentasDisponibles.map(item => {
+                return item.Ejercicio
+              }).join(', ')
+            }else {
+              item.CuentasDisponibles = '-'
+            }
+            if (item.TipoCuentasAnuales && Array.isArray(item.TipoCuentasAnuales)) {
+              item.TipoCuentasAnuales = item.TipoCuentasAnuales.map(item => {
+                return (item === 1)? 'Individual': 'Consolidada'
+              }).join(', ')
+            }else {
+              item.TipoCuentasAnuales = '-'
             }
             item.FechaConstitucionOrigen = (item.FechaConstitucionOrigen.length)? item.FechaConstitucionOrigen: '-'
             return item

@@ -208,14 +208,14 @@ export const getColumnsSummary = () => {
         {
           prop: 'Provincia',
           label: 'Provincia',
-          width: 'auto',
+          width: '130',
           show: true,
           sortable: true
         },
         {
           prop: 'Localidad',
           label: 'Localidad',
-          width: 'auto',
+          width: '130',
           show: true,
           sortable: true
         },
@@ -250,6 +250,20 @@ export const getColumnsSummary = () => {
         {
           prop: 'SumTotalEmpleados',
           label: 'Número empleados',
+          width: '147',
+          show: true,
+          sortable: true
+        },
+        {
+          prop: 'CuentasDisponibles',
+          label: 'Años con cuentas disponibles',
+          width: '210',
+          show: true,
+          sortable: true
+        },
+        {
+          prop: 'TipoCuentasAnuales',
+          label: 'Tipos de cuentas',
           width: '147',
           show: true,
           sortable: true
