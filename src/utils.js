@@ -264,7 +264,7 @@ export const getColumnsSummary = () => {
         {
           prop: 'TipoCuentasAnuales',
           label: 'Tipos de cuentas',
-          width: '147',
+          width: '210',
           show: true,
           sortable: true
         }

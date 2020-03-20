@@ -508,15 +508,18 @@ export default {
               item.Codigo_Postal = '-'
             }
             if (item.CuentasDisponibles && Array.isArray(item.CuentasDisponibles)) {
-              item.CuentasDisponibles = item.CuentasDisponibles.map(item => {
-                return item.Ejercicio
-              }).join(', ')
+              let length = item.CuentasDisponibles.length
+              if (item.CuentasDisponibles[length - 1] && item.CuentasDisponibles[length - 1].Ejercicio) {
+                item.CuentasDisponibles = item.CuentasDisponibles[length - 1].Ejercicio
+              }else  {
+                item.CuentasDisponibles = '-'  
+              }
             }else {
               item.CuentasDisponibles = '-'
             }
             if (item.TipoCuentasAnuales && Array.isArray(item.TipoCuentasAnuales)) {
               item.TipoCuentasAnuales = item.TipoCuentasAnuales.map(item => {
-                return (item === 1)? 'Individual': 'Consolidada'
+                return (item === 1)? 'Individuales': 'Consolidadas'
               }).join(', ')
             }else {
               item.TipoCuentasAnuales = '-'
