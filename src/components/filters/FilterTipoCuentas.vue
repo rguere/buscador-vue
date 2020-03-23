@@ -17,7 +17,7 @@
                 :id="`checkbox_TipoCuentas_${item.id}`"
                 :value="item">
               <span class="geekmark"></span>
-              <span class="name-checkbox">{{ item.label }}</span>
+              <span class="name-checkbox">{{ inPlural(item.label) }}</span>
               <span class="num-fil"> ({{ item.data | numeral('0,0') }})</span>
             </label>
         </div>
@@ -87,7 +87,7 @@
                                     :id="`checkbox_TipoCuentas___${item.id}`"
                                     :value="item">
                                   <span class="geekmark"></span>
-                                  <span class="name-checkbox">{{ item.label }}</span>
+                                  <span class="name-checkbox">{{ inPlural(item.label) }}</span>
                                   <span class="num-fil"> ({{ item.data | numeral('0,0') }})</span>
                                 </label>
                             </div>
@@ -127,7 +127,7 @@
                                       :id="`checkbox_cuentas_disponibles__${item.id}`"
                                       :value="item">
                                     <span class="geekmark"></span>
-                                    <span class="name-checkbox">{{ item.label }}</span>
+                                    <span class="name-checkbox">{{ inPlural(item.label) }}</span>
                                     <span class="num-fil"> ({{ item.data | numeral('0,0') }})</span>
                                   </label>
                                 </div>
@@ -223,10 +223,13 @@
       })
     },
     methods: {
-      fetchSearch (){
-        // this.$store.dispatch('search/fetchSearch').then(() => {
-        //   this.options[0].children = (this.search && this.search.tipo_cuentas) ? this.search.tipo_cuentas : []
-        // })
+      inPlural (text){
+        if (text === 'Individual') {
+          text = 'Individuales'
+        } else if (text === 'Consolidada') {
+          text = 'Consolidadas'
+        } 
+        return text
       },
       showModal () {
         sendPageView(`filtro-TipoCuentas`, `Buscador - Tipo de cuentas`)
