@@ -8,7 +8,7 @@
     </div>
     <div class="panel-body">
       <div v-if="search.tipo_cuentas && search.tipo_cuentas.length !== 0">
-        <div v-for="(item, key) in search.tipo_cuentas" :key="key">
+        <div v-for="(item, key) in orderItems(search.tipo_cuentas)" :key="key">
             <label class="custon-checkboxs" v-if="item.label !== 'incluir_null'">
               <input type="checkbox"
                 :name="`checkbox_TipoCuentas_${item.id}`"
@@ -78,7 +78,7 @@
                     <div class="panel-body">
                       <div class="row">
                         <div class="col-md-12">
-                            <div v-for="(item, key) in search.tipo_cuentas" :key="key">
+                            <div v-for="(item, key) in orderItems(search.tipo_cuentas)" :key="key">
                                 <label class="custon-checkboxs" v-if="item.label !== 'incluir_null'">
                                   <input type="checkbox"
                                     :name="`checkbox_TipoCuentas___${item.id}`"
@@ -230,6 +230,19 @@
           text = 'Consolidadas'
         } 
         return text
+      },
+      orderItems (items) {
+        let order = [{}, {}, {}] 
+        for (const item of items) {
+          if (item.id === '1') {
+            order[0] = item
+          }else if (item.id === '5') {
+            order[1] = item
+          }else if (item.id === '100') {
+            order[2] = item
+          }
+        }
+        return order
       },
       showModal () {
         sendPageView(`filtro-TipoCuentas`, `Buscador - Tipo de cuentas`)

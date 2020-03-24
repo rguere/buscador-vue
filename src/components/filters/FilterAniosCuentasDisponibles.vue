@@ -10,7 +10,7 @@
       <div v-if="search.cuentas_disponibles && search.cuentas_disponibles.length !== 0">
         <div class="grid-2-columns-1fr">
           <div>
-            <div class="grid-3-columns-1fr">
+            <div class="grid-3-columns-1fr rows-auto-flow">
               <div v-for="(item, key) in filterAvailableAccounts(search.cuentas_disponibles)" :key="key">
                 <label class="custon-checkboxs" v-if="item.label !== 'incluir_null'">
                   <input type="checkbox"
