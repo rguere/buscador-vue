@@ -3,7 +3,7 @@
     <div class="panel-heading">
       <p class="panel-title roboto white">
         {{ title }}
-        <span class="span-info-right" v-if="selected_by_cuentas_disponibles !== 0"> ({{ selected_by_cuentas_disponibles | numeral('0,0') }} empresas seleccionadas)</span>
+        <span class="span-info-right" v-if="selected_cuentas_disponibles.length !== 0 && selected_cuentas_disponibles.length < 2"> ({{ selected_by_cuentas_disponibles | numeral('0,0') }} empresas seleccionadas)</span>
       </p>
     </div>
     <div class="panel-body">
