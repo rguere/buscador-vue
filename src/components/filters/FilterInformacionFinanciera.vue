@@ -1,9 +1,7 @@
 <template>
   <div class="panel panel-default cd div_capa_superpuesta" id="filter_informacion_financiera">
     <div class="panel-heading">
-      <p class="panel-title roboto white">
-        Información Financiera
-      </p>
+      <p class="panel-title roboto white">Información Financiera</p>
     </div>
     <div class="panel-body">
       <div class="grid-2-columns-1fr">
@@ -12,9 +10,7 @@
             <div class="width-50-porcent">
               <div class="_flex-row">
                 <div class="padding-0-5">
-                  <div class="title-informacion-financiera">
-                    Partida financiera
-                  </div>
+                  <div class="title-informacion-financiera">Partida financiera</div>
                   <div>
                     <treeselect
                       class="select-partida-financiera"
@@ -22,32 +18,31 @@
                       :options="options"
                       placeholder="Seleccionar"
                       v-model="value"
-                      />
+                    />
                   </div>
                 </div>
                 <div>
-                  <button class="btn btn-warning">Ver detalles <i class="fa fa-plus-circle"></i></button>
+                  <button class="btn btn-warning">
+                    Ver detalles
+                    <i class="fa fa-plus-circle"></i>
+                  </button>
                 </div>
               </div>
             </div>
             <div class="width-50-porcent">
               <div class="padding-0-5">
                 <div class="padding-0-0-10-0">
-                  <div class="title-informacion-financiera">
-                    Minimo
-                  </div>
+                  <div class="title-informacion-financiera">Minimo</div>
                   <div class="conten-input-informacion-financiera">
-                    <input type="text" value="1000" name="min" id="min">
+                    <input type="text" value="1000" name="min" id="min" />
                     <label for="min">Miles de Euros</label>
                   </div>
                 </div>
 
                 <div class="padding-0-0-10-0">
-                  <div class="title-informacion-financiera">
-                    Maximo
-                  </div>
+                  <div class="title-informacion-financiera">Maximo</div>
                   <div class="conten-input-informacion-financiera">
-                    <input type="text" value="1000" name="max" id="max">
+                    <input type="text" value="1000" name="max" id="max" />
                     <label for="max">Miles de Euros</label>
                   </div>
                 </div>
@@ -57,34 +52,32 @@
         </div>
         <div>
           <div>
-            <div class="title-informacion-financiera">
-              Seleccionar Ejercicio
-            </div>
+            <div class="title-informacion-financiera">Seleccionar Ejercicio</div>
             <div class="anios_checkboxs">
               <div>
                 <label class="custon-checkboxs">
-                  <input type="checkbox" name="">
+                  <input type="checkbox" name />
                   <span class="geekmark"></span>
                   <span class="title">2018</span>
                 </label>
               </div>
               <div>
                 <label class="custon-checkboxs">
-                  <input type="checkbox" name="">
+                  <input type="checkbox" name />
                   <span class="geekmark"></span>
                   <span class="title">2017</span>
                 </label>
               </div>
               <div>
                 <label class="custon-checkboxs">
-                  <input type="checkbox" name="">
+                  <input type="checkbox" name />
                   <span class="geekmark"></span>
                   <span class="title">2016</span>
                 </label>
               </div>
               <div>
                 <label class="custon-checkboxs">
-                  <input type="checkbox" name="">
+                  <input type="checkbox" name />
                   <span class="geekmark"></span>
                   <span class="title">Ultimo año con consultas disponibles</span>
                 </label>
@@ -96,18 +89,24 @@
             </div>
           </div>
           <div>
-            <div class="">
+            <div class>
               <label class="custon-checkboxs">
-                <input type="checkbox" name="">
+                <input type="checkbox" name />
                 <span class="geekmark"></span>
-                <span class="title">Aplicar en la búsqueda <i>al menos uno</i> de los años seleccionados</span>
+                <span class="title">
+                  Aplicar en la búsqueda
+                  <i>al menos uno</i> de los años seleccionados
+                </span>
               </label>
             </div>
-            <div class="">
+            <div class>
               <label class="custon-checkboxs">
-                <input type="checkbox" name="">
+                <input type="checkbox" name />
                 <span class="geekmark"></span>
-                <span class="title">Aplicar en la búsqueda <i>TODOS</i> los años seleccionados</span>
+                <span class="title">
+                  Aplicar en la búsqueda
+                  <i>TODOS</i> los años seleccionados
+                </span>
               </label>
             </div>
           </div>
@@ -118,54 +117,67 @@
 </template>
 
 <script>
-  export default {
-    name: 'filter-informacion-financiera',
-    data: () => ({
-      value: [],
-      options: [{
-        id: 'fruits',
-        label: 'Fruits',
-        children: [{
-          id: 'apple',
-          label: 'Apple 🍎',
-          isNew: true,
-        }, {
-          id: 'grapes',
-          label: 'Grapes 🍇',
-        }, {
-          id: 'pear',
-          label: 'Pear 🍐',
-        }, {
-          id: 'strawberry',
-          label: 'Strawberry 🍓',
-        }, {
-          id: 'watermelon',
-          label: 'Watermelon 🍉',
-        }],
-      }, {
-        id: 'vegetables',
-        label: 'Vegetables',
-        children: [{
-          id: 'corn',
-          label: 'Corn 🌽',
-        }, {
-          id: 'carrot',
-          label: 'Carrot 🥕',
-        }, {
-          id: 'eggplant',
-          label: 'Eggplant 🍆',
-        }, {
-          id: 'tomato',
-          label: 'Tomato 🍅',
-        }],
-      }],
-    }),
-  }
+export default {
+  name: "filter-informacion-financiera",
+  data: () => ({
+    value: [],
+    options: [
+      {
+        id: "fruits",
+        label: "Fruits",
+        children: [
+          {
+            id: "apple",
+            label: "Apple 🍎",
+            isNew: true
+          },
+          {
+            id: "grapes",
+            label: "Grapes 🍇"
+          },
+          {
+            id: "pear",
+            label: "Pear 🍐"
+          },
+          {
+            id: "strawberry",
+            label: "Strawberry 🍓"
+          },
+          {
+            id: "watermelon",
+            label: "Watermelon 🍉"
+          }
+        ]
+      },
+      {
+        id: "vegetables",
+        label: "Vegetables",
+        children: [
+          {
+            id: "corn",
+            label: "Corn 🌽"
+          },
+          {
+            id: "carrot",
+            label: "Carrot 🥕"
+          },
+          {
+            id: "eggplant",
+            label: "Eggplant 🍆"
+          },
+          {
+            id: "tomato",
+            label: "Tomato 🍅"
+          }
+        ]
+      }
+    ]
+  })
+};
 </script>
 
 <style lang="scss" scoped>
-
-@import './../../sass/filters/filters';
+@import "./../../sass/filters/filters";
 
 .title-informacion-financiera {
   background-color: #dbe3f3;
@@ -190,7 +202,7 @@
   align-content: space-between;
 }
 
-._flex-row>div {
+._flex-row > div {
   width: 100%;
 }
 
@@ -204,7 +216,7 @@
   margin: 5px 0;
 }
 
-.flex>div.width-50-porcent {
+.flex > div.width-50-porcent {
   width: 50%;
 }
 
@@ -259,7 +271,5 @@
       }
     }
   }
-
 }
-
 </style>

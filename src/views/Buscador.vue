@@ -1,48 +1,51 @@
 <template>
-	<div class="home" id="page-wrapper">
-		<banner-top banner-title="Buscador de Empresas" banner-subtitle="Buscador de Empresas"></banner-top>
+  <div class="home" id="page-wrapper">
+    <banner-top banner-title="Buscador de Empresas" banner-subtitle="Buscador de Empresas"></banner-top>
     <div class="container">
       <loading-full-page></loading-full-page>
       <filter-list-checkboxs :search="search"></filter-list-checkboxs>
     </div>
-	</div>
+  </div>
 </template>
 
 <script>
 // @ is an alias to /src
 
-import { mapGetters } from 'vuex'
-import { sendPageView } from './../utils'
+import { mapGetters } from "vuex";
+import { sendPageView } from "./../utils";
 
 export default {
-  name: 'buscador',
+  name: "buscador",
   /*middleware: 'auth',*/
-  layout: 'basic',
-  metaInfo () {
-    return { 
-      title: 'Buscador - Filtros'
-    }
+  layout: "basic",
+  metaInfo() {
+    return {
+      title: "Buscador - Filtros"
+    };
   },
   computed: mapGetters({
-    search: 'search/search',
+    search: "search/search"
   }),
-  data: () => ({
-  }),
+  data: () => ({}),
   mounted() {
-    this.fetchSearch()
-    sendPageView('', 'Buscador - Filtros')
+    this.fetchSearch();
+    sendPageView("", "Buscador - Filtros");
   },
-  created () {
-    this.$store.dispatch('layout/setLayout', 'default-layout')
+  created() {
+    this.$store.dispatch("layout/setLayout", "default-layout");
   },
   methods: {
-    fetchSearch (){
-      if (this.search && this.search.provincia_localidad && this.search.provincia_localidad.length === 0) {
-        this.$store.dispatch('search/fetchSearch').then(() => {})
+    fetchSearch() {
+      if (
+        this.search &&
+        this.search.provincia_localidad &&
+        this.search.provincia_localidad.length === 0
+      ) {
+        this.$store.dispatch("search/fetchSearch").then(() => {});
       }
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>

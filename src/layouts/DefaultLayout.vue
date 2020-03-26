@@ -5,12 +5,12 @@
   </div>
 </template>
 
-<script> 
-  import MenuInfocif from '@/components/MenuInfocif'
-  export default {
-    name: 'DefaultLayout',
-    components: {
-      MenuInfocif
-    }
+<script>
+import MenuInfocif from "@/components/MenuInfocif";
+export default {
+  name: "DefaultLayout",
+  components: {
+    MenuInfocif
   }
+};
 </script>

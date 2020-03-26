@@ -5,14 +5,14 @@
 </template>
 
 <script>
-  import { mapGetters } from 'vuex'
-  export default {
-    computed: mapGetters({
-      layout: 'layout/layout'
-    }),
-  }
+import { mapGetters } from "vuex";
+export default {
+  computed: mapGetters({
+    layout: "layout/layout"
+  })
+};
 </script>
 
 <style lang="scss">
-  @import '@/sass/app';
+@import "@/sass/app";
 </style>
