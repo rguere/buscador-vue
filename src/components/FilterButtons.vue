@@ -31,7 +31,7 @@
               <div class="filter-btns">
                 <div v-for="(filter, key) in filters" :key="key">
                   <a
-                    href
+                    :href='`#${filter.slug}`'
                     class="btn btn-default"
                     v-if="!filter.disabled"
                     :class="(filter.apply)? 'active': ''"
