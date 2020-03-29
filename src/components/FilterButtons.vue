@@ -38,7 +38,6 @@
                     v-scroll-to="{
 											el: `#${filter.slug}`,
 											offset: -290,
-											onDone: onDone
 										}"
                   >{{ filter.name }}</a>
                   <el-badge v-if="filter.disabled" value="Próximamente" class="item">
