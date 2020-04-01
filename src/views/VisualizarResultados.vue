@@ -516,6 +516,14 @@ export default {
                   datas: element.selected_auditores,
                   data_quantity: countByProperty(element.selected_auditores, "data")
                 });
+              } else if (element.title === "Sector/Actividad") {
+                this.filtros_aplicados.push({
+                  title: element.title,
+                  quantity: result.quantity,
+                  key: result.key,
+                  datas: element.cnae,
+                  data_quantity: countByProperty(element.cnae, "data")
+                });
               }
             }
           }

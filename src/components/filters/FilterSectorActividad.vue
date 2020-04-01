@@ -1,145 +1,525 @@
 <template>
-  <div class="panel panel-default cd div_capa_superpuesta" id="filter_sector_actividad">
+  <div class="panel panel-default cd" id="filter_sector_actividad">
     <div class="panel-heading">
-      <p class="panel-title roboto white">Sector/Actividad</p>
+      <p class="panel-title roboto white">
+        {{ title }}
+        <span
+          class="span-info-right"
+          v-if="selected_by_cnae !== 0"
+        >({{ selected_by_cnae | numeral('0,0') }} empresas seleccionadas)</span>
+      </p>
     </div>
     <div class="panel-body">
-      <div>
-        <label class="custon-checkboxs">
-          <input type="checkbox" name />
-          <span class="geekmark"></span>
-          <span class="name-checkbox">Checkbox</span>
-          <span class="num-fil">(100.000)</span>
-        </label>
+      <div v-if="search.cnae && search.cnae.length !== 0">
+        <div class="max-height-250-overflow">
+          <div class="grid-2-columns-1fr">
+            <div v-for="(item, key) in search.cnae" :key="key">
+              <label class="custon-checkboxs" v-if="item.label !== 'incluir_null'">
+                <input
+                  type="checkbox"
+                  :name="`checkbox_TipoCuentas_${item.id}`"
+                  v-model="cnae"
+                  @change="handleChange()"
+                  :id="`checkbox_TipoCuentas_${item.id}`"
+                  :value="item"
+                />
+                <span class="geekmark"></span>
+                <span class="name-checkbox">{{ item.label }}</span>
+                <span class="num-fil"> ({{ item.data | numeral('0,0') }})</span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="flex-space-between-flex-end">
+          <div class="btns">
+            <button type="button" class="btn btn-warning" @click="showModal">
+              Ver detalles
+              <i class="fa fa-plus-circle"></i>
+            </button>
+            <button
+              type="button"
+              class="btn btn-success"
+              v-if="(cnae.length !== 0 && !areApplied) || (cnae.length !== 0 && !compareWithNewtoApply)"
+              @click="apply"
+            >
+              Aplicar
+              <i :class="(loadingFrm)?'fa  fa-spinner fa-spin':'fa  fa-send'"></i>
+            </button>
+            <button type="button" class="btn btn-info" v-if="areApplied" @click="confirmClean">
+              Limpiar
+              <i class="fa fa-undo"></i>
+            </button>
+          </div>
+        </div>
+        <div class="float-right margin-top-10">
+          <p class="text-help">* Puedes elegir más de una opción</p>
+        </div>
+        <el-dialog
+          :visible.sync="modalVisible"
+          width="95%"
+          :close-on-click-modal="false"
+          :show-close="false"
+          :destroy-on-close="true"
+          :center="true"
+          top="5vh"
+        >
+          <div>
+            <div class="btns-modal-header">
+              <div>
+                <button class="btn btn-warning" @click="hideModal">
+                  <i class="fa fa-arrow-left"></i> Vover
+                </button>
+                <button class="btn btn-a">{{ title }}</button>
+              </div>
+              <div>
+                <button
+                  type="button"
+                  class="btn btn-success"
+                  v-if="(cnae.length !== 0 && !areApplied) || (cnae.length !== 0 && !compareWithNewtoApply)"
+                  @click="apply"
+                >
+                  Aplicar
+                  <i :class="(loadingFrm)?'fa  fa-spinner fa-spin':'fa  fa-send'"></i>
+                </button>
+                <button type="button" class="btn btn-info" v-if="areApplied" @click="confirmClean">
+                  Limpiar
+                  <i class="fa fa-undo"></i>
+                </button>
+              </div>
+            </div>
+            <div class="row" v-if="search.cnae && search.cnae.length !== 0">
+              <div class="col-md-6">
+                <div class="panel panel-default cd">
+                  <div class="panel-heading">
+                    <p class="panel-title roboto white">
+                      Seleccionar empresas por Sector/Actividad.
+                      <span
+                        class="span-info-right"
+                        v-if="selected_by_cnae !== 0"
+                      >({{ selected_by_cnae | numeral('0,0') }} empresas seleccionadas)</span>
+                    </p>
+                  </div>
+                  <div class="panel-body">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div v-for="(item, key) in search.cnae" :key="key">
+                          <label class="custon-checkboxs" v-if="item.label !== 'incluir_null'">
+                            <input
+                              type="checkbox"
+                              :name="`checkbox_TipoCuentas___${item.id}`"
+                              v-model="cnae"
+                              @change="handleChange()"
+                              :id="`checkbox_TipoCuentas___${item.id}`"
+                              :value="item"
+                            />
+                            <span class="geekmark"></span>
+                            <span class="name-checkbox">{{ item.label }}</span>
+                            <span class="num-fil">({{ item.data | numeral('0,0') }})</span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="panel panel-default cd">
+                      <div class="panel-heading">
+                        <p class="panel-title roboto white">
+                          Sector/Actividad seleccionados
+                          <span
+                            class="span-info-right"
+                            v-if="cnae.length !== 0"
+                          >{{ cnae.length }}</span>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="panel panel-default cd">
+                      <div class="panel-heading">
+                        <p class="panel-title roboto white">
+                          Empresas seleccionadas
+                          <span
+                            class="span-info-right"
+                            v-if="selected_by_cnae !== 0"
+                          >({{ selected_by_cnae | numeral('0,0') }} empresas seleccionadas)</span>
+                        </p>
+                      </div>
+                      <div class="panel-body">
+                        <div class id="selected_cnae">
+                          <div v-for="(item, key) in cnae" :key="key">
+                            <label
+                              class="custon-checkboxs"
+                              v-if="item.label !== 'incluir_null' && item.id !== 'todos:true' && item.id !== 'todos:false'"
+                            >
+                              <input
+                                type="checkbox"
+                                :name="`checkbox_cuentas_disponibles__${item.id}`"
+                                v-model="cnae"
+                                @change="handleChangeList(item, $event)"
+                                :id="`checkbox_cuentas_disponibles__${item.id}`"
+                                :value="item"
+                              />
+                              <span class="geekmark"></span>
+                              <span class="name-checkbox">{{ item.label }}</span>
+                              <span class="num-fil">({{ item.data | numeral('0,0') }})</span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </el-dialog>
       </div>
-
-      <div class="flex-space-between-center">
-        <button class="btn btn-warning">
-          Ver detalles
-          <i class="fa fa-plus-circle"></i>
-        </button>
-        <treeselect
-          class="select-treeselect"
-          :multiple="true"
-          :options="options"
-          placeholder="Seleccionar"
-          v-model="value"
-        />
-      </div>
-
-      <div>
-        <label class="custon-checkboxs">
-          <input type="checkbox" name />
-          <span class="geekmark"></span>
-          <span class="name-checkbox">Checkbox</span>
-          <span class="num-fil">(100.000)</span>
-        </label>
-      </div>
-
-      <div class="flex-space-between-center">
-        <button class="btn btn-warning">
-          Ver detalles
-          <i class="fa fa-plus-circle"></i>
-        </button>
-        <treeselect
-          class="select-treeselect"
-          :multiple="true"
-          :options="options"
-          placeholder="Seleccionar"
-          v-model="value2"
-        />
-      </div>
-
-      <div class="flex-space-between-flex-end">
-        <p></p>
-        <p class="text-help">* Puedes elegir más de una opción</p>
+      <div
+        v-if="search.cnae && search.cnae.length === 0 && !loading"
+        class="alert alert-dismissible alert-primary"
+      >
+        <strong>Oh!</strong> datos no encontrados.
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+import swal from "sweetalert2";
+import {
+  inArrayObjectTreeselect,
+  howAnimation,
+  beforeOrderFilters,
+  sendPageView,
+  sendEvent
+} from "./../../utils";
+import { persistentData } from "./../../mixins/persistent-data";
 export default {
   name: "filter-sector-actividad",
+  mixins: [persistentData],
+  computed: {
+    ...mapGetters({
+      search: "search/search",
+      loading: "search/loading",
+      form: "filters/form",
+      selected_companies: "filters/selected_companies",
+      applied_filters: "filters/applied_filters",
+      filters: "filters/filters"
+    }),
+    compareWithNewtoApply: function() {
+      let stg = this.cnae_string;
+      let obj = JSON.stringify(this.cnae);
+      return stg === obj;
+    }
+  },
   data: () => ({
-    value: [],
-    value2: [],
+    title: "Sector/Actividad",
+    cnae_string: "",
+    cnae: [],
+    list_cnae: [],
+    selected_by_cnae: 0,
     options: [
       {
-        id: "fruits",
-        label: "Fruits",
-        children: [
-          {
-            id: "apple",
-            label: "Apple 🍎",
-            isNew: true
-          },
-          {
-            id: "grapes",
-            label: "Grapes 🍇"
-          },
-          {
-            id: "pear",
-            label: "Pear 🍐"
-          },
-          {
-            id: "strawberry",
-            label: "Strawberry 🍓"
-          },
-          {
-            id: "watermelon",
-            label: "Watermelon 🍉"
-          }
-        ]
-      },
-      {
-        id: "vegetables",
-        label: "Vegetables",
-        children: [
-          {
-            id: "corn",
-            label: "Corn 🌽"
-          },
-          {
-            id: "carrot",
-            label: "Carrot 🥕"
-          },
-          {
-            id: "eggplant",
-            label: "Eggplant 🍆"
-          },
-          {
-            id: "tomato",
-            label: "Tomato 🍅"
-          }
-        ]
+        id: "all",
+        label: "TODA ESPAÑA",
+        isDefaultExpanded: true,
+        children: []
       }
-    ]
-  })
+    ],
+    areApplied: false,
+    reapply: false,
+    showBtnApply: false,
+    loadingFrm: false,
+    modalVisible: false,
+    all: false,
+    custom_cnae: [],
+    selected_custom_cnae: []
+  }),
+  watch: {
+    cnae: function(newProvincesLocalidad) {
+      this.selected_by_cnae = this.numberCompaniesSelected(
+        this.isAllProvincesLocalidad(newProvincesLocalidad)
+          ? this.search.cnae
+          : newProvincesLocalidad
+      );
+      if (this.reapply && newProvincesLocalidad.length === 0) {
+        this.clean();
+      }
+    },
+    selected_custom_cnae: function(selected_custom) {
+      if (this.reapply && selected_custom.length === 0) {
+        this.clean();
+      }
+    },
+    selected_by_cnae: function(newValue) {
+      if (newValue === 0) this.cnae = [];
+    },
+    selected_companies: function() {
+      howAnimation(document.querySelector(".selected_companies"));
+    }
+  },
+  mounted() {
+    this.$root.$on("clean_filter", filter => {
+      if (filter === this.title) {
+        this.clean();
+      }
+    });
+    this.$root.$on("show_modal_filter", filter => {
+      if (filter === this.title) {
+        this.modalVisible = true;
+      }
+    });
+    this.$root.$on("empty_filter", filter => {
+      if (filter === this.title) {
+        this.emptyFilter();
+      }
+    });
+  },
+  methods: {
+    inPlural(text) {
+      if (text === "Individual") {
+        text = "Individuales";
+      } else if (text === "Consolidada") {
+        text = "Consolidadas";
+      }
+      return text;
+    },
+    orderItems(items) {
+      let order = [{}, {}, {}];
+      for (const item of items) {
+        if (item.id === "1") {
+          order[0] = item;
+        } else if (item.id === "5") {
+          order[1] = item;
+        } else if (item.id === "100") {
+          order[2] = item;
+        }
+      }
+      return order;
+    },
+    showModal() {
+      sendPageView(`filtro-TipoCuentas`, `Buscador - Sector/Actividad`);
+      this.modalVisible = true;
+    },
+    hideModal() {
+      sendPageView(``, `Buscador - Filtro`);
+      this.modalVisible = false;
+    },
+    /**
+     * [updateNumberSelectedCompanies actualiza la cantidad de empresas selecionadas en el store de Vuex]
+     * @param  {[number]} quantity [cantidad de empresas selecionadas]
+     */
+    updateNumberSelectedCompanies(quantity) {
+      this.$store.dispatch("filters/updateNumberSelectedCompanies", {
+        quantity
+      });
+    },
+    /**
+     * [numberCompaniesSelected cuenta la cantidad de empresas selecionadas]
+     * @param  {[Array<Object>]} newSelectedCompanies [description]
+     * @return {[number]}        business_accountant  [description]
+     */
+    numberCompaniesSelected(newSelectedCompanies) {
+      let business_accountant = 0;
+      if (Array.isArray(newSelectedCompanies)) {
+        newSelectedCompanies.forEach(item => {
+          let result = inArrayObjectTreeselect(
+            this.search.cnae,
+            item.id
+          );
+          if (result && result.data && result.data) {
+            business_accountant = business_accountant + result.data;
+          }
+        });
+      }
+      return business_accountant;
+    },
+    /**
+     * [isAllProvincesLocalidad saber si el valor del treeselect es TODA ESPAÑA]
+     * @param  {[type]}  arrayProvincesLocalidad [description]
+     * @return {Boolean}                         [description]
+     */
+    isAllProvincesLocalidad(arrayProvincesLocalidad) {
+      return arrayProvincesLocalidad[0] &&
+        arrayProvincesLocalidad[0].id === "all"
+        ? true
+        : false;
+    },
+    apply() {
+      if (this.cnae && this.cnae.length !== 0) {
+        this.hideModal();
+        this.loadingFrm = true;
+        this.formatearDataPOST();
+        let beforeForm = beforeOrderFilters(
+          this.filters,
+          this.applied_filters,
+          this.form,
+          this.title
+        );
+        this.$store
+          .dispatch("search/filtrar", beforeForm)
+          .then(response => {
+            this.updateNumberSelectedCompanies(response.cantidad);
+            this.$store.dispatch("filters/addFilters", {
+              name: this.title,
+              quantity: this.selected_by_cnae,
+              cantidades: response
+            });
+            this.areApplied = true;
+            this.reapply = false;
+            this.loadingFrm = false;
+            this.cnae_string = JSON.stringify(this.cnae);
+            this.ahnos_from = "";
+            this.ahnos_to = "";
+            this.custom_cnae = [];
+            sendEvent(`filtro-aplicado`, this.title);
+          })
+          .catch(() => {
+            this.loadingFrm = false;
+          });
+      }
+    },
+    confirmClean() {
+      swal
+        .fire({
+          icon: "question",
+          title: "Estas seguro?",
+          html: `deseas vaciar el filtro ${this.title}?`,
+          showCancelButton: true,
+          cancelButtonText: "Cancelar",
+          cancelButtonColor: "#d9534f",
+          showConfirmButton: true,
+          confirmButtonColor: "#337ab7",
+          confirmButtonText: "Si, seguro"
+        })
+        .then(result => {
+          if (result.value) {
+            this.clean();
+          }
+        });
+    },
+    clean() {
+      this.form.cnae = [];
+      this.cnae = [];
+      this.cnae_string = "";
+      if (this.applied_filters.length > 1) {
+        let beforeForm = beforeOrderFilters(
+          this.filters,
+          this.applied_filters,
+          this.form,
+          this.title
+        );
+        this.$store.dispatch("search/filtrar", beforeForm).then(response => {
+          this.updateNumberSelectedCompanies(response.cantidad);
+          this.$store.dispatch("filters/setCantidades", {
+            cantidades: response
+          });
+        });
+      } else {
+        this.updateNumberSelectedCompanies(0);
+      }
+      this.selected_by_cnae = 0;
+      (this.daterange = [null, null]),
+        this.$store.dispatch("filters/removeFilters", this.title);
+      this.areApplied = false;
+      this.reapply = false;
+      this.incluir_null = false;
+      this.ahnos_from = "";
+      this.ahnos_to = "";
+      this.custom_cnae = [];
+      sendEvent("filtro-limpiado", this.title);
+    },
+    emptyFilter() {
+      this.form.cnae = [];
+      this.cnae = [];
+      this.cnae_string = "";
+      this.updateNumberSelectedCompanies(0);
+      this.selected_by_cnae = 0;
+      (this.daterange = [null, null]),
+        this.$store.dispatch("filters/removeFilters", this.title);
+      this.areApplied = false;
+      this.reapply = false;
+      this.incluir_null = false;
+      this.ahnos_from = "";
+      this.ahnos_to = "";
+      this.custom_cnae = [];
+    },
+    handleChange() {
+      //province, event
+      this.reapply = this.areApplied ? true : this.areApplied;
+    },
+    handleChangeList(elemet, event) {
+      event.preventDefault();
+      this.reapply = this.areApplied ? true : this.areApplied;
+      let checkboxs = document.querySelectorAll(
+        '#selected_cnae input[type="checkbox"]'
+      );
+      checkboxs.forEach(item => {
+        item.checked = true;
+      });
+    },
+    formatearDataPOST() {
+      this.form.cnae = [];
+      this.cnae.forEach(item => {
+        this.form.cnae.push(item.id);
+      });
+      return this.form;
+    }
+  }
 };
 </script>
 
 <style lang="scss" scoped>
 @import "./../../sass/filters/filters";
-.flex-space-between-center {
-  button {
-    width: auto;
+
+.block {
+  display: flex;
+  flex-direction: column;
+
+  .demonstration {
+    margin-bottom: 3px;
   }
-  .select-treeselect {
-    width: 65%;
+
+  .el-date-editor {
+    width: 100%;
   }
 }
 
-@media (min-width: 750px) and (max-width: 820px) {
-  .flex-space-between-center {
-    flex-wrap: wrap;
-    button {
-      width: 100%;
-      margin-bottom: 5px;
-    }
-    .select-treeselect {
-      width: 100%;
-    }
+.float-right {
+  float: right;
+}
+.bg-g {
+  width: 50%;
+}
+
+.el-range-editor--medium.el-input__inner {
+  width: 100%;
+}
+
+.anti-inputs {
+  display: flex;
+  align-items: center;
+  input {
+    width: 50%;
+    margin: 0 5px;
   }
+}
+
+.conten-epa {
+  padding: 55px 0;
+}
+
+.checkbox input[type="checkbox"] {
+  margin-left: 15px;
+}
+
+.max-height-250-overflow {
+  overflow-y: auto;
+  max-height: 250px;
 }
 </style>

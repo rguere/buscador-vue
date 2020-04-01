@@ -14,7 +14,7 @@
 
             <filter-anios-cuentas-disponibles></filter-anios-cuentas-disponibles>
 
-            <filter-auditores></filter-auditores>
+            <filter-sector-actividad></filter-sector-actividad>
             
             <!--<filter-estado></filter-estado>
             <filter-informacion-financiera></filter-informacion-financiera>
@@ -29,7 +29,7 @@
             
             <filter-tipo-cuentas></filter-tipo-cuentas>
             
-            <filter-sector-actividad></filter-sector-actividad>
+            <filter-auditores></filter-auditores>
             <!--
             <el-badge value="Próximamente" class="item">
               <filter-directivos-vinculaciones></filter-directivos-vinculaciones>

@@ -15,6 +15,7 @@ const initialState = () => {
       empleados: [],
       cuentasDisponibles: [],
       TipoCuentas: [],
+      cnae: [],
       filtros: [{}]
     },
     applied_filters: [],
@@ -57,7 +58,7 @@ const initialState = () => {
         slug: "filter_sector_actividad",
         apply: false,
         quantity: 0,
-        key: 'actividad',
+        key: 'cnae',
         disabled: false
       },
       {
