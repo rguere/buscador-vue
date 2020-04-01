@@ -11,6 +11,7 @@ const initialState = () => {
       Localidades: [],
       antiguedad: [],
       razonSocial: [],
+      auditorBorme: [],
       empleados: [],
       cuentasDisponibles: [],
       TipoCuentas: [],
@@ -52,19 +53,19 @@ const initialState = () => {
         disabled: false
       },
       {
-        name: "Estado",
-        slug: "filter_estado",
-        apply: false,
-        quantity: 0,
-        key: 'estado',
-        disabled: true
-      },
-      {
         name: "Sector/Actividad",
         slug: "filter_sector_actividad",
         apply: false,
         quantity: 0,
         key: 'actividad',
+        disabled: false
+      },
+      {
+        name: "Estado",
+        slug: "filter_estado",
+        apply: false,
+        quantity: 0,
+        key: 'estado',
         disabled: true
       },
       {
@@ -108,19 +109,19 @@ const initialState = () => {
         disabled: false
       },
       {
+        name: "Auditores",
+        slug: "filter_auditores",
+        apply: false,
+        quantity: 0,
+        key: 'auditorBorme',
+        disabled: false
+      },
+      {
         name: "Información Financiera",
         slug: "filter_informacion_financiera",
         apply: false,
         quantity: 0,
         key: 'informacion',
-        disabled: true
-      },
-      {
-        name: "Auditores",
-        slug: "filter_auditores",
-        apply: false,
-        quantity: 0,
-        key: 'auditores',
         disabled: true
       },
       {

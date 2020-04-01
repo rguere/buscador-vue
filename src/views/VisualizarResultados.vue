@@ -508,6 +508,14 @@ export default {
                   datas: element.tipo_cuentas,
                   data_quantity: countByProperty(element.tipo_cuentas, "data")
                 });
+              } else if (element.title === "Auditores") {
+                this.filtros_aplicados.push({
+                  title: element.title,
+                  quantity: result.quantity,
+                  key: result.key,
+                  datas: element.selected_auditores,
+                  data_quantity: countByProperty(element.selected_auditores, "data")
+                });
               }
             }
           }

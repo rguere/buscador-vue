@@ -143,7 +143,17 @@ export const actions = {
       const { data } = await axios.get(`/buscador/razonSocial/buscar?RazonSocial=${razon_social}&page=0&size=500`)
       return data
     } catch (e) {
-     commit(types.LOADING_SEARCH, {
+      commit(types.LOADING_SEARCH, {
+        loading: false
+      })
+    }
+  },
+  async validateBormeAuditor({ commit }, AuditorBorme){
+    try{
+      const { data } = await axios.post(`/buscador/auditorBorme/buscar`, {lista: AuditorBorme} )
+      return data
+    } catch (e) {
+      commit(types.LOADING_SEARCH, {
         loading: false
       })
     }

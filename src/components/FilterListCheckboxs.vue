@@ -14,22 +14,11 @@
 
             <filter-anios-cuentas-disponibles></filter-anios-cuentas-disponibles>
 
-            <!-- <el-badge value="Próximamente" class="item">
-              <filter-estado></filter-estado>
-            </el-badge>
-
-            <el-badge value="Próximamente" class="item">
-              <filter-informacion-financiera></filter-informacion-financiera>
-            </el-badge>
+            <filter-auditores></filter-auditores>
             
-            <el-badge value="Próximamente" class="item">
-              <filter-auditores :search="search"></filter-auditores>
-            </el-badge>
-            
-            <el-badge value="Próximamente" class="item">
-              <filter-cargos></filter-cargos>
-            </el-badge> -->
-
+            <!--<filter-estado></filter-estado>
+            <filter-informacion-financiera></filter-informacion-financiera>
+            <filter-cargos></filter-cargos>-->
           </div>
           <div class="col-md-4">
             <filter-codigo-postal></filter-codigo-postal>
@@ -39,13 +28,9 @@
             <filter-nif></filter-nif>
             
             <filter-tipo-cuentas></filter-tipo-cuentas>
-            <!-- <el-badge value="Próximamente" class="item">
-            </el-badge>
             
-            <el-badge value="Próximamente" class="item">
-              <filter-sector-actividad></filter-sector-actividad>
-            </el-badge>  
-            
+            <filter-sector-actividad></filter-sector-actividad>
+            <!--
             <el-badge value="Próximamente" class="item">
               <filter-directivos-vinculaciones></filter-directivos-vinculaciones>
             </el-badge> -->
