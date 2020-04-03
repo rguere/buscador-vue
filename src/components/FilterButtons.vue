@@ -98,7 +98,7 @@
 </template>
 
 <script>
-import { howAnimation, orderFilters } from "./../utils"; //handleScroll
+import { handleScroll, howAnimation, orderFilters } from "./../utils";
 import { mapGetters } from "vuex";
 import swal from "sweetalert2";
 export default {
