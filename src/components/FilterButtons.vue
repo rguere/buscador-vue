@@ -1,3 +1,8 @@
+<!-- v-scroll-to="{
+  el: `#${filter.slug}`,
+  offset: -100,
+  onDone: onDone
+}" -->
 <template>
   <div class="panel panel-default cd min-height-200">
     <div class="panel-body">
@@ -34,12 +39,8 @@
                     :href='`#${filter.slug}`'
                     class="btn btn-default"
                     v-if="!filter.disabled"
+                    :data-offset="filter.offset"
                     :class="(filter.apply)? 'active': ''"
-                    v-scroll-to="{
-											el: `#${filter.slug}`,
-											offset: -100,
-                      onDone: onDone
-										}"
                   >{{ filter.name }}</a>
                   <el-badge v-if="filter.disabled" value="Próximamente" class="item">
                     <div class="btn btn_disabled">{{ filter.name }}</div>
@@ -98,7 +99,7 @@
 </template>
 
 <script>
-import { handleScroll, howAnimation, orderFilters } from "./../utils";
+import { handleScroll, howAnimation, orderFilters, scrollIt } from "./../utils";
 import { mapGetters } from "vuex";
 import swal from "sweetalert2";
 export default {
@@ -135,6 +136,23 @@ export default {
   },
   mounted() {
     window.addEventListener("scroll", handleScroll);
+    let links = document.querySelectorAll(".filter-btns a");
+    links.forEach(item => {
+      item.addEventListener('click', event => {
+        event.preventDefault();
+        const target = event.target;
+        const href = target.getAttribute('href');
+        const element = document.querySelector(href)
+        const offset = parseInt(target.dataset.offset)
+        scrollIt(
+          element,
+          300,
+          'easeOutQuad',
+          offset,
+          () => { howAnimation(element) }
+        )
+      })
+    });
   },
   watch: {},
   destroyed() {

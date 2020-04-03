@@ -24,6 +24,7 @@ const initialState = () => {
       {
         name: "Ubicación",
         slug: "filter_ubicacion",
+        offset: 290,
         apply: false,
         quantity: 0,
         key: 'comunidades',
@@ -32,6 +33,7 @@ const initialState = () => {
       {
         name: "Antigüedad",
         slug: "filter_antiguedad",
+        offset: 290,
         apply: false,
         quantity: 0,
         key: 'antiguedad',
@@ -40,6 +42,7 @@ const initialState = () => {
       {
         name: "Número de empleados",
         slug: "filter_numero_de_empleados",
+        offset: 290,
         apply: false,
         quantity: 0,
         key: 'empleados',
@@ -48,6 +51,7 @@ const initialState = () => {
       {
         name: "Tipo de cuentas",
         slug: "filter_tipo_de_cuentas",
+        offset: 290,
         apply: false,
         quantity: 0,
         key: 'TipoCuentas',
@@ -56,6 +60,7 @@ const initialState = () => {
       {
         name: "Sector/Actividad",
         slug: "filter_sector_actividad",
+        offset: 90,
         apply: false,
         quantity: 0,
         key: 'cnae',
@@ -64,6 +69,7 @@ const initialState = () => {
       {
         name: "Estado",
         slug: "filter_estado",
+        offset: 290,
         apply: false,
         quantity: 0,
         key: 'estado',
@@ -72,6 +78,7 @@ const initialState = () => {
       {
         name: "Cargos",
         slug: "filter_cargos",
+        offset: 290,
         apply: false,
         quantity: 0,
         key: 'cargos',
@@ -80,6 +87,7 @@ const initialState = () => {
       {
         name: "Código Postal",
         slug: "filter_codigo_postal",
+        offset: 290,
         apply: false,
         quantity: 0,
         key: 'codigosPostales',
@@ -88,6 +96,7 @@ const initialState = () => {
       {
         name: "Nombre o razón social",
         slug: "filter_nombre_o_razon_social",
+        offset: 290,
         apply: false,
         quantity: 0,
         key: 'razonSocial',
@@ -96,6 +105,7 @@ const initialState = () => {
       {
         name: "NIF",
         slug: "filter_nif",
+        offset: 290,
         apply: false,
         quantity: 0,
         key: 'cif',
@@ -104,6 +114,7 @@ const initialState = () => {
       {
         name: "Años con cuentas disponibles",
         slug: "filter_anios_con_cuentas_disponibles",
+        offset: 290,
         apply: false,
         quantity: 0,
         key: 'cuentasDisponibles',
@@ -112,6 +123,7 @@ const initialState = () => {
       {
         name: "Auditores",
         slug: "filter_auditores",
+        offset: 30,
         apply: false,
         quantity: 0,
         key: 'auditorBorme',
@@ -120,6 +132,7 @@ const initialState = () => {
       {
         name: "Información Financiera",
         slug: "filter_informacion_financiera",
+        offset: 290,
         apply: false,
         quantity: 0,
         key: 'informacion',
@@ -128,6 +141,7 @@ const initialState = () => {
       {
         name: "Directivos y Vinculaciones",
         slug: "filter_directivos_y_vinculaciones",
+        offset: 290,
         apply: false,
         quantity: 0,
         key: 'vinculaciones',

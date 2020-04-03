@@ -284,7 +284,7 @@ export const showColumnsSummary = (newColumns) => {
     return showColumns
 }
 
-export const scrollIt = (destination, duration = 200, easing = 'linear', callback) => {
+export const scrollIt = (destination, duration = 200, easing = 'linear', offset = 0,  callback) => {
   const easings = {
     linear(t) {
       return t;
@@ -333,7 +333,7 @@ export const scrollIt = (destination, duration = 200, easing = 'linear', callbac
   const documentHeight = Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);
   const windowHeight = window.innerHeight || document.documentElement.clientHeight || document.getElementsByTagName('body')[0].clientHeight;
   const destinationOffset = typeof destination === 'number' ? destination : destination.offsetTop;
-  const destinationOffsetToScroll = Math.round(documentHeight - destinationOffset < windowHeight ? documentHeight - windowHeight : destinationOffset);
+  const destinationOffsetToScroll = Math.round(documentHeight - destinationOffset < windowHeight ? documentHeight - windowHeight : destinationOffset) - offset;
 
   if ('requestAnimationFrame' in window === false) {
     window.scroll(0, destinationOffsetToScroll);

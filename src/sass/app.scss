@@ -14,6 +14,10 @@
 @import 'transitions';
 /* @import 'estilosres.css'; */
 
+// html {
+//   scroll-behavior: smooth;
+// }
+
 #filter-buttons {
   background-color: #fff!important;
   transition: all 0.5s;
