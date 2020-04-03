@@ -191,7 +191,11 @@
   }
 }
 
-span.num-fil { color: #2196f3; font-weight: bold; }
+span.num-fil { 
+  color: #2196f3;
+  font-weight: bold;
+  margin-left: 3px;
+}
 
 .div-scroll-200 {
   height: 200px;

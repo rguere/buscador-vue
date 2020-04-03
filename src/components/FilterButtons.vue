@@ -37,7 +37,8 @@
                     :class="(filter.apply)? 'active': ''"
                     v-scroll-to="{
 											el: `#${filter.slug}`,
-											offset: -290,
+											offset: -100,
+                      onDone: onDone
 										}"
                   >{{ filter.name }}</a>
                   <el-badge v-if="filter.disabled" value="Próximamente" class="item">
@@ -97,7 +98,7 @@
 </template>
 
 <script>
-import { handleScroll, howAnimation, orderFilters } from "./../utils";
+import { howAnimation, orderFilters } from "./../utils"; //handleScroll
 import { mapGetters } from "vuex";
 import swal from "sweetalert2";
 export default {
@@ -133,11 +134,11 @@ export default {
     }
   },
   mounted() {
-    window.addEventListener("scroll", handleScroll);
+    //window.addEventListener("scroll", handleScroll);
   },
   watch: {},
   destroyed() {
-    window.removeEventListener("scroll", handleScroll);
+    //window.removeEventListener("scroll", handleScroll);
   },
   methods: {
     onDone(element) {

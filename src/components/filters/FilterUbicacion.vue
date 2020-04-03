@@ -162,7 +162,7 @@
                         </el-select>
                       </div>
                       <div class="col-md-12">
-                        <div style="height: 400px; overflow-y: scroll; margin-top: 10px;">
+                        <div style="height: 260px; margin-top: 10px;">
                           <treeselect
                             valueFormat="object"
                             name="options"
@@ -217,7 +217,7 @@
                       <span class="span-info-right">{{ selected_by_location | numeral('0,0') }}</span>
                     </p>
                   </div>
-                  <div class="panel-body">
+                  <div class="panel-body" style="max-height: 300px; overflow-y: scroll;">
                     <ul
                       class="ul_selected_provinces_localidad"
                       id="ul_selected_provinces_localidad"
