@@ -134,11 +134,11 @@ export default {
     }
   },
   mounted() {
-    //window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll);
   },
   watch: {},
   destroyed() {
-    //window.removeEventListener("scroll", handleScroll);
+    window.removeEventListener("scroll", handleScroll);
   },
   methods: {
     onDone(element) {
