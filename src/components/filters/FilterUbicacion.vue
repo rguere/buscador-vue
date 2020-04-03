@@ -147,6 +147,7 @@
                           remote
                           reserve-keyword
                           placeholder="Busca y selecciona localidades"
+                          :popper-append-to-body="false"
                           :remote-method="remoteMethod"
                           :loading="loadingSelect"
                           @change="changeMethod"
