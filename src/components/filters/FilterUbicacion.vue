@@ -132,75 +132,72 @@
                     >CCAA, Provincia o Localidad encontradas en base a el (los) nombre(s) introducido(s).</p>
                   </div>
                   <div class="panel-body">
-                    <div class="row">
-                      <div class="col-md-12">
+
+                    <label
+                      class="control-label"
+                      for="SearchTheProvinceorTown"
+                    >Busca y selecciona localidades</label>
+                    <el-select
+                      id="SearchTheProvinceorTown"
+                      name="SearchTheProvinceorTown"
+                      v-model="valueSelect"
+                      multiple
+                      clearable
+                      filterable
+                      remote
+                      reserve-keyword
+                      placeholder="Busca y selecciona localidades"
+                      :popper-append-to-body="false"
+                      popper-class="SearchTheProvinceorTown"
+                      :remote-method="remoteMethod"
+                      :loading="loadingSelect"
+                      @change="changeMethod"
+                      @clear="changeClear"
+                      @remove-tag="changeRemoveTag"
+                    >
+                      <el-option
+                        v-for="item in optionsSelect"
+                        :key="item.id"
+                        :label="item.label"
+                        :value="item.id"
+                      ></el-option>
+                    </el-select>
+
+                    <div style="height: 260px; margin-top: 10px;">
+                      <treeselect
+                        valueFormat="object"
+                        name="options"
+                        id="options"
+                        :multiple="true"
+                        :options="options"
+                        :always-open="true"
+                        :default-expand-level="1"
+                        :load-options="fetchSearch"
+                        :limit="0"
+                        :limitText="t => ''"
+                        :disableFuzzyMatching="true"
+                        @input="inputTreeselect"
+                        @select="selectTreeselect"
+                        @deselect="deselectTreeselect"
+                        placeholder="Seleccionar"
+                        search-nested
+                        v-model="selected_provinces_localidad"
+                      >
                         <label
-                          class="control-label"
-                          for="SearchTheProvinceorTown"
-                        >Busca y selecciona localidades</label>
-                        <el-select
-                          id="SearchTheProvinceorTown"
-                          name="SearchTheProvinceorTown"
-                          v-model="valueSelect"
-                          multiple
-                          clearable
-                          filterable
-                          remote
-                          reserve-keyword
-                          placeholder="Busca y selecciona localidades"
-                          :popper-append-to-body="false"
-                          popper-class="SearchTheProvinceorTown"
-                          :remote-method="remoteMethod"
-                          :loading="loadingSelect"
-                          @change="changeMethod"
-                          @clear="changeClear"
-                          @remove-tag="changeRemoveTag"
+                          slot="option-label"
+                          slot-scope="{ node, shouldShowCount, count, labelClassName, countClassName }"
+                          :class="labelClassName"
                         >
-                          <el-option
-                            v-for="item in optionsSelect"
-                            :key="item.id"
-                            :label="item.label"
-                            :value="item.id"
-                          ></el-option>
-                        </el-select>
-
-                        <div style="height: 260px; margin-top: 10px;">
-                          <treeselect
-                            valueFormat="object"
-                            name="options"
-                            id="options"
-                            :multiple="true"
-                            :options="options"
-                            :always-open="true"
-                            :default-expand-level="1"
-                            :load-options="fetchSearch"
-                            :limit="0"
-                            :limitText="t => ''"
-                            :disableFuzzyMatching="true"
-                            @input="inputTreeselect"
-                            @select="selectTreeselect"
-                            @deselect="deselectTreeselect"
-                            placeholder="Seleccionar"
-                            search-nested
-                            v-model="selected_provinces_localidad"
-                          >
-                            <label
-                              slot="option-label"
-                              slot-scope="{ node, shouldShowCount, count, labelClassName, countClassName }"
-                              :class="labelClassName"
-                            >
-                              {{ node.label }}
-                              <span
-                                class="num-fil"
-                                v-if="node.raw.id != 'all'"
-                              >({{ node.raw.data | numeral('0,0') }})</span>
-                              <span v-if="shouldShowCount" :class="countClassName">({{ count }})</span>
-                            </label>
-                          </treeselect>
-                        </div>
-
-                      </div>
+                          {{ node.label }}
+                          <span
+                            class="num-fil"
+                            v-if="node.raw.id != 'all'"
+                          >({{ node.raw.data | numeral('0,0') }})</span>
+                          <span v-if="shouldShowCount" :class="countClassName">({{ count }})</span>
+                        </label>
+                      </treeselect>
                     </div>
+                    
                   </div>
                 </div>
               </div>
