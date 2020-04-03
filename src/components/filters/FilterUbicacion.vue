@@ -163,8 +163,7 @@
                             :value="item.id"
                           ></el-option>
                         </el-select>
-                      </div>
-                      <div class="col-md-12">
+
                         <div style="height: 260px; margin-top: 10px;">
                           <treeselect
                             valueFormat="object"
@@ -199,6 +198,7 @@
                             </label>
                           </treeselect>
                         </div>
+
                       </div>
                     </div>
                   </div>
