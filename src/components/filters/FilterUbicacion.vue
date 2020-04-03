@@ -89,6 +89,7 @@
         <el-dialog
           :visible.sync="modalVisible"
           width="95%"
+          :modal-append-to-body="false"
           :close-on-click-modal="false"
           :show-close="false"
           :destroy-on-close="true"
@@ -148,6 +149,7 @@
                           reserve-keyword
                           placeholder="Busca y selecciona localidades"
                           :popper-append-to-body="false"
+                          popper-class="SearchTheProvinceorTown"
                           :remote-method="remoteMethod"
                           :loading="loadingSelect"
                           @change="changeMethod"
