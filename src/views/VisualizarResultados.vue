@@ -51,6 +51,7 @@
                   placeholder="Seleccionar Columnas"
                   @change="changeColumns"
                   id="selectColumns"
+                  class="select-columns"
                 >
                   <el-option
                     v-for="item in selectColumns"
