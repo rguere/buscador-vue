@@ -51,7 +51,7 @@ const initialState = () => {
       {
         name: "Tipo de cuentas",
         slug: "filter_tipo_de_cuentas",
-        offset: 290,
+        offset: 0,
         apply: false,
         quantity: 0,
         key: 'TipoCuentas',
@@ -114,7 +114,7 @@ const initialState = () => {
       {
         name: "Años con cuentas disponibles",
         slug: "filter_anios_con_cuentas_disponibles",
-        offset: 290,
+        offset: 0,
         apply: false,
         quantity: 0,
         key: 'cuentasDisponibles',
