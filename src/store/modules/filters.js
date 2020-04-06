@@ -42,7 +42,7 @@ const initialState = () => {
       {
         name: "Número de empleados",
         slug: "filter_numero_de_empleados",
-        offset: 180,
+        offset: 70,
         apply: false,
         quantity: 0,
         key: 'empleados',
@@ -105,7 +105,7 @@ const initialState = () => {
       {
         name: "NIF",
         slug: "filter_nif",
-        offset: 245,
+        offset: 140,
         apply: false,
         quantity: 0,
         key: 'cif',
