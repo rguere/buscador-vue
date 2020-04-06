@@ -39,6 +39,11 @@
                     :href='`#${filter.slug}`'
                     class="btn btn-default"
                     v-if="!filter.disabled"
+                    v-scroll-to="{
+                      el: `#${filter.slug}`,
+                      offset: -290,
+                      onDone: onDone
+                    }"
                     :data-offset="filter.offset"
                     :class="(filter.apply)? 'active': ''"
                   >{{ filter.name }}</a>
@@ -99,7 +104,7 @@
 </template>
 
 <script>
-import { handleScroll, howAnimation, orderFilters, scrollIt } from "./../utils";
+import { handleScroll, howAnimation, orderFilters } from "./../utils"; //scrollIt
 import { mapGetters } from "vuex";
 import swal from "sweetalert2";
 export default {
@@ -136,23 +141,23 @@ export default {
   },
   mounted() {
     window.addEventListener("scroll", handleScroll);
-    let links = document.querySelectorAll(".filter-btns a");
-    links.forEach(item => {
-      item.addEventListener('click', event => {
-        event.preventDefault();
-        const target = event.target;
-        const href = target.getAttribute('href');
-        const element = document.querySelector(href)
-        const offset = parseInt(target.dataset.offset)
-        scrollIt(
-          element,
-          300,
-          'easeOutQuad',
-          offset,
-          () => { howAnimation(element) }
-        )
-      })
-    });
+    // let links = document.querySelectorAll(".filter-btns a");
+    // links.forEach(item => {
+    //   item.addEventListener('click', event => {
+    //     event.preventDefault();
+    //     const target = event.target;
+    //     const href = target.getAttribute('href');
+    //     const element = document.querySelector(href)
+    //     const offset = parseInt(target.dataset.offset)
+    //     scrollIt(
+    //       element,
+    //       300,
+    //       'easeOutQuad',
+    //       offset,
+    //       () => { howAnimation(element) }
+    //     )
+    //   })
+    // });
   },
   watch: {},
   destroyed() {
