@@ -9,7 +9,7 @@
             <filter-antiguedad></filter-antiguedad>
             <filter-numero-empleados></filter-numero-empleados>
             <filter-anios-cuentas-disponibles></filter-anios-cuentas-disponibles>
-            <filter-sector-actividad></filter-sector-actividad>
+            <!-- <filter-sector-actividad></filter-sector-actividad> -->
             <!--<filter-estado></filter-estado>
             <filter-informacion-financiera></filter-informacion-financiera>
             <filter-cargos></filter-cargos>-->
@@ -19,7 +19,7 @@
             <filter-razon-social></filter-razon-social>
             <filter-nif></filter-nif>
             <filter-tipo-cuentas></filter-tipo-cuentas>
-            <filter-auditores></filter-auditores>
+            <!-- <filter-auditores></filter-auditores> -->
             <!--
             <el-badge value="Próximamente" class="item">
               <filter-directivos-vinculaciones></filter-directivos-vinculaciones>
