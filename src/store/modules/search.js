@@ -1,6 +1,6 @@
 import axios from 'axios'
 import * as types from '../mutation-types'
-//import dataJSON from './../../assets/buscador-data.json'
+import { formatProvinciaLocalidad } from './../../utils'
 
 // state
 export const state = {
@@ -47,8 +47,9 @@ export const actions = {
           loading: true
         })
         const { data } = await axios.get('/buscador/resumen')
+        const _data = formatProvinciaLocalidad(data)
         commit(types.FETCH_SEARCH, {
-          search: data
+          search: _data
         })
       } catch (e) {
         commit(types.FETCH_SEARCH, {

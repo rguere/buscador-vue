@@ -361,3 +361,29 @@ export const scrollIt = (destination, duration = 200, easing = 'linear', offset 
 
   scroll();
 }
+
+export const formatProvinciaLocalidad = (data) => {
+  let newData = {}
+  for (const key in data) {
+    if (data.hasOwnProperty(key)) {
+      const element = data[key];
+      if (key === 'provincia_localidad' && Array.isArray(element)) {
+        element.map(item => {
+          if (Array.isArray(item.children)) {
+            item.children.map(_item => {
+              if (Array.isArray(_item.children)) {
+                _item.children.map(__item => {
+                  delete __item['children']
+                })
+              }
+              return _item
+            })
+          }
+          return item
+        })
+      }
+      newData[key] = element
+    }
+  }
+  return newData
+} 
