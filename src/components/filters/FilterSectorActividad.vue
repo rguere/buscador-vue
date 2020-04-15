@@ -20,7 +20,11 @@
       </ul>
 
       <div class="tab-content">
-        <div id="Codigo_CNAE" class="tab-pane fade in active">
+        <div
+          id="Codigo_CNAE"
+          class="tab-pane fade in active"
+          style="margin-bottom: 50px;"
+        >
           <div v-if="search.cnae && search.cnae.length != 0">
             <div class="">
               <div class="row">
@@ -42,7 +46,7 @@
                     @deselect="deselectTreeselect"
                     placeholder="Seleccionar"
                     search-nested
-                    v-model="selected_provinces_localidad"
+                    v-model="selected_cnae"
                   >
                     <label
                       slot="option-label"
@@ -65,109 +69,8 @@
                     </label>
                   </treeselect>
                 </div>
-                <div class="col-md-12">
-                  <div
-                    class="flex-space-between-flex-end"
-                    style="margin-top: 50px;"
-                  >
-                    <div class="btns">
-                      <button
-                        type="button"
-                        class="btn btn-warning"
-                        @click="showModal"
-                      >
-                        Ver detalles
-                        <i class="fa fa-plus-circle"></i>
-                      </button>
-                      <button
-                        type="button"
-                        class="btn btn-success"
-                        v-if="
-                          (selected_provinces_localidad.length !== 0 &&
-                            !areApplied) ||
-                            (selected_provinces_localidad.length !== 0 &&
-                              !compareWithNewtoApply)
-                        "
-                        @click="apply"
-                      >
-                        Aplicar
-                        <i
-                          :class="
-                            loadingFrm
-                              ? 'fa  fa-spinner fa-spin'
-                              : 'fa  fa-send'
-                          "
-                        ></i>
-                      </button>
-                      <button
-                        type="button"
-                        class="btn btn-info"
-                        v-if="areApplied"
-                        @click="confirmClean"
-                      >
-                        Limpiar
-                        <i class="fa fa-undo"></i>
-                      </button>
-                    </div>
-                    <p class="text-help">* Puedes elegir más de una opción</p>
-                  </div>
-                </div>
               </div>
             </div>
-            <el-dialog
-              :visible.sync="modalVisible"
-              width="95%"
-              :modal-append-to-body="false"
-              :close-on-click-modal="false"
-              :show-close="false"
-              :destroy-on-close="true"
-              :center="true"
-              top="5vh"
-            >
-              <div>
-                <div class="btns-modal-header">
-                  <div>
-                    <button class="btn btn-warning" @click="hideModal">
-                      <i class="fa fa-arrow-left"></i> Vover
-                    </button>
-                    <button class="btn btn-a">{{ title }}</button>
-                  </div>
-                  <div>
-                    <button
-                      type="button"
-                      class="btn btn-success"
-                      v-if="
-                        (selected_provinces_localidad.length !== 0 &&
-                          !areApplied) ||
-                          (selected_provinces_localidad.length !== 0 &&
-                            !compareWithNewtoApply)
-                      "
-                      @click="apply"
-                    >
-                      Aplicar
-                      <i
-                        :class="
-                          loadingFrm ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'
-                        "
-                      ></i>
-                    </button>
-                    <button
-                      type="button"
-                      class="btn btn-info"
-                      v-if="areApplied"
-                      @click="confirmClean"
-                    >
-                      Limpiar
-                      <i class="fa fa-undo"></i>
-                    </button>
-                  </div>
-                </div>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Asperiores, commodi adipisci sapiente, laudantium dignissimos
-                natus ipsam veniam recusandae alias rerum eveniet aspernatur
-                nisi ea error culpa optio necessitatibus odit ipsum.
-              </div>
-            </el-dialog>
           </div>
           <div
             v-if="search.cnae && search.cnae.length === 0 && !loading"
@@ -177,12 +80,119 @@
           </div>
         </div>
         <div id="Sector_INFOCIF" class="tab-pane fade">
-          <h3>Sector INFOCIF</h3>
-          <p>
-            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-            nisi ut aliquip ex ea commodo consequat.
-          </p>
+          <div v-if="search.industria && search.industria.length != 0">
+            <div class="max-height-400-overflow">
+              <div class="grid-3-columns-1fr">
+                <div v-for="(item, key) in search.industria" :key="key">
+                  <label class="custon-checkboxs">
+                    <input
+                      type="checkbox"
+                      :name="`checkbox_${item.id}`"
+                      v-model="selected_industria"
+                      @change="handleChange(item, $event)"
+                      :id="`checkbox_${item.id}`"
+                      :value="item"
+                    />
+                    <span class="geekmark"></span>
+                    <span class="name-checkbox">{{ item.label }}</span>
+                    <span class="num-fil"
+                      >({{ item.data | numeral("0,0") }})</span
+                    >
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="flex-space-between-flex-end">
+            <div class="btns">
+              <button type="button" class="btn btn-warning" @click="showModal">
+                Ver detalles
+                <i class="fa fa-plus-circle"></i>
+              </button>
+              <button
+                type="button"
+                class="btn btn-success"
+                v-if="
+                  (selected_cnae.length !== 0 && !areApplied) ||
+                    (selected_cnae.length !== 0 && !compareWithNewtoApply)
+                "
+                @click="apply"
+              >
+                Aplicar
+                <i
+                  :class="loadingFrm ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'"
+                ></i>
+              </button>
+              <button
+                type="button"
+                class="btn btn-info"
+                v-if="areApplied"
+                @click="confirmClean"
+              >
+                Limpiar
+                <i class="fa fa-undo"></i>
+              </button>
+            </div>
+            <p class="text-help">* Puedes elegir más de una opción</p>
+          </div>
+        </div>
+        <el-dialog
+          :visible.sync="modalVisible"
+          width="95%"
+          :modal-append-to-body="false"
+          :close-on-click-modal="false"
+          :show-close="false"
+          :destroy-on-close="true"
+          :center="true"
+          top="5vh"
+        >
+          <div>
+            <div class="btns-modal-header">
+              <div>
+                <button class="btn btn-warning" @click="hideModal">
+                  <i class="fa fa-arrow-left"></i> Vover
+                </button>
+                <button class="btn btn-a">{{ title }}</button>
+              </div>
+              <div>
+                <button
+                  type="button"
+                  class="btn btn-success"
+                  v-if="
+                    (selected_cnae.length !== 0 && !areApplied) ||
+                      (selected_cnae.length !== 0 && !compareWithNewtoApply)
+                  "
+                  @click="apply"
+                >
+                  Aplicar
+                  <i
+                    :class="
+                      loadingFrm ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'
+                    "
+                  ></i>
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-info"
+                  v-if="areApplied"
+                  @click="confirmClean"
+                >
+                  Limpiar
+                  <i class="fa fa-undo"></i>
+                </button>
+              </div>
+            </div>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+            Asperiores, commodi adipisci sapiente, laudantium dignissimos natus
+            ipsam veniam recusandae alias rerum eveniet aspernatur nisi ea error
+            culpa optio necessitatibus odit ipsum.
+          </div>
+        </el-dialog>
       </div>
     </div>
   </div>
@@ -213,17 +223,17 @@ export default {
       filters: "filters/filters",
     }),
     compareWithNewtoApply: function() {
-      let stg = this.selected_provinces_localidad_string;
-      let obj = JSON.stringify(
-        this.sortData(this.selected_provinces_localidad)
-      );
+      let stg = this.selected_cnae_string;
+      let obj = JSON.stringify(this.sortData(this.selected_cnae));
       return stg === obj;
     },
   },
   data: () => ({
     title: "Sector/Actividad",
-    selected_provinces_localidad_string: "",
-    selected_provinces_localidad: [],
+    selected_cnae_string: "",
+    selected_cnae: [],
+    selected_industria_string: "",
+    selected_industria: [],
     list_provinces_localidad: [],
     selected_children: [],
     selected_by_location: 0,
@@ -249,7 +259,7 @@ export default {
     limitChildren: 3,
   }),
   watch: {
-    selected_provinces_localidad: function(newProvincesLocalidad) {
+    selected_cnae: function(newProvincesLocalidad) {
       this.selected_by_location = this.numberCompaniesSelected(
         this.isAllProvincesLocalidad(newProvincesLocalidad)
           ? this.search.cnae
@@ -279,19 +289,14 @@ export default {
           }
         });
         respalSelectedPL = removeDuplicates(respalSelectedPL, "id");
-        this.selected_provinces_localidad = this.selected_provinces_localidad.concat(
-          respalSelectedPL
-        );
-        this.selected_provinces_localidad = removeDuplicates(
-          this.selected_provinces_localidad,
-          "id"
-        );
+        this.selected_cnae = this.selected_cnae.concat(respalSelectedPL);
+        this.selected_cnae = removeDuplicates(this.selected_cnae, "id");
       } else {
         let eliminadas = attValueSelect.filter((item) => {
           return !newValueSelect.includes(item) ? item : null;
         });
         eliminadas.map((_item) => {
-          this.selected_provinces_localidad = this.selected_provinces_localidad.filter(
+          this.selected_cnae = this.selected_cnae.filter(
             (item) => item.id !== _item
           );
         });
@@ -372,40 +377,37 @@ export default {
         : false;
     },
     apply() {
-      if (
-        this.selected_provinces_localidad &&
-        this.selected_provinces_localidad.length !== 0
-      ) {
-        this.hideModal();
-        this.loadingFrm = true;
-        this.formatearDataPOST();
-        let beforeForm = beforeOrderFilters(
-          this.filters,
-          this.applied_filters,
-          this.form,
-          this.title
-        );
-        this.$store
-          .dispatch("search/filtrar", beforeForm)
-          .then((response) => {
-            this.updateNumberSelectedCompanies(response.cantidad);
-            this.$store.dispatch("filters/addFilters", {
-              name: this.title,
-              quantity: this.selected_by_location,
-              cantidades: response,
-            });
-            this.areApplied = true;
-            this.reapply = false;
-            this.loadingFrm = false;
-            this.selected_provinces_localidad_string = JSON.stringify(
-              this.sortData(this.selected_provinces_localidad)
-            );
-            sendEvent(`filtro-aplicado`, this.title);
-          })
-          .catch(() => {
-            this.loadingFrm = false;
-          });
-      }
+      // if (this.selected_cnae && this.selected_cnae.length !== 0) {
+      //   this.hideModal();
+      //   this.loadingFrm = true;
+      //   this.formatearDataPOST();
+      //   let beforeForm = beforeOrderFilters(
+      //     this.filters,
+      //     this.applied_filters,
+      //     this.form,
+      //     this.title
+      //   );
+      //   this.$store
+      //     .dispatch("search/filtrar", beforeForm)
+      //     .then((response) => {
+      //       this.updateNumberSelectedCompanies(response.cantidad);
+      //       this.$store.dispatch("filters/addFilters", {
+      //         name: this.title,
+      //         quantity: this.selected_by_location,
+      //         cantidades: response,
+      //       });
+      //       this.areApplied = true;
+      //       this.reapply = false;
+      //       this.loadingFrm = false;
+      //       this.selected_cnae_string = JSON.stringify(
+      //         this.sortData(this.selected_cnae)
+      //       );
+      //       sendEvent(`filtro-aplicado`, this.title);
+      //     })
+      //     .catch(() => {
+      //       this.loadingFrm = false;
+      //     });
+      // }
     },
     confirmClean() {
       swal
@@ -431,9 +433,9 @@ export default {
       this.form.comunidades = [];
       this.form.Provincias = [];
       this.form.Localidades = [];
-      this.selected_provinces_localidad = [];
+      this.selected_cnae = [];
       this.valueSelect = [];
-      this.selected_provinces_localidad_string = "";
+      this.selected_cnae_string = "";
       if (this.applied_filters.length > 1) {
         let beforeForm = beforeOrderFilters(
           this.filters,
@@ -464,9 +466,9 @@ export default {
       this.form.comunidades = [];
       this.form.Provincias = [];
       this.form.Localidades = [];
-      this.selected_provinces_localidad = [];
+      this.selected_cnae = [];
       this.valueSelect = [];
-      this.selected_provinces_localidad_string = "";
+      this.selected_cnae_string = "";
       this.updateNumberSelectedCompanies(0);
       this.selected_by_location = 0;
       this.$store.dispatch("filters/removeFilters", this.title);
@@ -483,7 +485,7 @@ export default {
     handleChangeList(province, event) {
       event.preventDefault();
       let checkboxs = document.querySelectorAll(
-        '#ul_selected_provinces_localidad input[type="checkbox"]'
+        '#ul_selected_cnae input[type="checkbox"]'
       );
       checkboxs.forEach((item) => {
         item.checked = true;
@@ -530,7 +532,7 @@ export default {
       this.form.comunidades = [];
       this.form.Provincias = [];
       this.form.Localidades = [];
-      this.selected_provinces_localidad.forEach((item) => {
+      this.selected_cnae.forEach((item) => {
         let result = inArrayObjectTreeselect(this.search.cnae, item.id);
         if (result && result.id) {
           let resultIdSplit = result.id.split("|");
@@ -556,13 +558,13 @@ export default {
     handleCheckChange(data, checked) {
       //data, checked, indeterminate
       if (checked) {
-        let respalSelectedPL = [...this.selected_provinces_localidad];
+        let respalSelectedPL = [...this.selected_cnae];
         let result = inArrayObjectTreeselect(this.search.cnae, data.id);
         if (result) {
           respalSelectedPL.push(result);
         }
         respalSelectedPL = removeDuplicates(respalSelectedPL, "id");
-        this.selected_provinces_localidad = [...respalSelectedPL];
+        this.selected_cnae = [...respalSelectedPL];
       } else {
         this.changeRemoveTag(data.id);
       }
@@ -587,7 +589,7 @@ export default {
       }
     },
     changeRemoveTag(id_elemet) {
-      this.selected_provinces_localidad = this.selected_provinces_localidad.filter(
+      this.selected_cnae = this.selected_cnae.filter(
         (item) => item.id !== id_elemet
       );
     },

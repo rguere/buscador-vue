@@ -4,12 +4,12 @@
  * @return {[Array]}     [Array]
  */
 export const objectToArray = (obj) => {
-	return Object.keys(obj).map((key) => {
-		return {
-			[key]: obj[key]
-		}
-	})
-}
+  return Object.keys(obj).map((key) => {
+    return {
+      [key]: obj[key],
+    };
+  });
+};
 
 /**
  * [removeDuplicates remueve de una Array de Objetos los duplicados segun una propiedad]
@@ -18,16 +18,16 @@ export const objectToArray = (obj) => {
  * @return {[Array]}               [nuevo Array sin duplicados]
  */
 export const removeDuplicates = (originalArray, prop) => {
-	let newArray = []
-    let lookupObject  = {}
-    for(let key in originalArray) {
-        lookupObject[originalArray[key][prop]] = originalArray[key]
-    }
-    for(let key in lookupObject) {
-        newArray.push(lookupObject[key])
-    }
-    return newArray
-}
+  let newArray = [];
+  let lookupObject = {};
+  for (let key in originalArray) {
+    lookupObject[originalArray[key][prop]] = originalArray[key];
+  }
+  for (let key in lookupObject) {
+    newArray.push(lookupObject[key]);
+  }
+  return newArray;
+};
 
 /**
  * [inArrayObject description]
@@ -36,255 +36,251 @@ export const removeDuplicates = (originalArray, prop) => {
  * @param  {String} key    [description]
  * @return {[type]}        [description]
  */
-export const inArrayObject = (array, search, key = 'id') => {
-    let results = array.filter(function (item) { return item[key] == search })
-    return (results.length > 0) ? results[0] : null
-}
+export const inArrayObject = (array, search, key = "id") => {
+  let results = array.filter(function(item) {
+    return item[key] == search;
+  });
+  return results.length > 0 ? results[0] : null;
+};
 
-export const inArrayObjectTreeselect = (array, search, key = 'id') => {
-    
-    let results = null
-    
-    for (let i in array){
-        
-        if ((array[i][key] === search)) {
-            
-            results = array[i]
+export const inArrayObjectTreeselect = (array, search, key = "id") => {
+  let results = null;
 
-            break
+  for (let i in array) {
+    if (array[i][key] === search) {
+      results = array[i];
 
-        } else if (array[i].children && Array.isArray(array[i].children)){
-        
-            for (let j in array[i].children) {
+      break;
+    } else if (array[i].children && Array.isArray(array[i].children)) {
+      for (let j in array[i].children) {
+        if (array[i].children[j][key] === search) {
+          results = array[i].children[j];
 
-                if ((array[i].children[j][key] === search)) {
-                    
-                    results = array[i].children[j]
-
-                    break
-
-                } else if (array[i].children[j].children && Array.isArray(array[i].children[j].children)){
-        
-                    for (let k in array[i].children[j].children) {
-
-                        if ((array[i].children[j].children[k][key] === search)) {
-                            
-                            results = array[i].children[j].children[k]
-                            break
-                        }
-
-                    }
-                
-                }
-
+          break;
+        } else if (
+          array[i].children[j].children &&
+          Array.isArray(array[i].children[j].children)
+        ) {
+          for (let k in array[i].children[j].children) {
+            if (array[i].children[j].children[k][key] === search) {
+              results = array[i].children[j].children[k];
+              break;
             }
-        
+          }
         }
-
+      }
     }
+  }
 
-    return results
-}
+  return results;
+};
 
 export const handleScroll = () => {
-    let element = document.getElementById('filter-buttons')
-    let my_container = document.querySelector('.my_container')
-    let top = element.offsetTop
-    if (!(top >= window.pageYOffset)) {
-      element.classList.add('is-fixed')
-      my_container.classList.add('container')
-    }else {
-      element.classList.remove('is-fixed')
-      my_container.classList.remove('container')
-    }
-} 
+  let element = document.getElementById("filter-buttons");
+  let my_container = document.querySelector(".my_container");
+  let top = element.offsetTop;
+  if (!(top >= window.pageYOffset)) {
+    element.classList.add("is-fixed");
+    my_container.classList.add("container");
+  } else {
+    element.classList.remove("is-fixed");
+    my_container.classList.remove("container");
+  }
+};
 
 export const howAnimation = (element) => {
-    if (element) {
-      element.classList.add("bounce-leave-active")
-      setTimeout(function () {
-        element.classList.remove("bounce-leave-active")
-      }, 1000)
-    }
-}
+  if (element) {
+    element.classList.add("bounce-leave-active");
+    setTimeout(function() {
+      element.classList.remove("bounce-leave-active");
+    }, 1000);
+  }
+};
 
 export const spacesByDashes = (value) => {
-    value = value.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '')
-    value = value.replace(/(?:\r\n|\r|\n)/g, ',')
-    for (var i = 0; i <= 20; i++) {
-    value = value.split(",,").join(",")
-    }
-    return value
-}
+  value = value.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, "");
+  value = value.replace(/(?:\r\n|\r|\n)/g, ",");
+  for (var i = 0; i <= 20; i++) {
+    value = value.split(",,").join(",");
+  }
+  return value;
+};
 
 export const orderFilters = (filters, applied_filters) => {
-    let arrayResult = applied_filters.map((item) => {
-      return inArrayObject(filters, item, `name`)
-    })
-    return arrayResult
-}
+  let arrayResult = applied_filters.map((item) => {
+    return inArrayObject(filters, item, `name`);
+  });
+  return arrayResult;
+};
 
 export const beforeOrderFilters = (filters, applied_filters, form, title) => {
-    let before_applied_filters = [...applied_filters]
-    let before_filters = [...filters]
-    let before_form = {...form}
+  let before_applied_filters = [...applied_filters];
+  let before_filters = [...filters];
+  let before_form = { ...form };
 
-    if (!before_applied_filters.includes(title)) {
-      before_applied_filters.push(title)
-    }
+  if (!before_applied_filters.includes(title)) {
+    before_applied_filters.push(title);
+  }
 
-    let arrayResult = orderFilters(before_filters, before_applied_filters)
-    
-    if (arrayResult && arrayResult.length !== 0) {
-        let arr = {}
-        let comunidades = []
-        before_form.filtros = []
-        arrayResult.map((item) => {
-            if (item.key === 'comunidades') {
-                comunidades = before_form[item.key].concat(before_form.Provincias, before_form.Localidades)
-                if(comunidades.length !== 0) {
-                    arr[item.key] = comunidades
-                }
-                if (before_form.Localidades && before_form.Localidades.length !== 0){
-                    arr['Localidades'] = before_form.Localidades
-                }
-                if (before_form.Provincias && before_form.Provincias.length !== 0) {
-                    arr['Provincias'] = before_form.Provincias
-                }
-            }else {
-                if(before_form[item.key].length !== 0) {
-                    arr[item.key] = before_form[item.key]
-                }
-            }
-            let aux = {...arr}
-            before_form.filtros.push(aux)
-        })
-    }
+  let arrayResult = orderFilters(before_filters, before_applied_filters);
 
-    return before_form
-}
+  if (arrayResult && arrayResult.length !== 0) {
+    let arr = {};
+    let comunidades = [];
+    before_form.filtros = [];
+    arrayResult.map((item) => {
+      if (item.key === "comunidades") {
+        comunidades = before_form[item.key].concat(
+          before_form.Provincias,
+          before_form.Localidades
+        );
+        if (comunidades.length !== 0) {
+          arr[item.key] = comunidades;
+        }
+        if (before_form.Localidades && before_form.Localidades.length !== 0) {
+          arr["Localidades"] = before_form.Localidades;
+        }
+        if (before_form.Provincias && before_form.Provincias.length !== 0) {
+          arr["Provincias"] = before_form.Provincias;
+        }
+      } else {
+        if (before_form[item.key].length !== 0) {
+          arr[item.key] = before_form[item.key];
+        }
+      }
+      let aux = { ...arr };
+      before_form.filtros.push(aux);
+    });
+  }
+
+  return before_form;
+};
 
 export const countByProperty = (array, property) => {
-    let count = 0
-    for (const key in array) {
-        if (array.hasOwnProperty(key)) {
-            const element = array[key];
-            if (element[property]) {
-                count += element[property]
-            }else if(element.hasOwnProperty('RazonSocial')) {
-                count++
-                element.label = element.RazonSocial
-            }
-        }
+  let count = 0;
+  for (const key in array) {
+    if (array.hasOwnProperty(key)) {
+      const element = array[key];
+      if (element[property]) {
+        count += element[property];
+      } else if (element.hasOwnProperty("RazonSocial")) {
+        count++;
+        element.label = element.RazonSocial;
+      }
     }
-    return count
-}
-
+  }
+  return count;
+};
 
 export const sendPageView = (page, title) => {
   if (window.ga) {
-    window.ga('set','page',`/buscador/${page}`)
-    window.ga('set','title',title)
-    window.ga('send','pageview')
+    window.ga("set", "page", `/buscador/${page}`);
+    window.ga("set", "title", title);
+    window.ga("send", "pageview");
   }
-}
+};
 
 export const sendEvent = (cat, name) => {
   if (window.ga) {
-    window.ga('send', 'event', cat, name)
+    window.ga("send", "event", cat, name);
   }
-}
-
+};
 
 export const getColumnsSummary = () => {
-    return [
-        {
-          prop: 'RazonSocial',
-          label: 'Razón social',
-          width: '360',
-          show: true,
-          sortable: true
-        },
-        {
-          prop: 'Provincia',
-          label: 'Provincia',
-          width: '130',
-          show: true,
-          sortable: true
-        },
-        {
-          prop: 'Localidad',
-          label: 'Localidad',
-          width: '130',
-          show: true,
-          sortable: true
-        },
-        {
-          prop: 'CIF',
-          label: 'NIF',
-          width: '93',
-          show: true,
-          sortable: true
-        },
-        {
-          prop: 'Codigo_Postal',
-          label: 'Código Postal',
-          width: '118',
-          show: true,
-          sortable: true
-        },
-        {
-          prop: 'FechaConstitucionOrigen',
-          label: 'Fecha constitución',
-          width: '145',
-          show: true,
-          sortable: true
-        },
-        {
-          prop: 'anios_empresa',
-          label: 'Antigüedad (en años)',
-          width: '157',
-          show: true,
-          sortable: true
-        },
-        {
-          prop: 'SumTotalEmpleados',
-          label: 'Número empleados',
-          width: '147',
-          show: true,
-          sortable: true
-        },
-        {
-          prop: 'CuentasDisponibles',
-          label: 'Años con cuentas disponibles',
-          width: '210',
-          show: true,
-          sortable: true
-        },
-        {
-          prop: 'TipoCuentasAnuales',
-          label: 'Tipos de cuentas',
-          width: '210',
-          show: true,
-          sortable: true
-        }
-      ]
-}
+  return [
+    {
+      prop: "RazonSocial",
+      label: "Razón social",
+      width: "360",
+      show: true,
+      sortable: true,
+    },
+    {
+      prop: "Provincia",
+      label: "Provincia",
+      width: "130",
+      show: true,
+      sortable: true,
+    },
+    {
+      prop: "Localidad",
+      label: "Localidad",
+      width: "130",
+      show: true,
+      sortable: true,
+    },
+    {
+      prop: "CIF",
+      label: "NIF",
+      width: "93",
+      show: true,
+      sortable: true,
+    },
+    {
+      prop: "Codigo_Postal",
+      label: "Código Postal",
+      width: "118",
+      show: true,
+      sortable: true,
+    },
+    {
+      prop: "FechaConstitucionOrigen",
+      label: "Fecha constitución",
+      width: "145",
+      show: true,
+      sortable: true,
+    },
+    {
+      prop: "anios_empresa",
+      label: "Antigüedad (en años)",
+      width: "157",
+      show: true,
+      sortable: true,
+    },
+    {
+      prop: "SumTotalEmpleados",
+      label: "Número empleados",
+      width: "147",
+      show: true,
+      sortable: true,
+    },
+    {
+      prop: "CuentasDisponibles",
+      label: "Años con cuentas disponibles",
+      width: "210",
+      show: true,
+      sortable: true,
+    },
+    {
+      prop: "TipoCuentasAnuales",
+      label: "Tipos de cuentas",
+      width: "210",
+      show: true,
+      sortable: true,
+    },
+  ];
+};
 
 export const showColumnsSummary = (newColumns) => {
-    let columns = getColumnsSummary()
-    let showColumns = []
-    for (const column of columns) {
-        for (const item of newColumns) {
-            if (item === column.prop) {
-                showColumns.push(column)
-            }
-        }
+  let columns = getColumnsSummary();
+  let showColumns = [];
+  for (const column of columns) {
+    for (const item of newColumns) {
+      if (item === column.prop) {
+        showColumns.push(column);
+      }
     }
-    return showColumns
-}
+  }
+  return showColumns;
+};
 
-export const scrollIt = (destination, duration = 200, easing = 'linear', offset = 0,  callback) => {
+export const scrollIt = (
+  destination,
+  duration = 200,
+  easing = "linear",
+  offset = 0,
+  callback
+) => {
   const easings = {
     linear(t) {
       return t;
@@ -302,7 +298,7 @@ export const scrollIt = (destination, duration = 200, easing = 'linear', offset 
       return t * t * t;
     },
     easeOutCubic(t) {
-      return (--t) * t * t + 1;
+      return --t * t * t + 1;
     },
     easeInOutCubic(t) {
       return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
@@ -311,31 +307,47 @@ export const scrollIt = (destination, duration = 200, easing = 'linear', offset 
       return t * t * t * t;
     },
     easeOutQuart(t) {
-      return 1 - (--t) * t * t * t;
+      return 1 - --t * t * t * t;
     },
     easeInOutQuart(t) {
-      return t < 0.5 ? 8 * t * t * t * t : 1 - 8 * (--t) * t * t * t;
+      return t < 0.5 ? 8 * t * t * t * t : 1 - 8 * --t * t * t * t;
     },
     easeInQuint(t) {
       return t * t * t * t * t;
     },
     easeOutQuint(t) {
-      return 1 + (--t) * t * t * t * t;
+      return 1 + --t * t * t * t * t;
     },
     easeInOutQuint(t) {
-      return t < 0.5 ? 16 * t * t * t * t * t : 1 + 16 * (--t) * t * t * t * t;
-    }
+      return t < 0.5 ? 16 * t * t * t * t * t : 1 + 16 * --t * t * t * t * t;
+    },
   };
 
   const start = window.pageYOffset;
-  const startTime = 'now' in window.performance ? performance.now() : new Date().getTime();
+  const startTime =
+    "now" in window.performance ? performance.now() : new Date().getTime();
 
-  const documentHeight = Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);
-  const windowHeight = window.innerHeight || document.documentElement.clientHeight || document.getElementsByTagName('body')[0].clientHeight;
-  const destinationOffset = typeof destination === 'number' ? destination : destination.offsetTop;
-  const destinationOffsetToScroll = Math.round(documentHeight - destinationOffset < windowHeight ? documentHeight - windowHeight : destinationOffset) - offset;
+  const documentHeight = Math.max(
+    document.body.scrollHeight,
+    document.body.offsetHeight,
+    document.documentElement.clientHeight,
+    document.documentElement.scrollHeight,
+    document.documentElement.offsetHeight
+  );
+  const windowHeight =
+    window.innerHeight ||
+    document.documentElement.clientHeight ||
+    document.getElementsByTagName("body")[0].clientHeight;
+  const destinationOffset =
+    typeof destination === "number" ? destination : destination.offsetTop;
+  const destinationOffsetToScroll =
+    Math.round(
+      documentHeight - destinationOffset < windowHeight
+        ? documentHeight - windowHeight
+        : destinationOffset
+    ) - offset;
 
-  if ('requestAnimationFrame' in window === false) {
+  if ("requestAnimationFrame" in window === false) {
     window.scroll(0, destinationOffsetToScroll);
     if (callback) {
       callback();
@@ -344,10 +356,14 @@ export const scrollIt = (destination, duration = 200, easing = 'linear', offset 
   }
 
   function scroll() {
-    const now = 'now' in window.performance ? performance.now() : new Date().getTime();
-    const time = Math.min(1, ((now - startTime) / duration));
+    const now =
+      "now" in window.performance ? performance.now() : new Date().getTime();
+    const time = Math.min(1, (now - startTime) / duration);
     const timeFunction = easings[easing](time);
-    window.scroll(0, Math.ceil((timeFunction * (destinationOffsetToScroll - start)) + start));
+    window.scroll(
+      0,
+      Math.ceil(timeFunction * (destinationOffsetToScroll - start) + start)
+    );
 
     if (window.pageYOffset === destinationOffsetToScroll) {
       if (callback) {
@@ -360,30 +376,48 @@ export const scrollIt = (destination, duration = 200, easing = 'linear', offset 
   }
 
   scroll();
-}
+};
 
 export const formatProvinciaLocalidad = (data) => {
-  let newData = {}
+  let newData = {};
   for (const key in data) {
     if (data.hasOwnProperty(key)) {
       const element = data[key];
-      if (key === 'provincia_localidad' && Array.isArray(element)) {
-        element.map(item => {
+      if (key === "provincia_localidad" && Array.isArray(element)) {
+        element.map((item) => {
           if (Array.isArray(item.children)) {
-            item.children.map(_item => {
+            item.children.map((_item) => {
               if (Array.isArray(_item.children)) {
-                _item.children.map(__item => {
-                  delete __item['children']
-                })
+                _item.children.map((__item) => {
+                  delete __item["children"];
+                });
               }
-              return _item
-            })
+              return _item;
+            });
           }
-          return item
-        })
+          return item;
+        });
+      } else if (key === "cnae" && Array.isArray(element)) {
+        element.map((item) => {
+          if (Array.isArray(item.children)) {
+            item.children.map((_item) => {
+              if (Array.isArray(_item.children)) {
+                _item.children.map((__item) => {
+                  if (Array.isArray(__item.children)) {
+                    __item.children.map((___item) => {
+                      delete ___item["children"];
+                    });
+                  }
+                });
+              }
+              return _item;
+            });
+          }
+          return item;
+        });
       }
-      newData[key] = element
+      newData[key] = element;
     }
   }
-  return newData
-} 
+  return newData;
+};

@@ -1,5 +1,5 @@
 //import axios from 'axios'
-import * as types from '../mutation-types'
+import * as types from "../mutation-types";
 
 const initialState = () => {
   return {
@@ -16,7 +16,8 @@ const initialState = () => {
       cuentasDisponibles: [],
       TipoCuentas: [],
       cnae: [],
-      filtros: [{}]
+      industria: [],
+      filtros: [{}],
     },
     applied_filters: [],
     selected_companies: 0,
@@ -27,8 +28,8 @@ const initialState = () => {
         offset: 290,
         apply: false,
         quantity: 0,
-        key: 'comunidades',
-        disabled: false
+        key: "comunidades",
+        disabled: false,
       },
       {
         name: "Antigüedad",
@@ -36,8 +37,8 @@ const initialState = () => {
         offset: 290,
         apply: false,
         quantity: 0,
-        key: 'antiguedad',
-        disabled: false
+        key: "antiguedad",
+        disabled: false,
       },
       {
         name: "Número de empleados",
@@ -45,8 +46,8 @@ const initialState = () => {
         offset: 150,
         apply: false,
         quantity: 0,
-        key: 'empleados',
-        disabled: false
+        key: "empleados",
+        disabled: false,
       },
       {
         name: "Tipo de cuentas",
@@ -54,8 +55,8 @@ const initialState = () => {
         offset: 0,
         apply: false,
         quantity: 0,
-        key: 'TipoCuentas',
-        disabled: false
+        key: "TipoCuentas",
+        disabled: false,
       },
       {
         name: "Sector/Actividad",
@@ -63,8 +64,8 @@ const initialState = () => {
         offset: 290,
         apply: false,
         quantity: 0,
-        key: 'cnae',
-        disabled: false
+        key: "cnae",
+        disabled: false,
       },
       {
         name: "Estado",
@@ -72,8 +73,8 @@ const initialState = () => {
         offset: 290,
         apply: false,
         quantity: 0,
-        key: 'estado',
-        disabled: true
+        key: "estado",
+        disabled: true,
       },
       {
         name: "Cargos",
@@ -81,8 +82,8 @@ const initialState = () => {
         offset: 290,
         apply: false,
         quantity: 0,
-        key: 'cargos',
-        disabled: true
+        key: "cargos",
+        disabled: true,
       },
       {
         name: "Código Postal",
@@ -90,8 +91,8 @@ const initialState = () => {
         offset: 290,
         apply: false,
         quantity: 0,
-        key: 'codigosPostales',
-        disabled: false
+        key: "codigosPostales",
+        disabled: false,
       },
       {
         name: "Nombre o razón social",
@@ -99,8 +100,8 @@ const initialState = () => {
         offset: 290,
         apply: false,
         quantity: 0,
-        key: 'razonSocial',
-        disabled: false
+        key: "razonSocial",
+        disabled: false,
       },
       {
         name: "NIF",
@@ -108,8 +109,8 @@ const initialState = () => {
         offset: 150,
         apply: false,
         quantity: 0,
-        key: 'cif',
-        disabled: false
+        key: "cif",
+        disabled: false,
       },
       {
         name: "Años con cuentas disponibles",
@@ -117,8 +118,8 @@ const initialState = () => {
         offset: 0,
         apply: false,
         quantity: 0,
-        key: 'cuentasDisponibles',
-        disabled: false
+        key: "cuentasDisponibles",
+        disabled: false,
       },
       {
         name: "Auditores",
@@ -126,8 +127,8 @@ const initialState = () => {
         offset: 290,
         apply: false,
         quantity: 0,
-        key: 'auditorBorme',
-        disabled: false
+        key: "auditorBorme",
+        disabled: false,
       },
       {
         name: "Información Financiera",
@@ -135,8 +136,8 @@ const initialState = () => {
         offset: 290,
         apply: false,
         quantity: 0,
-        key: 'informacion',
-        disabled: true
+        key: "informacion",
+        disabled: true,
       },
       {
         name: "Directivos y Vinculaciones",
@@ -144,114 +145,116 @@ const initialState = () => {
         offset: 290,
         apply: false,
         quantity: 0,
-        key: 'vinculaciones',
-        disabled: true
-      }
+        key: "vinculaciones",
+        disabled: true,
+      },
     ],
-    cantidades: {}
-  }
-}
+    cantidades: {},
+  };
+};
 
 // state
-export const state = initialState()
+export const state = initialState();
 
 // getters
 export const getters = {
-  form: state => state.form,
-  applied_filters: state => state.applied_filters,
-  selected_companies: state => state.selected_companies,
-  filters: state => state.filters,
-  cantidades: state => state.cantidades,
-}
+  form: (state) => state.form,
+  applied_filters: (state) => state.applied_filters,
+  selected_companies: (state) => state.selected_companies,
+  filters: (state) => state.filters,
+  cantidades: (state) => state.cantidades,
+};
 
 // mutations
 export const mutations = {
   [types.RESET_FILTER](state, { initial }) {
     for (const prop in initial) {
-      state[prop] = initial[prop]
+      state[prop] = initial[prop];
     }
   },
 
   [types.ADD_FILTER](state, { name, quantity, cantidades }) {
-    state.applied_filters.push(name)
+    state.applied_filters.push(name);
     state.filters = state.filters.map((elem) => {
       if (elem.name === name) {
-        elem.apply = true
-        elem.quantity = quantity
+        elem.apply = true;
+        elem.quantity = quantity;
       }
       return elem;
-    })
-    state.cantidades = cantidades
+    });
+    state.cantidades = cantidades;
   },
 
-  [types.SET_QUANTITIES](state, {name, quantity, cantidades }) {
+  [types.SET_QUANTITIES](state, { name, quantity, cantidades }) {
     state.filters = state.filters.map((elem) => {
       if (elem.name === name) {
-        elem.apply = true
-        elem.quantity = quantity
+        elem.apply = true;
+        elem.quantity = quantity;
       }
       return elem;
-    })
-    state.cantidades = cantidades
+    });
+    state.cantidades = cantidades;
   },
-  
+
   [types.REMOVE_FILTER](state, { filter }) {
-    state.applied_filters = state.applied_filters.filter(_filter => _filter !== filter)
+    state.applied_filters = state.applied_filters.filter(
+      (_filter) => _filter !== filter
+    );
     state.filters = state.filters.map((elem) => {
       if (elem.name === filter) {
-        elem.apply = false
-        elem.quantity = 0
+        elem.apply = false;
+        elem.quantity = 0;
       }
       return elem;
-    })
+    });
   },
 
   [types.SET_SELECTED_COMPANIES](state, { quantity }) {
-    state.selected_companies = quantity 
+    state.selected_companies = quantity;
   },
 
   [types.SET_CANTIDADES](state, { cantidades }) {
-    state.cantidades = cantidades 
-  }
-}
+    state.cantidades = cantidades;
+  },
+};
 
 // actions
 export const actions = {
   resetFilter({ commit }) {
-    commit(types.RESET_FILTER, { 
-      initial: initialState() 
-    })
+    commit(types.RESET_FILTER, {
+      initial: initialState(),
+    });
   },
   addFilters({ commit }, { name, quantity, cantidades }) {
     if (!state.applied_filters.includes(name)) {
       commit(types.ADD_FILTER, {
         name: name,
         quantity: quantity,
-        cantidades: cantidades
-      })
-    }else {
+        cantidades: cantidades,
+      });
+    } else {
       commit(types.SET_QUANTITIES, {
         name: name,
         quantity: quantity,
-        cantidades: cantidades
-      })
+        cantidades: cantidades,
+      });
     }
   },
   removeFilters({ commit }, filter) {
     if (state.applied_filters.includes(filter)) {
       commit(types.REMOVE_FILTER, {
-        filter: filter
-      })
+        filter: filter,
+      });
     }
   },
   updateNumberSelectedCompanies({ commit }, { quantity }) {
     commit(types.SET_SELECTED_COMPANIES, {
-      quantity
-    })
+      quantity,
+    });
   },
   setCantidades({ commit }, { cantidades }) {
     commit(types.SET_CANTIDADES, {
-      cantidades
-    })
+      cantidades,
+    });
   },
-}
+};

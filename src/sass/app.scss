@@ -363,4 +363,8 @@ span.num-fil {
   margin-right: 3px;
 }
 
+#filter_sector_actividad .vue-treeselect__menu-container {
+  z-index: 0 !important;
+}
+
 @import 'media_queries.scss';
