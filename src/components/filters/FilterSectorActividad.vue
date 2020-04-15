@@ -273,7 +273,6 @@ export default {
       howAnimation(document.querySelector(".selected_companies"));
     },
     search: function(newSearch) {
-      console.log(newSearch);
       this.options = newSearch && newSearch.cnae ? newSearch.cnae : [];
     },
     filterText(val) {
