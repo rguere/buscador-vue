@@ -367,4 +367,10 @@ span.num-fil {
   z-index: 0 !important;
 }
 
+#filter_sector_actividad .panel-default>.panel-heading {
+  color: #333!important;
+  background-color: #f5f5f5!important;
+  border-color: #ddd!important;
+}
+
 @import 'media_queries.scss';
