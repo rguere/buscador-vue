@@ -70,27 +70,6 @@
                 </div>
               </div>
             </div>
-            <!-- <div class="max-height-400-overflow">
-              <div class="grid-3-columns-1fr">
-                <div v-for="(item, key) in search.cnae" :key="key">
-                  <label class="custon-checkboxs">
-                    <input
-                      type="checkbox"
-                      :name="`checkbox_${item.id}`"
-                      v-model="selected_cnae"
-                      @change="handleChange(item, $event)"
-                      :id="`checkbox_${item.id}`"
-                      :value="item"
-                    />
-                    <span class="geekmark"></span>
-                    <span class="name-checkbox">{{ item.label }}</span>
-                    <span class="num-fil"
-                      >({{ item.data | numeral("0,0") }})</span
-                    >
-                  </label>
-                </div>
-              </div>
-            </div> -->
           </div>
           <div
             v-if="search.cnae && search.cnae.length === 0 && !loading"
