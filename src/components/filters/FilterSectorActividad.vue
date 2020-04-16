@@ -23,51 +23,27 @@
         <div
           id="Codigo_CNAE"
           class="tab-pane fade in active"
-          style="margin-bottom: 50px;"
+          style="margin-bottom: 10px;"
         >
           <div v-if="search.cnae && search.cnae.length != 0">
-            <div class="">
-              <div class="row">
-                <div class="col-md-12" style="height: 260px; margin-top: 0px;">
-                  <treeselect
-                    valueFormat="object"
-                    name="options"
-                    id="options"
-                    :multiple="true"
-                    :options="options"
-                    :always-open="true"
-                    :default-expand-level="1"
-                    :load-options="fetchSearch"
-                    :limit="0"
-                    :limitText="(t) => ''"
-                    :disableFuzzyMatching="true"
-                    @input="inputTreeselect"
-                    @select="selectTreeselect"
-                    @deselect="deselectTreeselect"
-                    placeholder="Seleccionar"
-                    search-nested
-                    v-model="selected_cnae"
-                  >
-                    <label
-                      slot="option-label"
-                      slot-scope="{
-                        node,
-                        shouldShowCount,
-                        count,
-                        labelClassName,
-                        countClassName,
-                      }"
-                      :class="labelClassName"
+            <div class="max-height-400-overflow">
+              <div class="grid-3-columns-1fr">
+                <div v-for="(item, key) in search.cnae" :key="key">
+                  <label class="custon-checkboxs">
+                    <input
+                      type="checkbox"
+                      :name="`checkbox_${item.id}`"
+                      v-model="selected_cnae"
+                      @change="handleChange(item, $event)"
+                      :id="`checkbox_${item.id}`"
+                      :value="item"
+                    />
+                    <span class="geekmark"></span>
+                    <span class="name-checkbox">{{ item.label }}</span>
+                    <span class="num-fil"
+                      >({{ item.data | numeral("0,0") }})</span
                     >
-                      {{ node.label }}
-                      <span class="num-fil" v-if="node.raw.id != 'all'"
-                        >({{ node.raw.data | numeral("0,0") }})</span
-                      >
-                      <span v-if="shouldShowCount" :class="countClassName"
-                        >({{ count }})</span
-                      >
-                    </label>
-                  </treeselect>
+                  </label>
                 </div>
               </div>
             </div>
@@ -87,10 +63,10 @@
                   <label class="custon-checkboxs">
                     <input
                       type="checkbox"
-                      :name="`checkbox_${item.id}`"
+                      :name="`checkbox___${item.id}`"
                       v-model="selected_industria"
                       @change="handleChange(item, $event)"
-                      :id="`checkbox_${item.id}`"
+                      :id="`checkbox___${item.id}`"
                       :value="item"
                     />
                     <span class="geekmark"></span>
@@ -105,15 +81,57 @@
           </div>
         </div>
       </div>
-
-      <div class="row">
-        <div class="col-md-12">
-          <div class="flex-space-between-flex-end">
-            <div class="btns">
-              <button type="button" class="btn btn-warning" @click="showModal">
-                Ver detalles
-                <i class="fa fa-plus-circle"></i>
+      <div class="flex-space-between-flex-end">
+        <div class="btns">
+          <button type="button" class="btn btn-warning" @click="showModal">
+            Ver detalles
+            <i class="fa fa-plus-circle"></i>
+          </button>
+          <button
+            type="button"
+            class="btn btn-success"
+            v-if="
+              (selected_cnae.length !== 0 && !areApplied) ||
+                (selected_cnae.length !== 0 && !compareWithNewtoApply)
+            "
+            @click="apply"
+          >
+            Aplicar
+            <i
+              :class="loadingFrm ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'"
+            ></i>
+          </button>
+          <button
+            type="button"
+            class="btn btn-info"
+            v-if="areApplied"
+            @click="confirmClean"
+          >
+            Limpiar
+            <i class="fa fa-undo"></i>
+          </button>
+        </div>
+        <p class="text-help">* Puedes elegir más de una opción</p>
+      </div>
+      <el-dialog
+        :visible.sync="modalVisible"
+        width="95%"
+        :modal-append-to-body="false"
+        :close-on-click-modal="false"
+        :show-close="false"
+        :destroy-on-close="true"
+        :center="true"
+        top="5vh"
+      >
+        <div>
+          <div class="btns-modal-header">
+            <div>
+              <button class="btn btn-warning" @click="hideModal">
+                <i class="fa fa-arrow-left"></i> Vover
               </button>
+              <button class="btn btn-a">{{ title }}</button>
+            </div>
+            <div>
               <button
                 type="button"
                 class="btn btn-success"
@@ -138,62 +156,146 @@
                 <i class="fa fa-undo"></i>
               </button>
             </div>
-            <p class="text-help">* Puedes elegir más de una opción</p>
           </div>
-        </div>
-        <el-dialog
-          :visible.sync="modalVisible"
-          width="95%"
-          :modal-append-to-body="false"
-          :close-on-click-modal="false"
-          :show-close="false"
-          :destroy-on-close="true"
-          :center="true"
-          top="5vh"
-        >
-          <div>
-            <div class="btns-modal-header">
-              <div>
-                <button class="btn btn-warning" @click="hideModal">
-                  <i class="fa fa-arrow-left"></i> Vover
-                </button>
-                <button class="btn btn-a">{{ title }}</button>
-              </div>
-              <div>
-                <button
-                  type="button"
-                  class="btn btn-success"
-                  v-if="
-                    (selected_cnae.length !== 0 && !areApplied) ||
-                      (selected_cnae.length !== 0 && !compareWithNewtoApply)
-                  "
-                  @click="apply"
-                >
-                  Aplicar
-                  <i
-                    :class="
-                      loadingFrm ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'
-                    "
-                  ></i>
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-info"
-                  v-if="areApplied"
-                  @click="confirmClean"
-                >
-                  Limpiar
-                  <i class="fa fa-undo"></i>
-                </button>
+          <div
+            class="conten-flex-70-30"
+            v-if="search.cnae && search.cnae.length != 0"
+          >
+            <div>
+              <div
+                class="panel panel-default cd"
+                style="border-color: transparent;"
+              >
+                <div class="panel-heading">
+                  <p class="panel-title roboto white">
+                    Seleccione los Códigos CNAE que desee agregar a su
+                    estrategia de búsqueda.
+                  </p>
+                </div>
+                <div class="panel-body">
+                  <label class="control-label" for="SearchTheProvinceorTown"
+                    >Introduce el nombre y/o el código de uno o varios Códigos
+                    CNAE y clica en “BUSCAR”</label
+                  >
+                  <el-select
+                    id="SearchTheProvinceorTown"
+                    name="SearchTheProvinceorTown"
+                    v-model="valueSelect"
+                    multiple
+                    clearable
+                    filterable
+                    remote
+                    reserve-keyword
+                    placeholder="Introduce el nombre y/o el código de uno o varios Códigos CNAE y clica en “BUSCAR”"
+                    :popper-append-to-body="false"
+                    popper-class="SearchTheProvinceorTown"
+                    :remote-method="remoteMethod"
+                    :loading="loadingSelect"
+                    @change="changeMethod"
+                    @clear="changeClear"
+                    @remove-tag="changeRemoveTag"
+                  >
+                    <el-option
+                      v-for="item in optionsSelect"
+                      :key="item.id"
+                      :label="item.label"
+                      :value="item.id"
+                    ></el-option>
+                  </el-select>
+
+                  <div style="height: 260px; margin-top: 10px;">
+                    <treeselect
+                      valueFormat="object"
+                      name="options"
+                      id="options"
+                      :multiple="true"
+                      :options="options"
+                      :always-open="true"
+                      :default-expand-level="1"
+                      :load-options="fetchSearch"
+                      :limit="0"
+                      :limitText="(t) => ''"
+                      :disableFuzzyMatching="true"
+                      @input="inputTreeselect"
+                      @select="selectTreeselect"
+                      @deselect="deselectTreeselect"
+                      placeholder="Seleccionar"
+                      search-nested
+                      v-model="selected_cnae"
+                    >
+                      <label
+                        slot="option-label"
+                        slot-scope="{
+                          node,
+                          shouldShowCount,
+                          count,
+                          labelClassName,
+                          countClassName,
+                        }"
+                        :class="labelClassName"
+                      >
+                        {{ node.label }}
+                        <span class="num-fil" v-if="node.raw.id != 'all'"
+                          >({{ node.raw.data | numeral("0,0") }})</span
+                        >
+                        <span v-if="shouldShowCount" :class="countClassName"
+                          >({{ count }})</span
+                        >
+                      </label>
+                    </treeselect>
+                  </div>
+                </div>
               </div>
             </div>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-            Asperiores, commodi adipisci sapiente, laudantium dignissimos natus
-            ipsam veniam recusandae alias rerum eveniet aspernatur nisi ea error
-            culpa optio necessitatibus odit ipsum.
+            <div>
+              <div class="panel panel-default cd">
+                <div class="panel-heading">
+                  <p class="panel-title roboto white">
+                    Códigos seleccionadas
+                    <span class="span-info-right">{{
+                      selected_cnae.length
+                    }}</span>
+                  </p>
+                </div>
+              </div>
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <p class="panel-title roboto white">
+                    Empresas seleccionadas
+                    <span class="span-info-right">{{
+                      selected_by_location | numeral("0,0")
+                    }}</span>
+                  </p>
+                </div>
+                <div
+                  class="panel-body"
+                  style="max-height: 300px; overflow-y: scroll;"
+                >
+                  <ul class="ul_selected_cnae" id="ul_selected_cnae">
+                    <li v-for="(item, key) in selected_cnae" :key="key">
+                      <label class="custon-checkboxs">
+                        <input
+                          type="checkbox"
+                          :name="`checkbox_list_${item.id}`"
+                          v-model="selected_cnae"
+                          @change="handleChangeList(item, $event)"
+                          :id="`checkbox_list_${item.id}`"
+                          :value="item"
+                        />
+                        <span class="geekmark"></span>
+                        <span class="name-checkbox">{{ item.label }}</span>
+                        <span class="num-fil" v-if="item.id != 'all'"
+                          >({{ item.data | numeral("0,0") }})</span
+                        >
+                      </label>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
           </div>
-        </el-dialog>
-      </div>
+        </div>
+      </el-dialog>
     </div>
   </div>
 </template>
@@ -376,37 +478,37 @@ export default {
         : false;
     },
     apply() {
-      // if (this.selected_cnae && this.selected_cnae.length !== 0) {
-      //   this.hideModal();
-      //   this.loadingFrm = true;
-      //   this.formatearDataPOST();
-      //   let beforeForm = beforeOrderFilters(
-      //     this.filters,
-      //     this.applied_filters,
-      //     this.form,
-      //     this.title
-      //   );
-      //   this.$store
-      //     .dispatch("search/filtrar", beforeForm)
-      //     .then((response) => {
-      //       this.updateNumberSelectedCompanies(response.cantidad);
-      //       this.$store.dispatch("filters/addFilters", {
-      //         name: this.title,
-      //         quantity: this.selected_by_location,
-      //         cantidades: response,
-      //       });
-      //       this.areApplied = true;
-      //       this.reapply = false;
-      //       this.loadingFrm = false;
-      //       this.selected_cnae_string = JSON.stringify(
-      //         this.sortData(this.selected_cnae)
-      //       );
-      //       sendEvent(`filtro-aplicado`, this.title);
-      //     })
-      //     .catch(() => {
-      //       this.loadingFrm = false;
-      //     });
-      // }
+      if (this.selected_cnae && this.selected_cnae.length !== 0) {
+        this.hideModal();
+        // this.loadingFrm = true;
+        this.formatearDataPOST();
+        let beforeForm = beforeOrderFilters(
+          this.filters,
+          this.applied_filters,
+          this.form,
+          this.title
+        );
+        this.$store
+          .dispatch("search/filtrar", beforeForm)
+          .then((response) => {
+            this.updateNumberSelectedCompanies(response.cantidad);
+            this.$store.dispatch("filters/addFilters", {
+              name: this.title,
+              quantity: this.selected_by_location,
+              cantidades: response,
+            });
+            this.areApplied = true;
+            this.reapply = false;
+            this.loadingFrm = false;
+            this.selected_cnae_string = JSON.stringify(
+              this.sortData(this.selected_cnae)
+            );
+            sendEvent(`filtro-aplicado`, this.title);
+          })
+          .catch(() => {
+            this.loadingFrm = false;
+          });
+      }
     },
     confirmClean() {
       swal
@@ -429,9 +531,7 @@ export default {
     },
     clean() {
       this.selected_children = [];
-      this.form.comunidades = [];
-      this.form.Provincias = [];
-      this.form.Localidades = [];
+      this.form.sector_actividad = [];
       this.selected_cnae = [];
       this.valueSelect = [];
       this.selected_cnae_string = "";
@@ -462,9 +562,7 @@ export default {
     },
     emptyFilter() {
       this.selected_children = [];
-      this.form.comunidades = [];
-      this.form.Provincias = [];
-      this.form.Localidades = [];
+      this.form.sector_actividad = [];
       this.selected_cnae = [];
       this.valueSelect = [];
       this.selected_cnae_string = "";
@@ -528,24 +626,16 @@ export default {
     },
     formatearDataPOST() {
       this.selected_children = [];
-      this.form.comunidades = [];
-      this.form.Provincias = [];
-      this.form.Localidades = [];
+      this.form.sector_actividad = [];
       this.selected_cnae.forEach((item) => {
         let result = inArrayObjectTreeselect(this.search.cnae, item.id);
         if (result && result.id) {
-          let resultIdSplit = result.id.split("|");
-          let level = resultIdSplit.length;
-          if (level === 1) {
-            this.form.comunidades.push(result.id);
-            this.selected_children.push(result);
-          } else if (level === 2) {
-            this.form.Provincias.push(result.id);
-            this.selected_children.push(result);
-          } else if (level === 3) {
-            this.form.Localidades.push(result.id);
-            this.selected_children.push(result);
-          }
+          this.form.sector_actividad.push(`cnae|${result.id}`);
+        }
+      });
+      this.selected_industria.forEach((item) => {
+        if (item && item.id) {
+          this.form.sector_actividad.push(`icif|${item.id}`);
         }
       });
       return this.form;
@@ -570,19 +660,19 @@ export default {
     },
     remoteMethod(query) {
       if (query !== "") {
-        this.loadingSelect = true;
-        this.$store
-          .dispatch("search/searchLocalidades", query)
-          .then((response) => {
-            if (response.results && Array.isArray(response.results)) {
-              this.optionsSelect = response.results;
-            }
-            this.loadingSelect = false;
-          })
-          .catch(() => {
-            this.loadingSelect = false;
-            this.optionsSelect = [];
-          });
+        // this.loadingSelect = true;
+        // this.$store
+        //   .dispatch("search/searchLocalidades", query)
+        //   .then((response) => {
+        //     if (response.results && Array.isArray(response.results)) {
+        //       this.optionsSelect = response.results;
+        //     }
+        //     this.loadingSelect = false;
+        //   })
+        //   .catch(() => {
+        //     this.loadingSelect = false;
+        //     this.optionsSelect = [];
+        //   });
       } else {
         this.optionsSelect = [];
       }

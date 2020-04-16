@@ -15,8 +15,7 @@ const initialState = () => {
       empleados: [],
       cuentasDisponibles: [],
       TipoCuentas: [],
-      cnae: [],
-      industria: [],
+      sector_actividad: [],
       filtros: [{}],
     },
     applied_filters: [],
@@ -64,7 +63,7 @@ const initialState = () => {
         offset: 290,
         apply: false,
         quantity: 0,
-        key: "cnae",
+        key: "sector_actividad",
         disabled: false,
       },
       {

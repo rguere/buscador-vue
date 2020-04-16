@@ -65,6 +65,18 @@ export const inArrayObjectTreeselect = (array, search, key = "id") => {
             if (array[i].children[j].children[k][key] === search) {
               results = array[i].children[j].children[k];
               break;
+            } else if (
+              array[i].children[j].children[k].children &&
+              Array.isArray(array[i].children[j].children[k].children)
+            ) {
+              for (let l in array[i].children[j].children[k].children) {
+                if (
+                  array[i].children[j].children[k].children[l][key] === search
+                ) {
+                  results = array[i].children[j].children[k].children[l];
+                  break;
+                }
+              }
             }
           }
         }
@@ -392,10 +404,8 @@ export const formatProvinciaLocalidad = (data) => {
                   delete __item["children"];
                 });
               }
-              return _item;
             });
           }
-          return item;
         });
       } else if (key === "cnae" && Array.isArray(element)) {
         element.map((item) => {
@@ -407,13 +417,17 @@ export const formatProvinciaLocalidad = (data) => {
                     __item.children.map((___item) => {
                       delete ___item["children"];
                     });
+                  } else {
+                    delete __item["children"];
                   }
                 });
+              } else {
+                delete _item["children"];
               }
-              return _item;
             });
+          } else {
+            delete item["children"];
           }
-          return item;
         });
       }
       newData[key] = element;
