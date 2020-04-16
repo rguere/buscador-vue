@@ -25,7 +25,7 @@
           class="tab-pane fade in active"
           style="margin-bottom: 10px;"
         >
-          <div v-if="search.cnae && search.cnae.length != 0">
+          <div v-if="search.cnae && search.cnae.length != 0" class="invert">
             <div class="panel-group" id="accordion">
               <div v-for="(item, key) in search.cnae" :key="key">
                 <div
