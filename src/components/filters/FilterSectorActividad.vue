@@ -3,8 +3,10 @@
     <div class="panel-heading">
       <p class="panel-title roboto white">
         {{ title }}
-        <span class="span-info-right" v-if="selected_by_location !== 0"
-          >({{ selected_by_location | numeral("0,0") }} empresas
+        <span
+          class="span-info-right"
+          v-if="selected_by_code_cnae_and_industria !== 0"
+          >({{ selected_by_code_cnae_and_industria | numeral("0,0") }} empresas
           seleccionadas)</span
         >
       </p>
@@ -39,7 +41,7 @@
                         data-parent="#accordion"
                         :href="`#collapse-${key}`"
                       >
-                        {{ item.label }}</a
+                        {{ item.id }} - {{ item.label }}</a
                       >
                     </h4>
                   </div>
@@ -59,7 +61,9 @@
                             :value="item"
                           />
                           <span class="geekmark"></span>
-                          <span class="name-checkbox">{{ item.label }}</span>
+                          <span class="name-checkbox"
+                            >{{ item.id }} - {{ item.label }}</span
+                          >
                           <span class="num-fil"
                             >({{ item.data | numeral("0,0") }})</span
                           >
@@ -93,7 +97,9 @@
                       :value="item"
                     />
                     <span class="geekmark"></span>
-                    <span class="name-checkbox">{{ item.label }}</span>
+                    <span class="name-checkbox"
+                      >{{ item.id }} - {{ item.label }}</span
+                    >
                     <span class="num-fil"
                       >({{ item.data | numeral("0,0") }})</span
                     >
@@ -114,8 +120,12 @@
             type="button"
             class="btn btn-success"
             v-if="
-              (selected_cnae.length !== 0 && !areApplied) ||
-                (selected_cnae.length !== 0 && !compareWithNewtoApply)
+              ((selected_cnae.length !== 0 ||
+                selected_industria.length !== 0) &&
+                !areApplied) ||
+                ((selected_cnae.length !== 0 ||
+                  selected_industria.length !== 0) &&
+                  !compareWithNewtoApply)
             "
             @click="apply"
           >
@@ -159,8 +169,12 @@
                 type="button"
                 class="btn btn-success"
                 v-if="
-                  (selected_cnae.length !== 0 && !areApplied) ||
-                    (selected_cnae.length !== 0 && !compareWithNewtoApply)
+                  ((selected_cnae.length !== 0 ||
+                    selected_industria.length !== 0) &&
+                    !areApplied) ||
+                    ((selected_cnae.length !== 0 ||
+                      selected_industria.length !== 0) &&
+                      !compareWithNewtoApply)
                 "
                 @click="apply"
               >
@@ -185,98 +199,140 @@
             v-if="search.cnae && search.cnae.length != 0"
           >
             <div>
-              <div
-                class="panel panel-default cd"
-                style="border-color: transparent;"
-              >
-                <div class="panel-heading">
-                  <p class="panel-title roboto white">
-                    Seleccione los Códigos CNAE que desee agregar a su
-                    estrategia de búsqueda.
-                  </p>
-                </div>
-                <div class="panel-body">
-                  <label class="control-label" for="SearchTheProvinceorTown"
-                    >Introduce el nombre y/o el código de uno o varios Códigos
-                    CNAE y clica en “BUSCAR”</label
+              <ul class="nav nav-tabs">
+                <li class="active">
+                  <a data-toggle="tab" href="#Modal_Codigo_CNAE">Código CNAE</a>
+                </li>
+                <li>
+                  <a data-toggle="tab" href="#Modal_Sector_INFOCIF"
+                    >Sector INFOCIF</a
                   >
-                  <el-select
-                    id="SearchTheProvinceorTown"
-                    name="SearchTheProvinceorTown"
-                    v-model="valueSelect"
-                    multiple
-                    clearable
-                    filterable
-                    remote
-                    reserve-keyword
-                    placeholder="Introduce el nombre y/o el código de uno o varios Códigos CNAE y clica en “BUSCAR”"
-                    :popper-append-to-body="false"
-                    popper-class="SearchTheProvinceorTown"
-                    :remote-method="remoteMethod"
-                    :loading="loadingSelect"
-                    @change="changeMethod"
-                    @clear="changeClear"
-                    @remove-tag="changeRemoveTag"
-                  >
-                    <el-option
-                      v-for="item in optionsSelect"
-                      :key="item.id"
-                      :label="item.label"
-                      :value="item.id"
-                    ></el-option>
-                  </el-select>
+                </li>
+              </ul>
 
-                  <div style="height: 260px; margin-top: 10px;">
-                    <treeselect
-                      valueFormat="object"
-                      name="options"
-                      id="options"
-                      :multiple="true"
-                      :options="options"
-                      :always-open="true"
-                      :default-expand-level="1"
-                      :load-options="fetchSearch"
-                      :limit="0"
-                      :limitText="(t) => ''"
-                      :disableFuzzyMatching="true"
-                      @input="inputTreeselect"
-                      @select="selectTreeselect"
-                      @deselect="deselectTreeselect"
-                      placeholder="Seleccionar"
-                      search-nested
-                      v-model="selected_cnae"
-                    >
-                      <label
-                        slot="option-label"
-                        slot-scope="{
-                          node,
-                          shouldShowCount,
-                          count,
-                          labelClassName,
-                          countClassName,
-                        }"
-                        :class="labelClassName"
+              <div class="tab-content">
+                <div id="Modal_Codigo_CNAE" class="tab-pane fade in active">
+                  <div
+                    class="panel panel-default cd"
+                    style="border-color: transparent;"
+                  >
+                    <div class="panel-heading">
+                      <p class="panel-title roboto white">
+                        Seleccione los Códigos CNAE que desee agregar a su
+                        estrategia de búsqueda.
+                      </p>
+                    </div>
+                    <div class="panel-body">
+                      <label class="control-label" for="SearchTheProvinceorTown"
+                        >Introduce el nombre y/o el código de uno o varios
+                        Códigos CNAE y clica en “BUSCAR”</label
                       >
-                        {{ node.label }}
-                        <span class="num-fil" v-if="node.raw.id != 'all'"
-                          >({{ node.raw.data | numeral("0,0") }})</span
+                      <el-select
+                        id="SearchTheProvinceorTown"
+                        name="SearchTheProvinceorTown"
+                        v-model="valueSelect"
+                        multiple
+                        clearable
+                        filterable
+                        remote
+                        reserve-keyword
+                        placeholder="Introduce el nombre y/o el código de uno o varios Códigos CNAE y clica en “BUSCAR”"
+                        :popper-append-to-body="false"
+                        popper-class="SearchTheProvinceorTown"
+                        :remote-method="remoteMethod"
+                        :loading="loadingSelect"
+                        @change="changeMethod"
+                        @clear="changeClear"
+                        @remove-tag="changeRemoveTag"
+                      >
+                        <el-option
+                          v-for="item in optionsSelect"
+                          :key="item.id"
+                          :label="item.label"
+                          :value="item.id"
+                        ></el-option>
+                      </el-select>
+
+                      <div style="height: 260px; margin-top: 10px;">
+                        <treeselect
+                          valueFormat="object"
+                          name="options"
+                          id="options"
+                          :multiple="true"
+                          :options="options"
+                          :always-open="true"
+                          :default-expand-level="1"
+                          :load-options="fetchSearch"
+                          :limit="0"
+                          :limitText="(t) => ''"
+                          :disableFuzzyMatching="true"
+                          @input="inputTreeselect"
+                          @select="selectTreeselect"
+                          @deselect="deselectTreeselect"
+                          placeholder="Seleccionar"
+                          search-nested
+                          v-model="selected_cnae"
                         >
-                        <span v-if="shouldShowCount" :class="countClassName"
-                          >({{ count }})</span
-                        >
-                      </label>
-                    </treeselect>
+                          <label
+                            slot="option-label"
+                            slot-scope="{
+                              node,
+                              shouldShowCount,
+                              count,
+                              labelClassName,
+                              countClassName,
+                            }"
+                            :class="labelClassName"
+                          >
+                            {{ node.label }}
+                            <span class="num-fil" v-if="node.raw.id != 'all'"
+                              >({{ node.raw.data | numeral("0,0") }})</span
+                            >
+                            <span v-if="shouldShowCount" :class="countClassName"
+                              >({{ count }})</span
+                            >
+                          </label>
+                        </treeselect>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div id="Modal_Sector_INFOCIF" class="tab-pane fade">
+                  <div v-if="search.industria && search.industria.length != 0">
+                    <div class="max-height-400-overflow">
+                      <div class="grid-3-columns-1fr">
+                        <div v-for="(item, key) in search.industria" :key="key">
+                          <label class="custon-checkboxs">
+                            <input
+                              type="checkbox"
+                              :name="`checkbox___iii${item.id}`"
+                              v-model="selected_industria"
+                              @change="handleChange(item, $event)"
+                              :id="`checkbox___iii${item.id}`"
+                              :value="item"
+                            />
+                            <span class="geekmark"></span>
+                            <span class="name-checkbox"
+                              >{{ item.id }} - {{ item.label }}</span
+                            >
+                            <span class="num-fil"
+                              >({{ item.data | numeral("0,0") }})</span
+                            >
+                          </label>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
             <div>
-              <div class="panel panel-default cd">
+              <div class="panel panel-default cd ressss">
                 <div class="panel-heading">
                   <p class="panel-title roboto white">
                     Códigos seleccionadas
                     <span class="span-info-right">{{
-                      selected_cnae.length
+                      lengthCnaeIndustri
                     }}</span>
                   </p>
                 </div>
@@ -286,7 +342,7 @@
                   <p class="panel-title roboto white">
                     Empresas seleccionadas
                     <span class="span-info-right">{{
-                      selected_by_location | numeral("0,0")
+                      selected_by_code_cnae_and_industria | numeral("0,0")
                     }}</span>
                   </p>
                 </div>
@@ -350,7 +406,16 @@ export default {
     compareWithNewtoApply: function() {
       let stg = this.selected_cnae_string;
       let obj = JSON.stringify(this.sortData(this.selected_cnae));
-      return stg === obj;
+      let compare_cnae = stg === obj;
+
+      let stg_industria = this.selected_industria_string;
+      let obj_ = JSON.stringify(this.sortData(this.selected_industria));
+      let compare_industria = stg_industria === obj_;
+      let compare = compare_cnae === compare_industria;
+      return compare;
+    },
+    lengthCnaeIndustri: function() {
+      return this.selected_cnae.length + this.selected_industria.length;
     },
   },
   data: () => ({
@@ -361,7 +426,9 @@ export default {
     selected_industria: [],
     list_provinces_localidad: [],
     selected_children: [],
-    selected_by_location: 0,
+    selected_by_code_cnae_and_industria: 0,
+    selected_by_code_cnae: 0,
+    selected_by_code_industria: 0,
     options: [],
     SearchTheProvinceorTown: "madrid",
     ResultTheProvinceorTown: [],
@@ -384,13 +451,22 @@ export default {
     limitChildren: 3,
   }),
   watch: {
-    selected_cnae: function(newProvincesLocalidad) {
-      this.selected_by_location = this.numberCompaniesSelected(
-        this.isAllProvincesLocalidad(newProvincesLocalidad)
-          ? this.search.cnae
-          : newProvincesLocalidad
+    selected_cnae: function(newCnae) {
+      this.selected_by_code_cnae = this.numberCompaniesSelected(newCnae);
+      this.selected_by_code_cnae_and_industria =
+        this.selected_by_code_cnae + this.selected_by_code_industria;
+      if (this.reapply && this.selected_by_code_cnae_and_industria === 0) {
+        this.clean();
+      }
+    },
+    selected_industria: function(newIndustria) {
+      this.selected_by_code_industria = this.numberCompaniesSelected(
+        newIndustria,
+        "industria"
       );
-      if (this.reapply && newProvincesLocalidad.length === 0) {
+      this.selected_by_code_cnae_and_industria =
+        this.selected_by_code_cnae + this.selected_by_code_industria;
+      if (this.reapply && this.selected_by_code_cnae_and_industria === 0) {
         this.clean();
       }
     },
@@ -475,19 +551,19 @@ export default {
     /**
      * [numberCompaniesSelected cuenta la cantidad de empresas selecionadas]
      * @param  {[Array<Object>]} newSelectedCompanies [description]
-     * @return {[number]}        business_accountant  [description]
+     * @return {[number]}        accountant  [description]
      */
-    numberCompaniesSelected(newSelectedCompanies) {
-      let business_accountant = 0;
+    numberCompaniesSelected(newSelectedCompanies, key = "cnae") {
+      let accountant = 0;
       if (Array.isArray(newSelectedCompanies)) {
         newSelectedCompanies.forEach((item) => {
-          let result = inArrayObjectTreeselect(this.search.cnae, item.id);
+          let result = inArrayObjectTreeselect(this.search[key], item.id);
           if (result && result.data) {
-            business_accountant = business_accountant + result.data;
+            accountant = accountant + result.data;
           }
         });
       }
-      return business_accountant;
+      return accountant;
     },
     /**
      * [isAllProvincesLocalidad saber si el valor del treeselect es TODA ESPAÑA]
@@ -501,7 +577,10 @@ export default {
         : false;
     },
     apply() {
-      if (this.selected_cnae && this.selected_cnae.length !== 0) {
+      if (
+        (this.selected_cnae && this.selected_cnae.length !== 0) ||
+        (this.selected_industria && this.selected_industria.length !== 0)
+      ) {
         this.hideModal();
         // this.loadingFrm = true;
         this.formatearDataPOST();
@@ -517,7 +596,7 @@ export default {
             this.updateNumberSelectedCompanies(response.cantidad);
             this.$store.dispatch("filters/addFilters", {
               name: this.title,
-              quantity: this.selected_by_location,
+              quantity: this.selected_by_code_cnae_and_industria,
               cantidades: response,
             });
             this.areApplied = true;
@@ -525,6 +604,9 @@ export default {
             this.loadingFrm = false;
             this.selected_cnae_string = JSON.stringify(
               this.sortData(this.selected_cnae)
+            );
+            this.selected_industria_string = JSON.stringify(
+              this.sortData(this.selected_industria)
             );
             sendEvent(`filtro-aplicado`, this.title);
           })
@@ -554,6 +636,8 @@ export default {
     },
     clean() {
       this.selected_children = [];
+      this.selected_industria_string = "";
+      this.selected_industria = [];
       this.form.sector_actividad = [];
       this.selected_cnae = [];
       this.valueSelect = [];
@@ -574,7 +658,7 @@ export default {
       } else {
         this.updateNumberSelectedCompanies(0);
       }
-      this.selected_by_location = 0;
+      this.selected_by_code_cnae_and_industria = 0;
       this.$store.dispatch("filters/removeFilters", this.title);
       this.areApplied = false;
       this.reapply = false;
@@ -585,12 +669,14 @@ export default {
     },
     emptyFilter() {
       this.selected_children = [];
+      this.selected_industria_string = "";
+      this.selected_industria = [];
       this.form.sector_actividad = [];
       this.selected_cnae = [];
       this.valueSelect = [];
       this.selected_cnae_string = "";
       this.updateNumberSelectedCompanies(0);
-      this.selected_by_location = 0;
+      this.selected_by_code_cnae_and_industria = 0;
       this.$store.dispatch("filters/removeFilters", this.title);
       this.areApplied = false;
       this.reapply = false;
@@ -735,5 +821,11 @@ export default {
   li.active a {
     color: #fff !important;
   }
+}
+.ressss {
+  margin-top: 40px;
+}
+.nav-tabs {
+  border-bottom: none !important;
 }
 </style>
