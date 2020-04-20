@@ -409,6 +409,7 @@ export const formatProvinciaLocalidad = (data) => {
         });
       } else if (key === "cnae" && Array.isArray(element)) {
         element.map((item) => {
+          item.isDefaultExpanded = false;
           if (Array.isArray(item.children)) {
             item.children.map((_item) => {
               if (Array.isArray(_item.children)) {
@@ -434,4 +435,38 @@ export const formatProvinciaLocalidad = (data) => {
     }
   }
   return newData;
+};
+
+export const searchInArrayObject = (search = "", keyObj = "", myArray = []) => {
+  let results = [];
+  const gt = search.split(" ");
+  let expresion = "";
+  gt.map((datos) => {
+    expresion += `^(?=.*${datos})`;
+  });
+  const searchRegExp = new RegExp(expresion, "ims");
+
+  for (const key in myArray) {
+    if (myArray.hasOwnProperty(key)) {
+      const element = myArray[key];
+      var result = element[keyObj].match(searchRegExp);
+      if (result) {
+        results.push(element);
+      }
+      if (element.children && Array.isArray(element.children)) {
+        const arrayChildren = element.children;
+        for (const _key in arrayChildren) {
+          if (arrayChildren.hasOwnProperty(_key)) {
+            const elementChildren = arrayChildren[_key];
+            var resultChildren = elementChildren[keyObj].match(searchRegExp);
+            if (resultChildren) {
+              results.push(elementChildren);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  return results;
 };

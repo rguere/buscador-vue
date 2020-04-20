@@ -74,6 +74,32 @@
                 </div>
               </div>
             </div>
+            <hr />
+            <el-select
+              id="SearchTheProvinceorTown"
+              name="SearchTheProvinceorTown"
+              v-model="valueSelect"
+              multiple
+              clearable
+              filterable
+              remote
+              reserve-keyword
+              placeholder="Introduce el código de uno o varios Códigos CNAE para “BUSCAR”"
+              :popper-append-to-body="false"
+              popper-class="SearchTheProvinceorTown"
+              :remote-method="remoteMethod"
+              :loading="loadingSelect"
+              @change="changeMethod"
+              @clear="changeClear"
+              @remove-tag="changeRemoveTag"
+            >
+              <el-option
+                v-for="item in optionsSelect"
+                :key="item.id"
+                :label="`${item.id} - ${item.label}`"
+                :value="item.id"
+              ></el-option>
+            </el-select>
           </div>
           <div
             v-if="search.cnae && search.cnae.length === 0 && !loading"
@@ -224,8 +250,8 @@
                     </div>
                     <div class="panel-body">
                       <label class="control-label" for="SearchTheProvinceorTown"
-                        >Introduce el nombre y/o el código de uno o varios
-                        Códigos CNAE y clica en “BUSCAR”</label
+                        >Introduce el código de uno o varios Códigos CNAE para
+                        “BUSCAR”</label
                       >
                       <el-select
                         id="SearchTheProvinceorTown"
@@ -236,7 +262,7 @@
                         filterable
                         remote
                         reserve-keyword
-                        placeholder="Introduce el nombre y/o el código de uno o varios Códigos CNAE y clica en “BUSCAR”"
+                        placeholder="Introduce el código de uno o varios Códigos CNAE para “BUSCAR”"
                         :popper-append-to-body="false"
                         popper-class="SearchTheProvinceorTown"
                         :remote-method="remoteMethod"
@@ -248,7 +274,7 @@
                         <el-option
                           v-for="item in optionsSelect"
                           :key="item.id"
-                          :label="item.label"
+                          :label="`${item.id} - ${item.label}`"
                           :value="item.id"
                         ></el-option>
                       </el-select>
@@ -284,7 +310,7 @@
                             }"
                             :class="labelClassName"
                           >
-                            {{ node.label }}
+                            {{ node.id }} - {{ node.label }}
                             <span class="num-fil" v-if="node.raw.id != 'all'"
                               >({{ node.raw.data | numeral("0,0") }})</span
                             >
@@ -362,7 +388,31 @@
                           :value="item"
                         />
                         <span class="geekmark"></span>
-                        <span class="name-checkbox">{{ item.label }}</span>
+                        <span class="name-checkbox"
+                          >{{ item.id }} - {{ item.label }}</span
+                        >
+                        <span class="num-fil" v-if="item.id != 'all'"
+                          >({{ item.data | numeral("0,0") }})</span
+                        >
+                      </label>
+                    </li>
+                    <li
+                      v-for="(item, key) in selected_industria"
+                      :key="`_${key}`"
+                    >
+                      <label class="custon-checkboxs">
+                        <input
+                          type="checkbox"
+                          :name="`checkbox_list_${item.id}`"
+                          v-model="selected_industria"
+                          @change="handleChangeList(item, $event)"
+                          :id="`checkbox_list_${item.id}`"
+                          :value="item"
+                        />
+                        <span class="geekmark"></span>
+                        <span class="name-checkbox"
+                          >{{ item.id }} - {{ item.label }}</span
+                        >
                         <span class="num-fil" v-if="item.id != 'all'"
                           >({{ item.data | numeral("0,0") }})</span
                         >
@@ -389,8 +439,10 @@ import {
   beforeOrderFilters,
   sendPageView,
   sendEvent,
+  searchInArrayObject,
 } from "./../../utils";
 import { persistentData } from "./../../mixins/persistent-data";
+
 export default {
   name: "filter-sector-actividad",
   mixins: [persistentData],
@@ -769,19 +821,8 @@ export default {
     },
     remoteMethod(query) {
       if (query !== "") {
-        // this.loadingSelect = true;
-        // this.$store
-        //   .dispatch("search/searchLocalidades", query)
-        //   .then((response) => {
-        //     if (response.results && Array.isArray(response.results)) {
-        //       this.optionsSelect = response.results;
-        //     }
-        //     this.loadingSelect = false;
-        //   })
-        //   .catch(() => {
-        //     this.loadingSelect = false;
-        //     this.optionsSelect = [];
-        //   });
+        const results = searchInArrayObject(query, "id", this.search.cnae);
+        this.optionsSelect = results;
       } else {
         this.optionsSelect = [];
       }
