@@ -74,7 +74,7 @@
                             {{ item.id }} - {{ item.label }}</a
                           >
                           <span>
-                            <!-- <label class="custon-checkboxs">
+                            <label class="custon-checkboxs">
                               <input
                                 type="checkbox"
                                 :name="`checkbox_${item.id}`"
@@ -84,7 +84,7 @@
                                 :value="item"
                               />
                               <span class="geekmark"></span>
-                            </label> -->
+                            </label>
                           </span>
                         </h4>
                       </div>
@@ -136,7 +136,7 @@
                             {{ item.id }} - {{ item.label }}</a
                           >
                           <span>
-                            <!-- <label class="custon-checkboxs">
+                            <label class="custon-checkboxs">
                               <input
                                 type="checkbox"
                                 :name="`checkbox_${item.id}`"
@@ -146,7 +146,7 @@
                                 :value="item"
                               />
                               <span class="geekmark"></span>
-                            </label> -->
+                            </label>
                           </span>
                         </h4>
                       </div>

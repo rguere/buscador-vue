@@ -153,7 +153,7 @@ export default {
   top: 96px;
   width: 100%;
   padding-top: 5px;
-  z-index: 1;
+  z-index: 2;
   background: #ffffff;
   -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
   box-shadow: 0 -2px 11px 0px rgba(0, 0, 0, 0.5);
