@@ -64,14 +64,28 @@
                       v-if="item.children && Array.isArray(item.children)"
                     >
                       <div class="panel-heading">
-                        <h4 class="panel-title">
+                        <h4 class="panel-title panel-title-flex">
                           <a
                             data-toggle="collapse"
                             data-parent="#accordion"
                             :href="`#collapse-${key}`"
                           >
+                            <span class="glyphicon glyphicon-menu-right"></span>
                             {{ item.id }} - {{ item.label }}</a
                           >
+                          <span>
+                            <label class="custon-checkboxs">
+                              <input
+                                type="checkbox"
+                                :name="`checkbox_${item.id}`"
+                                v-model="selected_cnae"
+                                @change="handleChange(item, $event)"
+                                :id="`checkbox_${item.id}`"
+                                :value="item"
+                              />
+                              <span class="geekmark"></span>
+                            </label>
+                          </span>
                         </h4>
                       </div>
                       <div
@@ -112,14 +126,28 @@
                       v-if="item.children && Array.isArray(item.children)"
                     >
                       <div class="panel-heading">
-                        <h4 class="panel-title">
+                        <h4 class="panel-title panel-title-flex">
                           <a
                             data-toggle="collapse"
                             data-parent="#accordion2"
                             :href="`#collapse2-${key}`"
                           >
+                            <span class="glyphicon glyphicon-menu-right"></span>
                             {{ item.id }} - {{ item.label }}</a
                           >
+                          <span>
+                            <label class="custon-checkboxs">
+                              <input
+                                type="checkbox"
+                                :name="`checkbox_${item.id}`"
+                                v-model="selected_cnae"
+                                @change="handleChange(item, $event)"
+                                :id="`checkbox_${item.id}`"
+                                :value="item"
+                              />
+                              <span class="geekmark"></span>
+                            </label>
+                          </span>
                         </h4>
                       </div>
                       <div
@@ -494,6 +522,7 @@ import {
   searchInArrayObject,
 } from "./../../utils";
 import { persistentData } from "./../../mixins/persistent-data";
+import $ from "jquery";
 
 export default {
   name: "filter-sector-actividad",
@@ -624,6 +653,27 @@ export default {
       }
       sendEvent("filtro-vaciado", "-");
     });
+    $(".collapse.in").each(function() {
+      $(this)
+        .siblings(".panel-heading")
+        .find(".glyphicon")
+        .addClass("rotate");
+    });
+
+    // Toggle plus minus icon on show hide of collapse element
+    $(".collapse")
+      .on("show.bs.collapse", function() {
+        $(this)
+          .parent()
+          .find(".glyphicon")
+          .addClass("rotate");
+      })
+      .on("hide.bs.collapse", function() {
+        $(this)
+          .parent()
+          .find(".glyphicon")
+          .removeClass("rotate");
+      });
   },
   methods: {
     middle(items, part) {

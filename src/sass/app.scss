@@ -381,4 +381,24 @@ span.num-fil {
   border-color: #ddd !important;
 }
 
+.panel-title.panel-title-flex {
+  display: flex !important;
+}
+
+.panel-title.panel-title-flex > :nth-child(1) {
+  width: 90%;
+}
+
+.panel-title.panel-title-flex > :nth-child(2) {
+  width: 10%;
+  text-align: right;
+}
+
+.rotate {
+  -webkit-transform: rotate(90deg); /* Chrome, Safari, Opera */
+  -moz-transform: rotate(90deg); /* Firefox */
+  -ms-transform: rotate(90deg); /* IE 9 */
+  transform: rotate(90deg); /* Standard syntax */
+}
+
 @import "media_queries.scss";
