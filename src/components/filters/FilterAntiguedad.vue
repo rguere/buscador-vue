@@ -3,17 +3,20 @@
     <div class="panel-heading">
       <p class="panel-title roboto white">
         {{ title }}
-        <span
-          class="span-info-right"
-          v-if="selected_by_antiguedad !== 0"
-        >({{ selected_by_antiguedad | numeral('0,0') }} empresas seleccionadas)</span>
+        <span class="span-info-right" v-if="selected_by_antiguedad !== 0"
+          >({{ selected_by_antiguedad | numeral("0,0") }} empresas
+          seleccionadas)</span
+        >
       </p>
     </div>
     <div class="panel-body">
       <div v-if="search.antiguedad && search.antiguedad.length !== 0">
         <div class="grid-3-columns-1fr">
           <div v-for="(item, key) in search.antiguedad" :key="key">
-            <label class="custon-checkboxs" v-if="item.label !== 'incluir_null'">
+            <label
+              class="custon-checkboxs"
+              v-if="item.label !== 'incluir_null'"
+            >
               <input
                 type="checkbox"
                 :name="`checkbox_antiguedad_${item.id}`"
@@ -24,7 +27,7 @@
               />
               <span class="geekmark"></span>
               <span class="name-checkbox">{{ item.label }}</span>
-              <span class="num-fil">({{ item.data | numeral('0,0') }})</span>
+              <span class="num-fil">({{ item.data | numeral("0,0") }})</span>
             </label>
           </div>
         </div>
@@ -37,13 +40,23 @@
             <button
               type="button"
               class="btn btn-success"
-              v-if="(selected_antiguedad.length !== 0 && !areApplied) || (selected_antiguedad.length !== 0 && !compareWithNewtoApply)"
+              v-if="
+                (selected_antiguedad.length !== 0 && !areApplied) ||
+                  (selected_antiguedad.length !== 0 && !compareWithNewtoApply)
+              "
               @click="apply"
             >
               Aplicar
-              <i :class="(loadingFrm)?'fa  fa-spinner fa-spin':'fa  fa-send'"></i>
+              <i
+                :class="loadingFrm ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'"
+              ></i>
             </button>
-            <button type="button" class="btn btn-info" v-if="areApplied" @click="confirmClean">
+            <button
+              type="button"
+              class="btn btn-info"
+              v-if="areApplied"
+              @click="confirmClean"
+            >
               Limpiar
               <i class="fa fa-undo"></i>
             </button>
@@ -59,7 +72,10 @@
                   name
                 />
                 <span class="geekmark"></span>
-                <span class="title">Incluir aquellas empresas en las que se desconoce su antigüedad</span>
+                <span class="title"
+                  >Incluir aquellas empresas en las que se desconoce su
+                  antigüedad</span
+                >
               </label>
             </div>
           </div>
@@ -67,8 +83,15 @@
         <div v-if="custom_antiquity.length !== 0">
           <hr />
           <p style="margin: 0 0 10px 19px;">Renglon personalizado</p>
-          <div v-for="(item, key) in custom_antiquity" :key="key" class="checkbox">
-            <label class="custon-checkboxs" v-if="item.label !== 'incluir_null'">
+          <div
+            v-for="(item, key) in custom_antiquity"
+            :key="key"
+            class="checkbox"
+          >
+            <label
+              class="custon-checkboxs"
+              v-if="item.label !== 'incluir_null'"
+            >
               <input
                 type="checkbox"
                 :name="`__checkbox_empleados__${item.id}`"
@@ -79,7 +102,7 @@
               />
               <span class="geekmark"></span>
               <span class="name-checkbox">{{ item.label }}</span>
-              <span class="num-fil">({{ item.data | numeral('0,0') }})</span>
+              <span class="num-fil">({{ item.data | numeral("0,0") }})</span>
             </label>
           </div>
         </div>
@@ -107,19 +130,35 @@
                 <button
                   type="button"
                   class="btn btn-success"
-                  v-if="(selected_antiguedad.length !== 0 && !areApplied) || (selected_antiguedad.length !== 0 && !compareWithNewtoApply)"
+                  v-if="
+                    (selected_antiguedad.length !== 0 && !areApplied) ||
+                      (selected_antiguedad.length !== 0 &&
+                        !compareWithNewtoApply)
+                  "
                   @click="apply"
                 >
                   Aplicar
-                  <i :class="(loadingFrm)?'fa  fa-spinner fa-spin':'fa  fa-send'"></i>
+                  <i
+                    :class="
+                      loadingFrm ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'
+                    "
+                  ></i>
                 </button>
-                <button type="button" class="btn btn-info" v-if="areApplied" @click="confirmClean">
+                <button
+                  type="button"
+                  class="btn btn-info"
+                  v-if="areApplied"
+                  @click="confirmClean"
+                >
                   Limpiar
                   <i class="fa fa-undo"></i>
                 </button>
               </div>
             </div>
-            <div class="row" v-if="search.antiguedad && search.antiguedad.length !== 0">
+            <div
+              class="row"
+              v-if="search.antiguedad && search.antiguedad.length !== 0"
+            >
               <div class="col-md-12">
                 <div class="panel panel-default cd">
                   <div class="panel-heading">
@@ -128,7 +167,9 @@
                       <span
                         class="span-info-right"
                         v-if="selected_by_antiguedad !== 0"
-                      >({{ selected_by_antiguedad | numeral('0,0') }} empresas seleccionadas)</span>
+                        >({{ selected_by_antiguedad | numeral("0,0") }} empresas
+                        seleccionadas)</span
+                      >
                     </p>
                   </div>
                   <div class="panel-body">
@@ -142,19 +183,30 @@
                             :disabled="$v.$invalid || loadingAhnos"
                           >
                             BUSCAR
-                            <i :class="(loadingAhnos)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
+                            <i
+                              :class="
+                                loadingAhnos
+                                  ? 'fa  fa-spinner fa-spin'
+                                  : 'fa  fa-search'
+                              "
+                            ></i>
                           </button>
                           <div class="conten-epa">
                             <div class="form-group">
-                              <label
-                                class="control-label"
-                              >Insertar la antigüedad de la(s) empresa(s) en número de años</label>
+                              <label class="control-label"
+                                >Insertar la antigüedad de la(s) empresa(s) en
+                                número de años</label
+                              >
                             </div>
                             <div
                               class="form-group anti-inputs"
-                              :class="{ 'has-error has-feedback': $v.ahnos_from.$error }"
+                              :class="{
+                                'has-error has-feedback': $v.ahnos_from.$error,
+                              }"
                             >
-                              <label class="control-label" for="ahnos_from">De (incluido)</label>
+                              <label class="control-label" for="ahnos_from"
+                                >De (incluido)</label
+                              >
                               <input
                                 type="text"
                                 v-model.trim="$v.ahnos_from.$model"
@@ -168,9 +220,13 @@
                             </div>
                             <div
                               class="form-group anti-inputs"
-                              :class="{ 'has-error has-feedback': $v.ahnos_to.$error }"
+                              :class="{
+                                'has-error has-feedback': $v.ahnos_to.$error,
+                              }"
                             >
-                              <label class="control-label" for="ahnos_to">Hasta (incluido)</label>
+                              <label class="control-label" for="ahnos_to"
+                                >Hasta (incluido)</label
+                              >
                               <input
                                 type="text"
                                 v-model.trim="$v.ahnos_to.$model"
@@ -184,7 +240,9 @@
                             </div>
                             <div v-if="custom_antiquity.length !== 0">
                               <hr />
-                              <p style="margin: 0 0 10px 19px;">Renglon personalizado</p>
+                              <p style="margin: 0 0 10px 19px;">
+                                Renglon personalizado
+                              </p>
                               <div
                                 v-for="(item, key) in custom_antiquity"
                                 :key="key"
@@ -203,19 +261,29 @@
                                     :value="item"
                                   />
                                   <span class="geekmark"></span>
-                                  <span class="name-checkbox">{{ item.label }}</span>
-                                  <span class="num-fil">({{ item.data | numeral('0,0') }})</span>
+                                  <span class="name-checkbox">{{
+                                    item.label
+                                  }}</span>
+                                  <span class="num-fil"
+                                    >({{ item.data | numeral("0,0") }})</span
+                                  >
                                 </label>
                               </div>
                               <button
                                 type="button"
                                 class="btn btn-success pull-right"
-                                v-if="(selected_custom_antiguedad.length !== 0)"
+                                v-if="selected_custom_antiguedad.length !== 0"
                                 title="Aplicar Renglon personalizado"
                                 @click="applyAhnos"
                               >
                                 Aplicar Renglon personalizado
-                                <i :class="(loadingFrm)?'fa  fa-spinner fa-spin':'fa  fa-send'"></i>
+                                <i
+                                  :class="
+                                    loadingFrm
+                                      ? 'fa  fa-spinner fa-spin'
+                                      : 'fa  fa-send'
+                                  "
+                                ></i>
                               </button>
                             </div>
                           </div>
@@ -223,7 +291,9 @@
                       </div>
                       <div class="col-md-6">
                         <div class="panel panel-warning">
-                          <div class="panel-heading">Seleccionar años, por búsqueda estándar</div>
+                          <div class="panel-heading">
+                            Seleccionar años, por búsqueda estándar
+                          </div>
                           <div class="panel-body div-scroll-300">
                             <div v-if="search.antiguedad.length !== 0">
                               <div
@@ -244,8 +314,12 @@
                                     :value="item"
                                   />
                                   <span class="geekmark"></span>
-                                  <span class="name-checkbox">{{ item.label }}</span>
-                                  <span class="num-fil">({{ item.data | numeral('0,0') }})</span>
+                                  <span class="name-checkbox">{{
+                                    item.label
+                                  }}</span>
+                                  <span class="num-fil"
+                                    >({{ item.data | numeral("0,0") }})</span
+                                  >
                                 </label>
                               </div>
                             </div>
@@ -253,7 +327,10 @@
                         </div>
                       </div>
                       <div class="col-md-12">
-                        <div class="checkboxs-resaldado w-50-p" v-if="itemIncluirNull">
+                        <div
+                          class="checkboxs-resaldado w-50-p"
+                          v-if="itemIncluirNull"
+                        >
                           <label class="custon-checkboxs">
                             <input
                               type="checkbox"
@@ -263,9 +340,10 @@
                               name
                             />
                             <span class="geekmark"></span>
-                            <span
-                              class="title"
-                            >Incluir aquellas empresas en las que se desconoce su antigüedad</span>
+                            <span class="title"
+                              >Incluir aquellas empresas en las que se desconoce
+                              su antigüedad</span
+                            >
                           </label>
                         </div>
                       </div>
@@ -281,13 +359,18 @@
                       <span
                         class="span-info-right"
                         v-if="selected_by_antiguedad !== 0"
-                      >({{ selected_by_antiguedad | numeral('0,0') }} empresas seleccionadas)</span>
+                        >({{ selected_by_antiguedad | numeral("0,0") }} empresas
+                        seleccionadas)</span
+                      >
                     </p>
                   </div>
                   <div class="panel-body">
                     <div class="row">
                       <div class="col-md-4">
-                        <div class="block" @click="clickPicker($event, 'desdePicker')">
+                        <div
+                          class="block"
+                          @click="clickPicker($event, 'desdePicker')"
+                        >
                           <label class="demonstration">Desde (incluido)</label>
                           <el-date-picker
                             id="desdePicker"
@@ -304,7 +387,10 @@
                         </div>
                       </div>
                       <div class="col-md-4">
-                        <div class="block" @click="clickPicker($event, 'hastaPicker')">
+                        <div
+                          class="block"
+                          @click="clickPicker($event, 'hastaPicker')"
+                        >
                           <label class="demonstration">Hasta (incluido)</label>
                           <el-date-picker
                             id="hastaPicker"
@@ -325,14 +411,26 @@
                           type="button"
                           class="btn btn-info"
                           @click="applyRange"
-                          :disabled="(this.daterange[0] === null) || (this.daterange[1] === null)"
+                          :disabled="
+                            this.daterange[0] === null ||
+                              this.daterange[1] === null
+                          "
                         >
                           BUSCAR
-                          <i :class="(loadingDaterange)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
+                          <i
+                            :class="
+                              loadingDaterange
+                                ? 'fa  fa-spinner fa-spin'
+                                : 'fa  fa-search'
+                            "
+                          ></i>
                         </button>
                       </div>
                       <div class="col-md-12">
-                        <div class="checkboxs-resaldado w-50-p m-t-10" v-if="itemIncluirNull">
+                        <div
+                          class="checkboxs-resaldado w-50-p m-t-10"
+                          v-if="itemIncluirNull"
+                        >
                           <label class="custon-checkboxs">
                             <input
                               type="checkbox"
@@ -342,9 +440,10 @@
                               name
                             />
                             <span class="geekmark"></span>
-                            <span
-                              class="title"
-                            >Incluir aquellas empresas en las que se desconoce su antigüedad</span>
+                            <span class="title"
+                              >Incluir aquellas empresas en las que se desconoce
+                              su antigüedad</span
+                            >
                           </label>
                         </div>
                       </div>
@@ -375,7 +474,7 @@ import {
   howAnimation,
   beforeOrderFilters,
   sendPageView,
-  sendEvent
+  sendEvent,
 } from "./../../utils";
 import { persistentData } from "./../../mixins/persistent-data";
 export default {
@@ -388,7 +487,7 @@ export default {
       form: "filters/form",
       selected_companies: "filters/selected_companies",
       applied_filters: "filters/applied_filters",
-      filters: "filters/filters"
+      filters: "filters/filters",
     }),
     itemIncluirNull: function() {
       let include = this.search.antiguedad.filter(function(item) {
@@ -400,7 +499,7 @@ export default {
       let stg = this.selected_antiguedad_string;
       let obj = JSON.stringify(this.selected_antiguedad);
       return stg === obj;
-    }
+    },
   },
   data: () => ({
     title: "Antigüedad",
@@ -413,8 +512,8 @@ export default {
         id: "all",
         label: "TODA ESPAÑA",
         isDefaultExpanded: true,
-        children: []
-      }
+        children: [],
+      },
     ],
     areApplied: false,
     reapply: false,
@@ -432,25 +531,25 @@ export default {
     pickerOptions: {
       disabledDate(time) {
         return time.getTime() > Date.now();
-      }
+      },
     },
     desdePicker: 0,
     hastaPicker: 0,
     custom_antiquity: [],
-    selected_custom_antiguedad: []
+    selected_custom_antiguedad: [],
   }),
   validations() {
     return {
       ahnos_from: {
         required,
         between: maxLength(3),
-        numeric
+        numeric,
       },
       ahnos_to: {
         required,
         between: maxLength(3),
-        numeric
-      }
+        numeric,
+      },
     };
   },
   watch: {
@@ -474,20 +573,20 @@ export default {
     },
     selected_companies: function() {
       howAnimation(document.querySelector(".selected_companies"));
-    }
+    },
   },
   mounted() {
-    this.$root.$on("clean_filter", filter => {
+    this.$root.$on("clean_filter", (filter) => {
       if (filter === this.title) {
         this.clean();
       }
     });
-    this.$root.$on("show_modal_filter", filter => {
+    this.$root.$on("show_modal_filter", (filter) => {
       if (filter === this.title) {
         this.modalVisible = true;
       }
     });
-    this.$root.$on("empty_filter", filter => {
+    this.$root.$on("empty_filter", (filter) => {
       if (filter === this.title) {
         this.emptyFilter();
       }
@@ -515,7 +614,7 @@ export default {
           node.classList.add(`_${el.id}`);
           let textnode = document.createTextNode("X");
           node.appendChild(textnode);
-          node.addEventListener("click", event => {
+          node.addEventListener("click", (event) => {
             let target = event.target;
             let _class = target.getAttribute("class");
             this.$refs[_class.replace("_", "")].pickerVisible = false;
@@ -545,7 +644,7 @@ export default {
      */
     updateNumberSelectedCompanies(quantity) {
       this.$store.dispatch("filters/updateNumberSelectedCompanies", {
-        quantity
+        quantity,
       });
     },
     /**
@@ -556,7 +655,7 @@ export default {
     numberCompaniesSelected(newSelectedCompanies) {
       let business_accountant = 0;
       if (Array.isArray(newSelectedCompanies)) {
-        newSelectedCompanies.forEach(item => {
+        newSelectedCompanies.forEach((item) => {
           let result = inArrayObjectTreeselect(this.search.antiguedad, item.id);
           if (result && result.data && result.data) {
             business_accountant = business_accountant + result.data;
@@ -589,12 +688,12 @@ export default {
         );
         this.$store
           .dispatch("search/filtrar", beforeForm)
-          .then(response => {
+          .then((response) => {
             this.updateNumberSelectedCompanies(response.cantidad);
             this.$store.dispatch("filters/addFilters", {
               name: this.title,
               quantity: this.selected_by_antiguedad,
-              cantidades: response
+              cantidades: response,
             });
             this.areApplied = true;
             this.reapply = false;
@@ -632,12 +731,12 @@ export default {
         );
         this.$store
           .dispatch("search/filtrar", beforeForm)
-          .then(response => {
+          .then((response) => {
             this.updateNumberSelectedCompanies(response.cantidad);
             this.$store.dispatch("filters/addFilters", {
               name: this.title,
               quantity: this.selected_by_antiguedad,
-              cantidades: response
+              cantidades: response,
             });
             this.areApplied = true;
             this.reapply = false;
@@ -670,12 +769,12 @@ export default {
         );
         this.$store
           .dispatch("search/filtrar", beforeForm)
-          .then(response => {
+          .then((response) => {
             this.updateNumberSelectedCompanies(response.cantidad);
             this.$store.dispatch("filters/addFilters", {
               name: this.title,
               quantity: this.selected_by_antiguedad,
-              cantidades: response
+              cantidades: response,
             });
             this.areApplied = true;
             this.reapply = false;
@@ -711,14 +810,14 @@ export default {
         );
         this.$store
           .dispatch("search/filtrar", beforeForm)
-          .then(response => {
+          .then((response) => {
             if (response && response.cantidad) {
               this.custom_antiquity = [];
               this.selected_custom_antiguedad = [];
               let item = {
                 id: `ahnos:${smaller}|${major}`,
                 data: response.cantidad,
-                label: `De ${smaller} a ${major} años`
+                label: `De ${smaller} a ${major} años`,
               };
               this.custom_antiquity[0] = item;
               this.selected_custom_antiguedad[0] = item;
@@ -741,9 +840,9 @@ export default {
           cancelButtonColor: "#d9534f",
           showConfirmButton: true,
           confirmButtonColor: "#337ab7",
-          confirmButtonText: "Si, seguro"
+          confirmButtonText: "Si, seguro",
         })
-        .then(result => {
+        .then((result) => {
           if (result.value) {
             this.clean();
           }
@@ -760,10 +859,10 @@ export default {
           this.form,
           this.title
         );
-        this.$store.dispatch("search/filtrar", beforeForm).then(response => {
+        this.$store.dispatch("search/filtrar", beforeForm).then((response) => {
           this.updateNumberSelectedCompanies(response.cantidad);
           this.$store.dispatch("filters/setCantidades", {
-            cantidades: response
+            cantidades: response,
           });
         });
       } else {
@@ -803,12 +902,12 @@ export default {
     },
     formatearDataPOST() {
       this.form.antiguedad = [];
-      this.selected_antiguedad.forEach(item => {
+      this.selected_antiguedad.forEach((item) => {
         this.form.antiguedad.push(item.id);
       });
       return this.form;
-    }
-  }
+    },
+  },
 };
 </script>
 

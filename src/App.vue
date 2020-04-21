@@ -8,8 +8,8 @@
 import { mapGetters } from "vuex";
 export default {
   computed: mapGetters({
-    layout: "layout/layout"
-  })
+    layout: "layout/layout",
+  }),
 };
 </script>
 

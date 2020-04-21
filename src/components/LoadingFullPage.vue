@@ -7,15 +7,15 @@
 </template>
 
 <script>
-  import { mapGetters } from 'vuex'
-  export default {
-    name: 'loading-full-page',
-    computed: mapGetters({
-      loading: 'search/loading',
-    })
-  }
+import { mapGetters } from "vuex";
+export default {
+  name: "loading-full-page",
+  computed: mapGetters({
+    loading: "search/loading",
+  }),
+};
 </script>
 <!-- lang="scss" -->
 <style lang="scss" scoped>
-  @import './../sass/loading';
+@import "./../sass/loading";
 </style>

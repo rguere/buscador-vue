@@ -270,6 +270,27 @@ export const getColumnsSummary = () => {
       show: true,
       sortable: true,
     },
+    {
+      prop: "Cnae3_text",
+      label: "Sector/Actividad",
+      width: "210",
+      show: true,
+      sortable: true,
+    },
+    {
+      prop: "IndustriaDescripcion",
+      label: "Industria",
+      width: "210",
+      show: true,
+      sortable: true,
+    },
+    {
+      prop: "AuditorBorme",
+      label: "Auditor",
+      width: "210",
+      show: true,
+      sortable: true,
+    },
   ];
 };
 

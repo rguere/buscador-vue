@@ -1,5 +1,8 @@
 <template>
-  <div class="panel panel-default cd div_capa_superpuesta" id="filter_directivos_y_vinculaciones">
+  <div
+    class="panel panel-default cd div_capa_superpuesta"
+    id="filter_directivos_y_vinculaciones"
+  >
     <div class="panel-heading">
       <p class="panel-title roboto white">{{ title }}</p>
     </div>
@@ -35,7 +38,9 @@
             <input type="checkbox" name />
             <span class="geekmark"></span>
             <span class="title">Aplicar en la búsqueda</span>
-            <span class="description">Solo sociedades o personas juriducas</span>
+            <span class="description"
+              >Solo sociedades o personas juriducas</span
+            >
           </label>
         </div>
         <button class="btn btn-warning">
@@ -52,8 +57,8 @@ export default {
   name: "filter-directivos-vinculaciones",
   data: () => ({
     title: "Directivos y Vinculaciones",
-    managers_and_links: []
-  })
+    managers_and_links: [],
+  }),
 };
 </script>
 

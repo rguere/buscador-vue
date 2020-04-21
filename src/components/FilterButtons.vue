@@ -11,9 +11,10 @@
           <div class="row">
             <div class="col-md-3"></div>
             <div class="col-md-9">
-              <p
-                class="filter-buttons_description text-center"
-              >¡Incorpora a tus búsquedas tantos filtros como quieras!. Hay múltiples posibilidades.</p>
+              <p class="filter-buttons_description text-center">
+                ¡Incorpora a tus búsquedas tantos filtros como quieras!. Hay
+                múltiples posibilidades.
+              </p>
             </div>
           </div>
           <div class="row">
@@ -28,7 +29,9 @@
                 <span class="hidden-xs hidden-sm">resultados</span>
               </router-link>
               <h3 class="selected_companies">
-                <span class="f-20">{{ selected_companies | numeral('0,0') }}</span>
+                <span class="f-20">{{
+                  selected_companies | numeral("0,0")
+                }}</span>
                 Empresas seleccionadas
               </h3>
             </div>
@@ -36,13 +39,18 @@
               <div class="filter-btns">
                 <div v-for="(filter, key) in filters" :key="key">
                   <a
-                    :href='`#${filter.slug}`'
+                    :href="`#${filter.slug}`"
                     class="btn btn-default"
                     v-if="!filter.disabled"
                     :data-offset="filter.offset"
-                    :class="(filter.apply)? 'active': ''"
-                  >{{ filter.name }}</a>
-                  <el-badge v-if="filter.disabled" value="Próximamente" class="item">
+                    :class="filter.apply ? 'active' : ''"
+                    >{{ filter.name }}</a
+                  >
+                  <el-badge
+                    v-if="filter.disabled"
+                    value="Próximamente"
+                    class="item"
+                  >
                     <div class="btn btn_disabled">{{ filter.name }}</div>
                   </el-badge>
                   <span
@@ -84,9 +92,9 @@
                 >
                   <span class="filter-apply" v-if="filter.apply">
                     > {{ filter.name }}
-                    <span
-                      class="num-fil"
-                    >( {{ filter.quantity | numeral('0,0') }} )</span>
+                    <span class="num-fil"
+                      >( {{ filter.quantity | numeral("0,0") }} )</span
+                    >
                   </span>
                 </span>
               </h5>
@@ -106,7 +114,7 @@ export default {
   name: "filter-buttons",
   data() {
     return {
-      modalVisible: false
+      modalVisible: false,
     };
   },
   computed: {
@@ -115,7 +123,7 @@ export default {
       applied_filters: "filters/applied_filters",
       filters: "filters/filters",
       form: "filters/form",
-      cantidades: "filters/cantidades"
+      cantidades: "filters/cantidades",
     }),
     orderFilters: function() {
       let order = orderFilters(this.filters, this.applied_filters, this.form);
@@ -132,26 +140,22 @@ export default {
         }
       }
       return order;
-    }
+    },
   },
   mounted() {
     window.addEventListener("scroll", handleScroll);
     let links = document.querySelectorAll(".filter-btns a");
-    links.forEach(item => {
-      item.addEventListener('click', event => {
+    links.forEach((item) => {
+      item.addEventListener("click", (event) => {
         event.preventDefault();
         const target = event.target;
-        const href = target.getAttribute('href');
-        const element = document.querySelector(href)
-        const offset = parseInt(target.dataset.offset)
-        scrollIt(
-          element,
-          300,
-          'easeOutQuad',
-          offset,
-          () => { howAnimation(element) }
-        )
-      })
+        const href = target.getAttribute("href");
+        const element = document.querySelector(href);
+        const offset = parseInt(target.dataset.offset);
+        scrollIt(element, 300, "easeOutQuad", offset, () => {
+          howAnimation(element);
+        });
+      });
     });
   },
   watch: {},
@@ -164,7 +168,7 @@ export default {
     },
     activeFilter(filter) {
       let links = document.querySelectorAll(".filter-btns a");
-      links.forEach(item => {
+      links.forEach((item) => {
         if (item.textContent.search(filter) !== -1) {
           item.classList.add("active");
         }
@@ -181,9 +185,9 @@ export default {
           cancelButtonColor: "#d9534f",
           showConfirmButton: true,
           confirmButtonColor: "#337ab7",
-          confirmButtonText: "Si, seguro"
+          confirmButtonText: "Si, seguro",
         })
-        .then(result => {
+        .then((result) => {
           if (result.value) {
             this.$root.$emit("clean_filter", filter.name);
           }
@@ -232,11 +236,11 @@ export default {
           cancelButtonColor: "#d9534f",
           showConfirmButton: true,
           confirmButtonColor: "#337ab7",
-          confirmButtonText: "Si, seguro"
+          confirmButtonText: "Si, seguro",
         })
-        .then(result => {
+        .then((result) => {
           if (result.value) {
-            this.applied_filters.forEach(item => {
+            this.applied_filters.forEach((item) => {
               this.$root.$emit("empty_filter", item);
             });
           }
@@ -250,8 +254,8 @@ export default {
     },
     hideResults() {
       this.modalVisible = false;
-    }
-  }
+    },
+  },
 };
 </script>
 

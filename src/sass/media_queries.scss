@@ -1,5 +1,4 @@
 @media (max-width: 950px) {
-
   .grid-5-columns-1fr {
     grid-template-columns: repeat(4, 1fr);
   }
@@ -15,33 +14,42 @@
   .grid-2-columns-1fr {
     grid-template-columns: 100%;
   }
-
 }
 
 @media (max-width: 750px) {
-  .grid-2-columns-1fr, .grid-3-columns-1fr, .grid-4-columns-1fr, .grid-5-columns-1fr {
+  .grid-2-columns-1fr,
+  .grid-3-columns-1fr,
+  .grid-4-columns-1fr,
+  .grid-5-columns-1fr {
     grid-template-columns: 50% 50%;
   }
 
-  .conten-flex-70-30>div:nth-child(odd), .conten-flex-70-30>div:nth-child(even) {
+  .conten-flex-70-30 > div:nth-child(odd),
+  .conten-flex-70-30 > div:nth-child(even) {
     width: 100%;
   }
 
-  .conten-flex-50-50>div:nth-child(odd), .conten-flex-50-50>div:nth-child(even) {
+  .conten-flex-50-50 > div:nth-child(odd),
+  .conten-flex-50-50 > div:nth-child(even) {
     width: 100%;
   }
 }
 
 @media (max-width: 550px) {
-  .grid-2-columns-1fr, .grid-3-columns-1fr, .grid-4-columns-1fr, .grid-5-columns-1fr {
+  .grid-2-columns-1fr,
+  .grid-3-columns-1fr,
+  .grid-4-columns-1fr,
+  .grid-5-columns-1fr {
     grid-template-columns: 100%;
   }
 }
 
-@media (min-width: 992px){
-  #bv-modal-filter-ubicacion, #bv-modal-filter-codigo-postal {
-    .modal-lg, .modal-xl {
-        width: 90%;
+@media (min-width: 992px) {
+  #bv-modal-filter-ubicacion,
+  #bv-modal-filter-codigo-postal {
+    .modal-lg,
+    .modal-xl {
+      width: 90%;
     }
   }
 }
@@ -60,71 +68,71 @@
 
 @media (max-width: 1167px) {
   .filter-btns div .btn {
-    font-size: 11px!important;
+    font-size: 11px !important;
   }
 }
 
 @media (max-width: 1086px) {
   .filter-btns div .btn {
-    font-size: 9.8px!important;
+    font-size: 9.8px !important;
   }
 }
 
 @media (max-width: 991px) {
   .filter-btns div .btn {
-    font-size: 12px!important;
+    font-size: 12px !important;
   }
 }
 
-@media ( max-width: 883px ) {
+@media (max-width: 883px) {
   .filter-btns div .btn {
-    font-size: 10px!important;
+    font-size: 10px !important;
   }
 }
 
-@media ( max-width: 767px ) {
+@media (max-width: 767px) {
   .filter-btns div .btn {
-    font-size: 9px!important;
+    font-size: 9px !important;
   }
   #filter-buttons.is-fixed {
-    top: 42px!important;
+    top: 42px !important;
     // left: 900px!important;
     transition: all 1s;
   }
 }
 
-@media ( max-width: 702px ) {
+@media (max-width: 702px) {
   .filter-btns div .btn {
-    font-size: 8.5px!important;
+    font-size: 8.5px !important;
   }
 }
 
-@media ( max-width: 672px ) {
+@media (max-width: 672px) {
   .filter-btns div {
-    width: 34%!important;
+    width: 34% !important;
   }
   .filter-btns div .btn {
-    font-size: 12px!important;
+    font-size: 12px !important;
   }
 }
 
 @media (max-width: 436px) {
   .filter-btns div .btn {
-    font-size: 10px!important;
+    font-size: 10px !important;
   }
   #filter-buttons.is-fixed {
-    position: inherit!important;
-    -webkit-box-shadow: none!important;
-    box-shadow: none!important;
-    padding-top: 0px!important;
+    position: inherit !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    padding-top: 0px !important;
   }
 }
 
 @media (max-width: 378px) {
   .filter-btns div {
-    width: 100%!important;
+    width: 100% !important;
   }
   .filter-btns div .btn {
-    font-size: 12px!important;
+    font-size: 12px !important;
   }
 }

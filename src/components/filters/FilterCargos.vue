@@ -51,7 +51,7 @@
 
 <script>
 export default {
-  name: "filter-cargos"
+  name: "filter-cargos",
 };
 </script>
 

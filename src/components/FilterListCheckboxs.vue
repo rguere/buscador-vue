@@ -32,22 +32,19 @@
 </template>
 
 <script>
-    export default {
-      name: 'filter-list-checkboxs',
-      props: {
-        search: Object
-      },
-      data: () => ({
-        show: true
-      }),
-      mounted() {
-      },
-      methods: {}
-    }
+export default {
+  name: "filter-list-checkboxs",
+  props: {
+    search: Object,
+  },
+  data: () => ({
+    show: true,
+  }),
+  mounted() {},
+  methods: {},
+};
 </script>
 
 <style lang="scss" scoped>
-
-    @import './../sass/filters/filters';
-
+@import "./../sass/filters/filters";
 </style>

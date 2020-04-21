@@ -3,10 +3,10 @@
     <div class="panel-heading">
       <p class="panel-title roboto white">
         {{ title }}
-        <span
-          class="span-info-right"
-          v-if="selected_by_tipo_cuentas !== 0"
-        >({{ selected_by_tipo_cuentas | numeral('0,0') }} empresas seleccionadas)</span>
+        <span class="span-info-right" v-if="selected_by_tipo_cuentas !== 0"
+          >({{ selected_by_tipo_cuentas | numeral("0,0") }} empresas
+          seleccionadas)</span
+        >
       </p>
     </div>
     <div class="panel-body">
@@ -23,7 +23,7 @@
             />
             <span class="geekmark"></span>
             <span class="name-checkbox">{{ inPlural(item.label) }}</span>
-            <span class="num-fil">({{ item.data | numeral('0,0') }})</span>
+            <span class="num-fil">({{ item.data | numeral("0,0") }})</span>
           </label>
         </div>
         <div class="flex-space-between-flex-end">
@@ -35,13 +35,23 @@
             <button
               type="button"
               class="btn btn-success"
-              v-if="(tipo_cuentas.length !== 0 && !areApplied) || (tipo_cuentas.length !== 0 && !compareWithNewtoApply)"
+              v-if="
+                (tipo_cuentas.length !== 0 && !areApplied) ||
+                  (tipo_cuentas.length !== 0 && !compareWithNewtoApply)
+              "
               @click="apply"
             >
               Aplicar
-              <i :class="(loadingFrm)?'fa  fa-spinner fa-spin':'fa  fa-send'"></i>
+              <i
+                :class="loadingFrm ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'"
+              ></i>
             </button>
-            <button type="button" class="btn btn-info" v-if="areApplied" @click="confirmClean">
+            <button
+              type="button"
+              class="btn btn-info"
+              v-if="areApplied"
+              @click="confirmClean"
+            >
               Limpiar
               <i class="fa fa-undo"></i>
             </button>
@@ -71,19 +81,34 @@
                 <button
                   type="button"
                   class="btn btn-success"
-                  v-if="(tipo_cuentas.length !== 0 && !areApplied) || (tipo_cuentas.length !== 0 && !compareWithNewtoApply)"
+                  v-if="
+                    (tipo_cuentas.length !== 0 && !areApplied) ||
+                      (tipo_cuentas.length !== 0 && !compareWithNewtoApply)
+                  "
                   @click="apply"
                 >
                   Aplicar
-                  <i :class="(loadingFrm)?'fa  fa-spinner fa-spin':'fa  fa-send'"></i>
+                  <i
+                    :class="
+                      loadingFrm ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'
+                    "
+                  ></i>
                 </button>
-                <button type="button" class="btn btn-info" v-if="areApplied" @click="confirmClean">
+                <button
+                  type="button"
+                  class="btn btn-info"
+                  v-if="areApplied"
+                  @click="confirmClean"
+                >
                   Limpiar
                   <i class="fa fa-undo"></i>
                 </button>
               </div>
             </div>
-            <div class="row" v-if="search.tipo_cuentas && search.tipo_cuentas.length !== 0">
+            <div
+              class="row"
+              v-if="search.tipo_cuentas && search.tipo_cuentas.length !== 0"
+            >
               <div class="col-md-6">
                 <div class="panel panel-default cd">
                   <div class="panel-heading">
@@ -92,14 +117,24 @@
                       <span
                         class="span-info-right"
                         v-if="selected_by_tipo_cuentas !== 0"
-                      >({{ selected_by_tipo_cuentas | numeral('0,0') }} empresas seleccionadas)</span>
+                        >({{
+                          selected_by_tipo_cuentas | numeral("0,0")
+                        }}
+                        empresas seleccionadas)</span
+                      >
                     </p>
                   </div>
                   <div class="panel-body">
                     <div class="row">
                       <div class="col-md-12">
-                        <div v-for="(item, key) in orderItems(search.tipo_cuentas)" :key="key">
-                          <label class="custon-checkboxs" v-if="item.label !== 'incluir_null'">
+                        <div
+                          v-for="(item, key) in orderItems(search.tipo_cuentas)"
+                          :key="key"
+                        >
+                          <label
+                            class="custon-checkboxs"
+                            v-if="item.label !== 'incluir_null'"
+                          >
                             <input
                               type="checkbox"
                               :name="`checkbox_TipoCuentas___${item.id}`"
@@ -109,8 +144,12 @@
                               :value="item"
                             />
                             <span class="geekmark"></span>
-                            <span class="name-checkbox">{{ inPlural(item.label) }}</span>
-                            <span class="num-fil">({{ item.data | numeral('0,0') }})</span>
+                            <span class="name-checkbox">{{
+                              inPlural(item.label)
+                            }}</span>
+                            <span class="num-fil"
+                              >({{ item.data | numeral("0,0") }})</span
+                            >
                           </label>
                         </div>
                       </div>
@@ -128,7 +167,8 @@
                           <span
                             class="span-info-right"
                             v-if="tipo_cuentas.length !== 0"
-                          >{{ tipo_cuentas.length }}</span>
+                            >{{ tipo_cuentas.length }}</span
+                          >
                         </p>
                       </div>
                     </div>
@@ -141,7 +181,11 @@
                           <span
                             class="span-info-right"
                             v-if="selected_by_tipo_cuentas !== 0"
-                          >({{ selected_by_tipo_cuentas | numeral('0,0') }} empresas seleccionadas)</span>
+                            >({{
+                              selected_by_tipo_cuentas | numeral("0,0")
+                            }}
+                            empresas seleccionadas)</span
+                          >
                         </p>
                       </div>
                       <div class="panel-body">
@@ -149,19 +193,29 @@
                           <div v-for="(item, key) in tipo_cuentas" :key="key">
                             <label
                               class="custon-checkboxs"
-                              v-if="item.label !== 'incluir_null' && item.id !== 'todos:true' && item.id !== 'todos:false'"
+                              v-if="
+                                item.label !== 'incluir_null' &&
+                                  item.id !== 'todos:true' &&
+                                  item.id !== 'todos:false'
+                              "
                             >
                               <input
                                 type="checkbox"
-                                :name="`checkbox_cuentas_disponibles__${item.id}`"
+                                :name="
+                                  `checkbox_cuentas_disponibles__${item.id}`
+                                "
                                 v-model="tipo_cuentas"
                                 @change="handleChangeList(item, $event)"
                                 :id="`checkbox_cuentas_disponibles__${item.id}`"
                                 :value="item"
                               />
                               <span class="geekmark"></span>
-                              <span class="name-checkbox">{{ inPlural(item.label) }}</span>
-                              <span class="num-fil">({{ item.data | numeral('0,0') }})</span>
+                              <span class="name-checkbox">{{
+                                inPlural(item.label)
+                              }}</span>
+                              <span class="num-fil"
+                                >({{ item.data | numeral("0,0") }})</span
+                              >
                             </label>
                           </div>
                         </div>
@@ -175,7 +229,9 @@
         </el-dialog>
       </div>
       <div
-        v-if="search.tipo_cuentas && search.tipo_cuentas.length === 0 && !loading"
+        v-if="
+          search.tipo_cuentas && search.tipo_cuentas.length === 0 && !loading
+        "
         class="alert alert-dismissible alert-primary"
       >
         <strong>Oh!</strong> datos no encontrados.
@@ -192,7 +248,7 @@ import {
   howAnimation,
   beforeOrderFilters,
   sendPageView,
-  sendEvent
+  sendEvent,
 } from "./../../utils";
 import { persistentData } from "./../../mixins/persistent-data";
 export default {
@@ -205,13 +261,13 @@ export default {
       form: "filters/form",
       selected_companies: "filters/selected_companies",
       applied_filters: "filters/applied_filters",
-      filters: "filters/filters"
+      filters: "filters/filters",
     }),
     compareWithNewtoApply: function() {
       let stg = this.tipo_cuentas_string;
       let obj = JSON.stringify(this.tipo_cuentas);
       return stg === obj;
-    }
+    },
   },
   data: () => ({
     title: "Tipo de cuentas",
@@ -224,8 +280,8 @@ export default {
         id: "all",
         label: "TODA ESPAÑA",
         isDefaultExpanded: true,
-        children: []
-      }
+        children: [],
+      },
     ],
     areApplied: false,
     reapply: false,
@@ -234,7 +290,7 @@ export default {
     modalVisible: false,
     all: false,
     custom_tipo_cuentas: [],
-    selected_custom_tipo_cuentas: []
+    selected_custom_tipo_cuentas: [],
   }),
   watch: {
     tipo_cuentas: function(newProvincesLocalidad) {
@@ -257,20 +313,20 @@ export default {
     },
     selected_companies: function() {
       howAnimation(document.querySelector(".selected_companies"));
-    }
+    },
   },
   mounted() {
-    this.$root.$on("clean_filter", filter => {
+    this.$root.$on("clean_filter", (filter) => {
       if (filter === this.title) {
         this.clean();
       }
     });
-    this.$root.$on("show_modal_filter", filter => {
+    this.$root.$on("show_modal_filter", (filter) => {
       if (filter === this.title) {
         this.modalVisible = true;
       }
     });
-    this.$root.$on("empty_filter", filter => {
+    this.$root.$on("empty_filter", (filter) => {
       if (filter === this.title) {
         this.emptyFilter();
       }
@@ -312,7 +368,7 @@ export default {
      */
     updateNumberSelectedCompanies(quantity) {
       this.$store.dispatch("filters/updateNumberSelectedCompanies", {
-        quantity
+        quantity,
       });
     },
     /**
@@ -323,7 +379,7 @@ export default {
     numberCompaniesSelected(newSelectedCompanies) {
       let business_accountant = 0;
       if (Array.isArray(newSelectedCompanies)) {
-        newSelectedCompanies.forEach(item => {
+        newSelectedCompanies.forEach((item) => {
           let result = inArrayObjectTreeselect(
             this.search.tipo_cuentas,
             item.id
@@ -359,12 +415,12 @@ export default {
         );
         this.$store
           .dispatch("search/filtrar", beforeForm)
-          .then(response => {
+          .then((response) => {
             this.updateNumberSelectedCompanies(response.cantidad);
             this.$store.dispatch("filters/addFilters", {
               name: this.title,
               quantity: this.selected_by_tipo_cuentas,
-              cantidades: response
+              cantidades: response,
             });
             this.areApplied = true;
             this.reapply = false;
@@ -391,9 +447,9 @@ export default {
           cancelButtonColor: "#d9534f",
           showConfirmButton: true,
           confirmButtonColor: "#337ab7",
-          confirmButtonText: "Si, seguro"
+          confirmButtonText: "Si, seguro",
         })
-        .then(result => {
+        .then((result) => {
           if (result.value) {
             this.clean();
           }
@@ -410,10 +466,10 @@ export default {
           this.form,
           this.title
         );
-        this.$store.dispatch("search/filtrar", beforeForm).then(response => {
+        this.$store.dispatch("search/filtrar", beforeForm).then((response) => {
           this.updateNumberSelectedCompanies(response.cantidad);
           this.$store.dispatch("filters/setCantidades", {
-            cantidades: response
+            cantidades: response,
           });
         });
       } else {
@@ -455,18 +511,18 @@ export default {
       let checkboxs = document.querySelectorAll(
         '#selected_tipo_cuentas input[type="checkbox"]'
       );
-      checkboxs.forEach(item => {
+      checkboxs.forEach((item) => {
         item.checked = true;
       });
     },
     formatearDataPOST() {
       this.form.TipoCuentas = [];
-      this.tipo_cuentas.forEach(item => {
+      this.tipo_cuentas.forEach((item) => {
         this.form.TipoCuentas.push(item.id);
       });
       return this.form;
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -1,6 +1,9 @@
 <template>
   <div class="home" id="page-wrapper">
-    <banner-top banner-title="Buscador de Empresas" banner-subtitle="Buscador de Empresas"></banner-top>
+    <banner-top
+      banner-title="Buscador de Empresas"
+      banner-subtitle="Buscador de Empresas"
+    ></banner-top>
     <div class="container">
       <loading-full-page></loading-full-page>
       <filter-list-checkboxs :search="search"></filter-list-checkboxs>
@@ -20,11 +23,11 @@ export default {
   layout: "basic",
   metaInfo() {
     return {
-      title: "Buscador - Filtros"
+      title: "Buscador - Filtros",
     };
   },
   computed: mapGetters({
-    search: "search/search"
+    search: "search/search",
   }),
   data: () => ({}),
   mounted() {
@@ -43,10 +46,9 @@ export default {
       ) {
         this.$store.dispatch("search/fetchSearch").then(() => {});
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

@@ -3,10 +3,10 @@
     <div class="panel-heading">
       <p class="panel-title roboto white">
         {{ title }}
-        <span
-          class="span-info-right"
-          v-if="selected_by_auditores !== 0"
-        >({{ selected_by_auditores | numeral('0,0') }} empresas seleccionadas)</span>
+        <span class="span-info-right" v-if="selected_by_auditores !== 0"
+          >({{ selected_by_auditores | numeral("0,0") }} empresas
+          seleccionadas)</span
+        >
       </p>
     </div>
     <div class="panel-body">
@@ -29,7 +29,11 @@
               :disabled="dataFrm.length === 0 || loadingValidar"
             >
               BUSCAR
-              <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
+              <i
+                :class="
+                  loadingValidar ? 'fa  fa-spinner fa-spin' : 'fa  fa-search'
+                "
+              ></i>
             </button>
           </span>
         </div>
@@ -71,16 +75,28 @@
             <i class="fa fa-plus-circle"></i>
           </button>
           <button
-            v-if="selected_auditores && selected_auditores.length !== 0 && !search_edit && !compareWithNewtoApply"
+            v-if="
+              selected_auditores &&
+                selected_auditores.length !== 0 &&
+                !search_edit &&
+                !compareWithNewtoApply
+            "
             :disabled="selected_auditores.length === 0 || loadingApply"
             type="button"
             class="btn btn-success m-r-5"
             @click="apply"
           >
             Aplicar
-            <i :class="(loadingApply)?'fa  fa-spinner fa-spin':'fa  fa-send'"></i>
+            <i
+              :class="loadingApply ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'"
+            ></i>
           </button>
-          <button type="button" class="btn btn-info" v-if="areApplied" @click="confirmClean">
+          <button
+            type="button"
+            class="btn btn-info"
+            v-if="areApplied"
+            @click="confirmClean"
+          >
             Limpiar
             <i class="fa fa-undo"></i>
           </button>
@@ -93,7 +109,10 @@
         <div class="col-md-12">
           <br />
           <el-collapse v-model="collapseResumen">
-            <el-collapse-item title="Resumen de empresas seleccionadas" name="1">
+            <el-collapse-item
+              title="Resumen de empresas seleccionadas"
+              name="1"
+            >
               <div class="div-scroll-200">
                 <div v-for="(item, key) in list_selected_auditores" :key="key">
                   <div class="checkbox" id="selected_em">
@@ -134,16 +153,30 @@
             </div>
             <div>
               <button
-                v-if="selected_auditores && selected_auditores.length !== 0 && !search_edit && !compareWithNewtoApply"
+                v-if="
+                  selected_auditores &&
+                    selected_auditores.length !== 0 &&
+                    !search_edit &&
+                    !compareWithNewtoApply
+                "
                 :disabled="selected_auditores.length === 0 || loadingApply"
                 type="button"
                 class="btn btn-success"
                 @click="apply"
               >
                 Aplicar
-                <i :class="(loadingApply)?'fa  fa-spinner fa-spin':'fa  fa-send'"></i>
+                <i
+                  :class="
+                    loadingApply ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'
+                  "
+                ></i>
               </button>
-              <button type="button" class="btn btn-info" v-if="areApplied" @click="confirmClean">
+              <button
+                type="button"
+                class="btn btn-info"
+                v-if="areApplied"
+                @click="confirmClean"
+              >
                 Limpiar
                 <i class="fa fa-undo"></i>
               </button>
@@ -153,9 +186,11 @@
             <div class="col-md-12">
               <div class="panel panel-default cd">
                 <div class="panel-heading">
-                  <p
-                    class="panel-title roboto white"
-                  >Introduce el NIF o la razón social del auditor o de los auditores, separados por coma o salto de línea, y clicar en “BUSCAR”.</p>
+                  <p class="panel-title roboto white">
+                    Introduce el NIF o la razón social del auditor o de los
+                    auditores, separados por coma o salto de línea, y clicar en
+                    “BUSCAR”.
+                  </p>
                 </div>
                 <div class="panel-body">
                   <div class="row">
@@ -178,7 +213,13 @@
                               :disabled="dataFrm.length === 0 || loadingValidar"
                             >
                               BUSCAR
-                              <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
+                              <i
+                                :class="
+                                  loadingValidar
+                                    ? 'fa  fa-spinner fa-spin'
+                                    : 'fa  fa-search'
+                                "
+                              ></i>
                             </button>
                           </span>
                         </div>
@@ -190,16 +231,21 @@
             </div>
             <div
               class="col-md-12"
-              v-if="auditores && auditores.empresas.length !== 0 && !search_edit"
+              v-if="
+                auditores && auditores.empresas.length !== 0 && !search_edit
+              "
             >
               <div class="panel panel-default cd">
                 <div class="panel-heading">
                   <p class="panel-title roboto white">
-                    Selecciona una o varias empresas y clique en “Aplicar” para incorporarlas a su búsqueda.
+                    Selecciona una o varias empresas y clique en “Aplicar” para
+                    incorporarlas a su búsqueda.
                     <span
                       class="span-info-right"
                       v-if="selected_by_auditores !== 0"
-                    >({{ selected_by_auditores | numeral('0,0') }} empresas seleccionadas)</span>
+                      >({{ selected_by_auditores | numeral("0,0") }} empresas
+                      seleccionadas)</span
+                    >
                   </p>
                 </div>
                 <div class="panel-body div-scroll-200">
@@ -234,7 +280,13 @@
                         <td>{{ item.CIF }}</td>
                         <td>{{ item.Provincia }}</td>
                         <td>{{ item.Localidad }}</td>
-                        <td>{{ (item.UltimaCuentaAnual)? item.UltimaCuentaAnual.Ejercicio : '' }}</td>
+                        <td>
+                          {{
+                            item.UltimaCuentaAnual
+                              ? item.UltimaCuentaAnual.Ejercicio
+                              : ""
+                          }}
+                        </td>
                       </tr>
                     </tbody>
                   </table>
@@ -243,7 +295,9 @@
             </div>
             <div
               class="col-md-12"
-              v-if="list_selected_auditores && list_selected_auditores.length !== 0"
+              v-if="
+                list_selected_auditores && list_selected_auditores.length !== 0
+              "
             >
               <div class="panel panel-default cd">
                 <div class="panel-heading">
@@ -252,7 +306,9 @@
                     <span
                       class="span-info-right"
                       v-if="selected_by_auditores !== 0"
-                    >({{ selected_by_auditores | numeral('0,0') }} empresas seleccionadas)</span>
+                      >({{ selected_by_auditores | numeral("0,0") }} empresas
+                      seleccionadas)</span
+                    >
                   </p>
                 </div>
                 <div class="panel-body div-scroll-200">
@@ -267,7 +323,10 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr v-for="(item, key) in list_selected_auditores" :key="key">
+                      <tr
+                        v-for="(item, key) in list_selected_auditores"
+                        :key="key"
+                      >
                         <th scope="row">
                           <div class="checkbox" id="selected_em">
                             <label>
@@ -286,7 +345,13 @@
                         <td>{{ item.CIF }}</td>
                         <td>{{ item.Provincia }}</td>
                         <td>{{ item.Localidad }}</td>
-                        <td>{{ (item.UltimaCuentaAnual)? item.UltimaCuentaAnual.Ejercicio : '' }}</td>
+                        <td>
+                          {{
+                            item.UltimaCuentaAnual
+                              ? item.UltimaCuentaAnual.Ejercicio
+                              : ""
+                          }}
+                        </td>
                       </tr>
                     </tbody>
                   </table>
@@ -307,7 +372,7 @@ import {
   beforeOrderFilters,
   removeDuplicates,
   sendPageView,
-  sendEvent
+  sendEvent,
 } from "./../../utils";
 import { persistentData } from "./../../mixins/persistent-data";
 export default {
@@ -320,13 +385,13 @@ export default {
       form: "filters/form",
       selected_companies: "filters/selected_companies",
       applied_filters: "filters/applied_filters",
-      filters: "filters/filters"
+      filters: "filters/filters",
     }),
     compareWithNewtoApply: function() {
       let stg = this.selected_auditores_string;
       let obj = JSON.stringify(this.selected_auditores);
       return stg === obj;
-    }
+    },
   },
   data: () => ({
     title: "Auditores",
@@ -337,7 +402,7 @@ export default {
     auditores: {
       total: 0,
       cantidad: 0,
-      empresas: []
+      empresas: [],
     },
     selected_auditores_string: "",
     selected_auditores: [],
@@ -351,20 +416,20 @@ export default {
     to_social_reason: "",
     loadingFile: false,
     file: {},
-    collapseResumen: []
+    collapseResumen: [],
   }),
   mounted() {
-    this.$root.$on("clean_filter", filter => {
+    this.$root.$on("clean_filter", (filter) => {
       if (filter === this.title) {
         this.clean();
       }
     });
-    this.$root.$on("show_modal_filter", filter => {
+    this.$root.$on("show_modal_filter", (filter) => {
       if (filter === this.title) {
         this.showModal();
       }
     });
-    this.$root.$on("empty_filter", filter => {
+    this.$root.$on("empty_filter", (filter) => {
       if (filter === this.title) {
         this.emptyFilter();
       }
@@ -377,7 +442,7 @@ export default {
       if (this.reapply && newRazonSocial.length === 0) {
         this.clean();
       }
-    }
+    },
   },
   methods: {
     validateBormeAuditor() {
@@ -385,14 +450,14 @@ export default {
         this.loadingValidar = true;
         this.$store
           .dispatch("search/validateBormeAuditor", this.dataFrm)
-          .then(response => {
+          .then((response) => {
             if (
               response &&
               response.empresas &&
               this.auditores.empresas.length !== 0 &&
               this.search_add
             ) {
-              response.empresas.map(item => {
+              response.empresas.map((item) => {
                 this.auditores.empresas.unshift(item);
               });
               this.auditores.empresas = removeDuplicates(
@@ -408,11 +473,7 @@ export default {
             this.search_edit = false;
             this.search_add = false;
             if (response.empresas.length === 0) {
-              swal.fire(
-                "Advertencia",
-                "Auditores no existe",
-                "warning"
-              );
+              swal.fire("Advertencia", "Auditores no existe", "warning");
             } else {
               this.dataFrm = "";
             }
@@ -425,14 +486,11 @@ export default {
       }
     },
     apply() {
-      if (
-        this.selected_auditores &&
-        this.selected_auditores.length !== 0
-      ) {
+      if (this.selected_auditores && this.selected_auditores.length !== 0) {
         this.loadingApply = true;
         this.search_edit = false;
         this.search_add = false;
-        this.form.auditorBorme = this.selected_auditores.map(item => {
+        this.form.auditorBorme = this.selected_auditores.map((item) => {
           return item.AuditorBorme;
         });
         let beforeForm = beforeOrderFilters(
@@ -443,11 +501,11 @@ export default {
         );
         this.$store
           .dispatch("search/filtrar", beforeForm)
-          .then(response => {
+          .then((response) => {
             this.$store.dispatch("filters/addFilters", {
               name: this.title,
               quantity: this.selected_by_auditores,
-              cantidades: response
+              cantidades: response,
             });
             this.updateNumberSelectedCompanies(response.cantidad);
             this.areApplied = true;
@@ -476,9 +534,9 @@ export default {
           cancelButtonColor: "#d9534f",
           showConfirmButton: true,
           confirmButtonColor: "#337ab7",
-          confirmButtonText: "Si, seguro"
+          confirmButtonText: "Si, seguro",
         })
-        .then(result => {
+        .then((result) => {
           if (result.value) {
             this.clean();
           }
@@ -500,10 +558,10 @@ export default {
           this.form,
           this.title
         );
-        this.$store.dispatch("search/filtrar", beforeForm).then(response => {
+        this.$store.dispatch("search/filtrar", beforeForm).then((response) => {
           this.updateNumberSelectedCompanies(response.cantidad);
           this.$store.dispatch("filters/setCantidades", {
-            cantidades: response
+            cantidades: response,
           });
         });
       } else {
@@ -561,7 +619,7 @@ export default {
     },
     updateNumberSelectedCompanies(quantity) {
       this.$store.dispatch("filters/updateNumberSelectedCompanies", {
-        quantity
+        quantity,
       });
     },
     handleChange() {
@@ -574,7 +632,7 @@ export default {
       let checkboxs = document.querySelectorAll(
         '#selected_em input[type="checkbox"]'
       );
-      checkboxs.forEach(item => {
+      checkboxs.forEach((item) => {
         item.checked = true;
       });
     },
@@ -585,8 +643,8 @@ export default {
     hideModal() {
       sendPageView(``, `Buscador - Filtro`);
       this.modalVisible = false;
-    }
-  }
+    },
+  },
 };
 </script>
 

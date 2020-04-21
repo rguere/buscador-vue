@@ -796,7 +796,7 @@ export default {
       });
       this.selected_industria.forEach((item) => {
         if (item && item.id) {
-          this.form.sector_actividad.push(`icif|${item.id}`);
+          this.form.sector_actividad.push(`icif|${item.label}`);
         }
       });
       return this.form;

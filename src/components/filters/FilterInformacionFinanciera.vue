@@ -1,5 +1,8 @@
 <template>
-  <div class="panel panel-default cd div_capa_superpuesta" id="filter_informacion_financiera">
+  <div
+    class="panel panel-default cd div_capa_superpuesta"
+    id="filter_informacion_financiera"
+  >
     <div class="panel-heading">
       <p class="panel-title roboto white">Información Financiera</p>
     </div>
@@ -10,7 +13,9 @@
             <div class="width-50-porcent">
               <div class="_flex-row">
                 <div class="padding-0-5">
-                  <div class="title-informacion-financiera">Partida financiera</div>
+                  <div class="title-informacion-financiera">
+                    Partida financiera
+                  </div>
                   <div>
                     <treeselect
                       class="select-partida-financiera"
@@ -52,7 +57,9 @@
         </div>
         <div>
           <div>
-            <div class="title-informacion-financiera">Seleccionar Ejercicio</div>
+            <div class="title-informacion-financiera">
+              Seleccionar Ejercicio
+            </div>
             <div class="anios_checkboxs">
               <div>
                 <label class="custon-checkboxs">
@@ -79,7 +86,9 @@
                 <label class="custon-checkboxs">
                   <input type="checkbox" name />
                   <span class="geekmark"></span>
-                  <span class="title">Ultimo año con consultas disponibles</span>
+                  <span class="title"
+                    >Ultimo año con consultas disponibles</span
+                  >
                 </label>
               </div>
             </div>
@@ -129,25 +138,25 @@ export default {
           {
             id: "apple",
             label: "Apple 🍎",
-            isNew: true
+            isNew: true,
           },
           {
             id: "grapes",
-            label: "Grapes 🍇"
+            label: "Grapes 🍇",
           },
           {
             id: "pear",
-            label: "Pear 🍐"
+            label: "Pear 🍐",
           },
           {
             id: "strawberry",
-            label: "Strawberry 🍓"
+            label: "Strawberry 🍓",
           },
           {
             id: "watermelon",
-            label: "Watermelon 🍉"
-          }
-        ]
+            label: "Watermelon 🍉",
+          },
+        ],
       },
       {
         id: "vegetables",
@@ -155,24 +164,24 @@ export default {
         children: [
           {
             id: "corn",
-            label: "Corn 🌽"
+            label: "Corn 🌽",
           },
           {
             id: "carrot",
-            label: "Carrot 🥕"
+            label: "Carrot 🥕",
           },
           {
             id: "eggplant",
-            label: "Eggplant 🍆"
+            label: "Eggplant 🍆",
           },
           {
             id: "tomato",
-            label: "Tomato 🍅"
-          }
-        ]
-      }
-    ]
-  })
+            label: "Tomato 🍅",
+          },
+        ],
+      },
+    ],
+  }),
 };
 </script>
 

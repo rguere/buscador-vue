@@ -1,6 +1,9 @@
 <template>
   <div class="home" id="page-wrapper">
-    <banner-top banner-title="Buscador de Empresas" banner-subtitle="Visualizar resultados"></banner-top>
+    <banner-top
+      banner-title="Buscador de Empresas"
+      banner-subtitle="Visualizar resultados"
+    ></banner-top>
     <div class="container">
       <loading-full-page></loading-full-page>
       <div class="banner">
@@ -27,13 +30,17 @@
                     <div class="row">
                       <div class="col-md-12">
                         <p style="padding: 9px">
-                          Para poder disfrutar de esta funcionalidad del Buscador de Empresas de Infocif es necesario registrarse.
-                          <br />Regístrese en Infocif, de manera rápida y sencilla, en el siguiente enlace:
+                          Para poder disfrutar de esta funcionalidad del
+                          Buscador de Empresas de Infocif es necesario
+                          registrarse.
+                          <br />Regístrese en Infocif, de manera rápida y
+                          sencilla, en el siguiente enlace:
                           <br />
                           <a
                             target="_blank"
                             href="http://www.infocif.es/gestion/gestion-registro.asp"
-                          >http://www.infocif.es/gestion/gestion-registro.asp</a>
+                            >http://www.infocif.es/gestion/gestion-registro.asp</a
+                          >
                         </p>
                       </div>
                     </div>
@@ -68,7 +75,13 @@
                     :disabled="loadingCorreo"
                     class="btn btn-info"
                   >
-                    <i :class="(loadingCorreo)?'fa  fa-spinner fa-spin':'fa  fa-envelope'"></i>
+                    <i
+                      :class="
+                        loadingCorreo
+                          ? 'fa  fa-spinner fa-spin'
+                          : 'fa  fa-envelope'
+                      "
+                    ></i>
                     Enviar al correo
                   </button>
                   <el-dialog
@@ -92,7 +105,9 @@
                       </div>
                       <div
                         class="form-group anti-inputs"
-                        :class="{ 'has-error has-feedback': $v.nombreArchivo.$error }"
+                        :class="{
+                          'has-error has-feedback': $v.nombreArchivo.$error,
+                        }"
                       >
                         <input
                           type="text"
@@ -104,13 +119,24 @@
                         />
                       </div>
                       <span slot="footer" class="dialog-footer">
-                        <button @click="dialogCorreoVisible = false" class="btn btn-danger">Cerrar</button>
+                        <button
+                          @click="dialogCorreoVisible = false"
+                          class="btn btn-danger"
+                        >
+                          Cerrar
+                        </button>
                         <button
                           @click="enviarResultadosCorreo"
                           :disabled="loadingCorreo"
                           class="btn btn-info m-l-5"
                         >
-                          <i :class="(loadingCorreo)?'fa  fa-spinner fa-spin':'fa  fa-envelope'"></i>
+                          <i
+                            :class="
+                              loadingCorreo
+                                ? 'fa  fa-spinner fa-spin'
+                                : 'fa  fa-envelope'
+                            "
+                          ></i>
                           Enviar al correo
                         </button>
                       </span>
@@ -119,24 +145,34 @@
                       <div class="row">
                         <div class="col-md-12">
                           <p style="padding: 9px">
-                            Para poder disfrutar de esta funcionalidad del Buscador de Empresas de Infocif es necesario registrarse.
-                            <br />Regístrese en Infocif, de manera rápida y sencilla, en el siguiente enlace:
+                            Para poder disfrutar de esta funcionalidad del
+                            Buscador de Empresas de Infocif es necesario
+                            registrarse.
+                            <br />Regístrese en Infocif, de manera rápida y
+                            sencilla, en el siguiente enlace:
                             <br />
                             <a
                               target="_blank"
                               href="http://www.infocif.es/gestion/gestion-registro.asp"
-                            >http://www.infocif.es/gestion/gestion-registro.asp</a>
+                              >http://www.infocif.es/gestion/gestion-registro.asp</a
+                            >
                           </p>
                         </div>
                       </div>
                     </div>
                   </el-dialog>
                   <button
-                    @click="dialogCorreoVisible2  = true"
+                    @click="dialogCorreoVisible2 = true"
                     :disabled="loadingExcel"
                     class="btn btn-success m-l-5"
                   >
-                    <i :class="(loadingExcel)?'fa  fa-spinner fa-spin':'fa  fa-file-excel-o'"></i>
+                    <i
+                      :class="
+                        loadingExcel
+                          ? 'fa  fa-spinner fa-spin'
+                          : 'fa  fa-file-excel-o'
+                      "
+                    ></i>
                     Descargar en excel
                   </button>
                   <el-dialog
@@ -147,7 +183,9 @@
                     <div v-if="puedeDescargar">
                       <div
                         class="form-group anti-inputs"
-                        :class="{ 'has-error has-feedback': $v.nombreArchivo.$error }"
+                        :class="{
+                          'has-error has-feedback': $v.nombreArchivo.$error,
+                        }"
                       >
                         <input
                           type="text"
@@ -159,13 +197,24 @@
                         />
                       </div>
                       <span slot="footer" class="dialog-footer">
-                        <button @click="dialogCorreoVisible2 = false" class="btn btn-danger">Cerrar</button>
+                        <button
+                          @click="dialogCorreoVisible2 = false"
+                          class="btn btn-danger"
+                        >
+                          Cerrar
+                        </button>
                         <button
                           @click="descargarExcel"
                           :disabled="loadingExcel"
                           class="btn btn-success m-l-5"
                         >
-                          <i :class="(loadingExcel)?'fa  fa-spinner fa-spin':'fa  fa-file-excel-o'"></i>
+                          <i
+                            :class="
+                              loadingExcel
+                                ? 'fa  fa-spinner fa-spin'
+                                : 'fa  fa-file-excel-o'
+                            "
+                          ></i>
                           Iniciar la descarga
                         </button>
                       </span>
@@ -174,13 +223,17 @@
                       <div class="row">
                         <div class="col-md-12">
                           <p style="padding: 9px">
-                            Para poder disfrutar de esta funcionalidad del Buscador de Empresas de Infocif es necesario registrarse.
-                            <br />Regístrese en Infocif, de manera rápida y sencilla, en el siguiente enlace:
+                            Para poder disfrutar de esta funcionalidad del
+                            Buscador de Empresas de Infocif es necesario
+                            registrarse.
+                            <br />Regístrese en Infocif, de manera rápida y
+                            sencilla, en el siguiente enlace:
                             <br />
                             <a
                               target="_blank"
                               href="http://www.infocif.es/gestion/gestion-registro.asp"
-                            >http://www.infocif.es/gestion/gestion-registro.asp</a>
+                              >http://www.infocif.es/gestion/gestion-registro.asp</a
+                            >
                           </p>
                         </div>
                       </div>
@@ -217,7 +270,9 @@
                               alt="infocif"
                             />
                             <h1 class="text-center fs20">
-                              <strong class="title-lg">Ficha Resumen de la Búsqueda</strong>
+                              <strong class="title-lg"
+                                >Ficha Resumen de la Búsqueda</strong
+                              >
                             </h1>
                             <img
                               src="./../assets/images/buscador-logo.png"
@@ -231,16 +286,27 @@
                         <div class="col-md-8">
                           <h4>Estrategia de Búsqueda</h4>
                           <ul class="ul_filtros_aplicados">
-                            <li v-for="(item, key) in filtros_aplicados" :key="key">
+                            <li
+                              v-for="(item, key) in filtros_aplicados"
+                              :key="key"
+                            >
                               {{ item.title }}
                               <ul v-if="item.datas">
                                 <li
                                   v-for="(_item, _key) in item.datas"
                                   :key="_key"
-                                >{{ (_item.label !== 'incluir_null')? _item.label: `Empresas en las que se desconoce su ${item.title.toLowerCase()}` }}</li>
+                                >
+                                  {{
+                                    _item.label !== "incluir_null"
+                                      ? _item.label
+                                      : `Empresas en las que se desconoce su ${item.title.toLowerCase()}`
+                                  }}
+                                </li>
                               </ul>
                               <el-divider></el-divider>
-                              <span class="_right">{{ item.quantity | numeral('0,0') }}</span>
+                              <span class="_right">{{
+                                item.quantity | numeral("0,0")
+                              }}</span>
                             </li>
                           </ul>
                         </div>
@@ -248,7 +314,8 @@
                           <h4>Resultado Final de la búsqueda</h4>
                           <p class="f25">
                             <b>
-                              <span class>{{ total | numeral('0,0') }}</span> Empresas
+                              <span class>{{ total | numeral("0,0") }}</span>
+                              Empresas
                             </b>
                           </p>
                         </div>
@@ -279,8 +346,11 @@
                         :href="scope.row.urlInfocif"
                         v-if="item.prop === 'RazonSocial'"
                         target="_blank"
-                      >{{ scope.row.RazonSocial }}</a>
-                      <p v-if="item.prop !== 'RazonSocial'">{{ scope.row[item.prop] }}</p>
+                        >{{ scope.row.RazonSocial }}</a
+                      >
+                      <p v-if="item.prop !== 'RazonSocial'">
+                        {{ scope.row[item.prop] }}
+                      </p>
                     </template>
                   </el-table-column>
                 </el-table>
@@ -313,7 +383,7 @@ import {
   sendPageView,
   sendEvent,
   getColumnsSummary,
-  showColumnsSummary
+  showColumnsSummary,
 } from "./../utils";
 import swal from "sweetalert2";
 import slugify from "slugify";
@@ -325,7 +395,7 @@ export default {
   layout: "basic",
   metaInfo() {
     return {
-      title: "Buscador - Visualizar resultados"
+      title: "Buscador - Visualizar resultados",
     };
   },
   data: () => ({
@@ -342,7 +412,7 @@ export default {
     results: {
       cantidad: 0,
       total: 0,
-      empresas: []
+      empresas: [],
     },
     filtros_aplicados: [],
     total: 0,
@@ -353,18 +423,18 @@ export default {
     valueSelect: [],
     sort: {
       prop: "razonSocial",
-      order: "asc"
-    }
+      order: "asc",
+    },
   }),
   validations() {
     return {
       correo: {
         required,
-        email
+        email,
       },
       nombreArchivo: {
-        required
-      }
+        required,
+      },
     };
   },
   computed: {
@@ -375,7 +445,7 @@ export default {
       localDatas: "localDatas/localDatas",
       filters: "filters/filters",
       cantidades: "filters/cantidades",
-      user: "auth/user"
+      user: "auth/user",
     }),
     orderFilters: function() {
       let order = orderFilters(this.filters, this.applied_filters, this.form);
@@ -392,7 +462,7 @@ export default {
         }
       }
       return order;
-    }
+    },
   },
   created() {
     this.$store.dispatch("layout/setLayout", "default-layout");
@@ -401,7 +471,7 @@ export default {
     sendPageView("resultados", "Buscador - Visualizar resultados");
     this.columns = getColumnsSummary();
     this.selectColumns = getColumnsSummary();
-    this.valueSelect = this.selectColumns.map(item => {
+    this.valueSelect = this.selectColumns.map((item) => {
       return item.prop;
     });
     setTimeout(() => {
@@ -414,7 +484,7 @@ export default {
       swal.fire("Advertencia", "Aún no hay filtros aplicados", "warning");
       this.$router.push({ name: "buscador" });
     } else {
-      this.applied_filters.forEach(item => {
+      this.applied_filters.forEach((item) => {
         for (const key in this.localDatas) {
           if (this.localDatas.hasOwnProperty(key)) {
             const element = this.localDatas[key];
@@ -433,7 +503,7 @@ export default {
                   data_quantity: countByProperty(
                     element.selected_antiguedad,
                     "data"
-                  )
+                  ),
                 });
               } else if (element.title === "Ubicación") {
                 this.filtros_aplicados.push({
@@ -444,7 +514,7 @@ export default {
                   data_quantity: countByProperty(
                     element.selected_provinces_localidad,
                     "data"
-                  )
+                  ),
                 });
               } else if (element.title === "Número de empleados") {
                 this.filtros_aplicados.push({
@@ -455,7 +525,7 @@ export default {
                   data_quantity: countByProperty(
                     element.selected_empleados,
                     "data"
-                  )
+                  ),
                 });
               } else if (element.title === "Código Postal") {
                 this.filtros_aplicados.push({
@@ -466,7 +536,7 @@ export default {
                   data_quantity: countByProperty(
                     element.selected_zip_codes,
                     "data"
-                  )
+                  ),
                 });
               } else if (element.title === "Nombre o razón social") {
                 this.filtros_aplicados.push({
@@ -477,7 +547,7 @@ export default {
                   data_quantity: countByProperty(
                     element.selected_social_reasons,
                     "data"
-                  )
+                  ),
                 });
               } else if (element.title === "NIF") {
                 this.filtros_aplicados.push({
@@ -488,7 +558,7 @@ export default {
                   data_quantity: countByProperty(
                     element.selected_list_nif,
                     "data"
-                  )
+                  ),
                 });
               } else if (element.title === "Años con cuentas disponibles") {
                 this.filtros_aplicados.push({
@@ -499,7 +569,7 @@ export default {
                   data_quantity: countByProperty(
                     element.selected_cuentas_disponibles,
                     "data"
-                  )
+                  ),
                 });
               } else if (element.title === "Tipo de cuentas") {
                 this.filtros_aplicados.push({
@@ -507,7 +577,7 @@ export default {
                   quantity: result.quantity,
                   key: result.key,
                   datas: element.tipo_cuentas,
-                  data_quantity: countByProperty(element.tipo_cuentas, "data")
+                  data_quantity: countByProperty(element.tipo_cuentas, "data"),
                 });
               } else if (element.title === "Auditores") {
                 this.filtros_aplicados.push({
@@ -515,15 +585,21 @@ export default {
                   quantity: result.quantity,
                   key: result.key,
                   datas: element.selected_auditores,
-                  data_quantity: countByProperty(element.selected_auditores, "data")
+                  data_quantity: countByProperty(
+                    element.selected_auditores,
+                    "data"
+                  ),
                 });
               } else if (element.title === "Sector/Actividad") {
+                const selecteds = element.selected_cnae.concat(
+                  element.selected_industria
+                );
                 this.filtros_aplicados.push({
                   title: element.title,
                   quantity: result.quantity,
                   key: result.key,
-                  datas: element.cnae,
-                  data_quantity: countByProperty(element.cnae, "data")
+                  datas: selecteds,
+                  data_quantity: countByProperty(selecteds, "data"),
                 });
               }
             }
@@ -575,9 +651,9 @@ export default {
       let sort = `&ord=${this.sort.prop}&dir=${this.sort.order}`;
       this.$store
         .dispatch("search/visualizarResultados", { filters, page, size, sort })
-        .then(response => {
+        .then((response) => {
           if (response && response.empresas) {
-            this.results.empresas = response.empresas.map(item => {
+            this.results.empresas = response.empresas.map((item) => {
               if (item.razonSocialNormalizadaURL301) {
                 item.urlInfocif = `http://www.infocif.es/ficha-empresa/${item.razonSocialNormalizadaURL301}`;
               } else {
@@ -621,13 +697,20 @@ export default {
               } else {
                 item.CuentasDisponibles = "-";
               }
+              if (item.CnaeInfo && item.CnaeInfo.Cnae3_text) {
+                item.Cnae3_text = item.CnaeInfo.Cnae3_tex;
+              } else {
+                item.Cnae3_text = "-";
+              }
               if (
                 item.TipoCuentasAnuales &&
                 Array.isArray(item.TipoCuentasAnuales)
               ) {
-                item.TipoCuentasAnuales = item.TipoCuentasAnuales.map(item => {
-                  return item === 1 ? "Individuales" : "Consolidadas";
-                }).join(", ");
+                item.TipoCuentasAnuales = item.TipoCuentasAnuales.map(
+                  (item) => {
+                    return item === 1 ? "Individuales" : "Consolidadas";
+                  }
+                ).join(", ");
               } else {
                 item.TipoCuentasAnuales = "-";
               }
@@ -649,9 +732,9 @@ export default {
         this.$store
           .dispatch("search/archivoExcel", {
             filters: data,
-            nombreArchivo: this.nombreArchivo
+            nombreArchivo: this.nombreArchivo,
           })
-          .then(response => {
+          .then((response) => {
             if (response) {
               const link = document.createElement("a");
               link.href = `${axios.defaults.baseURL}/buscador/archivos/${response}`;
@@ -686,7 +769,7 @@ export default {
           .dispatch("search/enviarResultadosCorreo", {
             filters,
             email: this.correo,
-            nombreArchivo: this.nombreArchivo
+            nombreArchivo: this.nombreArchivo,
           })
           .then(() => {
             this.loadingCorreo = false;
@@ -712,7 +795,7 @@ export default {
     },
     formatearData() {
       let data = {
-        filtros: []
+        filtros: [],
       };
       let arr = {};
       for (let key in this.form) {
@@ -724,7 +807,7 @@ export default {
             let aux = { ...arr };
             data.filtros.push({
               nombreFiltro: result.title,
-              ...aux
+              ...aux,
             });
             if (
               result.datas &&
@@ -740,7 +823,7 @@ export default {
                 .split("|")
                 .join(" | ");
               result.datas.push({
-                label
+                label,
               });
             }
           }
@@ -777,7 +860,7 @@ export default {
       }
       this.sort = {
         prop,
-        order
+        order,
       };
       this.visualizarResultados();
     },
@@ -802,8 +885,8 @@ export default {
     goBack() {
       sendEvent("resultados", "volver");
       this.$router.push({ name: "buscador" });
-    }
-  }
+    },
+  },
 };
 </script>
 

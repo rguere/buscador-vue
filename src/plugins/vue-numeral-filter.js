@@ -1,4 +1,4 @@
-import Vue from 'vue'
-import vueNumeralFilterInstaller from 'vue-numeral-filter';
+import Vue from "vue";
+import vueNumeralFilterInstaller from "vue-numeral-filter";
 
-Vue.use(vueNumeralFilterInstaller, { locale: 'es-es' });
+Vue.use(vueNumeralFilterInstaller, { locale: "es-es" });

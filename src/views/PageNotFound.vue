@@ -20,14 +20,14 @@ export default {
   /*middleware: 'guest',*/
   metaInfo() {
     return {
-      title: "Buscador - Page Not Found"
+      title: "Buscador - Page Not Found",
     };
   },
   name: "page-not-found",
   layout: "basic",
   mounted() {
     sendPageView(this.$route.path, "Buscador - Page Not Found");
-  }
+  },
 };
 </script>
 

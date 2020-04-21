@@ -1,6 +1,6 @@
-import axios from 'axios'
-import * as types from '../mutation-types'
-import { formatProvinciaLocalidad } from './../../utils'
+import axios from "axios";
+import * as types from "../mutation-types";
+import { formatProvinciaLocalidad } from "./../../utils";
 //import dataJson from './../../assets/buscador-data.json'
 
 // state
@@ -16,209 +16,237 @@ export const state = {
     cnae: [],
     industria: [],
     tipo_cuentas: [],
-    cuentas_disponibles: [], 
+    cuentas_disponibles: [],
   },
-}
+};
 
 // getters
 export const getters = {
-  loading: state => state.loading,
-  search: state => state.search,
-}
+  loading: (state) => state.loading,
+  search: (state) => state.search,
+};
 
 // mutations
 export const mutations = {
-  [types.FETCH_SEARCH] (state, { search }) {
-    state.search = search
-    state.loading = false
+  [types.FETCH_SEARCH](state, { search }) {
+    state.search = search;
+    state.loading = false;
   },
-  [types.LOADING_SEARCH] (state, { loading }) {
-    state.loading = loading
+  [types.LOADING_SEARCH](state, { loading }) {
+    state.loading = loading;
   },
-}
+};
 
-let load = 0
+let load = 0;
 // actions
 export const actions = {
   async fetchSearch({ commit }) {
-    load++
-    if(load < 2){
+    load++;
+    if (load < 2) {
       try {
         commit(types.LOADING_SEARCH, {
-          loading: true
-        })
-        const { data } = await axios.get('/buscador/resumen')
-        const _data = formatProvinciaLocalidad(data)
+          loading: true,
+        });
+        const { data } = await axios.get("/buscador/resumen");
+        const _data = formatProvinciaLocalidad(data);
         commit(types.FETCH_SEARCH, {
-          search: _data
-        })
+          search: _data,
+        });
       } catch (e) {
         commit(types.FETCH_SEARCH, {
-          search: state.search
-        })
+          search: state.search,
+        });
       }
     }
   },
   async filtrar({ commit }, filters) {
     try {
       commit(types.LOADING_SEARCH, {
-        loading: true
-      })
-      const { data } = await axios.post('/buscador/filtrar?resumen=false', filters)
+        loading: true,
+      });
+      const { data } = await axios.post(
+        "/buscador/filtrar?resumen=false",
+        filters
+      );
 
       commit(types.LOADING_SEARCH, {
-        loading: false
-      })
+        loading: false,
+      });
 
-      return data
-
+      return data;
     } catch (e) {
       commit(types.LOADING_SEARCH, {
-        loading: false
-      })
+        loading: false,
+      });
     }
   },
-  async searchLocalidades({ commit }, search){
-    try{
-      const { data } = await axios.get(`/buscador/localidades?buscar=${search}`)
-      return data
+  async searchLocalidades({ commit }, search) {
+    try {
+      const { data } = await axios.get(
+        `/buscador/localidades?buscar=${search}`
+      );
+      return data;
     } catch (e) {
-     commit(types.LOADING_SEARCH, {
-        loading: false
-      })
+      commit(types.LOADING_SEARCH, {
+        loading: false,
+      });
     }
   },
-  async validateZipCodes({ commit }, zip_codes){
-    try{
-      const { data } = await axios.post('/buscador/codigoPostal/validar', {lista: zip_codes})
-      return data
+  async validateZipCodes({ commit }, zip_codes) {
+    try {
+      const { data } = await axios.post("/buscador/codigoPostal/validar", {
+        lista: zip_codes,
+      });
+      return data;
     } catch (e) {
-     commit(types.LOADING_SEARCH, {
-        loading: false
-      })
+      commit(types.LOADING_SEARCH, {
+        loading: false,
+      });
     }
   },
   async validateZipCodesFile({ commit }, file) {
-    try{
+    try {
       var formData = new FormData();
       formData.append("file", file);
-      const { data } = await axios.post('/buscador/codigoPostal/archivo', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
+      const { data } = await axios.post(
+        "/buscador/codigoPostal/archivo",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         }
-      })
-      return data
+      );
+      return data;
     } catch (e) {
-     commit(types.LOADING_SEARCH, {
-        loading: false
-      })
+      commit(types.LOADING_SEARCH, {
+        loading: false,
+      });
     }
   },
-  async validateNif({ commit }, list_nif){
-    try{
-      const { data } = await axios.post('/buscador/NIF/validar', {lista: list_nif})
-      return data
+  async validateNif({ commit }, list_nif) {
+    try {
+      const { data } = await axios.post("/buscador/NIF/validar", {
+        lista: list_nif,
+      });
+      return data;
     } catch (e) {
-     commit(types.LOADING_SEARCH, {
-        loading: false
-      })
+      commit(types.LOADING_SEARCH, {
+        loading: false,
+      });
     }
   },
   async validateNifFile({ commit }, file) {
-    try{
+    try {
       var formData = new FormData();
       formData.append("file", file);
-      const { data } = await axios.post('/buscador/NIF/archivo', formData, {
+      const { data } = await axios.post("/buscador/NIF/archivo", formData, {
         headers: {
-          'Content-Type': 'multipart/form-data'
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return data;
+    } catch (e) {
+      commit(types.LOADING_SEARCH, {
+        loading: false,
+      });
+    }
+  },
+  async validateRazonSocial({ commit }, razon_social) {
+    try {
+      const { data } = await axios.get(
+        `/buscador/razonSocial/buscar?RazonSocial=${razon_social}&page=0&size=500`
+      );
+      return data;
+    } catch (e) {
+      commit(types.LOADING_SEARCH, {
+        loading: false,
+      });
+    }
+  },
+  async validateBormeAuditor({ commit }, AuditorBorme) {
+    try {
+      const { data } = await axios.post(`/buscador/auditorBorme/buscar`, {
+        lista: AuditorBorme,
+      });
+      return data;
+    } catch (e) {
+      commit(types.LOADING_SEARCH, {
+        loading: false,
+      });
+    }
+  },
+  async archivoExcel({ commit }, { filters, nombreArchivo }) {
+    try {
+      const { data } = await axios.post(
+        `/buscador/empresas/excel?nombreArchivo=${nombreArchivo}`,
+        filters
+      );
+      return data;
+    } catch (e) {
+      commit(types.LOADING_SEARCH, {
+        loading: false,
+      });
+    }
+  },
+  async enviarResultadosCorreo({ commit }, { filters, email, nombreArchivo }) {
+    try {
+      const { data } = await axios.post(
+        `buscador/empresas/email?to=${email}&nombreArchivo=${nombreArchivo}`,
+        filters
+      );
+      return data;
+    } catch (e) {
+      commit(types.LOADING_SEARCH, {
+        loading: false,
+      });
+    }
+  },
+  async saveFilter({ commit }, { idUser, type, filter }) {
+    try {
+      const { data } = await axios.post(
+        `/filtrousuario/${idUser}/${type}`,
+        filter,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         }
-      })
-      return data
+      );
+      return data;
     } catch (e) {
-     commit(types.LOADING_SEARCH, {
-        loading: false
-      })
+      commit(types.LOADING_SEARCH, {
+        loading: false,
+      });
     }
   },
-  async validateRazonSocial({ commit }, razon_social){
-    try{
-      const { data } = await axios.get(`/buscador/razonSocial/buscar?RazonSocial=${razon_social}&page=0&size=500`)
-      return data
+  async getFilter({ commit }, { idUser, type }) {
+    try {
+      const { data } = await axios.get(`/filtrousuario/${idUser}/${type}`);
+      return data;
     } catch (e) {
       commit(types.LOADING_SEARCH, {
-        loading: false
-      })
+        loading: false,
+      });
     }
   },
-  async validateBormeAuditor({ commit }, AuditorBorme){
-    try{
-      const { data } = await axios.post(`/buscador/auditorBorme/buscar`, {lista: AuditorBorme} )
-      return data
+  async visualizarResultados({ commit }, { filters, page, size, sort }) {
+    try {
+      commit(types.LOADING_SEARCH, {
+        loading: true,
+      });
+      const { data } = await axios.post(
+        `/buscador/empresas/filtrar?pag=${page}&size=${size}${sort}`,
+        filters
+      );
+      commit(types.LOADING_SEARCH, {
+        loading: false,
+      });
+      return data;
     } catch (e) {
       commit(types.LOADING_SEARCH, {
-        loading: false
-      })
+        loading: false,
+      });
     }
   },
-  async archivoExcel({ commit }, {filters, nombreArchivo}){
-    try{
-      const { data } = await axios.post(`/buscador/empresas/excel?nombreArchivo=${nombreArchivo}`, filters)
-      return data
-    } catch (e) {
-      commit(types.LOADING_SEARCH, {
-        loading: false
-      })
-    }
-  },
-  async enviarResultadosCorreo({ commit }, {filters, email, nombreArchivo}){
-    try{
-      const { data } = await axios.post(`buscador/empresas/email?to=${email}&nombreArchivo=${nombreArchivo}`, filters)
-      return data
-    } catch (e) {
-      commit(types.LOADING_SEARCH, {
-        loading: false
-      })
-    }
-  },
-  async saveFilter({ commit }, { idUser, type, filter }){
-    try{
-      const { data } = await axios.post(`/filtrousuario/${idUser}/${type}`, filter,{
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      })
-      return data
-    } catch (e) {
-      commit(types.LOADING_SEARCH, {
-        loading: false
-      })
-    }
-  },
-  async getFilter({ commit }, {idUser, type}){
-    try{
-      const { data } = await axios.get(`/filtrousuario/${idUser}/${type}`)
-      return data
-    } catch (e) {
-    commit(types.LOADING_SEARCH, {
-        loading: false
-    })
-  }
-},
-  async visualizarResultados({ commit }, {filters, page, size, sort}){
-    try{
-      commit(types.LOADING_SEARCH, {
-        loading: true
-      })
-      const { data } = await axios.post(`/buscador/empresas/filtrar?pag=${page}&size=${size}${sort}`, filters)
-      commit(types.LOADING_SEARCH, {
-        loading: false
-      })
-      return data
-    } catch (e) {
-      commit(types.LOADING_SEARCH, {
-
-        loading: false
-      })
-    }
-  }
-}
+};

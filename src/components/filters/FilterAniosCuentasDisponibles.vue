@@ -5,20 +5,34 @@
         {{ title }}
         <span
           class="span-info-right"
-          v-if="selected_cuentas_disponibles.length !== 0 && selected_cuentas_disponibles.length < 2"
-        >({{ selected_by_cuentas_disponibles | numeral('0,0') }} empresas seleccionadas)</span>
+          v-if="
+            selected_cuentas_disponibles.length !== 0 &&
+              selected_cuentas_disponibles.length < 2
+          "
+          >({{ selected_by_cuentas_disponibles | numeral("0,0") }} empresas
+          seleccionadas)</span
+        >
       </p>
     </div>
     <div class="panel-body">
-      <div v-if="search.cuentas_disponibles && search.cuentas_disponibles.length !== 0">
+      <div
+        v-if="
+          search.cuentas_disponibles && search.cuentas_disponibles.length !== 0
+        "
+      >
         <div class="grid-2-columns-1fr">
           <div>
             <div class="grid-3-columns-1fr rows-auto-flow">
               <div
-                v-for="(item, key) in filterAvailableAccounts(search.cuentas_disponibles)"
+                v-for="(item, key) in filterAvailableAccounts(
+                  search.cuentas_disponibles
+                )"
                 :key="key"
               >
-                <label class="custon-checkboxs" v-if="item.label !== 'incluir_null'">
+                <label
+                  class="custon-checkboxs"
+                  v-if="item.label !== 'incluir_null'"
+                >
                   <input
                     type="checkbox"
                     :name="`checkbox_cuentas_disponibles_${item.id}`"
@@ -29,14 +43,19 @@
                   />
                   <span class="geekmark"></span>
                   <span class="name-checkbox">{{ item.label }}</span>
-                  <span class="num-fil">({{ item.data | numeral('0,0') }})</span>
+                  <span class="num-fil"
+                    >({{ item.data | numeral("0,0") }})</span
+                  >
                 </label>
               </div>
             </div>
           </div>
           <div v-if="selected_cuentas_disponibles.length > 1">
             <div v-for="(item, key) in options_to_include" :key="key">
-              <label class="custon-checkboxs white" v-if="item.label !== 'incluir_null'">
+              <label
+                class="custon-checkboxs white"
+                v-if="item.label !== 'incluir_null'"
+              >
                 <input
                   type="checkbox"
                   :name="`checkbox___cuentas_disponibles__${item.id}`"
@@ -60,13 +79,24 @@
             <button
               type="button"
               class="btn btn-success"
-              v-if="(selected_cuentas_disponibles.length !== 0 && !areApplied) || (selected_cuentas_disponibles.length !== 0 && !compareWithNewtoApply)"
+              v-if="
+                (selected_cuentas_disponibles.length !== 0 && !areApplied) ||
+                  (selected_cuentas_disponibles.length !== 0 &&
+                    !compareWithNewtoApply)
+              "
               @click="apply"
             >
               Aplicar
-              <i :class="(loadingFrm)?'fa  fa-spinner fa-spin':'fa  fa-send'"></i>
+              <i
+                :class="loadingFrm ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'"
+              ></i>
             </button>
-            <button type="button" class="btn btn-info" v-if="areApplied" @click="confirmClean">
+            <button
+              type="button"
+              class="btn btn-info"
+              v-if="areApplied"
+              @click="confirmClean"
+            >
               Limpiar
               <i class="fa fa-undo"></i>
             </button>
@@ -82,7 +112,10 @@
                   name
                 />
                 <span class="geekmark"></span>
-                <span class="title">Incluir aquellas empresas de las que no hay cuentas disponibles</span>
+                <span class="title"
+                  >Incluir aquellas empresas de las que no hay cuentas
+                  disponibles</span
+                >
               </label>
             </div>
           </div>
@@ -111,13 +144,27 @@
                 <button
                   type="button"
                   class="btn btn-success"
-                  v-if="(selected_cuentas_disponibles.length !== 0 && !areApplied) || (selected_cuentas_disponibles.length !== 0 && !compareWithNewtoApply)"
+                  v-if="
+                    (selected_cuentas_disponibles.length !== 0 &&
+                      !areApplied) ||
+                      (selected_cuentas_disponibles.length !== 0 &&
+                        !compareWithNewtoApply)
+                  "
                   @click="apply"
                 >
                   Aplicar
-                  <i :class="(loadingFrm)?'fa  fa-spinner fa-spin':'fa  fa-send'"></i>
+                  <i
+                    :class="
+                      loadingFrm ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'
+                    "
+                  ></i>
                 </button>
-                <button type="button" class="btn btn-info" v-if="areApplied" @click="confirmClean">
+                <button
+                  type="button"
+                  class="btn btn-info"
+                  v-if="areApplied"
+                  @click="confirmClean"
+                >
                   Limpiar
                   <i class="fa fa-undo"></i>
                 </button>
@@ -125,40 +172,62 @@
             </div>
             <div
               class="row"
-              v-if="search.cuentas_disponibles && search.cuentas_disponibles.length !== 0"
+              v-if="
+                search.cuentas_disponibles &&
+                  search.cuentas_disponibles.length !== 0
+              "
             >
               <div class="col-md-6">
                 <div class="panel panel-default cd">
                   <div class="panel-heading">
-                    <p class="panel-title roboto white">Años con Cuentas Disponibles</p>
+                    <p class="panel-title roboto white">
+                      Años con Cuentas Disponibles
+                    </p>
                   </div>
                   <div class="panel-body">
                     <div class="row">
                       <div class="col-md-12">
-                        <div class="div-scroll-300" v-if="search.cuentas_disponibles.length !== 0">
+                        <div
+                          class="div-scroll-300"
+                          v-if="search.cuentas_disponibles.length !== 0"
+                        >
                           <div
-                            v-for="(item, key) in filterAvailableAccounts(search.cuentas_disponibles)"
+                            v-for="(item, key) in filterAvailableAccounts(
+                              search.cuentas_disponibles
+                            )"
                             :key="key"
                             class="checkbox"
                           >
-                            <label class="custon-checkboxs" v-if="item.label !== 'incluir_null'">
+                            <label
+                              class="custon-checkboxs"
+                              v-if="item.label !== 'incluir_null'"
+                            >
                               <input
                                 type="checkbox"
-                                :name="`checkbox_cuentas_disponibles_${item.id}`"
+                                :name="
+                                  `checkbox_cuentas_disponibles_${item.id}`
+                                "
                                 v-model="selected_cuentas_disponibles"
                                 @change="handleChange()"
                                 :id="`checkbox_cuentas_disponibles_${item.id}`"
                                 :value="item"
                               />
                               <span class="geekmark"></span>
-                              <span class="name-checkbox">{{ item.label }}</span>
-                              <span class="num-fil">({{ item.data | numeral('0,0') }})</span>
+                              <span class="name-checkbox">{{
+                                item.label
+                              }}</span>
+                              <span class="num-fil"
+                                >({{ item.data | numeral("0,0") }})</span
+                              >
                             </label>
                           </div>
                         </div>
                       </div>
                       <div class="col-md-12">
-                        <div class="checkboxs-resaldado float-right" v-if="itemIncluirNull">
+                        <div
+                          class="checkboxs-resaldado float-right"
+                          v-if="itemIncluirNull"
+                        >
                           <label class="custon-checkboxs">
                             <input
                               type="checkbox"
@@ -168,9 +237,10 @@
                               name
                             />
                             <span class="geekmark"></span>
-                            <span
-                              class="title"
-                            >Incluir aquellas empresas de las que no hay cuentas disponibles</span>
+                            <span class="title"
+                              >Incluir aquellas empresas de las que no hay
+                              cuentas disponibles</span
+                            >
                           </label>
                         </div>
                       </div>
@@ -188,7 +258,8 @@
                           <span
                             class="span-info-right"
                             v-if="selected_cuentas_disponibles.length !== 0"
-                          >{{ selected_cuentas_disponibles.length }}</span>
+                            >{{ selected_cuentas_disponibles.length }}</span
+                          >
                         </p>
                       </div>
                     </div>
@@ -201,46 +272,73 @@
                           <span
                             class="span-info-right"
                             v-if="selected_by_cuentas_disponibles !== 0"
-                          >({{ selected_by_cuentas_disponibles | numeral('0,0') }} empresas seleccionadas)</span>
+                            >({{
+                              selected_by_cuentas_disponibles | numeral("0,0")
+                            }}
+                            empresas seleccionadas)</span
+                          >
                         </p>
                       </div>
                       <div class="panel-body">
-                        <div class="div-scroll-200" id="selected_cuentasDisponibles">
-                          <div v-for="(item, key) in selected_cuentas_disponibles" :key="key">
+                        <div
+                          class="div-scroll-200"
+                          id="selected_cuentasDisponibles"
+                        >
+                          <div
+                            v-for="(item, key) in selected_cuentas_disponibles"
+                            :key="key"
+                          >
                             <label
                               class="custon-checkboxs"
-                              v-if="item.label !== 'incluir_null' && item.id !== 'todos:true' && item.id !== 'todos:false'"
+                              v-if="
+                                item.label !== 'incluir_null' &&
+                                  item.id !== 'todos:true' &&
+                                  item.id !== 'todos:false'
+                              "
                             >
                               <input
                                 type="checkbox"
-                                :name="`checkbox_cuentas_disponibles__${item.id}`"
+                                :name="
+                                  `checkbox_cuentas_disponibles__${item.id}`
+                                "
                                 v-model="selected_cuentas_disponibles"
                                 @change="handleChangeList(item, $event)"
                                 :id="`checkbox_cuentas_disponibles__${item.id}`"
                                 :value="item"
                               />
                               <span class="geekmark"></span>
-                              <span class="name-checkbox">{{ item.label }}</span>
-                              <span class="num-fil">({{ item.data | numeral('0,0') }})</span>
+                              <span class="name-checkbox">{{
+                                item.label
+                              }}</span>
+                              <span class="num-fil"
+                                >({{ item.data | numeral("0,0") }})</span
+                              >
                             </label>
                           </div>
                         </div>
                         <div style="margin-top: 40px;">
-                          <div v-for="(item, key) in options_to_include" :key="key">
+                          <div
+                            v-for="(item, key) in options_to_include"
+                            :key="key"
+                          >
                             <label
                               class="custon-checkboxs white"
                               v-if="item.label !== 'incluir_null'"
                             >
                               <input
                                 type="checkbox"
-                                :name="`checkbox_cuentas_disponibles__${item.id}`"
+                                :name="
+                                  `checkbox_cuentas_disponibles__${item.id}`
+                                "
                                 v-model="selected_cuentas_disponibles"
                                 :id="`checkbox_cuentas_disponibles__${item.id}`"
                                 :value="item"
                                 @click="takeIntoAccount(item, $event)"
                               />
                               <span class="geekmark"></span>
-                              <span class="name-checkbox">{{ item.label }}</span>
+                              <span class="name-checkbox">{{
+                                item.label
+                              }}</span>
                             </label>
                           </div>
                         </div>
@@ -254,7 +352,11 @@
         </el-dialog>
       </div>
       <div
-        v-if="search.cuentas_disponibles && search.cuentas_disponibles.length === 0 && !loading"
+        v-if="
+          search.cuentas_disponibles &&
+            search.cuentas_disponibles.length === 0 &&
+            !loading
+        "
         class="alert alert-dismissible alert-primary"
       >
         <strong>Oh!</strong> datos no encontrados.
@@ -272,7 +374,7 @@ import {
   beforeOrderFilters,
   sendPageView,
   sendEvent,
-  removeDuplicates
+  removeDuplicates,
 } from "./../../utils";
 import { persistentData } from "./../../mixins/persistent-data";
 export default {
@@ -285,7 +387,7 @@ export default {
       form: "filters/form",
       selected_companies: "filters/selected_companies",
       applied_filters: "filters/applied_filters",
-      filters: "filters/filters"
+      filters: "filters/filters",
     }),
     itemIncluirNull: function() {
       let include = this.search.cuentas_disponibles.filter(function(item) {
@@ -297,7 +399,7 @@ export default {
       let stg = this.selected_cuentas_disponibles_string;
       let obj = JSON.stringify(this.selected_cuentas_disponibles);
       return stg === obj;
-    }
+    },
   },
   data: () => ({
     title: "Años con cuentas disponibles",
@@ -310,13 +412,13 @@ export default {
       {
         id: "todos:true",
         label: "Tener en cuenta todos los años seleccionados",
-        data: null
+        data: null,
       },
       {
         id: "todos:false",
         label: "Tener en cuenta al menos uno de los años seleccionados",
-        data: null
-      }
+        data: null,
+      },
     ],
     areApplied: false,
     reapply: false,
@@ -328,7 +430,7 @@ export default {
     loadingEmpleados: false,
     daterange_incluir_null: false,
     incluir_null: false,
-    all: false
+    all: false,
   }),
   watch: {
     selected_cuentas_disponibles: function(newProvincesLocalidad) {
@@ -346,20 +448,20 @@ export default {
     },
     selected_companies: function() {
       howAnimation(document.querySelector(".selected_companies"));
-    }
+    },
   },
   mounted() {
-    this.$root.$on("clean_filter", filter => {
+    this.$root.$on("clean_filter", (filter) => {
       if (filter === this.title) {
         this.clean();
       }
     });
-    this.$root.$on("show_modal_filter", filter => {
+    this.$root.$on("show_modal_filter", (filter) => {
       if (filter === this.title) {
         this.modalVisible = true;
       }
     });
-    this.$root.$on("empty_filter", filter => {
+    this.$root.$on("empty_filter", (filter) => {
       if (filter === this.title) {
         this.emptyFilter();
       }
@@ -374,9 +476,9 @@ export default {
         "2017",
         "2018",
         "2019",
-        "incluir_null"
+        "incluir_null",
       ];
-      return availableAccounts.filter(item => {
+      return availableAccounts.filter((item) => {
         if (validos.includes(item.id)) {
           return item;
         }
@@ -400,7 +502,7 @@ export default {
      */
     updateNumberSelectedCompanies(quantity) {
       this.$store.dispatch("filters/updateNumberSelectedCompanies", {
-        quantity
+        quantity,
       });
     },
     /**
@@ -411,7 +513,7 @@ export default {
     numberCompaniesSelected(newSelectedCompanies) {
       let business_accountant = 0;
       if (Array.isArray(newSelectedCompanies)) {
-        newSelectedCompanies.forEach(item => {
+        newSelectedCompanies.forEach((item) => {
           let result = inArrayObjectTreeselect(
             this.search.cuentas_disponibles,
             item.id
@@ -450,12 +552,12 @@ export default {
         );
         this.$store
           .dispatch("search/filtrar", beforeForm)
-          .then(response => {
+          .then((response) => {
             this.updateNumberSelectedCompanies(response.cantidad);
             this.$store.dispatch("filters/addFilters", {
               name: this.title,
               quantity: this.selected_by_cuentas_disponibles,
-              cantidades: response
+              cantidades: response,
             });
             this.areApplied = true;
             this.reapply = false;
@@ -481,9 +583,9 @@ export default {
           cancelButtonColor: "#d9534f",
           showConfirmButton: true,
           confirmButtonColor: "#337ab7",
-          confirmButtonText: "Si, seguro"
+          confirmButtonText: "Si, seguro",
         })
-        .then(result => {
+        .then((result) => {
           if (result.value) {
             this.clean();
           }
@@ -500,10 +602,10 @@ export default {
           this.form,
           this.title
         );
-        this.$store.dispatch("search/filtrar", beforeForm).then(response => {
+        this.$store.dispatch("search/filtrar", beforeForm).then((response) => {
           this.updateNumberSelectedCompanies(response.cantidad);
           this.$store.dispatch("filters/setCantidades", {
-            cantidades: response
+            cantidades: response,
           });
         });
       } else {
@@ -542,13 +644,13 @@ export default {
       let checkboxs = document.querySelectorAll(
         '#selected_cuentasDisponibles input[type="checkbox"]'
       );
-      checkboxs.forEach(item => {
+      checkboxs.forEach((item) => {
         item.checked = true;
       });
     },
     formatearDataPOST() {
       this.form.cuentasDisponibles = [];
-      this.selected_cuentas_disponibles.forEach(item => {
+      this.selected_cuentas_disponibles.forEach((item) => {
         this.form.cuentasDisponibles.push(item.id);
       });
       return this.form;
@@ -556,12 +658,12 @@ export default {
     takeIntoAccount(item, event = null) {
       if (item.id === "todos:true") {
         this.selected_cuentas_disponibles = this.selected_cuentas_disponibles.filter(
-          item => item.id !== "todos:false"
+          (item) => item.id !== "todos:false"
         );
         this.selected_cuentas_disponibles.push(this.options_to_include[0]);
       } else if (item.id === "todos:false") {
         this.selected_cuentas_disponibles = this.selected_cuentas_disponibles.filter(
-          item => item.id !== "todos:true"
+          (item) => item.id !== "todos:true"
         );
         this.selected_cuentas_disponibles.push(this.options_to_include[1]);
       }
@@ -581,7 +683,7 @@ export default {
         this.options_to_include.length > 0
       ) {
         let tiene = this.selected_cuentas_disponibles.filter(
-          item => item.id === "todos:false" || item.id === "todos:true"
+          (item) => item.id === "todos:false" || item.id === "todos:true"
         );
         if (tiene && tiene.length === 0) {
           this.takeIntoAccount(this.options_to_include[0]);
@@ -592,18 +694,18 @@ export default {
         this.selected_cuentas_disponibles.length <= 2
       ) {
         this.selected_cuentas_disponibles = this.selected_cuentas_disponibles.filter(
-          item => item.id !== "todos:false"
+          (item) => item.id !== "todos:false"
         );
         this.selected_cuentas_disponibles = this.selected_cuentas_disponibles.filter(
-          item => item.id !== "todos:true"
+          (item) => item.id !== "todos:true"
         );
         this.selected_cuentas_disponibles = removeDuplicates(
           this.selected_cuentas_disponibles,
           "id"
         );
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

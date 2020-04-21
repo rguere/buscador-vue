@@ -59,7 +59,7 @@
 
 <script>
 export default {
-  name: "filter-estado"
+  name: "filter-estado",
 };
 </script>
 

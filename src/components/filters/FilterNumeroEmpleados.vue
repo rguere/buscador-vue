@@ -3,17 +3,20 @@
     <div class="panel-heading">
       <p class="panel-title roboto white">
         {{ title }}
-        <span
-          class="span-info-right"
-          v-if="selected_by_empleados !== 0"
-        >({{ selected_by_empleados | numeral('0,0') }} empresas seleccionadas)</span>
+        <span class="span-info-right" v-if="selected_by_empleados !== 0"
+          >({{ selected_by_empleados | numeral("0,0") }} empresas
+          seleccionadas)</span
+        >
       </p>
     </div>
     <div class="panel-body">
       <div v-if="search.empleados && search.empleados.length !== 0">
         <div class="grid-2-columns-1fr">
           <div v-for="(item, key) in search.empleados" :key="key">
-            <label class="custon-checkboxs" v-if="item.label !== 'incluir_null'">
+            <label
+              class="custon-checkboxs"
+              v-if="item.label !== 'incluir_null'"
+            >
               <input
                 type="checkbox"
                 :name="`checkbox_empleados_${item.id}`"
@@ -24,7 +27,7 @@
               />
               <span class="geekmark"></span>
               <span class="name-checkbox">{{ item.label }}</span>
-              <span class="num-fil">({{ item.data | numeral('0,0') }})</span>
+              <span class="num-fil">({{ item.data | numeral("0,0") }})</span>
             </label>
           </div>
         </div>
@@ -37,13 +40,23 @@
             <button
               type="button"
               class="btn btn-success"
-              v-if="(selected_empleados.length !== 0 && !areApplied) || (selected_empleados.length !== 0 && !compareWithNewtoApply)"
+              v-if="
+                (selected_empleados.length !== 0 && !areApplied) ||
+                  (selected_empleados.length !== 0 && !compareWithNewtoApply)
+              "
               @click="apply"
             >
               Aplicar
-              <i :class="(loadingFrm)?'fa  fa-spinner fa-spin':'fa  fa-send'"></i>
+              <i
+                :class="loadingFrm ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'"
+              ></i>
             </button>
-            <button type="button" class="btn btn-info" v-if="areApplied" @click="confirmClean">
+            <button
+              type="button"
+              class="btn btn-info"
+              v-if="areApplied"
+              @click="confirmClean"
+            >
               Limpiar
               <i class="fa fa-undo"></i>
             </button>
@@ -59,9 +72,10 @@
                   name
                 />
                 <span class="geekmark"></span>
-                <span
-                  class="title"
-                >Incluir aquellas empresas en las que se desconoce su número de empleados</span>
+                <span class="title"
+                  >Incluir aquellas empresas en las que se desconoce su número
+                  de empleados</span
+                >
               </label>
             </div>
           </div>
@@ -90,36 +104,62 @@
                 <button
                   type="button"
                   class="btn btn-success"
-                  v-if="(selected_empleados.length !== 0 && !areApplied) || (selected_empleados.length !== 0 && !compareWithNewtoApply)"
+                  v-if="
+                    (selected_empleados.length !== 0 && !areApplied) ||
+                      (selected_empleados.length !== 0 &&
+                        !compareWithNewtoApply)
+                  "
                   @click="apply"
                 >
                   Aplicar
-                  <i :class="(loadingFrm)?'fa  fa-spinner fa-spin':'fa  fa-send'"></i>
+                  <i
+                    :class="
+                      loadingFrm ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'
+                    "
+                  ></i>
                 </button>
-                <button type="button" class="btn btn-info" v-if="areApplied" @click="confirmClean">
+                <button
+                  type="button"
+                  class="btn btn-info"
+                  v-if="areApplied"
+                  @click="confirmClean"
+                >
                   Limpiar
                   <i class="fa fa-undo"></i>
                 </button>
               </div>
             </div>
-            <div class="row" v-if="search.empleados && search.empleados.length !== 0">
+            <div
+              class="row"
+              v-if="search.empleados && search.empleados.length !== 0"
+            >
               <div class="col-md-12">
                 <div class="panel panel-default cd">
                   <div class="panel-heading">
                     <p class="panel-title roboto white">
-                      Seleccionar empresas por número de empleados (*Puedes elegir más de una opción)
+                      Seleccionar empresas por número de empleados (*Puedes
+                      elegir más de una opción)
                       <span
                         class="span-info-right"
                         v-if="selected_by_empleados !== 0"
-                      >({{ selected_by_empleados | numeral('0,0') }} empresas seleccionadas)</span>
+                        >({{ selected_by_empleados | numeral("0,0") }} empresas
+                        seleccionadas)</span
+                      >
                     </p>
                   </div>
                   <div class="panel-body">
                     <div class="row">
                       <div class="col-md-12">
                         <div v-if="search.empleados.length !== 0">
-                          <div v-for="(item, key) in search.empleados" :key="key" class="checkbox">
-                            <label class="custon-checkboxs" v-if="item.label !== 'incluir_null'">
+                          <div
+                            v-for="(item, key) in search.empleados"
+                            :key="key"
+                            class="checkbox"
+                          >
+                            <label
+                              class="custon-checkboxs"
+                              v-if="item.label !== 'incluir_null'"
+                            >
                               <input
                                 type="checkbox"
                                 :name="`checkbox_empleados_${item.id}`"
@@ -129,14 +169,21 @@
                                 :value="item"
                               />
                               <span class="geekmark"></span>
-                              <span class="name-checkbox">{{ item.label }}</span>
-                              <span class="num-fil">({{ item.data | numeral('0,0') }})</span>
+                              <span class="name-checkbox">{{
+                                item.label
+                              }}</span>
+                              <span class="num-fil"
+                                >({{ item.data | numeral("0,0") }})</span
+                              >
                             </label>
                           </div>
                         </div>
                       </div>
                       <div class="col-md-12">
-                        <div class="checkboxs-resaldado float-right" v-if="itemIncluirNull">
+                        <div
+                          class="checkboxs-resaldado float-right"
+                          v-if="itemIncluirNull"
+                        >
                           <label class="custon-checkboxs">
                             <input
                               type="checkbox"
@@ -146,9 +193,10 @@
                               name
                             />
                             <span class="geekmark"></span>
-                            <span
-                              class="title"
-                            >Incluir aquellas empresas en las que se desconoce su número de empleados</span>
+                            <span class="title"
+                              >Incluir aquellas empresas en las que se desconoce
+                              su número de empleados</span
+                            >
                           </label>
                         </div>
                       </div>
@@ -159,23 +207,26 @@
               <div class="col-md-12">
                 <div class="panel panel-default cd">
                   <div class="panel-heading">
-                    <p
-                      class="panel-title roboto white"
-                    >Seleccionar empresas por número de empleados.</p>
+                    <p class="panel-title roboto white">
+                      Seleccionar empresas por número de empleados.
+                    </p>
                   </div>
                   <div class="panel-body">
                     <div class="row">
                       <div class="col-md-12">
                         <div class="form-group">
-                          <label
-                            class="control-label"
-                          >Insertar la antigüedad de la(s) empresa(s) en número de años</label>
+                          <label class="control-label"
+                            >Insertar la antigüedad de la(s) empresa(s) en
+                            número de años</label
+                          >
                         </div>
                       </div>
                       <div class="col-md-4">
                         <div
                           class="form-group"
-                          :class="{ 'has-error has-feedback': $v.employees_from.$error }"
+                          :class="{
+                            'has-error has-feedback': $v.employees_from.$error,
+                          }"
                         >
                           <label class="control-label" for="employees_from">
                             De (incluido)
@@ -198,7 +249,9 @@
                       <div class="col-md-4">
                         <div
                           class="form-group"
-                          :class="{ 'has-error has-feedback': $v.employees_to.$error }"
+                          :class="{
+                            'has-error has-feedback': $v.employees_to.$error,
+                          }"
                         >
                           <label class="control-label" for="employees_to">
                             Hasta (incluido)
@@ -226,11 +279,20 @@
                           :disabled="$v.$invalid || loadingEmpleados"
                         >
                           BUSCAR
-                          <i :class="(loadingEmpleados)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
+                          <i
+                            :class="
+                              loadingEmpleados
+                                ? 'fa  fa-spinner fa-spin'
+                                : 'fa  fa-search'
+                            "
+                          ></i>
                         </button>
                       </div>
                       <div class="col-md-12">
-                        <div class="checkboxs-resaldado w-50-p" v-if="itemIncluirNull">
+                        <div
+                          class="checkboxs-resaldado w-50-p"
+                          v-if="itemIncluirNull"
+                        >
                           <label class="custon-checkboxs">
                             <input
                               type="checkbox"
@@ -240,9 +302,10 @@
                               name
                             />
                             <span class="geekmark"></span>
-                            <span
-                              class="title"
-                            >Incluir aquellas empresas en las que se desconoce su número de empleados</span>
+                            <span class="title"
+                              >Incluir aquellas empresas en las que se desconoce
+                              su número de empleados</span
+                            >
                           </label>
                         </div>
                       </div>
@@ -273,7 +336,7 @@ import {
   howAnimation,
   beforeOrderFilters,
   sendPageView,
-  sendEvent
+  sendEvent,
 } from "./../../utils";
 import { persistentData } from "./../../mixins/persistent-data";
 export default {
@@ -286,7 +349,7 @@ export default {
       form: "filters/form",
       selected_companies: "filters/selected_companies",
       applied_filters: "filters/applied_filters",
-      filters: "filters/filters"
+      filters: "filters/filters",
     }),
     itemIncluirNull: function() {
       let include = this.search.empleados.filter(function(item) {
@@ -298,7 +361,7 @@ export default {
       let stg = this.selected_empleados_string;
       let obj = JSON.stringify(this.selected_empleados);
       return stg === obj;
-    }
+    },
   },
   data: () => ({
     title: "Número de empleados",
@@ -311,8 +374,8 @@ export default {
         id: "all",
         label: "TODA ESPAÑA",
         isDefaultExpanded: true,
-        children: []
-      }
+        children: [],
+      },
     ],
     areApplied: false,
     reapply: false,
@@ -326,20 +389,20 @@ export default {
     employees_to: "",
     employees_from: "",
     incluir_null: false,
-    all: false
+    all: false,
   }),
   validations() {
     return {
       employees_from: {
         required,
         between: maxLength(6),
-        numeric
+        numeric,
       },
       employees_to: {
         required,
         between: maxLength(6),
-        numeric
-      }
+        numeric,
+      },
     };
   },
   watch: {
@@ -358,20 +421,20 @@ export default {
     },
     selected_companies: function() {
       howAnimation(document.querySelector(".selected_companies"));
-    }
+    },
   },
   mounted() {
-    this.$root.$on("clean_filter", filter => {
+    this.$root.$on("clean_filter", (filter) => {
       if (filter === this.title) {
         this.clean();
       }
     });
-    this.$root.$on("show_modal_filter", filter => {
+    this.$root.$on("show_modal_filter", (filter) => {
       if (filter === this.title) {
         this.modalVisible = true;
       }
     });
-    this.$root.$on("empty_filter", filter => {
+    this.$root.$on("empty_filter", (filter) => {
       if (filter === this.title) {
         this.emptyFilter();
       }
@@ -402,7 +465,7 @@ export default {
      */
     updateNumberSelectedCompanies(quantity) {
       this.$store.dispatch("filters/updateNumberSelectedCompanies", {
-        quantity
+        quantity,
       });
     },
     /**
@@ -413,7 +476,7 @@ export default {
     numberCompaniesSelected(newSelectedCompanies) {
       let business_accountant = 0;
       if (Array.isArray(newSelectedCompanies)) {
-        newSelectedCompanies.forEach(item => {
+        newSelectedCompanies.forEach((item) => {
           let result = inArrayObjectTreeselect(this.search.empleados, item.id);
           if (result && result.data && result.data) {
             business_accountant = business_accountant + result.data;
@@ -446,12 +509,12 @@ export default {
         );
         this.$store
           .dispatch("search/filtrar", beforeForm)
-          .then(response => {
+          .then((response) => {
             this.updateNumberSelectedCompanies(response.cantidad);
             this.$store.dispatch("filters/addFilters", {
               name: this.title,
               quantity: this.selected_by_empleados,
-              cantidades: response
+              cantidades: response,
             });
             this.areApplied = true;
             this.reapply = false;
@@ -492,12 +555,12 @@ export default {
         );
         this.$store
           .dispatch("search/filtrar", beforeForm)
-          .then(response => {
+          .then((response) => {
             this.updateNumberSelectedCompanies(response.cantidad);
             this.$store.dispatch("filters/addFilters", {
               name: this.title,
               quantity: this.selected_by_empleados,
-              cantidades: response
+              cantidades: response,
             });
             this.areApplied = true;
             this.reapply = false;
@@ -522,9 +585,9 @@ export default {
           cancelButtonColor: "#d9534f",
           showConfirmButton: true,
           confirmButtonColor: "#337ab7",
-          confirmButtonText: "Si, seguro"
+          confirmButtonText: "Si, seguro",
         })
-        .then(result => {
+        .then((result) => {
           if (result.value) {
             this.clean();
           }
@@ -541,10 +604,10 @@ export default {
           this.form,
           this.title
         );
-        this.$store.dispatch("search/filtrar", beforeForm).then(response => {
+        this.$store.dispatch("search/filtrar", beforeForm).then((response) => {
           this.updateNumberSelectedCompanies(response.cantidad);
           this.$store.dispatch("filters/setCantidades", {
-            cantidades: response
+            cantidades: response,
           });
         });
       } else {
@@ -579,7 +642,7 @@ export default {
     },
     formatearDataPOST() {
       this.form.empleados = [];
-      this.selected_empleados.forEach(item => {
+      this.selected_empleados.forEach((item) => {
         this.form.empleados.push(item.id);
       });
       return this.form;
@@ -590,8 +653,8 @@ export default {
       } else {
         this.selected_empleados = [];
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

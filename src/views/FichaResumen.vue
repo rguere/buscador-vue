@@ -29,13 +29,18 @@
                 <li v-for="(item, key) in filtros_aplicados" :key="key">
                   {{ item.title }}
                   <ul v-if="item.datas">
-                    <li
-                      v-for="(_item, _key) in item.datas"
-                      :key="_key"
-                    >{{ (_item.label !== 'incluir_null')? _item.label: `Empresas en las que se desconoce su ${item.title.toLowerCase()}` }}</li>
+                    <li v-for="(_item, _key) in item.datas" :key="_key">
+                      {{
+                        _item.label !== "incluir_null"
+                          ? _item.label
+                          : `Empresas en las que se desconoce su ${item.title.toLowerCase()}`
+                      }}
+                    </li>
                   </ul>
                   <el-divider></el-divider>
-                  <span class="_right">{{ item.quantity | numeral('0,0') }}</span>
+                  <span class="_right">{{
+                    item.quantity | numeral("0,0")
+                  }}</span>
                 </li>
               </ul>
             </div>
@@ -43,7 +48,7 @@
               <h4>Resultado Final de la búsqueda</h4>
               <p class="f25">
                 <b>
-                  <span class>{{ total | numeral('0,0') }}</span> Empresas
+                  <span class>{{ total | numeral("0,0") }}</span> Empresas
                 </b>
               </p>
             </div>
@@ -65,7 +70,7 @@ export default {
   /*middleware: 'guest',*/
   metaInfo() {
     return {
-      title: "Buscador - Ficha Resumen"
+      title: "Buscador - Ficha Resumen",
     };
   },
   name: "page-ficha-resumen",
@@ -84,22 +89,22 @@ export default {
     results: {
       cantidad: 0,
       total: 0,
-      empresas: []
+      empresas: [],
     },
     filtros_aplicados: [],
     total: 0,
     puedeDescargar: false,
-    puedeEnviarCorreo: false
+    puedeEnviarCorreo: false,
   }),
   validations() {
     return {
       correo: {
         required,
-        email
+        email,
       },
       nombreArchivo: {
-        required
-      }
+        required,
+      },
     };
   },
   computed: {},
@@ -122,7 +127,7 @@ export default {
       this.$router.push({ name: "buscador" });
     }
   },
-  methods: {}
+  methods: {},
 };
 </script>
 

@@ -3,15 +3,19 @@
     <div class="panel-heading">
       <p class="panel-title roboto white">
         {{ title }}
-        <span
-          class="span-info-right"
-          v-if="selected_by_list_nif !== 0"
-        >({{ selected_by_list_nif | numeral('0,0') }} empresas seleccionadas)</span>
+        <span class="span-info-right" v-if="selected_by_list_nif !== 0"
+          >({{ selected_by_list_nif | numeral("0,0") }} empresas
+          seleccionadas)</span
+        >
       </p>
     </div>
     <div class="panel-body">
       <div class="form-group">
-        <textarea v-model="dataFrm" id="list_nif" class="form-control"></textarea>
+        <textarea
+          v-model="dataFrm"
+          id="list_nif"
+          class="form-control"
+        ></textarea>
       </div>
       <div class="flex-space-between-flex-end">
         <div></div>
@@ -23,7 +27,11 @@
             :disabled="dataFrm.length === 0 || loadingValidar"
           >
             BUSCAR
-            <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
+            <i
+              :class="
+                loadingValidar ? 'fa  fa-spinner fa-spin' : 'fa  fa-search'
+              "
+            ></i>
           </button>
         </div>
       </div>
@@ -59,7 +67,7 @@
                 />
                 <span class="geekmark"></span>
                 <span class="name-checkbox">{{ item.label }}</span>
-                <span class="num-fil">({{ item.data | numeral('0,0') }})</span>
+                <span class="num-fil">({{ item.data | numeral("0,0") }})</span>
               </label>
             </div>
           </div>
@@ -75,18 +83,26 @@
           v-for="(item, key) in list_nif.invalidos.slice(0, limitNifInvalidos)"
           :key="key"
           class="label label-danger label-no-encontrados"
-        >{{ item }}</span>
+          >{{ item }}</span
+        >
         <a
           href
           v-on:click.stop.prevent="showAllInvalidos"
           v-if="list_nif.invalidos.length >= limitNifInvalidos"
           class="btn"
           style="display: block;"
-        >{{ (list_nif.invalidos.length == limitNifInvalidos) ? 'Ver menos' : `Ver todos (${list_nif.invalidos.length})` }}</a>
+          >{{
+            list_nif.invalidos.length == limitNifInvalidos
+              ? "Ver menos"
+              : `Ver todos (${list_nif.invalidos.length})`
+          }}</a
+        >
         <hr />
       </div>
       <div class="form-group">
-        <p class="text-help">*Puedes incluir uno o más NIF separados por coma o por salto de línea</p>
+        <p class="text-help">
+          *Puedes incluir uno o más NIF separados por coma o por salto de línea
+        </p>
       </div>
       <div class="flex-space-between-flex-end">
         <div>
@@ -95,23 +111,38 @@
             <i class="fa fa-plus-circle"></i>
           </button>
           <button
-            v-if="list_nif && list_nif.validos.length !== 0 && !search_edit && !compareWithNewtoApply"
+            v-if="
+              list_nif &&
+                list_nif.validos.length !== 0 &&
+                !search_edit &&
+                !compareWithNewtoApply
+            "
             :disabled="selected_list_nif.length === 0 || loadingApply"
             type="button"
             class="btn btn-success m-r-2"
             @click="apply"
           >
             Aplicar
-            <i :class="(loadingApply)?'fa  fa-spinner fa-spin':'fa  fa-send'"></i>
+            <i
+              :class="loadingApply ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'"
+            ></i>
           </button>
-          <button type="button" class="btn btn-info" v-if="areApplied" @click="confirmClean">
+          <button
+            type="button"
+            class="btn btn-info"
+            v-if="areApplied"
+            @click="confirmClean"
+          >
             Limpiar
             <i class="fa fa-undo"></i>
           </button>
         </div>
         <div></div>
       </div>
-      <div class="row" v-if="selected_list_nif && selected_list_nif.length !== 0">
+      <div
+        class="row"
+        v-if="selected_list_nif && selected_list_nif.length !== 0"
+      >
         <div class="col-md-12">
           <br />
           <el-collapse v-model="collapseResumen">
@@ -129,7 +160,9 @@
                     />
                     <span class="geekmark"></span>
                     <span class="name-checkbox">{{ item.label }}</span>
-                    <span class="num-fil">({{ item.data | numeral('0,0') }})</span>
+                    <span class="num-fil"
+                      >({{ item.data | numeral("0,0") }})</span
+                    >
                   </label>
                 </div>
               </div>
@@ -156,16 +189,30 @@
             </div>
             <div>
               <button
-                v-if="list_nif && list_nif.validos.length !== 0 && !search_edit && !compareWithNewtoApply"
+                v-if="
+                  list_nif &&
+                    list_nif.validos.length !== 0 &&
+                    !search_edit &&
+                    !compareWithNewtoApply
+                "
                 :disabled="selected_list_nif.length === 0 || loadingApply"
                 type="button"
                 class="btn btn-success"
                 @click="apply"
               >
                 Aplicar
-                <i :class="(loadingApply)?'fa  fa-spinner fa-spin':'fa  fa-send'"></i>
+                <i
+                  :class="
+                    loadingApply ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'
+                  "
+                ></i>
               </button>
-              <button type="button" class="btn btn-info" v-if="areApplied" @click="confirmClean">
+              <button
+                type="button"
+                class="btn btn-info"
+                v-if="areApplied"
+                @click="confirmClean"
+              >
                 Limpiar
                 <i class="fa fa-undo"></i>
               </button>
@@ -175,9 +222,10 @@
             <div class="col-md-8">
               <div class="panel panel-default cd">
                 <div class="panel-heading">
-                  <p
-                    class="panel-title roboto white"
-                  >Introduce uno o varios NIF, separados por coma o salto de línea, y clica en “BUSCAR”.</p>
+                  <p class="panel-title roboto white">
+                    Introduce uno o varios NIF, separados por coma o salto de
+                    línea, y clica en “BUSCAR”.
+                  </p>
                 </div>
                 <div class="panel-body">
                   <div class="row">
@@ -189,10 +237,20 @@
                           @click="innerVisible = true"
                           :disabled="loadingFile"
                         >
-                          <i :class="(loadingFile)?'fa fa-spinner fa-spin': 'fa fa-paperclip'"></i>
+                          <i
+                            :class="
+                              loadingFile
+                                ? 'fa fa-spinner fa-spin'
+                                : 'fa fa-paperclip'
+                            "
+                          ></i>
                           Adjuntar Archivo
                         </button>
-                        <el-dialog width="55%" :visible.sync="innerVisible" append-to-body>
+                        <el-dialog
+                          width="55%"
+                          :visible.sync="innerVisible"
+                          append-to-body
+                        >
                           <div>
                             <el-alert
                               title="*NOTA"
@@ -209,9 +267,22 @@
                                 :show-file-list="false"
                                 :before-upload="uploadFileNif"
                               >
-                                <button class="btn btn-primary" :disabled="loadingFile">
-                                  <i :class="(loadingFile)?'fa fa-spinner fa-spin': 'fa fa-check'"></i>
-                                  {{(loadingFile)? 'Cargando archivo ' : 'Aceptar'}}
+                                <button
+                                  class="btn btn-primary"
+                                  :disabled="loadingFile"
+                                >
+                                  <i
+                                    :class="
+                                      loadingFile
+                                        ? 'fa fa-spinner fa-spin'
+                                        : 'fa fa-check'
+                                    "
+                                  ></i>
+                                  {{
+                                    loadingFile
+                                      ? "Cargando archivo "
+                                      : "Aceptar"
+                                  }}
                                 </button>
                               </el-upload>
                             </div>
@@ -224,17 +295,30 @@
                           :disabled="dataFrm.length === 0 || loadingValidar"
                         >
                           BUSCAR
-                          <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-search'"></i>
+                          <i
+                            :class="
+                              loadingValidar
+                                ? 'fa  fa-spinner fa-spin'
+                                : 'fa  fa-search'
+                            "
+                          ></i>
                         </button>
                       </div>
                       <div style>
                         <div class="form-group">
-                          <textarea v-model="dataFrm" class="form-control"></textarea>
+                          <textarea
+                            v-model="dataFrm"
+                            class="form-control"
+                          ></textarea>
                         </div>
                       </div>
                     </div>
                     <div class="col-md-12">
-                      <p>Introduce o pega de los NIF que desees, también Puedes adjuntar un archivo con NIF clicando en “Adjuntar Archivo”</p>
+                      <p>
+                        Introduce o pega de los NIF que desees, también Puedes
+                        adjuntar un archivo con NIF clicando en “Adjuntar
+                        Archivo”
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -245,7 +329,9 @@
                 <div class="panel-heading">
                   <p class="panel-title roboto white">
                     NIF seleccionadas
-                    <span class="span-info-right">{{ list_nif.validos.length }}</span>
+                    <span class="span-info-right">{{
+                      list_nif.validos.length
+                    }}</span>
                   </p>
                 </div>
               </div>
@@ -253,19 +339,32 @@
                 <div class="panel-heading">
                   <p class="panel-title roboto white">
                     Empresas seleccionadas
-                    <span class="span-info-right">{{ selected_by_list_nif | numeral('0,0') }}</span>
+                    <span class="span-info-right">{{
+                      selected_by_list_nif | numeral("0,0")
+                    }}</span>
                   </p>
                 </div>
                 <div class="panel-body">
                   <div class="div-scroll-200">
                     <button
                       type="button"
-                      v-if="list_nif && list_nif.validos.length !== 0 && !search_edit && dataFrm.length === 0"
+                      v-if="
+                        list_nif &&
+                          list_nif.validos.length !== 0 &&
+                          !search_edit &&
+                          dataFrm.length === 0
+                      "
                       class="btn btn-xs btn-danger pull-right"
                       @click="cleanFile"
                     >
                       Limpiar búsqueda
-                      <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-undo'"></i>
+                      <i
+                        :class="
+                          loadingValidar
+                            ? 'fa  fa-spinner fa-spin'
+                            : 'fa  fa-undo'
+                        "
+                      ></i>
                     </button>
                     <ul
                       class="ul_selected_provinces_localidad"
@@ -283,7 +382,9 @@
                           />
                           <span class="geekmark"></span>
                           <span class="name-checkbox">{{ item.label }}</span>
-                          <span class="num-fil">({{ item.data | numeral('0,0') }})</span>
+                          <span class="num-fil"
+                            >({{ item.data | numeral("0,0") }})</span
+                          >
                         </label>
                       </li>
                     </ul>
@@ -291,38 +392,57 @@
                   <div
                     class="form-group"
                     style="overflow-y: scroll; max-height: 130px;"
-                    v-if="list_nif && list_nif.invalidos.length !== 0 && !search_edit"
+                    v-if="
+                      list_nif &&
+                        list_nif.invalidos.length !== 0 &&
+                        !search_edit
+                    "
                   >
                     <p>NIF no encontrados</p>
                     <span
-                      v-for="(item, key) in list_nif.invalidos.slice(0, limitNifInvalidos)"
+                      v-for="(item, key) in list_nif.invalidos.slice(
+                        0,
+                        limitNifInvalidos
+                      )"
                       :key="key"
                       class="label label-danger label-no-encontrados"
-                    >{{ item }}</span>
+                      >{{ item }}</span
+                    >
                     <a
                       href
                       v-on:click.stop.prevent="showAllInvalidos"
                       v-if="list_nif.invalidos.length >= limitNifInvalidos"
                       class="btn"
                       style="display: block;"
-                    >{{ (list_nif.invalidos.length == limitNifInvalidos) ? 'Ver menos' : `Ver todos (${list_nif.invalidos.length})` }}</a>
+                      >{{
+                        list_nif.invalidos.length == limitNifInvalidos
+                          ? "Ver menos"
+                          : `Ver todos (${list_nif.invalidos.length})`
+                      }}</a
+                    >
                     <hr />
                   </div>
                 </div>
               </div>
             </div>
-            <div class="col-md-12" v-if="selected_list_nif && selected_list_nif.length !== 0">
+            <div
+              class="col-md-12"
+              v-if="selected_list_nif && selected_list_nif.length !== 0"
+            >
               <div class="panel panel-default cd">
                 <div class="panel-heading">
                   <p class="panel-title roboto white">
                     Resumen de códigos postales seleccionadas
-                    <span
-                      class="span-info-right"
-                      v-if="selected_list_nif !== 0"
-                    >({{ selected_list_nif | numeral('0,0') }} empresas seleccionadas)</span>
+                    <span class="span-info-right" v-if="selected_list_nif !== 0"
+                      >({{ selected_list_nif | numeral("0,0") }} empresas
+                      seleccionadas)</span
+                    >
                   </p>
                 </div>
-                <div class="panel-body div-scroll-200" id="selected_resumen_NIF2">
+                <div
+                  class="panel-body div-scroll-200"
+                  id="selected_resumen_NIF2"
+                >
                   <div v-for="(item, key) in selected_list_nif" :key="key">
                     <label class="custon-checkboxs">
                       <input
@@ -335,7 +455,9 @@
                       />
                       <span class="geekmark"></span>
                       <span class="name-checkbox">{{ item.label }}</span>
-                      <span class="num-fil">({{ item.data | numeral('0,0') }})</span>
+                      <span class="num-fil"
+                        >({{ item.data | numeral("0,0") }})</span
+                      >
                     </label>
                   </div>
                 </div>
@@ -354,7 +476,7 @@ import {
   spacesByDashes,
   beforeOrderFilters,
   sendPageView,
-  sendEvent
+  sendEvent,
 } from "./../../utils";
 import swal from "sweetalert2";
 import { persistentData } from "./../../mixins/persistent-data";
@@ -368,13 +490,13 @@ export default {
       form: "filters/form",
       selected_companies: "filters/selected_companies",
       applied_filters: "filters/applied_filters",
-      filters: "filters/filters"
+      filters: "filters/filters",
     }),
     compareWithNewtoApply: function() {
       let stg = this.selected_list_nif_string;
       let obj = JSON.stringify(this.selected_list_nif);
       return stg === obj;
-    }
+    },
   },
   data: () => ({
     title: "NIF",
@@ -383,7 +505,7 @@ export default {
     dataFrm: "",
     list_nif: {
       validos: [],
-      invalidos: []
+      invalidos: [],
     },
     selected_list_nif_string: "",
     selected_list_nif: [],
@@ -396,20 +518,20 @@ export default {
     innerVisible: false,
     file: {},
     limitNifInvalidos: 8,
-    collapseResumen: []
+    collapseResumen: [],
   }),
   mounted() {
-    this.$root.$on("clean_filter", filter => {
+    this.$root.$on("clean_filter", (filter) => {
       if (filter === this.title) {
         this.clean();
       }
     });
-    this.$root.$on("show_modal_filter", filter => {
+    this.$root.$on("show_modal_filter", (filter) => {
       if (filter === this.title) {
         this.showModal();
       }
     });
-    this.$root.$on("empty_filter", filter => {
+    this.$root.$on("empty_filter", (filter) => {
       if (filter === this.title) {
         this.emptyFilter();
       }
@@ -421,7 +543,7 @@ export default {
       if (this.reapply && newSelectedZipCodes.length === 0) {
         this.clean();
       }
-    }
+    },
   },
   methods: {
     validateNif() {
@@ -429,7 +551,7 @@ export default {
       let sin_salto = spacesByDashes(this.dataFrm);
       this.$store
         .dispatch("search/validateNif", sin_salto.toUpperCase())
-        .then(response => {
+        .then((response) => {
           this.list_nif.validos = response.validos ? response.validos : [];
           this.list_nif.invalidos = response.invalidos
             ? response.invalidos
@@ -450,7 +572,7 @@ export default {
         this.hideModal();
         this.loadingApply = true;
         this.search_edit = false;
-        this.form.cif = this.selected_list_nif.map(item => {
+        this.form.cif = this.selected_list_nif.map((item) => {
           return item.id;
         });
         let beforeForm = beforeOrderFilters(
@@ -461,11 +583,11 @@ export default {
         );
         this.$store
           .dispatch("search/filtrar", beforeForm)
-          .then(response => {
+          .then((response) => {
             this.$store.dispatch("filters/addFilters", {
               name: this.title,
               quantity: this.selected_by_list_nif,
-              cantidades: response
+              cantidades: response,
             });
             this.updateNumberSelectedCompanies(response.cantidad);
             this.areApplied = true;
@@ -494,9 +616,9 @@ export default {
           cancelButtonColor: "#d9534f",
           showConfirmButton: true,
           confirmButtonColor: "#337ab7",
-          confirmButtonText: "Si, seguro"
+          confirmButtonText: "Si, seguro",
         })
-        .then(result => {
+        .then((result) => {
           if (result.value) {
             this.clean();
           }
@@ -515,10 +637,10 @@ export default {
           this.form,
           this.title
         );
-        this.$store.dispatch("search/filtrar", beforeForm).then(response => {
+        this.$store.dispatch("search/filtrar", beforeForm).then((response) => {
           this.updateNumberSelectedCompanies(response.cantidad);
           this.$store.dispatch("filters/setCantidades", {
-            cantidades: response
+            cantidades: response,
           });
         });
       } else {
@@ -565,7 +687,7 @@ export default {
     numberSelectedNif(newSelectedZipCodes) {
       let business_accountant = 0;
       if (Array.isArray(newSelectedZipCodes)) {
-        newSelectedZipCodes.forEach(item => {
+        newSelectedZipCodes.forEach((item) => {
           business_accountant = business_accountant + item.data;
         });
       }
@@ -573,7 +695,7 @@ export default {
     },
     updateNumberSelectedCompanies(quantity) {
       this.$store.dispatch("filters/updateNumberSelectedCompanies", {
-        quantity
+        quantity,
       });
     },
     handleChange() {
@@ -586,7 +708,7 @@ export default {
       let checkboxs = document.querySelectorAll(
         '#selected_resumen_NIF1 input[type="checkbox"], #selected_resumen_NIF2 input[type="checkbox"]'
       );
-      checkboxs.forEach(item => {
+      checkboxs.forEach((item) => {
         item.checked = true;
       });
     },
@@ -596,7 +718,7 @@ export default {
         this.innerVisible = false;
         this.$store
           .dispatch("search/validateNifFile", file)
-          .then(response => {
+          .then((response) => {
             this.list_nif.validos = response.validos ? response.validos : [];
             this.list_nif.invalidos = response.invalidos
               ? response.invalidos
@@ -628,8 +750,8 @@ export default {
       } else {
         this.limitNifInvalidos = 8;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

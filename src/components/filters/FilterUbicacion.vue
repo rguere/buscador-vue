@@ -3,14 +3,18 @@
     <div class="panel-heading">
       <p class="panel-title roboto white">
         {{ title }}
-        <span
-          class="span-info-right"
-          v-if="selected_by_location !== 0"
-        >({{ selected_by_location | numeral('0,0') }} empresas seleccionadas)</span>
+        <span class="span-info-right" v-if="selected_by_location !== 0"
+          >({{ selected_by_location | numeral("0,0") }} empresas
+          seleccionadas)</span
+        >
       </p>
     </div>
     <div class="panel-body">
-      <div v-if="search.provincia_localidad && search.provincia_localidad.length != 0">
+      <div
+        v-if="
+          search.provincia_localidad && search.provincia_localidad.length != 0
+        "
+      >
         <div class="max-height-400-overflow">
           <div class="grid-3-columns-1fr">
             <div v-for="(item, key) in search.provincia_localidad" :key="key">
@@ -25,13 +29,16 @@
                 />
                 <span class="geekmark"></span>
                 <span class="name-checkbox">{{ item.label }}</span>
-                <span class="num-fil">({{ item.data | numeral('0,0') }})</span>
+                <span class="num-fil">({{ item.data | numeral("0,0") }})</span>
               </label>
             </div>
           </div>
           <div
             class="selected_children"
-            v-if="areApplied && (form.Provincias && form.Provincias.length !== 0) || (form.Localidades && form.Localidades.length !== 0)"
+            v-if="
+              (areApplied && form.Provincias && form.Provincias.length !== 0) ||
+                (form.Localidades && form.Localidades.length !== 0)
+            "
           >
             <hr />
             <div class="grid-3-columns-1fr">
@@ -50,8 +57,12 @@
                     :value="item"
                   />
                   <span class="geekmark"></span>
-                  <span class="name-checkbox">- {{ formatearLabel(item) }}</span>
-                  <span class="num-fil">({{ item.data | numeral('0,0') }})</span>
+                  <span class="name-checkbox"
+                    >- {{ formatearLabel(item) }}</span
+                  >
+                  <span class="num-fil"
+                    >({{ item.data | numeral("0,0") }})</span
+                  >
                 </label>
               </div>
             </div>
@@ -61,7 +72,12 @@
               v-if="selected_children.length >= limitChildren"
               class="btn"
               style="display: block;"
-            >{{ (selected_children.length == limitChildren) ? 'Ver menos' : `Ver todos (${selected_children.length})` }}</a>
+              >{{
+                selected_children.length == limitChildren
+                  ? "Ver menos"
+                  : `Ver todos (${selected_children.length})`
+              }}</a
+            >
           </div>
         </div>
         <div class="flex-space-between-flex-end">
@@ -73,13 +89,24 @@
             <button
               type="button"
               class="btn btn-success"
-              v-if="(selected_provinces_localidad.length !== 0 && !areApplied) || (selected_provinces_localidad.length !== 0 && !compareWithNewtoApply)"
+              v-if="
+                (selected_provinces_localidad.length !== 0 && !areApplied) ||
+                  (selected_provinces_localidad.length !== 0 &&
+                    !compareWithNewtoApply)
+              "
               @click="apply"
             >
               Aplicar
-              <i :class="(loadingFrm)?'fa  fa-spinner fa-spin':'fa  fa-send'"></i>
+              <i
+                :class="loadingFrm ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'"
+              ></i>
             </button>
-            <button type="button" class="btn btn-info" v-if="areApplied" @click="confirmClean">
+            <button
+              type="button"
+              class="btn btn-info"
+              v-if="areApplied"
+              @click="confirmClean"
+            >
               Limpiar
               <i class="fa fa-undo"></i>
             </button>
@@ -108,13 +135,27 @@
                 <button
                   type="button"
                   class="btn btn-success"
-                  v-if="(selected_provinces_localidad.length !== 0 && !areApplied) || (selected_provinces_localidad.length !== 0 && !compareWithNewtoApply)"
+                  v-if="
+                    (selected_provinces_localidad.length !== 0 &&
+                      !areApplied) ||
+                      (selected_provinces_localidad.length !== 0 &&
+                        !compareWithNewtoApply)
+                  "
                   @click="apply"
                 >
                   Aplicar
-                  <i :class="(loadingFrm)?'fa  fa-spinner fa-spin':'fa  fa-send'"></i>
+                  <i
+                    :class="
+                      loadingFrm ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'
+                    "
+                  ></i>
                 </button>
-                <button type="button" class="btn btn-info" v-if="areApplied" @click="confirmClean">
+                <button
+                  type="button"
+                  class="btn btn-info"
+                  v-if="areApplied"
+                  @click="confirmClean"
+                >
                   Limpiar
                   <i class="fa fa-undo"></i>
                 </button>
@@ -122,21 +163,26 @@
             </div>
             <div
               class="conten-flex-70-30"
-              v-if="search.provincia_localidad && search.provincia_localidad.length != 0"
+              v-if="
+                search.provincia_localidad &&
+                  search.provincia_localidad.length != 0
+              "
             >
               <div>
-                <div class="panel panel-default cd" style="border-color: transparent;">
+                <div
+                  class="panel panel-default cd"
+                  style="border-color: transparent;"
+                >
                   <div class="panel-heading">
-                    <p
-                      class="panel-title roboto white"
-                    >CCAA, Provincia o Localidad encontradas en base a el (los) nombre(s) introducido(s).</p>
+                    <p class="panel-title roboto white">
+                      CCAA, Provincia o Localidad encontradas en base a el (los)
+                      nombre(s) introducido(s).
+                    </p>
                   </div>
                   <div class="panel-body">
-
-                    <label
-                      class="control-label"
-                      for="SearchTheProvinceorTown"
-                    >Busca y selecciona localidades</label>
+                    <label class="control-label" for="SearchTheProvinceorTown"
+                      >Busca y selecciona localidades</label
+                    >
                     <el-select
                       id="SearchTheProvinceorTown"
                       name="SearchTheProvinceorTown"
@@ -174,7 +220,7 @@
                         :default-expand-level="1"
                         :load-options="fetchSearch"
                         :limit="0"
-                        :limitText="t => ''"
+                        :limitText="(t) => ''"
                         :disableFuzzyMatching="true"
                         @input="inputTreeselect"
                         @select="selectTreeselect"
@@ -185,19 +231,25 @@
                       >
                         <label
                           slot="option-label"
-                          slot-scope="{ node, shouldShowCount, count, labelClassName, countClassName }"
+                          slot-scope="{
+                            node,
+                            shouldShowCount,
+                            count,
+                            labelClassName,
+                            countClassName,
+                          }"
                           :class="labelClassName"
                         >
                           {{ node.label }}
-                          <span
-                            class="num-fil"
-                            v-if="node.raw.id != 'all'"
-                          >({{ node.raw.data | numeral('0,0') }})</span>
-                          <span v-if="shouldShowCount" :class="countClassName">({{ count }})</span>
+                          <span class="num-fil" v-if="node.raw.id != 'all'"
+                            >({{ node.raw.data | numeral("0,0") }})</span
+                          >
+                          <span v-if="shouldShowCount" :class="countClassName"
+                            >({{ count }})</span
+                          >
                         </label>
                       </treeselect>
                     </div>
-                    
                   </div>
                 </div>
               </div>
@@ -206,7 +258,9 @@
                   <div class="panel-heading">
                     <p class="panel-title roboto white">
                       Ubicaciones seleccionadas
-                      <span class="span-info-right">{{ selected_provinces_localidad.length }}</span>
+                      <span class="span-info-right">{{
+                        selected_provinces_localidad.length
+                      }}</span>
                     </p>
                   </div>
                 </div>
@@ -214,15 +268,23 @@
                   <div class="panel-heading">
                     <p class="panel-title roboto white">
                       Empresas seleccionadas
-                      <span class="span-info-right">{{ selected_by_location | numeral('0,0') }}</span>
+                      <span class="span-info-right">{{
+                        selected_by_location | numeral("0,0")
+                      }}</span>
                     </p>
                   </div>
-                  <div class="panel-body" style="max-height: 300px; overflow-y: scroll;">
+                  <div
+                    class="panel-body"
+                    style="max-height: 300px; overflow-y: scroll;"
+                  >
                     <ul
                       class="ul_selected_provinces_localidad"
                       id="ul_selected_provinces_localidad"
                     >
-                      <li v-for="(item, key) in selected_provinces_localidad" :key="key">
+                      <li
+                        v-for="(item, key) in selected_provinces_localidad"
+                        :key="key"
+                      >
                         <label class="custon-checkboxs">
                           <input
                             type="checkbox"
@@ -234,10 +296,9 @@
                           />
                           <span class="geekmark"></span>
                           <span class="name-checkbox">{{ item.label }}</span>
-                          <span
-                            class="num-fil"
-                            v-if="item.id != 'all'"
-                          >({{ item.data | numeral('0,0') }})</span>
+                          <span class="num-fil" v-if="item.id != 'all'"
+                            >({{ item.data | numeral("0,0") }})</span
+                          >
                         </label>
                       </li>
                     </ul>
@@ -249,7 +310,11 @@
         </el-dialog>
       </div>
       <div
-        v-if="search.provincia_localidad && search.provincia_localidad.length === 0 && !loading"
+        v-if="
+          search.provincia_localidad &&
+            search.provincia_localidad.length === 0 &&
+            !loading
+        "
         class="alert alert-dismissible alert-primary"
       >
         <strong>Oh!</strong> datos no encontrados.
@@ -267,7 +332,7 @@ import {
   removeDuplicates,
   beforeOrderFilters,
   sendPageView,
-  sendEvent
+  sendEvent,
 } from "./../../utils";
 import { persistentData } from "./../../mixins/persistent-data";
 export default {
@@ -280,7 +345,7 @@ export default {
       form: "filters/form",
       selected_companies: "filters/selected_companies",
       applied_filters: "filters/applied_filters",
-      filters: "filters/filters"
+      filters: "filters/filters",
     }),
     compareWithNewtoApply: function() {
       let stg = this.selected_provinces_localidad_string;
@@ -288,7 +353,7 @@ export default {
         this.sortData(this.selected_provinces_localidad)
       );
       return stg === obj;
-    }
+    },
   },
   data: () => ({
     title: "Ubicación",
@@ -302,8 +367,8 @@ export default {
         id: "all",
         label: "TODA ESPAÑA",
         isDefaultExpanded: true,
-        children: []
-      }
+        children: [],
+      },
     ],
     SearchTheProvinceorTown: "madrid",
     ResultTheProvinceorTown: [],
@@ -317,13 +382,13 @@ export default {
     defaultProps: {
       children: "children",
       label: "label",
-      data: "data"
+      data: "data",
     },
     optionsSelect: [],
     valueSelect: [],
     listSelect: [],
     loadingSelect: false,
-    limitChildren: 3
+    limitChildren: 3,
   }),
   watch: {
     selected_provinces_localidad: function(newProvincesLocalidad) {
@@ -351,7 +416,7 @@ export default {
     valueSelect(newValueSelect, attValueSelect) {
       if (!(newValueSelect.length < attValueSelect.length)) {
         let respalSelectedPL = [];
-        newValueSelect.forEach(item => {
+        newValueSelect.forEach((item) => {
           let result = inArrayObjectTreeselect(
             this.search.provincia_localidad,
             item
@@ -369,29 +434,29 @@ export default {
           "id"
         );
       } else {
-        let eliminadas = attValueSelect.filter(item => {
+        let eliminadas = attValueSelect.filter((item) => {
           return !newValueSelect.includes(item) ? item : null;
         });
-        eliminadas.map(_item => {
+        eliminadas.map((_item) => {
           this.selected_provinces_localidad = this.selected_provinces_localidad.filter(
-            item => item.id !== _item
+            (item) => item.id !== _item
           );
         });
       }
-    }
+    },
   },
   mounted() {
-    this.$root.$on("clean_filter", filter => {
+    this.$root.$on("clean_filter", (filter) => {
       if (filter === this.title) {
         this.clean();
       }
     });
-    this.$root.$on("show_modal_filter", filter => {
+    this.$root.$on("show_modal_filter", (filter) => {
       if (filter === this.title) {
         this.showModal();
       }
     });
-    this.$root.$on("empty_filter", filter => {
+    this.$root.$on("empty_filter", (filter) => {
       if (filter === this.title) {
         this.emptyFilter();
       }
@@ -422,7 +487,7 @@ export default {
      */
     updateNumberSelectedCompanies(quantity) {
       this.$store.dispatch("filters/updateNumberSelectedCompanies", {
-        quantity
+        quantity,
       });
     },
     /**
@@ -433,7 +498,7 @@ export default {
     numberCompaniesSelected(newSelectedCompanies) {
       let business_accountant = 0;
       if (Array.isArray(newSelectedCompanies)) {
-        newSelectedCompanies.forEach(item => {
+        newSelectedCompanies.forEach((item) => {
           let result = inArrayObjectTreeselect(
             this.search.provincia_localidad,
             item.id
@@ -472,12 +537,12 @@ export default {
         );
         this.$store
           .dispatch("search/filtrar", beforeForm)
-          .then(response => {
+          .then((response) => {
             this.updateNumberSelectedCompanies(response.cantidad);
             this.$store.dispatch("filters/addFilters", {
               name: this.title,
               quantity: this.selected_by_location,
-              cantidades: response
+              cantidades: response,
             });
             this.areApplied = true;
             this.reapply = false;
@@ -503,9 +568,9 @@ export default {
           cancelButtonColor: "#d9534f",
           showConfirmButton: true,
           confirmButtonColor: "#337ab7",
-          confirmButtonText: "Si, seguro"
+          confirmButtonText: "Si, seguro",
         })
-        .then(result => {
+        .then((result) => {
           if (result.value) {
             this.clean();
           }
@@ -526,10 +591,10 @@ export default {
           this.form,
           this.title
         );
-        this.$store.dispatch("search/filtrar", beforeForm).then(response => {
+        this.$store.dispatch("search/filtrar", beforeForm).then((response) => {
           this.updateNumberSelectedCompanies(response.cantidad);
           this.$store.dispatch("filters/setCantidades", {
-            cantidades: response
+            cantidades: response,
           });
         });
       } else {
@@ -570,7 +635,7 @@ export default {
       let checkboxs = document.querySelectorAll(
         '#ul_selected_provinces_localidad input[type="checkbox"]'
       );
-      checkboxs.forEach(item => {
+      checkboxs.forEach((item) => {
         item.checked = true;
       });
     },
@@ -579,7 +644,7 @@ export default {
       this.ResultTheProvinceorTown = [];
       this.$store
         .dispatch("search/searchLocalidades", this.SearchTheProvinceorTown)
-        .then(response => {
+        .then((response) => {
           if (response.results && Array.isArray(response.results)) {
             this.ResultTheProvinceorTown = response.results;
           }
@@ -615,7 +680,7 @@ export default {
       this.form.comunidades = [];
       this.form.Provincias = [];
       this.form.Localidades = [];
-      this.selected_provinces_localidad.forEach(item => {
+      this.selected_provinces_localidad.forEach((item) => {
         let result = inArrayObjectTreeselect(
           this.search.provincia_localidad,
           item.id
@@ -663,7 +728,7 @@ export default {
         this.loadingSelect = true;
         this.$store
           .dispatch("search/searchLocalidades", query)
-          .then(response => {
+          .then((response) => {
             if (response.results && Array.isArray(response.results)) {
               this.optionsSelect = response.results;
             }
@@ -679,7 +744,7 @@ export default {
     },
     changeRemoveTag(id_elemet) {
       this.selected_provinces_localidad = this.selected_provinces_localidad.filter(
-        item => item.id !== id_elemet
+        (item) => item.id !== id_elemet
       );
     },
     changeClear() {
@@ -692,8 +757,8 @@ export default {
       } else {
         this.limitChildren = 3;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

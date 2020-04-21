@@ -10,7 +10,7 @@ import MenuInfocif from "@/components/MenuInfocif";
 export default {
   name: "DefaultLayout",
   components: {
-    MenuInfocif
-  }
+    MenuInfocif,
+  },
 };
 </script>
