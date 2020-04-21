@@ -20,7 +20,7 @@
           <a data-toggle="tab" href="#Sector_INFOCIF">Sector INFOCIF</a>
         </li>
       </ul>
-
+      <br />
       <div class="tab-content">
         <div
           id="Codigo_CNAE"
@@ -28,46 +28,98 @@
           style="margin-bottom: 10px;"
         >
           <div v-if="search.cnae && search.cnae.length != 0" class="invert">
-            <div class="panel-group" id="accordion">
-              <div v-for="(item, key) in search.cnae" :key="key">
-                <div
-                  class="panel panel-default"
-                  v-if="item.children && Array.isArray(item.children)"
-                >
-                  <div class="panel-heading">
-                    <h4 class="panel-title">
-                      <a
-                        data-toggle="collapse"
-                        data-parent="#accordion"
-                        :href="`#collapse-${key}`"
+            <div class="row">
+              <div class="col-md-6">
+                <div class="panel-group" id="accordion">
+                  <div v-for="(item, key) in middle(search.cnae, 1)" :key="key">
+                    <div
+                      class="panel panel-default"
+                      v-if="item.children && Array.isArray(item.children)"
+                    >
+                      <div class="panel-heading">
+                        <h4 class="panel-title">
+                          <a
+                            data-toggle="collapse"
+                            data-parent="#accordion"
+                            :href="`#collapse-${key}`"
+                          >
+                            {{ item.id }} - {{ item.label }}</a
+                          >
+                        </h4>
+                      </div>
+                      <div
+                        :id="`collapse-${key}`"
+                        class="panel-collapse collapse"
                       >
-                        {{ item.id }} - {{ item.label }}</a
-                      >
-                    </h4>
+                        <div class="panel-body">
+                          <div v-for="(item, key) in item.children" :key="key">
+                            <label class="custon-checkboxs">
+                              <input
+                                type="checkbox"
+                                :name="`checkbox_${item.id}`"
+                                v-model="selected_cnae"
+                                @change="handleChange(item, $event)"
+                                :id="`checkbox_${item.id}`"
+                                :value="item"
+                              />
+                              <span class="geekmark"></span>
+                              <span class="name-checkbox"
+                                >{{ item.id }} - {{ item.label }}</span
+                              >
+                              <span class="num-fil"
+                                >({{ item.data | numeral("0,0") }})</span
+                              >
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div
-                    :id="`collapse-${key}`"
-                    :class="`panel-collapse collapse ${key === 0 ? 'in' : ''}`"
-                  >
-                    <div class="panel-body">
-                      <div v-for="(item, key) in item.children" :key="key">
-                        <label class="custon-checkboxs">
-                          <input
-                            type="checkbox"
-                            :name="`checkbox_${item.id}`"
-                            v-model="selected_cnae"
-                            @change="handleChange(item, $event)"
-                            :id="`checkbox_${item.id}`"
-                            :value="item"
-                          />
-                          <span class="geekmark"></span>
-                          <span class="name-checkbox"
-                            >{{ item.id }} - {{ item.label }}</span
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="panel-group" id="accordion2">
+                  <div v-for="(item, key) in middle(search.cnae, 2)" :key="key">
+                    <div
+                      class="panel panel-default"
+                      v-if="item.children && Array.isArray(item.children)"
+                    >
+                      <div class="panel-heading">
+                        <h4 class="panel-title">
+                          <a
+                            data-toggle="collapse"
+                            data-parent="#accordion2"
+                            :href="`#collapse2-${key}`"
                           >
-                          <span class="num-fil"
-                            >({{ item.data | numeral("0,0") }})</span
+                            {{ item.id }} - {{ item.label }}</a
                           >
-                        </label>
+                        </h4>
+                      </div>
+                      <div
+                        :id="`collapse2-${key}`"
+                        class="panel-collapse collapse"
+                      >
+                        <div class="panel-body">
+                          <div v-for="(item, key) in item.children" :key="key">
+                            <label class="custon-checkboxs">
+                              <input
+                                type="checkbox"
+                                :name="`checkbox2_${item.id}`"
+                                v-model="selected_cnae"
+                                @change="handleChange(item, $event)"
+                                :id="`checkbox2_${item.id}`"
+                                :value="item"
+                              />
+                              <span class="geekmark"></span>
+                              <span class="name-checkbox"
+                                >{{ item.id }} - {{ item.label }}</span
+                              >
+                              <span class="num-fil"
+                                >({{ item.data | numeral("0,0") }})</span
+                              >
+                            </label>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -278,47 +330,56 @@
                           :value="item.id"
                         ></el-option>
                       </el-select>
-
-                      <div style="height: 260px; margin-top: 10px;">
-                        <treeselect
-                          valueFormat="object"
-                          name="options"
-                          id="options"
-                          :multiple="true"
-                          :options="options"
-                          :always-open="true"
-                          :default-expand-level="1"
-                          :load-options="fetchSearch"
-                          :limit="0"
-                          :limitText="(t) => ''"
-                          :disableFuzzyMatching="true"
-                          @input="inputTreeselect"
-                          @select="selectTreeselect"
-                          @deselect="deselectTreeselect"
-                          placeholder="Seleccionar"
-                          search-nested
-                          v-model="selected_cnae"
-                        >
-                          <label
-                            slot="option-label"
-                            slot-scope="{
-                              node,
-                              shouldShowCount,
-                              count,
-                              labelClassName,
-                              countClassName,
-                            }"
-                            :class="labelClassName"
+                      <br />
+                      <br />
+                      <div class="panel-group invert" id="_accordion">
+                        <div v-for="(item, key) in search.cnae" :key="key">
+                          <div
+                            class="panel panel-default"
+                            v-if="item.children && Array.isArray(item.children)"
                           >
-                            {{ node.id }} - {{ node.label }}
-                            <span class="num-fil" v-if="node.raw.id != 'all'"
-                              >({{ node.raw.data | numeral("0,0") }})</span
+                            <div class="panel-heading">
+                              <h4 class="panel-title">
+                                <a
+                                  data-toggle="collapse"
+                                  data-parent="#_accordion"
+                                  :href="`#collapse--${key}`"
+                                >
+                                  {{ item.id }} - {{ item.label }}</a
+                                >
+                              </h4>
+                            </div>
+                            <div
+                              :id="`collapse--${key}`"
+                              class="panel-collapse collapse"
                             >
-                            <span v-if="shouldShowCount" :class="countClassName"
-                              >({{ count }})</span
-                            >
-                          </label>
-                        </treeselect>
+                              <div class="panel-body">
+                                <div
+                                  v-for="(item, key) in item.children"
+                                  :key="key"
+                                >
+                                  <label class="custon-checkboxs">
+                                    <input
+                                      type="checkbox"
+                                      :name="`checkbox_${item.id}`"
+                                      v-model="selected_cnae"
+                                      @change="handleChange(item, $event)"
+                                      :id="`checkbox_${item.id}`"
+                                      :value="item"
+                                    />
+                                    <span class="geekmark"></span>
+                                    <span class="name-checkbox"
+                                      >{{ item.id }} - {{ item.label }}</span
+                                    >
+                                    <span class="num-fil"
+                                      >({{ item.data | numeral("0,0") }})</span
+                                    >
+                                  </label>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -574,6 +635,12 @@ export default {
     });
   },
   methods: {
+    middle(items, part) {
+      let _items = [...items];
+      let m1 = _items.splice(0, _items.length / 2);
+      let m2 = _items.splice(0, _items.length);
+      return part === 1 ? m1 : m2;
+    },
     fetchSearch() {
       // this.$store.dispatch('search/fetchSearch').then(() => {
       //   this.options[0].children = (this.search && this.search.cnae) ? this.search.cnae : []
