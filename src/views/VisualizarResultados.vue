@@ -697,12 +697,15 @@ export default {
               } else {
                 item.CuentasDisponibles = "-";
               }
-              if (
-                item.CnaeInfo &&
-                item.CnaeInfo.Cnae3_text &&
-                item.CnaeInfo.Cnae3_text.length > 0
-              ) {
-                item.Cnae3_text = item.CnaeInfo.Cnae3_tex;
+              item.Cnae3_text = "-";
+              item.Cnae3_code = "-";
+              if (item.CnaeInfo && item.CnaeInfo.Cnae3_text) {
+                let text = item.CnaeInfo.Cnae3_text;
+                let cnae = text.split(".");
+                if (cnae.length > 1) {
+                  item.Cnae3_code = cnae[0];
+                  item.Cnae3_text = cnae[1];
+                }
               }
               if (
                 item.TipoCuentasAnuales &&
