@@ -74,7 +74,7 @@
                             {{ item.id }} - {{ item.label }}</a
                           >
                           <span>
-                            <label class="custon-checkboxs">
+                            <!-- <label class="custon-checkboxs">
                               <input
                                 type="checkbox"
                                 :name="`checkbox_${item.id}`"
@@ -84,7 +84,7 @@
                                 :value="item"
                               />
                               <span class="geekmark"></span>
-                            </label>
+                            </label> -->
                           </span>
                         </h4>
                       </div>
@@ -136,7 +136,7 @@
                             {{ item.id }} - {{ item.label }}</a
                           >
                           <span>
-                            <label class="custon-checkboxs">
+                            <!-- <label class="custon-checkboxs">
                               <input
                                 type="checkbox"
                                 :name="`checkbox_${item.id}`"
@@ -146,7 +146,7 @@
                                 :value="item"
                               />
                               <span class="geekmark"></span>
-                            </label>
+                            </label> -->
                           </span>
                         </h4>
                       </div>
@@ -653,6 +653,7 @@ export default {
       }
       sendEvent("filtro-vaciado", "-");
     });
+
     $(".collapse.in").each(function() {
       $(this)
         .siblings(".panel-heading")
@@ -660,7 +661,6 @@ export default {
         .addClass("rotate");
     });
 
-    // Toggle plus minus icon on show hide of collapse element
     $(".collapse")
       .on("show.bs.collapse", function() {
         $(this)

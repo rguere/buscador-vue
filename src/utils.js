@@ -278,7 +278,7 @@ export const getColumnsSummary = () => {
       sortable: true,
     },
     {
-      prop: "Cnae3_text",
+      prop: "IndustriaDescripcion",
       label: "Sector Infocif",
       width: "210",
       show: true,
@@ -292,7 +292,7 @@ export const getColumnsSummary = () => {
       sortable: true,
     },
     {
-      prop: "IndustriaDescripcion",
+      prop: "Cnae3_text",
       label: "Actividad Descripción",
       width: "210",
       show: true,
