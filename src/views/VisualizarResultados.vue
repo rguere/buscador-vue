@@ -697,10 +697,12 @@ export default {
               } else {
                 item.CuentasDisponibles = "-";
               }
-              if (item.CnaeInfo && item.CnaeInfo.Cnae3_text) {
+              if (
+                item.CnaeInfo &&
+                item.CnaeInfo.Cnae3_text &&
+                item.CnaeInfo.Cnae3_text.length > 0
+              ) {
                 item.Cnae3_text = item.CnaeInfo.Cnae3_tex;
-              } else {
-                item.Cnae3_text = "-";
               }
               if (
                 item.TipoCuentasAnuales &&
@@ -857,6 +859,12 @@ export default {
         prop = "antiguedad";
       } else if (prop === "SumTotalEmpleados") {
         prop = "empleados";
+      } else if (prop === "Cnae3_text") {
+        prop = "actividad";
+      } else if (prop === "IndustriaDescripcion") {
+        prop = "sector";
+      } else if (prop === "AuditorBorme") {
+        prop = "auditores";
       }
       this.sort = {
         prop,
