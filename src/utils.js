@@ -440,10 +440,13 @@ export const formatProvinciaLocalidad = (data) => {
           item.isDefaultExpanded = false;
           if (Array.isArray(item.children)) {
             item.children.map((_item) => {
+              _item.father_id = item.id;
               if (Array.isArray(_item.children)) {
                 _item.children.map((__item) => {
+                  __item.father_id = _item.id;
                   if (Array.isArray(__item.children)) {
                     __item.children.map((___item) => {
+                      ___item.father_id = __item.id;
                       delete ___item["children"];
                     });
                   } else {

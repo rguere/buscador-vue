@@ -77,10 +77,10 @@
                             <label class="custon-checkboxs">
                               <input
                                 type="checkbox"
-                                :name="`checkbox_${item.id}`"
+                                :name="`checkbox_father${item.id}`"
                                 v-model="selected_cnae"
                                 @change="handleChange(item, $event)"
-                                :id="`checkbox_${item.id}`"
+                                :id="`checkbox_father${item.id}`"
                                 :value="item"
                               />
                               <span class="geekmark"></span>
@@ -97,10 +97,10 @@
                             <label class="custon-checkboxs">
                               <input
                                 type="checkbox"
-                                :name="`checkbox_${item.id}`"
+                                :name="`checkbox_children${item.id}`"
                                 v-model="selected_cnae"
                                 @change="handleChange(item, $event)"
-                                :id="`checkbox_${item.id}`"
+                                :id="`checkbox_children${item.id}`"
                                 :value="item"
                               />
                               <span class="geekmark"></span>
@@ -139,10 +139,10 @@
                             <label class="custon-checkboxs">
                               <input
                                 type="checkbox"
-                                :name="`checkbox_${item.id}`"
+                                :name="`checkbox_father${item.id}`"
                                 v-model="selected_cnae"
                                 @change="handleChange(item, $event)"
-                                :id="`checkbox_${item.id}`"
+                                :id="`checkbox_father${item.id}`"
                                 :value="item"
                               />
                               <span class="geekmark"></span>
@@ -159,10 +159,10 @@
                             <label class="custon-checkboxs">
                               <input
                                 type="checkbox"
-                                :name="`checkbox2_${item.id}`"
+                                :name="`checkbox_children${item.id}`"
                                 v-model="selected_cnae"
                                 @change="handleChange(item, $event)"
-                                :id="`checkbox2_${item.id}`"
+                                :id="`checkbox_children${item.id}`"
                                 :value="item"
                               />
                               <span class="geekmark"></span>
@@ -520,6 +520,7 @@ import {
   sendPageView,
   sendEvent,
   searchInArrayObject,
+  inArrayObject,
 } from "./../../utils";
 import { persistentData } from "./../../mixins/persistent-data";
 import $ from "jquery";
@@ -624,11 +625,18 @@ export default {
         respalSelectedPL = removeDuplicates(respalSelectedPL, "id");
         this.selected_cnae = this.selected_cnae.concat(respalSelectedPL);
         this.selected_cnae = removeDuplicates(this.selected_cnae, "id");
+        for (const cnae of this.selected_cnae) {
+          this.seeSeals(cnae, true);
+        }
       } else {
         let eliminadas = attValueSelect.filter((item) => {
           return !newValueSelect.includes(item) ? item : null;
         });
         eliminadas.map((_item) => {
+          let result = inArrayObjectTreeselect(this.search.cnae, _item);
+          if (result) {
+            this.seeSeals(result, false);
+          }
           this.selected_cnae = this.selected_cnae.filter(
             (item) => item.id !== _item
           );
@@ -844,9 +852,71 @@ export default {
       this.ResultTheProvinceorTown = [];
       this.SearchTheProvinceorTown = "";
     },
-    handleChange() {
-      //province, event
+    handleChange(item, event) {
+      const target = event.target;
+      const checked = target.checked;
+      this.seeSeals(item, checked);
       this.reapply = this.areApplied ? true : this.areApplied;
+    },
+    seeSeals(item, checked) {
+      if (item.children && Array.isArray(item.children)) {
+        for (const child of item.children) {
+          if (checked) {
+            let respalSelectedPL = [...this.selected_cnae];
+            respalSelectedPL.push(item);
+            respalSelectedPL = removeDuplicates(respalSelectedPL, "id");
+            this.selected_cnae = [...respalSelectedPL];
+            this.selected_cnae = this.selected_cnae.filter(
+              (cnae) => cnae.id !== child.id
+            );
+          }
+          setTimeout(() => {
+            const checkbox = document.querySelector(
+              `[name="checkbox_children${child.id}"]`
+            );
+            if (checkbox) {
+              checkbox.checked = checked;
+            }
+          }, 50);
+        }
+      } else if (item.father_id) {
+        const result = inArrayObject(this.search.cnae, item.father_id, "id");
+        if (result && result.children && Array.isArray(result.children)) {
+          const result2 = this.selected_cnae.filter(
+            (cnae) => cnae.father_id === item.father_id
+          );
+          const isChecked =
+            result2 && result2.length === result.children.length;
+
+          if (isChecked) {
+            this.seeSeals(result, isChecked);
+          } else {
+            this.selected_cnae = this.selected_cnae.filter(
+              (cnae) => cnae.id !== item.father_id
+            );
+          }
+          const checkbox = document.querySelector(
+            `[name="checkbox_father${item.father_id}"]`
+          );
+          if (checkbox) {
+            checkbox.checked = isChecked;
+          }
+
+          if (!isChecked) {
+            for (const child of result.children) {
+              const checkbox = document.querySelector(
+                `[name="checkbox_children${child.id}"]`
+              );
+              if (checkbox && checkbox.checked) {
+                let respalSelectedPL = [...this.selected_cnae];
+                respalSelectedPL.push(child);
+                respalSelectedPL = removeDuplicates(respalSelectedPL, "id");
+                this.selected_cnae = [...respalSelectedPL];
+              }
+            }
+          }
+        }
+      }
     },
     handleChangeList(province, event) {
       event.preventDefault();
@@ -876,11 +946,13 @@ export default {
     handleCheck() {
       //data, checked
     },
-    inputTreeselect() {
-      //values
+    inputTreeselect() {},
+    selectTreeselect(item) {
+      this.seeSeals(item, true);
     },
-    selectTreeselect() {},
-    deselectTreeselect() {},
+    deselectTreeselect(item) {
+      this.seeSeals(item, false);
+    },
     formatearLabel(item) {
       let _item = { ...item };
       let arr = _item.id.split("|");
@@ -944,13 +1016,6 @@ export default {
       //element, checked
     },
     changeMethod() {},
-    showAllInvalidos() {
-      if (this.limitChildren === 3) {
-        this.limitChildren = this.selected_children.length;
-      } else {
-        this.limitChildren = 3;
-      }
-    },
   },
 };
 </script>

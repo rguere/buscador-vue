@@ -1,8 +1,8 @@
 import axios from "axios";
 import * as types from "../mutation-types";
 import { formatProvinciaLocalidad } from "./../../utils";
-//import dataJson from './../../assets/buscador-data.json'
-
+import dataJson from "./../../assets/buscador-data.json";
+const local = false;
 // state
 export const state = {
   loading: false,
@@ -47,8 +47,13 @@ export const actions = {
         commit(types.LOADING_SEARCH, {
           loading: true,
         });
-        const { data } = await axios.get("/buscador/resumen");
-        const _data = formatProvinciaLocalidad(data);
+        let _data = [];
+        if (!local) {
+          const { data } = await axios.get("/buscador/resumen");
+          _data = formatProvinciaLocalidad(data);
+        } else {
+          _data = formatProvinciaLocalidad(dataJson);
+        }
         commit(types.FETCH_SEARCH, {
           search: _data,
         });
