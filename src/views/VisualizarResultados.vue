@@ -862,8 +862,10 @@ export default {
         prop = "antiguedad";
       } else if (prop === "SumTotalEmpleados") {
         prop = "empleados";
+      } else if (prop === "Cnae3_code") {
+        prop = "actCod";
       } else if (prop === "Cnae3_text") {
-        prop = "actividad";
+        prop = "actDes";
       } else if (prop === "IndustriaDescripcion") {
         prop = "sector";
       } else if (prop === "AuditorBorme") {
