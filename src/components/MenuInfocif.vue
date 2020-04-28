@@ -113,7 +113,7 @@
 
               <a
                 v-if="this.user && this.user.username"
-                href="http://dev.infocif.info/gestion/micartera.asp"
+                :href="url_micartera"
                 class="hidden-xs hidden-sm"
               >
                 <span class="glyphicon glyphicon-user"></span>
@@ -415,14 +415,10 @@ export default {
     user: "auth/user",
   }),
   data: () => ({
-    url_acceso: "http://www.infocif.es/gestion/gestion-acceso.asp?b=1",
+    url_acceso: `http://${window.location.host}/gestion/gestion-acceso.asp?b=1`,
+    url_micartera: `http://${window.location.host}/gestion/micartera.asp`,
   }),
-  mounted() {
-    this.url_acceso =
-      window.location.host === "www.infocif.es"
-        ? "http://www.infocif.es/gestion/gestion-acceso.asp?b=1"
-        : "http://dev.infocif.info/gestion/gestion-acceso.asp?b=1";
-  },
+  mounted() {},
   methods: {
     showSlidebar() {
       $(".sb-slidebar").toggleClass("show-slidebar", 300, "easeOutSine");
