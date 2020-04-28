@@ -42,7 +42,7 @@ const initialState = () => {
       {
         name: "Número de empleados",
         slug: "filter_numero_de_empleados",
-        offset: 150,
+        offset: 290,
         apply: false,
         quantity: 0,
         key: "empleados",
@@ -51,7 +51,7 @@ const initialState = () => {
       {
         name: "Tipo de cuentas",
         slug: "filter_tipo_de_cuentas",
-        offset: 0,
+        offset: 290,
         apply: false,
         quantity: 0,
         key: "TipoCuentas",
@@ -105,7 +105,7 @@ const initialState = () => {
       {
         name: "NIF",
         slug: "filter_nif",
-        offset: 150,
+        offset: 290,
         apply: false,
         quantity: 0,
         key: "cif",
@@ -114,7 +114,7 @@ const initialState = () => {
       {
         name: "Años con cuentas disponibles",
         slug: "filter_anios_con_cuentas_disponibles",
-        offset: 0,
+        offset: 290,
         apply: false,
         quantity: 0,
         key: "cuentasDisponibles",
