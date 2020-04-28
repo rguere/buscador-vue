@@ -161,7 +161,9 @@ export const beforeOrderFilters = (filters, applied_filters, form, title) => {
         }
       }
       let aux = { ...arr };
-      before_form.filtros.push(aux);
+      if (Object.keys(aux).length !== 0) {
+        before_form.filtros.push(aux);
+      }
     });
   }
 

@@ -877,7 +877,6 @@ export default {
       this.ahnos_from = "";
       this.ahnos_to = "";
       this.custom_antiquity = [];
-      this.$v.$reset();
       sendEvent("filtro-limpiado", this.title);
     },
     emptyFilter() {
