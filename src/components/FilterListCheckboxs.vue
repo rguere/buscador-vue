@@ -19,7 +19,7 @@
             <filter-razon-social></filter-razon-social>
             <filter-nif></filter-nif>
             <filter-tipo-cuentas></filter-tipo-cuentas>
-            <filter-auditores></filter-auditores>
+            <!-- <filter-auditores></filter-auditores> -->
             <!--
             <el-badge value="Próximamente" class="item">
               <filter-directivos-vinculaciones></filter-directivos-vinculaciones>

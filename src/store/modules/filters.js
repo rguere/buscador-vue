@@ -127,7 +127,7 @@ const initialState = () => {
         apply: false,
         quantity: 0,
         key: "auditorBorme",
-        disabled: false,
+        disabled: true,
       },
       {
         name: "Información Financiera",
