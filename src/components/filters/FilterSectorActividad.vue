@@ -12,14 +12,49 @@
       </p>
     </div>
     <div class="panel-body">
-      <ul class="nav nav-tabs">
-        <li class="active">
-          <a data-toggle="tab" href="#Codigo_CNAE">Código CNAE</a>
-        </li>
-        <li>
-          <a data-toggle="tab" href="#Sector_INFOCIF">Sector INFOCIF</a>
-        </li>
-      </ul>
+      <div class="he-nav-btns">
+        <ul class="nav nav-tabs">
+          <li class="active">
+            <a data-toggle="tab" href="#Codigo_CNAE">Código CNAE</a>
+          </li>
+          <li>
+            <a data-toggle="tab" href="#Sector_INFOCIF">Sector INFOCIF</a>
+          </li>
+        </ul>
+        <div class="btns">
+          <button type="button" class="btn btn-warning" @click="showModal">
+            Ver detalles
+            <i class="fa fa-plus-circle"></i>
+          </button>
+          <button
+            type="button"
+            class="btn btn-success"
+            v-if="
+              ((selected_cnae.length !== 0 ||
+                selected_industria.length !== 0) &&
+                !areApplied) ||
+                ((selected_cnae.length !== 0 ||
+                  selected_industria.length !== 0) &&
+                  !compareWithNewtoApply)
+            "
+            @click="apply"
+          >
+            Aplicar
+            <i
+              :class="loadingFrm ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'"
+            ></i>
+          </button>
+          <button
+            type="button"
+            class="btn btn-info"
+            v-if="areApplied"
+            @click="confirmClean"
+          >
+            Limpiar
+            <i class="fa fa-undo"></i>
+          </button>
+        </div>
+      </div>
       <br />
       <div class="tab-content">
         <div
@@ -62,8 +97,8 @@
                     <div class="treeselect-items">
                       <treeselect
                         valueFormat="object"
-                        name="options"
-                        id="options"
+                        :name="`options-${key}`"
+                        :id="`options-${key}`"
                         :multiple="true"
                         :options="[item]"
                         :always-open="true"
@@ -110,8 +145,8 @@
                     <div class="treeselect-items">
                       <treeselect
                         valueFormat="object"
-                        name="options"
-                        id="options"
+                        :name="`options-${key}`"
+                        :id="`options-${key}`"
                         :multiple="true"
                         :options="[item]"
                         :always-open="true"
@@ -492,7 +527,6 @@ import {
   sendPageView,
   sendEvent,
   searchInArrayObject,
-  inArrayObject,
 } from "./../../utils";
 import { persistentData } from "./../../mixins/persistent-data";
 import $ from "jquery";
@@ -668,7 +702,10 @@ export default {
       // })
     },
     showModal() {
-      sendPageView(`filtro-ubicacion`, `Buscador - Filtro de Ubicacion`);
+      sendPageView(
+        `filtro-Sector-Actividad`,
+        `Buscador - Filtro de Sector/Actividad`
+      );
       this.modalVisible = true;
     },
     hideModal() {
@@ -824,71 +861,8 @@ export default {
       this.ResultTheProvinceorTown = [];
       this.SearchTheProvinceorTown = "";
     },
-    handleChange(item, event) {
-      const target = event.target;
-      const checked = target.checked;
-      this.seeSeals(item, checked);
+    handleChange() {
       this.reapply = this.areApplied ? true : this.areApplied;
-    },
-    seeSeals(item, checked) {
-      if (item.children && Array.isArray(item.children)) {
-        for (const child of item.children) {
-          if (checked) {
-            let respalSelectedPL = [...this.selected_cnae];
-            respalSelectedPL.push(item);
-            respalSelectedPL = removeDuplicates(respalSelectedPL, "id");
-            this.selected_cnae = [...respalSelectedPL];
-            this.selected_cnae = this.selected_cnae.filter(
-              (cnae) => cnae.id !== child.id
-            );
-          }
-          setTimeout(() => {
-            const checkbox = document.querySelector(
-              `[name="checkbox_children${child.id}"]`
-            );
-            if (checkbox) {
-              checkbox.checked = checked;
-            }
-          }, 50);
-        }
-      } else if (item.father_id) {
-        const result = inArrayObject(this.search.cnae, item.father_id, "id");
-        if (result && result.children && Array.isArray(result.children)) {
-          const result2 = this.selected_cnae.filter(
-            (cnae) => cnae.father_id === item.father_id
-          );
-          const isChecked =
-            result2 && result2.length === result.children.length;
-
-          if (isChecked) {
-            this.seeSeals(result, isChecked);
-          } else {
-            this.selected_cnae = this.selected_cnae.filter(
-              (cnae) => cnae.id !== item.father_id
-            );
-          }
-          const checkbox = document.querySelector(
-            `[name="checkbox_father${item.father_id}"]`
-          );
-          if (checkbox) {
-            checkbox.checked = isChecked;
-          }
-
-          if (!isChecked) {
-            for (const child of result.children) {
-              const checkbox = document.querySelector(
-                `[name="checkbox_children${child.id}"]`
-              );
-              if (checkbox && checkbox.checked) {
-                let respalSelectedPL = [...this.selected_cnae];
-                respalSelectedPL.push(child);
-                respalSelectedPL = removeDuplicates(respalSelectedPL, "id");
-                this.selected_cnae = [...respalSelectedPL];
-              }
-            }
-          }
-        }
-      }
     },
     handleChangeList(province, event) {
       event.preventDefault();
@@ -1013,5 +987,9 @@ export default {
 }
 .nav-tabs {
   border-bottom: none !important;
+}
+.he-nav-btns {
+  display: flex;
+  justify-content: space-between;
 }
 </style>
