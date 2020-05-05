@@ -495,6 +495,40 @@ export const searchInArrayObject = (search = "", keyObj = "", myArray = []) => {
             if (resultChildren) {
               results.push(elementChildren);
             }
+            if (
+              elementChildren.children &&
+              Array.isArray(elementChildren.children)
+            ) {
+              const _arrayChildren = elementChildren.children;
+              for (const _key in _arrayChildren) {
+                if (_arrayChildren.hasOwnProperty(_key)) {
+                  const _elementChildren = _arrayChildren[_key];
+                  var _resultChildren = _elementChildren[keyObj].match(
+                    searchRegExp
+                  );
+                  if (_resultChildren) {
+                    results.push(_elementChildren);
+                  }
+                  if (
+                    _elementChildren.children &&
+                    Array.isArray(_elementChildren.children)
+                  ) {
+                    const __arrayChildren = _elementChildren.children;
+                    for (const _key in __arrayChildren) {
+                      if (__arrayChildren.hasOwnProperty(_key)) {
+                        const __elementChildren = __arrayChildren[_key];
+                        var __resultChildren = __elementChildren[keyObj].match(
+                          searchRegExp
+                        );
+                        if (__resultChildren) {
+                          results.push(__elementChildren);
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }

@@ -401,4 +401,20 @@ span.num-fil {
   transform: rotate(90deg); /* Standard syntax */
 }
 
+.treeselect-items {
+  .vue-treeselect {
+    position: relative;
+    .vue-treeselect__menu-container {
+      position: relative;
+    }
+    .vue-treeselect__menu {
+      position: relative;
+      height: auto;
+    }
+  }
+  .vue-treeselect__option {
+    background-color: #fff !important;
+  }
+}
+
 @import "media_queries.scss";

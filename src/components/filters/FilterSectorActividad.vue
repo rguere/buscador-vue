@@ -57,125 +57,97 @@
             <br />
             <div class="row">
               <div class="col-md-6">
-                <div class="panel-group" id="accordion">
-                  <div v-for="(item, key) in middle(search.cnae, 1)" :key="key">
-                    <div
-                      class="panel panel-default"
-                      v-if="item.children && Array.isArray(item.children)"
-                    >
-                      <div class="panel-heading">
-                        <h4 class="panel-title panel-title-flex">
-                          <a
-                            data-toggle="collapse"
-                            data-parent="#accordion"
-                            :href="`#collapse-${key}`"
-                          >
-                            <span class="glyphicon glyphicon-menu-right"></span>
-                            {{ item.id }} - {{ item.label }}</a
-                          >
-                          <span>
-                            <label class="custon-checkboxs">
-                              <input
-                                type="checkbox"
-                                :name="`checkbox_father${item.id}`"
-                                v-model="selected_cnae"
-                                @change="handleChange(item, $event)"
-                                :id="`checkbox_father${item.id}`"
-                                :value="item"
-                              />
-                              <span class="geekmark"></span>
-                            </label>
-                          </span>
-                        </h4>
-                      </div>
-                      <div
-                        :id="`collapse-${key}`"
-                        class="panel-collapse collapse"
+                <div v-for="(item, key) in middle(search.cnae, 1)" :key="key">
+                  <div v-if="item.children && Array.isArray(item.children)">
+                    <div class="treeselect-items">
+                      <treeselect
+                        valueFormat="object"
+                        name="options"
+                        id="options"
+                        :multiple="true"
+                        :options="[item]"
+                        :always-open="true"
+                        :default-expand-level="0"
+                        :load-options="fetchSearch"
+                        :limit="0"
+                        :limitText="(t) => ''"
+                        :disableFuzzyMatching="true"
+                        @input="inputTreeselect"
+                        @select="selectTreeselect"
+                        @deselect="deselectTreeselect"
+                        placeholder="Seleccionar"
+                        search-nested
+                        v-model="selected_cnae"
                       >
-                        <div class="panel-body">
-                          <div v-for="(item, key) in item.children" :key="key">
-                            <label class="custon-checkboxs">
-                              <input
-                                type="checkbox"
-                                :name="`checkbox_children${item.id}`"
-                                v-model="selected_cnae"
-                                @change="handleChange(item, $event)"
-                                :id="`checkbox_children${item.id}`"
-                                :value="item"
-                              />
-                              <span class="geekmark"></span>
-                              <span class="name-checkbox"
-                                >{{ item.id }} - {{ item.label }}</span
-                              >
-                              <span class="num-fil"
-                                >({{ item.data | numeral("0,0") }})</span
-                              >
-                            </label>
-                          </div>
-                        </div>
-                      </div>
+                        <label
+                          slot="option-label"
+                          slot-scope="{
+                            node,
+                            shouldShowCount,
+                            count,
+                            labelClassName,
+                            countClassName,
+                          }"
+                          :class="labelClassName"
+                        >
+                          {{ node.id }} - {{ node.label }}
+                          <span class="num-fil" v-if="node.raw.id != 'all'"
+                            >({{ node.raw.data | numeral("0,0") }})</span
+                          >
+                          <span v-if="shouldShowCount" :class="countClassName"
+                            >({{ count }})</span
+                          >
+                        </label>
+                      </treeselect>
+                      <br />
                     </div>
                   </div>
                 </div>
               </div>
               <div class="col-md-6">
-                <div class="panel-group" id="accordion2">
-                  <div v-for="(item, key) in middle(search.cnae, 2)" :key="key">
-                    <div
-                      class="panel panel-default"
-                      v-if="item.children && Array.isArray(item.children)"
-                    >
-                      <div class="panel-heading">
-                        <h4 class="panel-title panel-title-flex">
-                          <a
-                            data-toggle="collapse"
-                            data-parent="#accordion2"
-                            :href="`#collapse2-${key}`"
-                          >
-                            <span class="glyphicon glyphicon-menu-right"></span>
-                            {{ item.id }} - {{ item.label }}</a
-                          >
-                          <span>
-                            <label class="custon-checkboxs">
-                              <input
-                                type="checkbox"
-                                :name="`checkbox_father${item.id}`"
-                                v-model="selected_cnae"
-                                @change="handleChange(item, $event)"
-                                :id="`checkbox_father${item.id}`"
-                                :value="item"
-                              />
-                              <span class="geekmark"></span>
-                            </label>
-                          </span>
-                        </h4>
-                      </div>
-                      <div
-                        :id="`collapse2-${key}`"
-                        class="panel-collapse collapse"
+                <div v-for="(item, key) in middle(search.cnae, 2)" :key="key">
+                  <div v-if="item.children && Array.isArray(item.children)">
+                    <div class="treeselect-items">
+                      <treeselect
+                        valueFormat="object"
+                        name="options"
+                        id="options"
+                        :multiple="true"
+                        :options="[item]"
+                        :always-open="true"
+                        :default-expand-level="0"
+                        :load-options="fetchSearch"
+                        :limit="0"
+                        :limitText="(t) => ''"
+                        :disableFuzzyMatching="true"
+                        @input="inputTreeselect"
+                        @select="selectTreeselect"
+                        @deselect="deselectTreeselect"
+                        placeholder="Seleccionar"
+                        search-nested
+                        v-model="selected_cnae"
                       >
-                        <div class="panel-body">
-                          <div v-for="(item, key) in item.children" :key="key">
-                            <label class="custon-checkboxs">
-                              <input
-                                type="checkbox"
-                                :name="`checkbox_children${item.id}`"
-                                v-model="selected_cnae"
-                                @change="handleChange(item, $event)"
-                                :id="`checkbox_children${item.id}`"
-                                :value="item"
-                              />
-                              <span class="geekmark"></span>
-                              <span class="name-checkbox"
-                                >{{ item.id }} - {{ item.label }}</span
-                              >
-                              <span class="num-fil"
-                                >({{ item.data | numeral("0,0") }})</span
-                              >
-                            </label>
-                          </div>
-                        </div>
-                      </div>
+                        <label
+                          slot="option-label"
+                          slot-scope="{
+                            node,
+                            shouldShowCount,
+                            count,
+                            labelClassName,
+                            countClassName,
+                          }"
+                          :class="labelClassName"
+                        >
+                          {{ node.id }} - {{ node.label }}
+                          <span class="num-fil" v-if="node.raw.id != 'all'"
+                            >({{ node.raw.data | numeral("0,0") }})</span
+                          >
+                          <span v-if="shouldShowCount" :class="countClassName"
+                            >({{ count }})</span
+                          >
+                        </label>
+                      </treeselect>
+                      <br />
                     </div>
                   </div>
                 </div>

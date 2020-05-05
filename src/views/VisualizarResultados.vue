@@ -296,11 +296,20 @@
                                   v-for="(_item, _key) in item.datas"
                                   :key="_key"
                                 >
-                                  {{
-                                    _item.label !== "incluir_null"
-                                      ? _item.label
-                                      : `Empresas en las que se desconoce su ${item.title.toLowerCase()}`
-                                  }}
+                                  <span
+                                    v-if="item.title === 'Sector/Actividad'"
+                                  >
+                                    {{ `${_item.id} - ${_item.label}` }}
+                                  </span>
+                                  <span
+                                    v-if="item.title !== 'Sector/Actividad'"
+                                  >
+                                    {{
+                                      _item.label !== "incluir_null"
+                                        ? _item.label
+                                        : `Empresas en las que se desconoce su ${item.title.toLowerCase()}`
+                                    }}
+                                  </span>
                                 </li>
                               </ul>
                               <el-divider></el-divider>
