@@ -595,7 +595,7 @@ export default {
       this.selected_by_code_cnae = this.numberCompaniesSelected(newCnae);
       this.selected_by_code_cnae_and_industria =
         this.selected_by_code_cnae + this.selected_by_code_industria;
-      if (this.reapply && this.selected_by_code_cnae_and_industria === 0) {
+      if (this.reapply && this.lengthCnaeIndustri === 0) {
         this.clean();
       }
     },
@@ -606,7 +606,7 @@ export default {
       );
       this.selected_by_code_cnae_and_industria =
         this.selected_by_code_cnae + this.selected_by_code_industria;
-      if (this.reapply && this.selected_by_code_cnae_and_industria === 0) {
+      if (this.reapply && this.lengthCnaeIndustri === 0) {
         this.clean();
       }
     },
@@ -631,18 +631,11 @@ export default {
         respalSelectedPL = removeDuplicates(respalSelectedPL, "id");
         this.selected_cnae = this.selected_cnae.concat(respalSelectedPL);
         this.selected_cnae = removeDuplicates(this.selected_cnae, "id");
-        for (const cnae of this.selected_cnae) {
-          this.seeSeals(cnae, true);
-        }
       } else {
         let eliminadas = attValueSelect.filter((item) => {
           return !newValueSelect.includes(item) ? item : null;
         });
         eliminadas.map((_item) => {
-          let result = inArrayObjectTreeselect(this.search.cnae, _item);
-          if (result) {
-            this.seeSeals(result, false);
-          }
           this.selected_cnae = this.selected_cnae.filter(
             (item) => item.id !== _item
           );
@@ -893,11 +886,11 @@ export default {
       //data, checked
     },
     inputTreeselect() {},
-    selectTreeselect(item) {
-      this.seeSeals(item, true);
+    selectTreeselect() {
+      //this.seeSeals(item, true);
     },
-    deselectTreeselect(item) {
-      this.seeSeals(item, false);
+    deselectTreeselect() {
+      //this.seeSeals(item, false);
     },
     formatearLabel(item) {
       let _item = { ...item };
