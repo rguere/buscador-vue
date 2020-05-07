@@ -260,6 +260,52 @@
         </div>
         <p class="text-help">* Puedes elegir más de una opción</p>
       </div>
+
+      <div class="row" v-if="lengthCnaeIndustri > 0">
+        <div class="col-md-12">
+          <br />
+          <el-collapse v-model="collapseResumen">
+            <el-collapse-item
+              title="Resumen de empresas seleccionadas"
+              name="1"
+            >
+              <div class="div-scroll-200 ul_selected_cnae">
+                <div v-for="(item, key) in selected_cnae" :key="key">
+                  <div class="checkbox">
+                    <label>
+                      <input
+                        type="checkbox"
+                        :name="`checkbox_resumen${item.id}`"
+                        v-model="selected_cnae"
+                        @change="handleChangeList(item, $event)"
+                        :id="`checkbox_resumen${item.id}`"
+                        :value="item"
+                      />
+                      {{ item.id }} - {{ item.label }}
+                    </label>
+                  </div>
+                </div>
+                <div v-for="(item, key) in selected_industria" :key="`_${key}`">
+                  <div class="checkbox">
+                    <label>
+                      <input
+                        type="checkbox"
+                        :name="`checkbox_resumen${item.id}`"
+                        v-model="selected_industria"
+                        @change="handleChangeList(item, $event)"
+                        :id="`checkbox_resumen${item.id}`"
+                        :value="item"
+                      />
+                      {{ item.id }} - {{ item.label }}
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </el-collapse-item>
+          </el-collapse>
+        </div>
+      </div>
+
       <el-dialog
         :visible.sync="modalVisible"
         width="95%"
@@ -589,6 +635,7 @@ export default {
     listSelect: [],
     loadingSelect: false,
     limitChildren: 3,
+    collapseResumen: [],
   }),
   watch: {
     selected_cnae: function(newCnae) {
@@ -811,6 +858,7 @@ export default {
       this.form.sector_actividad = [];
       this.selected_cnae = [];
       this.valueSelect = [];
+      this.collapseResumen = [];
       this.selected_cnae_string = "";
       if (this.applied_filters.length > 1) {
         let beforeForm = beforeOrderFilters(
@@ -844,6 +892,7 @@ export default {
       this.form.sector_actividad = [];
       this.selected_cnae = [];
       this.valueSelect = [];
+      this.collapseResumen = [];
       this.selected_cnae_string = "";
       this.updateNumberSelectedCompanies(0);
       this.selected_by_code_cnae_and_industria = 0;
@@ -860,11 +909,12 @@ export default {
     handleChangeList(province, event) {
       event.preventDefault();
       let checkboxs = document.querySelectorAll(
-        '#ul_selected_cnae input[type="checkbox"]'
+        '.ul_selected_cnae input[type="checkbox"]'
       );
       checkboxs.forEach((item) => {
         item.checked = true;
       });
+      this.reapply = this.areApplied ? true : this.areApplied;
     },
     searchProvinceorTown() {
       this.loadingSearchTheProvinceorTown = true;

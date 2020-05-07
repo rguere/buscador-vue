@@ -51,26 +51,6 @@
                 <label class>{{ dataFrm }}</label>
               </div>
             </div>
-            <!-- <div class="col-md-6">
-              <el-tooltip content="Agregar más nombre o razón social a la búsqueda" placement="top">
-                <button
-                  type="button"        
-                  v-if="social_reasons && social_reasons.empresas.length !== 0 && !search_edit"
-                  class="btn btn-success pull-right" @click="addSearch" 
-                  :disabled="dataFrm.length === 0 || loadingValidar">
-                    <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-plus'"></i>
-                </button>
-              </el-tooltip>
-              <el-tooltip content="Editar búsqueda" placement="top">
-                <button
-                  type="button"        
-                  v-if="social_reasons && social_reasons.empresas.length !== 0 && !search_edit"
-                  class="btn btn-info pull-right m-r-5" @click="editSearch" 
-                  :disabled="dataFrm.length === 0 || loadingValidar">
-                    <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-edit'"></i>
-                </button>
-              </el-tooltip>
-            </div>-->
           </div>
           <div class="div-scroll-200">
             <div v-for="(item, key) in social_reasons.empresas" :key="key">
