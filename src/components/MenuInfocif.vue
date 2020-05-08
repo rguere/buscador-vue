@@ -320,7 +320,7 @@
             to="/"
             class="btn btn-noborder"
             role="button"
-            title="Buscardor de Empresas"
+            title="Buscador de Empresas"
           >
             <img
               src="./../assets/images/buscador.png"
@@ -328,7 +328,7 @@
               class="alignmiddle"
               alt="Informes de Empresas"
             />
-            Buscardor
+            Buscador
             <span class="hidden-xs hidden-sm hidden-md ">de empresas</span>
           </router-link>
           <a
