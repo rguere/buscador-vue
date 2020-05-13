@@ -713,8 +713,22 @@ export default {
                 let cnae = text.split(".");
                 if (cnae.length > 1) {
                   item.Cnae3_code = cnae[0];
-                  item.Cnae3_text = cnae[1];
+                  cnae = cnae.splice(1);
+                  item.Cnae3_text = cnae.join(".");
                 }
+              }
+              item.audCod = "-";
+              item.audDes = "-";
+              item.audSit = "-";
+              if (item.AuditorRoac && item.AuditorRoac.Roac_Text) {
+                let text = item.AuditorRoac.Roac_Text;
+                let array_text = text.split(".");
+                if (array_text.length > 1) {
+                  item.audCod = array_text[0];
+                  array_text = array_text.splice(1);
+                  item.audDes = array_text.join(".");
+                }
+                item.audSit = item.AuditorRoac.Situacion;
               }
               if (
                 item.TipoCuentasAnuales &&
@@ -877,8 +891,6 @@ export default {
         prop = "actDes";
       } else if (prop === "IndustriaDescripcion") {
         prop = "sector";
-      } else if (prop === "AuditorBorme") {
-        prop = "auditores";
       }
       this.sort = {
         prop,

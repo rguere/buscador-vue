@@ -11,7 +11,7 @@ const initialState = () => {
       Localidades: [],
       antiguedad: [],
       razonSocial: [],
-      auditorBorme: [],
+      auditores: [],
       empleados: [],
       cuentasDisponibles: [],
       TipoCuentas: [],
@@ -126,7 +126,7 @@ const initialState = () => {
         offset: 290,
         apply: false,
         quantity: 0,
-        key: "auditorBorme",
+        key: "auditores",
         disabled: false,
       },
       {

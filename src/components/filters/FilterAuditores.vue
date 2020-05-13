@@ -57,14 +57,14 @@
               <label class="custon-checkboxs">
                 <input
                   type="checkbox"
-                  :name="`checkbox_${item.IdEmpresa}`"
+                  :name="`checkbox_${item.id}`"
                   v-model="selected_auditores"
                   @change="handleChange(item, $event)"
-                  :id="`checkbox_${item.IdEmpresa}`"
+                  :id="`checkbox_${item.id}`"
                   :value="item"
                 />
                 <span class="geekmark"></span>
-                <span class="name-checkbox">{{ item.RazonSocial }}</span>
+                <span class="name-checkbox">{{ item.label }}</span>
               </label>
             </div>
           </div>
@@ -121,13 +121,13 @@
                     <label>
                       <input
                         type="checkbox"
-                        :name="`checkbox_resumen${item.IdEmpresa}`"
+                        :name="`checkbox_resumen${item.id}`"
                         v-model="selected_auditores"
                         @change="handleChangeList(item, $event)"
-                        :id="`checkbox_resumen${item.IdEmpresa}`"
+                        :id="`checkbox_resumen${item.id}`"
                         :value="item"
                       />
-                      {{ item.RazonSocial }} - {{ item.CIF }}
+                      {{ item.label }}
                     </label>
                   </div>
                 </div>
@@ -254,10 +254,10 @@
                     <thead>
                       <tr>
                         <th scope="col">Razón social de la empresa</th>
-                        <th scope="col">NIF</th>
+                        <!-- <th scope="col">NIF</th>
                         <th scope="col">Provincia</th>
                         <th scope="col">Localidad</th>
-                        <th scope="col">Último año cuentas disponibles</th>
+                        <th scope="col">Último año cuentas disponibles</th> -->
                         <!--<th scope="col">Ventas último año disponible (miles de €)</th>-->
                       </tr>
                     </thead>
@@ -268,17 +268,17 @@
                             <label>
                               <input
                                 type="checkbox"
-                                :name="`checkbox_table_${item.IdEmpresa}`"
+                                :name="`checkbox_table_${item.id}`"
                                 v-model="selected_auditores"
                                 @change="handleChange(item, $event)"
-                                :id="`checkbox_table_${item.IdEmpresa}`"
+                                :id="`checkbox_table_${item.id}`"
                                 :value="item"
                               />
-                              {{ item.RazonSocial }}
+                              {{ item.label }}
                             </label>
                           </div>
                         </th>
-                        <td>{{ item.CIF }}</td>
+                        <!-- <td>{{ item.CIF }}</td>
                         <td>{{ item.Provincia }}</td>
                         <td>{{ item.Localidad }}</td>
                         <td>
@@ -287,7 +287,7 @@
                               ? item.UltimaCuentaAnual.Ejercicio
                               : ""
                           }}
-                        </td>
+                        </td> -->
                       </tr>
                     </tbody>
                   </table>
@@ -317,10 +317,10 @@
                     <thead>
                       <tr>
                         <th scope="col">Razón social de la empresa</th>
-                        <th scope="col">NIF</th>
+                        <!-- <th scope="col">NIF</th>
                         <th scope="col">Provincia</th>
                         <th scope="col">Localidad</th>
-                        <th scope="col">Último año cuentas disponibles</th>
+                        <th scope="col">Último año cuentas disponibles</th> -->
                       </tr>
                     </thead>
                     <tbody>
@@ -333,17 +333,17 @@
                             <label>
                               <input
                                 type="checkbox"
-                                :name="`checkbox_table_${item.IdEmpresa}`"
+                                :name="`checkbox_table_${item.id}`"
                                 v-model="selected_auditores"
                                 @change="handleChangeList(item, $event)"
-                                :id="`checkbox_table_${item.IdEmpresa}`"
+                                :id="`checkbox_table_${item.id}`"
                                 :value="item"
                               />
-                              {{ item.RazonSocial }}
+                              {{ item.label }}
                             </label>
                           </div>
                         </th>
-                        <td>{{ item.CIF }}</td>
+                        <!-- <td>{{ item.CIF }}</td>
                         <td>{{ item.Provincia }}</td>
                         <td>{{ item.Localidad }}</td>
                         <td>
@@ -352,7 +352,7 @@
                               ? item.UltimaCuentaAnual.Ejercicio
                               : ""
                           }}
-                        </td>
+                        </td> -->
                       </tr>
                     </tbody>
                   </table>
@@ -456,7 +456,15 @@ export default {
           .dispatch("search/validateBormeAuditor", this.dataFrm)
           .then((response) => {
             if (response && Array.isArray(response) && response.length > 0) {
-              response.empresas = objectToArray(response);
+              const result = objectToArray(response);
+              response.empresas = result.map((item) => {
+                return {
+                  data: 0,
+                  id: item.roac_codigo,
+                  label: item.roac_Text,
+                  situacion: item.situacion,
+                };
+              });
             }
             if (
               response &&
@@ -469,7 +477,7 @@ export default {
               });
               this.auditores.empresas = removeDuplicates(
                 this.auditores.empresas,
-                "RazonSocial"
+                "id"
               );
             } else {
               this.auditores.empresas = response.empresas
@@ -497,8 +505,8 @@ export default {
         this.loadingApply = true;
         this.search_edit = false;
         this.search_add = false;
-        this.form.auditorBorme = this.selected_auditores.map((item) => {
-          return item.AuditorBorme;
+        this.form.auditores = this.selected_auditores.map((item) => {
+          return item.id;
         });
         let beforeForm = beforeOrderFilters(
           this.filters,
@@ -550,7 +558,7 @@ export default {
         });
     },
     clean() {
-      this.form.auditorBorme = [];
+      this.form.auditores = [];
       this.dataFrm = "";
       this.to_social_reason = "";
       this.selected_auditores = [];
@@ -583,7 +591,7 @@ export default {
       sendEvent("filtro-limpiado", this.title);
     },
     emptyFilter() {
-      this.form.auditorBorme = [];
+      this.form.auditores = [];
       this.selected_auditores = [];
       this.selected_auditores_string = "";
       this.dataFrm = "";

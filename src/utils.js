@@ -279,8 +279,22 @@ export const getColumnsSummary = () => {
       sortable: true,
     },
     {
-      prop: "AuditorBorme",
+      prop: "audCod",
+      label: "Roac",
+      width: "210",
+      show: true,
+      sortable: true,
+    },
+    {
+      prop: "audDes",
       label: "Auditor",
+      width: "210",
+      show: true,
+      sortable: true,
+    },
+    {
+      prop: "audSit",
+      label: "Situación",
       width: "210",
       show: true,
       sortable: true,
