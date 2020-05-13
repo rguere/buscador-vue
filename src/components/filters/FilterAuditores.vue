@@ -463,7 +463,6 @@ export default {
         this.emptyFilter();
       }
     });
-    console.log(this.search.auditor);
   },
   watch: {
     selected_auditores: function(newRazonSocial) {
