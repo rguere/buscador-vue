@@ -11,16 +11,18 @@
     </div>
     <div class="panel-body">
       <form v-on:submit.prevent="validateBormeAuditor" class="m-b-10">
-        <div class="input-group">
-          <input
-            type="text"
+        <div class="form-group">
+          <textarea
             v-model="dataFrm"
             id="auditores1"
             class="form-control"
-            placeholder="Introduce el NIF o la razón social del auditor o de los auditores, separados por coma o salto de línea, y clicar en “BUSCAR”"
-            title="Introduce el NIF o la razón social del auditor o de los auditores, separados por coma o salto de línea, y clicar en “BUSCAR”"
-          />
-          <span class="input-group-btn">
+            placeholder="Introduce los códigos Roac o nombres de los auditores, separados por coma o salto de línea, y clicar en “BUSCAR”"
+            title="Introduce los códigos Roac o nombres de los auditores, separados por coma o salto de línea, y clicar en “BUSCAR”"
+          ></textarea>
+        </div>
+        <div class="flex-space-between-flex-end">
+          <div></div>
+          <div>
             <button
               title="BUSCAR"
               type="button"
@@ -35,7 +37,7 @@
                 "
               ></i>
             </button>
-          </span>
+          </div>
         </div>
       </form>
       <div
@@ -187,9 +189,8 @@
               <div class="panel panel-default cd">
                 <div class="panel-heading">
                   <p class="panel-title roboto white">
-                    Introduce el NIF o la razón social del auditor o de los
-                    auditores, separados por coma o salto de línea, y clicar en
-                    “BUSCAR”.
+                    Introduce los códigos Roac o nombres de los auditores,
+                    separados por coma o salto de línea, y clicar en “BUSCAR”.
                   </p>
                 </div>
                 <div class="panel-body">
@@ -202,8 +203,8 @@
                             v-model="dataFrm"
                             id="auditores"
                             class="form-control"
-                            placeholder="Introduce el NIF o la razón social del auditor o de los auditores, separados por coma o salto de línea, y clicar en “BUSCAR”"
-                            title="Introduce el NIF o la razón social del auditor o de los auditores, separados por coma o salto de línea, y clicar en “BUSCAR”"
+                            placeholder="Introduce los códigos Roac o nombres de los auditores, separados por coma o salto de línea, y clicar en “BUSCAR”"
+                            title="Introduce los códigos Roac o nombres de los auditores, separados por coma o salto de línea, y clicar en “BUSCAR”"
                           />
                           <span class="input-group-btn">
                             <button
@@ -369,10 +370,12 @@
 import { mapGetters } from "vuex";
 import swal from "sweetalert2";
 import {
+  spacesByDashes,
   beforeOrderFilters,
-  removeDuplicates,
   sendPageView,
   sendEvent,
+  objectToArray,
+  removeDuplicates,
 } from "./../../utils";
 import { persistentData } from "./../../mixins/persistent-data";
 export default {
@@ -448,9 +451,13 @@ export default {
     validateBormeAuditor() {
       if (this.dataFrm.length !== 0) {
         this.loadingValidar = true;
+        this.dataFrm = spacesByDashes(this.dataFrm);
         this.$store
           .dispatch("search/validateBormeAuditor", this.dataFrm)
           .then((response) => {
+            if (response && Array.isArray(response) && response.length > 0) {
+              response.empresas = objectToArray(response);
+            }
             if (
               response &&
               response.empresas &&
@@ -469,14 +476,14 @@ export default {
                 ? response.empresas
                 : [];
             }
-            this.loadingValidar = false;
-            this.search_edit = false;
-            this.search_add = false;
             if (response.empresas.length === 0) {
               swal.fire("Advertencia", "Auditores no existe", "warning");
             } else {
               this.dataFrm = "";
             }
+            this.loadingValidar = false;
+            this.search_edit = false;
+            this.search_add = false;
           })
           .catch(() => {
             this.loadingValidar = false;

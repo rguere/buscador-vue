@@ -4,11 +4,17 @@
  * @return {[Array]}     [Array]
  */
 export const objectToArray = (obj) => {
-  return Object.keys(obj).map((key) => {
-    return {
-      [key]: obj[key],
-    };
-  });
+  let auditores = [];
+  if (obj && Array.isArray(obj) && obj.length > 0) {
+    for (const items of obj) {
+      if (Array.isArray(items)) {
+        for (const item of items) {
+          auditores.push(item);
+        }
+      }
+    }
+  }
+  return auditores;
 };
 
 /**

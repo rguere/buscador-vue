@@ -171,7 +171,7 @@ export const actions = {
   },
   async validateBormeAuditor({ commit }, AuditorBorme) {
     try {
-      const { data } = await axios.post(`/buscador/auditorBorme/buscar`, {
+      const { data } = await axios.post(`/buscador/auditor/buscar`, {
         lista: AuditorBorme,
       });
       return data;
