@@ -21,7 +21,16 @@
           ></textarea>
         </div>
         <div class="flex-space-between-flex-end">
-          <div></div>
+          <div>
+            <button
+              title="Ver top 10"
+              @click="show_top_10 = !show_top_10"
+              type="button"
+              class="btn btn-link"
+            >
+              Ver top 10 Auditores
+            </button>
+          </div>
           <div>
             <button
               title="BUSCAR"
@@ -31,15 +40,33 @@
               :disabled="dataFrm.length === 0 || loadingValidar"
             >
               BUSCAR
-              <i
-                :class="
-                  loadingValidar ? 'fa  fa-spinner fa-spin' : 'fa  fa-search'
-                "
-              ></i>
+              <i :class="iconBtnBuscar"></i>
             </button>
           </div>
         </div>
       </form>
+      <div v-show="show_top_10">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="div-scroll-200 mb-5">
+              <div v-for="(item, key) in search.auditor" :key="key">
+                <label class="custon-checkboxs">
+                  <input
+                    type="checkbox"
+                    :name="`checkbox_top_10${item.id}`"
+                    v-model="selected_auditores"
+                    @change="handleChange(item, $event)"
+                    :id="`checkbox_top_10${item.id}`"
+                    :value="item"
+                  />
+                  <span class="geekmark"></span>
+                  <span class="name-checkbox">{{ item.label }}</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div
         class="panel panel-default cd"
         v-if="auditores && auditores.empresas.length !== 0 && !search_edit"
@@ -80,7 +107,6 @@
             v-if="
               selected_auditores &&
                 selected_auditores.length !== 0 &&
-                !search_edit &&
                 !compareWithNewtoApply
             "
             :disabled="selected_auditores.length === 0 || loadingApply"
@@ -214,13 +240,7 @@
                               :disabled="dataFrm.length === 0 || loadingValidar"
                             >
                               BUSCAR
-                              <i
-                                :class="
-                                  loadingValidar
-                                    ? 'fa  fa-spinner fa-spin'
-                                    : 'fa  fa-search'
-                                "
-                              ></i>
+                              <i :class="iconBtnBuscar"></i>
                             </button>
                           </span>
                         </div>
@@ -230,12 +250,7 @@
                 </div>
               </div>
             </div>
-            <div
-              class="col-md-12"
-              v-if="
-                auditores && auditores.empresas.length !== 0 && !search_edit
-              "
-            >
+            <div class="col-md-12" v-if="showAuditores">
               <div class="panel panel-default cd">
                 <div class="panel-heading">
                   <p class="panel-title roboto white">
@@ -395,12 +410,23 @@ export default {
       let obj = JSON.stringify(this.selected_auditores);
       return stg === obj;
     },
+    iconBtnBuscar: function() {
+      return this.loadingValidar ? "fa  fa-spinner fa-spin" : "fa  fa-search";
+    },
+    showAuditores: function() {
+      return (
+        this.auditores &&
+        this.auditores.empresas.length !== 0 &&
+        !this.search_edit
+      );
+    },
   },
   data: () => ({
     title: "Auditores",
     loadingValidar: false,
     search_edit: true,
     search_add: false,
+    show_top_10: false,
     dataFrm: "",
     auditores: {
       total: 0,
@@ -437,6 +463,7 @@ export default {
         this.emptyFilter();
       }
     });
+    console.log(this.search.auditor);
   },
   watch: {
     selected_auditores: function(newRazonSocial) {
@@ -559,6 +586,7 @@ export default {
     },
     clean() {
       this.form.auditores = [];
+      this.show_top_10 = false;
       this.dataFrm = "";
       this.to_social_reason = "";
       this.selected_auditores = [];
