@@ -21,16 +21,7 @@
           ></textarea>
         </div>
         <div class="flex-space-between-flex-end">
-          <div>
-            <button
-              title="Ver top 10"
-              @click="show_top_10 = !show_top_10"
-              type="button"
-              class="btn btn-link"
-            >
-              Ver top 10 Auditores
-            </button>
-          </div>
+          <div></div>
           <div>
             <button
               title="BUSCAR"
@@ -45,40 +36,11 @@
           </div>
         </div>
       </form>
-      <div v-show="show_top_10">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="div-scroll-200 mb-5">
-              <div v-for="(item, key) in search.auditor" :key="key">
-                <label class="custon-checkboxs">
-                  <input
-                    type="checkbox"
-                    :name="`checkbox_top_10${item.id}`"
-                    v-model="selected_auditores"
-                    @change="handleChange(item, $event)"
-                    :id="`checkbox_top_10${item.id}`"
-                    :value="item"
-                  />
-                  <span class="geekmark"></span>
-                  <span class="name-checkbox">{{ item.label }}</span>
-                </label>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
       <div
         class="panel panel-default cd"
         v-if="auditores && auditores.empresas.length !== 0 && !search_edit"
       >
         <div class="panel-body">
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label class>{{ dataFrm }}</label>
-              </div>
-            </div>
-          </div>
           <div class="div-scroll-200">
             <div v-for="(item, key) in auditores.empresas" :key="key">
               <label class="custon-checkboxs">
@@ -96,6 +58,29 @@
             </div>
           </div>
         </div>
+      </div>
+      <div>
+        <el-collapse v-model="collapseTop10">
+          <el-collapse-item title="Top 10 Auditores" name="1">
+            <div class="div-scroll-200 mb-5">
+              <div v-for="(item, key) in search.auditor" :key="key">
+                <label class="custon-checkboxs">
+                  <input
+                    type="checkbox"
+                    :name="`checkbox_top_10${item.id}`"
+                    v-model="selected_auditores"
+                    @change="handleChange(item, $event)"
+                    :id="`checkbox_top_10${item.id}`"
+                    :value="item"
+                  />
+                  <span class="geekmark"></span>
+                  <span class="name-checkbox">{{ item.label }}</span>
+                </label>
+              </div>
+            </div>
+          </el-collapse-item>
+        </el-collapse>
+        <br />
       </div>
       <div class="flex-space-between-flex-end">
         <div>
@@ -130,10 +115,7 @@
           </button>
         </div>
       </div>
-      <div
-        class="row"
-        v-if="list_selected_auditores && list_selected_auditores.length !== 0"
-      >
+      <div class="row" v-if="listSelectedAuditoresLengthNot0">
         <div class="col-md-12">
           <br />
           <el-collapse v-model="collapseResumen">
@@ -221,19 +203,25 @@
                 </div>
                 <div class="panel-body">
                   <div class="row">
-                    <div class="col-md-12">
-                      <form v-on:submit.prevent="validateBormeAuditor">
-                        <div class="input-group">
-                          <input
-                            type="text"
+                    <div class="col-md-7">
+                      <form
+                        v-on:submit.prevent="validateBormeAuditor"
+                        class="m-b-10"
+                      >
+                        <div class="form-group">
+                          <textarea
                             v-model="dataFrm"
-                            id="auditores"
+                            id="auditores1"
                             class="form-control"
                             placeholder="Introduce los códigos Roac o nombres de los auditores, separados por coma o salto de línea, y clicar en “BUSCAR”"
                             title="Introduce los códigos Roac o nombres de los auditores, separados por coma o salto de línea, y clicar en “BUSCAR”"
-                          />
-                          <span class="input-group-btn">
+                          ></textarea>
+                        </div>
+                        <div class="flex-space-between-flex-end">
+                          <div></div>
+                          <div>
                             <button
+                              title="BUSCAR"
                               type="button"
                               class="btn btn-info"
                               @click="validateBormeAuditor"
@@ -242,9 +230,36 @@
                               BUSCAR
                               <i :class="iconBtnBuscar"></i>
                             </button>
-                          </span>
+                          </div>
                         </div>
                       </form>
+                    </div>
+                    <div class="col-md-5">
+                      <el-collapse v-model="collapseTop10">
+                        <el-collapse-item title="Top 10 Auditores" name="1">
+                          <div class="div-scroll-200 mb-5">
+                            <div
+                              v-for="(item, key) in search.auditor"
+                              :key="key"
+                            >
+                              <label class="custon-checkboxs">
+                                <input
+                                  type="checkbox"
+                                  :name="`checkbox_detalles_top_10${item.id}`"
+                                  v-model="selected_auditores"
+                                  @change="handleChange(item, $event)"
+                                  :id="`checkbox_detalles_top_10${item.id}`"
+                                  :value="item"
+                                />
+                                <span class="geekmark"></span>
+                                <span class="name-checkbox">{{
+                                  item.label
+                                }}</span>
+                              </label>
+                            </div>
+                          </div>
+                        </el-collapse-item>
+                      </el-collapse>
                     </div>
                   </div>
                 </div>
@@ -309,12 +324,7 @@
                 </div>
               </div>
             </div>
-            <div
-              class="col-md-12"
-              v-if="
-                list_selected_auditores && list_selected_auditores.length !== 0
-              "
-            >
+            <div class="col-md-12" v-if="listSelectedAuditoresLengthNot0">
               <div class="panel panel-default cd">
                 <div class="panel-heading">
                   <p class="panel-title roboto white">
@@ -420,13 +430,19 @@ export default {
         !this.search_edit
       );
     },
+    listSelectedAuditoresLengthNot0: function() {
+      return (
+        this.list_selected_auditores &&
+        this.list_selected_auditores.length !== 0
+      );
+    },
   },
   data: () => ({
     title: "Auditores",
     loadingValidar: false,
     search_edit: true,
     search_add: false,
-    show_top_10: false,
+    show_top_10: true,
     dataFrm: "",
     auditores: {
       total: 0,
@@ -446,6 +462,7 @@ export default {
     loadingFile: false,
     file: {},
     collapseResumen: [],
+    collapseTop10: ["1"],
   }),
   mounted() {
     this.$root.$on("clean_filter", (filter) => {
@@ -585,7 +602,7 @@ export default {
     },
     clean() {
       this.form.auditores = [];
-      this.show_top_10 = false;
+      this.show_top_10 = true;
       this.dataFrm = "";
       this.to_social_reason = "";
       this.selected_auditores = [];
@@ -593,6 +610,7 @@ export default {
       this.auditores = { total: 0, cantidad: 0, empresas: [] };
       this.list_selected_auditores = [];
       this.collapseResumen = [];
+      this.collapseTop10 = ["1"];
       if (this.applied_filters.length > 1) {
         let beforeForm = beforeOrderFilters(
           this.filters,
