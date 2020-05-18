@@ -1,8 +1,3 @@
-<!-- v-scroll-to="{
-  el: `#${filter.slug}`,
-  offset: -100,
-  onDone: onDone
-}" -->
 <template>
   <div class="panel panel-default cd min-height-200">
     <div class="panel-body">
