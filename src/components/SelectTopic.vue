@@ -1,11 +1,6 @@
 <template>
   <div class="btn-tools">
-    <el-tooltip
-      class="item"
-      effect="light"
-      content="Selecione Tema"
-      placement="left"
-    >
+    <el-tooltip class="item" effect="light" content="Temas" placement="left">
       <el-dropdown size="mini" @command="setTeme">
         <el-button
           type="primary"
