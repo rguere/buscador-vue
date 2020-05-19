@@ -96,13 +96,15 @@ export const inArrayObjectTreeselect = (array, search, key = "id") => {
 export const handleScroll = () => {
   let element = document.getElementById("filter-buttons");
   let my_container = document.querySelector(".my_container");
-  let top = element.offsetTop;
-  if (!(top >= window.pageYOffset)) {
-    element.classList.add("is-fixed");
-    my_container.classList.add("container");
-  } else {
-    element.classList.remove("is-fixed");
-    my_container.classList.remove("container");
+  if (element && my_container) {
+    let top = element.offsetTop;
+    if (!(top >= window.pageYOffset)) {
+      element.classList.add("is-fixed");
+      my_container.classList.add("container");
+    } else {
+      element.classList.remove("is-fixed");
+      my_container.classList.remove("container");
+    }
   }
 };
 

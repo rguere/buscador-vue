@@ -21,6 +21,11 @@ import FilterAuditores from "./filters/FilterAuditores.vue";
 import FilterInformacionFinanciera from "./filters/FilterInformacionFinanciera.vue";
 import FilterAniosCuentasDisponibles from "./filters/FilterAniosCuentasDisponibles.vue";
 import FilterTree from "./FilterTree.vue";
+import BtnsFilter from "./BtnsFilter.vue";
+import BtnEmptyFilter from "./BtnEmptyFilter.vue";
+import BtnVisualizarResultados from "./BtnVisualizarResultados.vue";
+import SelectedCompanies from "./SelectedCompanies.vue";
+import SelectTopic from "./SelectTopic.vue";
 
 [
   MenuInfocif,
@@ -43,6 +48,11 @@ import FilterTree from "./FilterTree.vue";
   FilterButtons,
   LoadingFullPage,
   FilterTree,
+  BtnsFilter,
+  BtnEmptyFilter,
+  BtnVisualizarResultados,
+  SelectedCompanies,
+  SelectTopic,
 ].forEach((Component) => {
   Vue.component(Component.name, Component);
 });

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <span>
     <span
       v-for="(filter, key) in orderFilters"
       :key="key"
@@ -11,7 +11,7 @@
         <span class="num-fil">( {{ filter.quantity | numeral("0,0") }} )</span>
       </span>
     </span>
-  </div>
+  </span>
 </template>
 
 <script>
@@ -50,7 +50,11 @@ export default {
   watch: {},
   destroyed() {},
   methods: {
-    showModalFilter() {},
+    showModalFilter(filter) {
+      if (this.$route.name === "buscador") {
+        this.$root.$emit("show_modal_filter", filter);
+      }
+    },
   },
 };
 </script>
