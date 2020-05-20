@@ -2,7 +2,7 @@
   <div class="criteria-applied">
     <el-card
       class="box-card"
-      v-if="filters && filters.length > 0"
+      v-if="applyFilters.length > 0"
       :body-style="{
         padding: '0px 20px 10px 20px',
         maxHeight: '250px',
@@ -15,7 +15,7 @@
       <div>
         <el-collapse v-model="activeNames">
           <el-collapse-item
-            v-for="(item, key) in applyFilters(filters)"
+            v-for="(item, key) in applyFilters"
             :title="item.name"
             :name="key"
             :key="key"
@@ -34,6 +34,14 @@
         </el-collapse>
       </div>
     </el-card>
+    <div v-if="applyFilters.length === 0">
+      <el-alert
+        title="Aun no aplicado criterios a su búsqueda"
+        type="info"
+        :closable="false"
+      >
+      </el-alert>
+    </div>
   </div>
 </template>
 
@@ -50,13 +58,12 @@ export default {
     ...mapGetters({
       filters: "filters/filters",
     }),
-  },
-  mounted() {},
-  methods: {
-    applyFilters(filters) {
-      return filters.filter((item) => item.apply);
+    applyFilters: function() {
+      return this.filters.filter((item) => item.apply);
     },
   },
+  mounted() {},
+  methods: {},
 };
 </script>
 
