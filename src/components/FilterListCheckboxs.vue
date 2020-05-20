@@ -16,7 +16,7 @@
           v-if="structure === `0.2`"
           class="sidebar-menu"
           style="z-index: 1; background-color: rgb(255, 255, 255); max-width: 402.68px;"
-          :offset="{ top: 217, bottom: 0 }"
+          :offset="{ top: 237, bottom: 0 }"
           relative-element-selector="#example-content"
         >
           <div class="panel panel-default cd col_left">
@@ -36,14 +36,14 @@
           class="sidebar-menu"
           v-if="structure === `0.2`"
           style="z-index: 1; background-color: rgb(255, 255, 255); max-width: 857px;"
-          :offset="{ top: 217, bottom: 0 }"
+          :offset="{ top: 237, bottom: 0 }"
           relative-element-selector="#example-content"
         >
           <div class="panel panel-default cd" style="margin-bottom: 0px;">
             <btns-filter class="m-b-10"></btns-filter>
           </div>
         </affix>
-        <div class="panel panel-default cd">
+        <div :class="stylesClass.panel_filtres_items">
           <div class="panel-body" id="example-content">
             <div :class="stylesClass.conten_row_flex">
               <div :class="stylesClass.conten_item">
@@ -96,12 +96,14 @@ export default {
         styles.conten_item = "";
         styles.col_left = "";
         styles.col_main = "";
+        styles.panel_filtres_items = "panel panel-default cd";
       } else if (this.structure === "0.2") {
         styles.conten_row = "row";
         styles.conten_row_flex = "row";
         styles.conten_item = "col-md-12";
         styles.col_left = "col-md-4";
         styles.col_main = "col-md-8";
+        styles.panel_filtres_items = "panel panel-default cd m-t-20";
       }
       return styles;
     },

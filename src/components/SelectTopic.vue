@@ -1,26 +1,23 @@
 <template>
   <div class="btn-tools">
     <el-tooltip class="item" effect="light" content="Temas" placement="left">
-      <el-dropdown size="mini" placement="bottom" @command="setTeme">
-        <el-button
-          type="primary"
-          style="padding: 3px 5px 3px 0px; font-size: 15px;"
+      <div class="dropdown">
+        <button
+          class="btn btn-primary dropdown-toggle"
+          type="button"
+          data-toggle="dropdown"
         >
-          <i class="el-icon-s-tools el-icon--right"></i>
-        </el-button>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item
-            command="0.1"
-            :class="structure === `0.1` ? `active` : ``"
-            >Tema 1</el-dropdown-item
-          >
-          <el-dropdown-item
-            command="0.2"
-            :class="structure === `0.2` ? `active` : ``"
-            >Tema 2</el-dropdown-item
-          >
-        </el-dropdown-menu>
-      </el-dropdown>
+          <i class="el-icon-s-tools"></i>
+        </button>
+        <ul class="dropdown-menu" style="left: -57px; min-width: 100px;">
+          <li :class="structure === `0.1` ? `active` : ``">
+            <a href="#" @click="setTeme('0.1')">Tema 1</a>
+          </li>
+          <li :class="structure === `0.2` ? `active` : ``">
+            <a href="#" @click="setTeme('0.2')">Tema 2</a>
+          </li>
+        </ul>
+      </div>
     </el-tooltip>
   </div>
 </template>
