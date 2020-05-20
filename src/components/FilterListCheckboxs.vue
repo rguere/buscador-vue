@@ -1,6 +1,5 @@
 <template>
   <div>
-    <select-topic></select-topic>
     <filter-buttons v-if="structure === `0.1`"></filter-buttons>
     <div v-if="structure === `0.2`">
       <p
