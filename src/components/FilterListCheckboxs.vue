@@ -15,6 +15,7 @@
         <affix
           v-if="structure === `0.2`"
           class="sidebar-menu"
+          style="z-index: 1; background-color: rgb(255, 255, 255); max-width: 402.68px;"
           :offset="{ top: 217, bottom: 0 }"
           relative-element-selector="#example-content"
         >
@@ -34,7 +35,7 @@
         <affix
           class="sidebar-menu"
           v-if="structure === `0.2`"
-          style="z-index: 1; background-color: rgb(255, 255, 255);"
+          style="z-index: 1; background-color: rgb(255, 255, 255); max-width: 857px;"
           :offset="{ top: 217, bottom: 0 }"
           relative-element-selector="#example-content"
         >

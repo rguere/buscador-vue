@@ -1,7 +1,12 @@
 <template>
   <div class="btn-tools">
     <el-tooltip class="item" effect="light" content="Temas" placement="left">
-      <el-dropdown size="mini" @command="setTeme">
+      <el-dropdown
+        size="mini"
+        placement="bottom"
+        tabindex="0"
+        @command="setTeme"
+      >
         <el-button
           type="primary"
           style="padding: 3px 5px 3px 0px; font-size: 15px;"
