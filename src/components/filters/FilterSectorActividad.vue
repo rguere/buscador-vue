@@ -811,10 +811,14 @@ export default {
           .dispatch("search/filtrar", beforeForm)
           .then((response) => {
             this.updateNumberSelectedCompanies(response.cantidad);
+            const selected_cnae = [...this.selected_cnae];
+            const selected_industria = [...this.selected_industria];
+            const selecteds = selected_cnae.concat(selected_industria);
             this.$store.dispatch("filters/addFilters", {
               name: this.title,
               quantity: this.selected_by_code_cnae_and_industria,
               cantidades: response,
+              items: selecteds,
             });
             this.areApplied = true;
             this.reapply = false;

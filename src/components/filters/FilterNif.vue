@@ -588,6 +588,7 @@ export default {
               name: this.title,
               quantity: this.selected_by_list_nif,
               cantidades: response,
+              items: this.selected_list_nif,
             });
             this.updateNumberSelectedCompanies(response.cantidad);
             this.areApplied = true;

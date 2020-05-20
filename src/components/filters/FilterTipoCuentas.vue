@@ -421,6 +421,7 @@ export default {
               name: this.title,
               quantity: this.selected_by_tipo_cuentas,
               cantidades: response,
+              items: this.tipo_cuentas,
             });
             this.areApplied = true;
             this.reapply = false;

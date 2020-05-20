@@ -564,6 +564,7 @@ export default {
               name: this.title,
               quantity: this.selected_by_auditores,
               cantidades: response,
+              items: this.selected_auditores,
             });
             this.updateNumberSelectedCompanies(response.cantidad);
             this.areApplied = true;

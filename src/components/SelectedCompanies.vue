@@ -24,7 +24,8 @@ export default {
 .col_left {
   .selected_companies {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
+    margin-top: 0;
     span.f-20 {
       display: block;
       font-size: 35px;

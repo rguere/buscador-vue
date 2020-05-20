@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import { handleScroll } from "./../utils";
+// import { handleScroll } from "./../utils";
 export default {
   name: "filter-buttons",
   data() {
@@ -47,11 +47,11 @@ export default {
   },
   computed: {},
   mounted() {
-    window.addEventListener("scroll", handleScroll);
+    //window.addEventListener("scroll", handleScroll);
   },
   watch: {},
   destroyed() {
-    window.removeEventListener("scroll", handleScroll);
+    //window.removeEventListener("scroll", handleScroll);
   },
   methods: {},
 };

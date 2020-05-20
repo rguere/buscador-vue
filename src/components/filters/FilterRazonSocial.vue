@@ -529,6 +529,7 @@ export default {
               name: this.title,
               quantity: this.selected_by_social_reasons,
               cantidades: response,
+              items: this.selected_social_reasons,
             });
             this.updateNumberSelectedCompanies(response.cantidad);
             this.areApplied = true;

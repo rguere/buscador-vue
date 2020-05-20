@@ -694,6 +694,7 @@ export default {
               name: this.title,
               quantity: this.selected_by_antiguedad,
               cantidades: response,
+              items: this.selected_antiguedad,
             });
             this.areApplied = true;
             this.reapply = false;
@@ -737,6 +738,7 @@ export default {
               name: this.title,
               quantity: this.selected_by_antiguedad,
               cantidades: response,
+              items: this.selected_antiguedad,
             });
             this.areApplied = true;
             this.reapply = false;
@@ -775,6 +777,7 @@ export default {
               name: this.title,
               quantity: this.selected_by_antiguedad,
               cantidades: response,
+              items: this.selected_custom_antiguedad,
             });
             this.areApplied = true;
             this.reapply = false;

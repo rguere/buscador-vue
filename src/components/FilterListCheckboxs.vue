@@ -12,21 +12,39 @@
       </p>
     </div>
     <div :class="stylesClass.conten_row">
-      <div :class="stylesClass.col_left" v-if="structure === `0.2`">
-        <div class="panel panel-default cd col_left">
-          <div class="panel-body">
-            <selected-companies></selected-companies>
-            <btn-visualizar-resultados
-              class="m-b-10"
-            ></btn-visualizar-resultados>
-            <btn-empty-filter class="m-b-10"></btn-empty-filter>
+      <div :class="stylesClass.col_left">
+        <affix
+          v-if="structure === `0.2`"
+          class="sidebar-menu"
+          :offset="{ top: 217, bottom: 0 }"
+          relative-element-selector="#example-content"
+        >
+          <div class="panel panel-default cd col_left">
+            <div class="panel-body">
+              <selected-companies></selected-companies>
+              <btn-visualizar-resultados
+                class="m-b-10"
+              ></btn-visualizar-resultados>
+              <btn-empty-filter class="m-b-10"></btn-empty-filter>
+              <criteria-applied></criteria-applied>
+            </div>
           </div>
-        </div>
+        </affix>
       </div>
       <div :class="stylesClass.col_main">
-        <btns-filter v-if="structure === `0.2`" class="m-b-10"></btns-filter>
+        <affix
+          class="sidebar-menu"
+          v-if="structure === `0.2`"
+          style="z-index: 1; background-color: rgb(255, 255, 255);"
+          :offset="{ top: 217, bottom: 0 }"
+          relative-element-selector="#example-content"
+        >
+          <div class="panel panel-default cd" style="margin-bottom: 0px;">
+            <btns-filter class="m-b-10"></btns-filter>
+          </div>
+        </affix>
         <div class="panel panel-default cd">
-          <div class="panel-body">
+          <div class="panel-body" id="example-content">
             <div :class="stylesClass.conten_row_flex">
               <div :class="stylesClass.conten_item">
                 <filter-ubicacion></filter-ubicacion>
@@ -82,8 +100,8 @@ export default {
         styles.conten_row = "row";
         styles.conten_row_flex = "row";
         styles.conten_item = "col-md-12";
-        styles.col_left = "col-md-3";
-        styles.col_main = "col-md-9";
+        styles.col_left = "col-md-4";
+        styles.col_main = "col-md-8";
       }
       return styles;
     },

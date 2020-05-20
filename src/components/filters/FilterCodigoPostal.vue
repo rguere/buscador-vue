@@ -689,6 +689,7 @@ export default {
               name: this.title,
               quantity: this.selected_by_zip_codes,
               cantidades: response,
+              items: this.selected_zip_codes,
             });
             this.updateNumberSelectedCompanies(response.cantidad);
             this.areApplied = true;

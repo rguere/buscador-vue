@@ -515,6 +515,7 @@ export default {
               name: this.title,
               quantity: this.selected_by_empleados,
               cantidades: response,
+              items: this.selected_empleados,
             });
             this.areApplied = true;
             this.reapply = false;
@@ -535,6 +536,10 @@ export default {
         this.hideModal();
         this.loadingEmpleados = true;
         this.form.empleados = [];
+        this.selected_empleados = [];
+        this.selected_empleados_string = JSON.stringify(
+          this.selected_empleados
+        );
         let employees_from = parseInt(this.employees_from, 10),
           employees_to = parseInt(this.employees_to, 10),
           mayor = 0,
@@ -561,6 +566,7 @@ export default {
               name: this.title,
               quantity: this.selected_by_empleados,
               cantidades: response,
+              items: [],
             });
             this.areApplied = true;
             this.reapply = false;
@@ -620,7 +626,6 @@ export default {
       this.incluir_null = false;
       this.employees_from = "";
       this.employees_to = "";
-      this.$v.$reset();
       sendEvent("filtro-limpiado", this.title);
     },
     emptyFilter() {

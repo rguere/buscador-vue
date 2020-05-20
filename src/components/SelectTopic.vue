@@ -57,7 +57,7 @@ export default {
 .btn-tools {
   z-index: 99;
   position: fixed;
-  top: 150px;
-  right: 10px;
+  top: 220px;
+  right: 0px;
 }
 </style>

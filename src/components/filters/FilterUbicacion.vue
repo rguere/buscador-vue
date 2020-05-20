@@ -464,11 +464,7 @@ export default {
     });
   },
   methods: {
-    fetchSearch() {
-      // this.$store.dispatch('search/fetchSearch').then(() => {
-      //   this.options[0].children = (this.search && this.search.provincia_localidad) ? this.search.provincia_localidad : []
-      // })
-    },
+    fetchSearch() {},
     showModal() {
       sendPageView(`filtro-ubicacion`, `Buscador - Filtro de Ubicacion`);
       this.modalVisible = true;
@@ -543,6 +539,7 @@ export default {
               name: this.title,
               quantity: this.selected_by_location,
               cantidades: response,
+              items: this.selected_provinces_localidad,
             });
             this.areApplied = true;
             this.reapply = false;

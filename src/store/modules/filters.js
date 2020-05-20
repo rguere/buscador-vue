@@ -25,7 +25,9 @@ const initialState = () => {
         name: "Ubicación",
         slug: "filter_ubicacion",
         offset: 290,
+        offset_v2: -65,
         apply: false,
+        items: [],
         quantity: 0,
         key: "comunidades",
         disabled: false,
@@ -34,7 +36,9 @@ const initialState = () => {
         name: "Antigüedad",
         slug: "filter_antiguedad",
         offset: 290,
+        offset_v2: -65,
         apply: false,
+        items: [],
         quantity: 0,
         key: "antiguedad",
         disabled: false,
@@ -43,7 +47,9 @@ const initialState = () => {
         name: "Número de empleados",
         slug: "filter_numero_de_empleados",
         offset: 290,
+        offset_v2: -65,
         apply: false,
+        items: [],
         quantity: 0,
         key: "empleados",
         disabled: false,
@@ -52,7 +58,9 @@ const initialState = () => {
         name: "Tipo de cuentas",
         slug: "filter_tipo_de_cuentas",
         offset: 290,
+        offset_v2: -2040,
         apply: false,
+        items: [],
         quantity: 0,
         key: "TipoCuentas",
         disabled: false,
@@ -61,7 +69,9 @@ const initialState = () => {
         name: "Sector/Actividad",
         slug: "filter_sector_actividad",
         offset: 290,
+        offset_v2: -65,
         apply: false,
+        items: [],
         quantity: 0,
         key: "sector_actividad",
         disabled: false,
@@ -70,7 +80,9 @@ const initialState = () => {
         name: "Estado",
         slug: "filter_estado",
         offset: 290,
+        offset_v2: -65,
         apply: false,
+        items: [],
         quantity: 0,
         key: "estado",
         disabled: true,
@@ -79,7 +91,9 @@ const initialState = () => {
         name: "Cargos",
         slug: "filter_cargos",
         offset: 290,
+        offset_v2: -65,
         apply: false,
+        items: [],
         quantity: 0,
         key: "cargos",
         disabled: true,
@@ -88,7 +102,9 @@ const initialState = () => {
         name: "Código Postal",
         slug: "filter_codigo_postal",
         offset: 290,
+        offset_v2: -2040,
         apply: false,
+        items: [],
         quantity: 0,
         key: "codigosPostales",
         disabled: false,
@@ -97,7 +113,9 @@ const initialState = () => {
         name: "Nombre o razón social",
         slug: "filter_nombre_o_razon_social",
         offset: 290,
+        offset_v2: -2040,
         apply: false,
+        items: [],
         quantity: 0,
         key: "razonSocial",
         disabled: false,
@@ -106,7 +124,9 @@ const initialState = () => {
         name: "NIF",
         slug: "filter_nif",
         offset: 290,
+        offset_v2: -2040,
         apply: false,
+        items: [],
         quantity: 0,
         key: "cif",
         disabled: false,
@@ -115,7 +135,9 @@ const initialState = () => {
         name: "Años con cuentas disponibles",
         slug: "filter_anios_con_cuentas_disponibles",
         offset: 290,
+        offset_v2: -65,
         apply: false,
+        items: [],
         quantity: 0,
         key: "cuentasDisponibles",
         disabled: false,
@@ -124,7 +146,9 @@ const initialState = () => {
         name: "Auditores",
         slug: "filter_auditores",
         offset: 290,
+        offset_v2: -2040,
         apply: false,
+        items: [],
         quantity: 0,
         key: "auditores",
         disabled: false,
@@ -133,7 +157,9 @@ const initialState = () => {
         name: "Información Financiera",
         slug: "filter_informacion_financiera",
         offset: 290,
+        offset_v2: -65,
         apply: false,
+        items: [],
         quantity: 0,
         key: "informacion",
         disabled: true,
@@ -142,7 +168,9 @@ const initialState = () => {
         name: "Directivos y Vinculaciones",
         slug: "filter_directivos_y_vinculaciones",
         offset: 290,
+        offset_v2: -65,
         apply: false,
+        items: [],
         quantity: 0,
         key: "vinculaciones",
         disabled: true,
@@ -172,23 +200,25 @@ export const mutations = {
     }
   },
 
-  [types.ADD_FILTER](state, { name, quantity, cantidades }) {
+  [types.ADD_FILTER](state, { name, quantity, cantidades, items }) {
     state.applied_filters.push(name);
     state.filters = state.filters.map((elem) => {
       if (elem.name === name) {
         elem.apply = true;
         elem.quantity = quantity;
+        elem.items = items;
       }
       return elem;
     });
     state.cantidades = cantidades;
   },
 
-  [types.SET_QUANTITIES](state, { name, quantity, cantidades }) {
+  [types.SET_QUANTITIES](state, { name, quantity, cantidades, items }) {
     state.filters = state.filters.map((elem) => {
       if (elem.name === name) {
         elem.apply = true;
         elem.quantity = quantity;
+        elem.items = items;
       }
       return elem;
     });
@@ -224,18 +254,20 @@ export const actions = {
       initial: initialState(),
     });
   },
-  addFilters({ commit }, { name, quantity, cantidades }) {
+  addFilters({ commit }, { name, quantity, cantidades, items }) {
     if (!state.applied_filters.includes(name)) {
       commit(types.ADD_FILTER, {
         name: name,
         quantity: quantity,
         cantidades: cantidades,
+        items: items,
       });
     } else {
       commit(types.SET_QUANTITIES, {
         name: name,
         quantity: quantity,
         cantidades: cantidades,
+        items: items,
       });
     }
   },

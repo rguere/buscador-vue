@@ -6,6 +6,7 @@
         class="btn btn-default"
         v-if="!filter.disabled"
         :data-offset="filter.offset"
+        :data-offsetv2="filter.offset_v2"
         :class="filter.apply ? 'active' : ''"
         >{{ filter.name }}</a
       >
@@ -22,6 +23,7 @@
 </template>
 
 <script>
+// v-scroll-to="{ el: `#${filter.slug}`, offset: -100, onDone: onDone, }"
 import { handleScroll, howAnimation, scrollIt } from "./../utils";
 import { mapGetters } from "vuex";
 import swal from "sweetalert2";
@@ -39,7 +41,9 @@ export default {
     }),
   },
   mounted() {
-    window.addEventListener("scroll", handleScroll);
+    if (this.structure === "0.1") {
+      window.addEventListener("scroll", handleScroll);
+    }
     let links = document.querySelectorAll(".filter-btns a");
     links.forEach((item) => {
       item.addEventListener("click", (event) => {
@@ -48,7 +52,9 @@ export default {
         const href = target.getAttribute("href");
         const element = document.querySelector(href);
         const offset =
-          this.structure === "0.1" ? parseInt(target.dataset.offset) : 0;
+          this.structure === "0.1"
+            ? parseInt(target.dataset.offset)
+            : parseInt(target.dataset.offsetv2);
         scrollIt(element, 300, "easeOutQuad", offset, () => {
           howAnimation(element);
         });
@@ -56,7 +62,11 @@ export default {
     });
   },
   watch: {},
-  destroyed() {},
+  destroyed() {
+    if (this.structure === "0.1") {
+      window.removeEventListener("scroll", handleScroll);
+    }
+  },
   methods: {
     resetFilter(filter) {
       swal

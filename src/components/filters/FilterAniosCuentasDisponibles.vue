@@ -558,6 +558,7 @@ export default {
               name: this.title,
               quantity: this.selected_by_cuentas_disponibles,
               cantidades: response,
+              items: this.selected_cuentas_disponibles,
             });
             this.areApplied = true;
             this.reapply = false;

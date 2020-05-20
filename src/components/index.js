@@ -26,6 +26,7 @@ import BtnEmptyFilter from "./BtnEmptyFilter.vue";
 import BtnVisualizarResultados from "./BtnVisualizarResultados.vue";
 import SelectedCompanies from "./SelectedCompanies.vue";
 import SelectTopic from "./SelectTopic.vue";
+import CriteriaApplied from "./CriteriaApplied.vue";
 
 [
   MenuInfocif,
@@ -53,6 +54,7 @@ import SelectTopic from "./SelectTopic.vue";
   BtnVisualizarResultados,
   SelectedCompanies,
   SelectTopic,
+  CriteriaApplied,
 ].forEach((Component) => {
   Vue.component(Component.name, Component);
 });
