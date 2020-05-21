@@ -43,29 +43,48 @@
             <btns-filter class="m-b-10"></btns-filter>
           </div>
         </affix>
-        <div :class="stylesClass.panel_filtres_items">
+        <div v-if="structure === `0.1`" class="panel panel-default cd">
           <div class="panel-body" id="example-content">
-            <div :class="stylesClass.conten_row_flex">
-              <div :class="stylesClass.conten_item">
+            <div class="conten-flex-70-30">
+              <div>
                 <filter-ubicacion></filter-ubicacion>
                 <filter-antiguedad></filter-antiguedad>
                 <filter-numero-empleados></filter-numero-empleados>
                 <filter-anios-cuentas-disponibles></filter-anios-cuentas-disponibles>
                 <filter-sector-actividad></filter-sector-actividad>
                 <!--<filter-estado></filter-estado>
-            <filter-informacion-financiera></filter-informacion-financiera>
-            <filter-cargos></filter-cargos>-->
+                <filter-informacion-financiera></filter-informacion-financiera>
+                <filter-cargos></filter-cargos>-->
               </div>
-              <div :class="stylesClass.conten_item">
+              <div>
                 <filter-codigo-postal></filter-codigo-postal>
                 <filter-razon-social></filter-razon-social>
                 <filter-nif></filter-nif>
                 <filter-tipo-cuentas></filter-tipo-cuentas>
                 <filter-auditores></filter-auditores>
                 <!--
-            <el-badge value="Próximamente" class="item">
-              <filter-directivos-vinculaciones></filter-directivos-vinculaciones>
-            </el-badge> -->
+                <el-badge value="Próximamente" class="item">
+                  <filter-directivos-vinculaciones></filter-directivos-vinculaciones>
+                </el-badge> -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div v-if="structure === `0.2`" class="panel panel-default cd m-t-20">
+          <div class="panel-body" id="example-content">
+            <div class="row">
+              <div class="col-md-12">
+                <filter-ubicacion></filter-ubicacion>
+                <filter-codigo-postal></filter-codigo-postal>
+                <filter-antiguedad></filter-antiguedad>
+                <filter-razon-social></filter-razon-social>
+                <filter-numero-empleados></filter-numero-empleados>
+                <filter-nif></filter-nif>
+                <filter-anios-cuentas-disponibles></filter-anios-cuentas-disponibles>
+                <filter-tipo-cuentas></filter-tipo-cuentas>
+                <filter-sector-actividad></filter-sector-actividad>
+                <filter-auditores></filter-auditores>
               </div>
             </div>
           </div>

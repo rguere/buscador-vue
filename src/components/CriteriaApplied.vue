@@ -2,7 +2,7 @@
   <div class="criteria-applied">
     <el-card
       class="box-card"
-      v-if="applyFilters.length > 0"
+      v-if="orderFilters.length > 0"
       :body-style="{
         padding: '0px 20px 10px 20px',
         maxHeight: '250px',
@@ -15,11 +15,18 @@
       <div>
         <el-collapse v-model="activeNames">
           <el-collapse-item
-            v-for="(item, key) in applyFilters"
-            :title="item.name"
+            v-for="(item, key) in orderFilters"
             :name="key"
             :key="key"
           >
+            <template slot="title">
+              <div class="flex-2" v-if="item.apply">
+                <span> {{ item.name }} </span>
+                <span class="num-fil"
+                  >( {{ item.quantity | numeral("0,0") }} )</span
+                >
+              </div>
+            </template>
             <div v-for="(_item, _key) in item.items" :key="_key">
               <div class="flex-2" v-if="item.name === 'Nombre o razón social'">
                 <span class="name-checkbox">{{ _item.RazonSocial }}</span>
@@ -34,7 +41,7 @@
         </el-collapse>
       </div>
     </el-card>
-    <div v-if="applyFilters.length === 0">
+    <div v-if="orderFilters.length === 0">
       <el-alert
         title="Aun no aplicado criterios a su búsqueda"
         type="info"
@@ -46,6 +53,7 @@
 </template>
 
 <script>
+import { orderFilters } from "./../utils";
 import { mapGetters } from "vuex";
 export default {
   name: "criteria-applied",
@@ -56,10 +64,26 @@ export default {
   },
   computed: {
     ...mapGetters({
+      applied_filters: "filters/applied_filters",
       filters: "filters/filters",
+      form: "filters/form",
+      cantidades: "filters/cantidades",
     }),
-    applyFilters: function() {
-      return this.filters.filter((item) => item.apply);
+    orderFilters: function() {
+      let order = orderFilters(this.filters, this.applied_filters, this.form);
+      for (const prop in this.cantidades) {
+        let split = prop.split(".");
+        if (
+          split &&
+          split[0] === "filtro" &&
+          split[1] &&
+          order &&
+          order[split[1]]
+        ) {
+          order[split[1]].quantity = this.cantidades[prop].cantidad;
+        }
+      }
+      return order;
     },
   },
   mounted() {},
