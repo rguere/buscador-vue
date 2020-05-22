@@ -342,7 +342,6 @@ export const scrollIt = (
   destination,
   duration = 200,
   easing = "linear",
-  offset = 0,
   callback
 ) => {
   const easings = {
@@ -404,12 +403,11 @@ export const scrollIt = (
     document.getElementsByTagName("body")[0].clientHeight;
   const destinationOffset =
     typeof destination === "number" ? destination : destination.offsetTop;
-  const destinationOffsetToScroll =
-    Math.round(
-      documentHeight - destinationOffset < windowHeight
-        ? documentHeight - windowHeight
-        : destinationOffset
-    ) - offset;
+  const destinationOffsetToScroll = Math.round(
+    documentHeight - destinationOffset < windowHeight
+      ? documentHeight - windowHeight
+      : destinationOffset
+  );
 
   if ("requestAnimationFrame" in window === false) {
     window.scroll(0, destinationOffsetToScroll);

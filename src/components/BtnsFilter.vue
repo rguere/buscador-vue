@@ -5,6 +5,12 @@
         :href="`#${filter.slug}`"
         class="btn btn-default"
         v-if="!filter.disabled"
+        v-scroll-to="{
+          el: `#${filter.slug}`,
+          offset: structure === '0.1' ? filter.offset : filter.offset_v2,
+          onDone: onDone,
+        }"
+        @click="scrollItAnimation(filter, $event)"
         :data-offset="filter.offset"
         :data-offsetv2="filter.offset_v2"
         :class="filter.apply ? 'active' : ''"
@@ -24,7 +30,7 @@
 
 <script>
 // v-scroll-to="{ el: `#${filter.slug}`, offset: -100, onDone: onDone, }"
-import { handleScroll, howAnimation, scrollIt } from "./../utils";
+import { handleScroll, howAnimation } from "./../utils"; //howAnimation, scrollIt
 import { mapGetters } from "vuex";
 import swal from "sweetalert2";
 export default {
@@ -44,22 +50,6 @@ export default {
     if (this.structure === "0.1") {
       window.addEventListener("scroll", handleScroll);
     }
-    let links = document.querySelectorAll(".filter-btns a");
-    links.forEach((item) => {
-      item.addEventListener("click", (event) => {
-        event.preventDefault();
-        const target = event.target;
-        const href = target.getAttribute("href");
-        const element = document.querySelector(href);
-        const offset =
-          this.structure === "0.1"
-            ? parseInt(target.dataset.offset)
-            : parseInt(target.dataset.offsetv2);
-        scrollIt(element, 300, "easeOutQuad", offset, () => {
-          howAnimation(element);
-        });
-      });
-    });
   },
   watch: {},
   destroyed() {
@@ -86,6 +76,38 @@ export default {
             this.$root.$emit("clean_filter", filter.name);
           }
         });
+    },
+    onDone(element) {
+      howAnimation(element);
+    },
+    scrollItAnimation() {
+      //filter, event
+      // event.preventDefault();
+      // const target = event.target;
+      // const href = target.getAttribute("href");
+      // const element = document.querySelector(href);
+      // const offset =
+      //   this.structure === "0.1"
+      //     ? parseInt(target.dataset.offset)
+      //     : parseInt(target.dataset.offsetv2);
+      // console.log(element, offset);
+      //scrollIt(element, 300, "easeOutQuad");
+      // function myFunction(x) {
+      //   if (x.matches) {
+      //     // If media query matches
+      //     document.body.style.backgroundColor = "yellow";
+      //     console.log("if");
+      //   } else {
+      //     console.log("else");
+      //     document.body.style.backgroundColor = "pink";
+      //     scrollIt(element, 300, "easeOutQuad", offset, () => {
+      //       howAnimation(element);
+      //     });
+      //   }
+      // }
+      // var x = window.matchMedia("(max-width: 1585px)");
+      // myFunction(x);
+      // x.addListener(myFunction);
     },
   },
 };
