@@ -63,19 +63,61 @@
         <el-collapse v-model="collapseTop10">
           <el-collapse-item title="Top 10 Auditores" name="1">
             <div class="div-scroll-200 mb-5">
-              <div v-for="(item, key) in search.auditor" :key="key">
-                <label class="custon-checkboxs">
-                  <input
-                    type="checkbox"
-                    :name="`checkbox_top_10${item.id}`"
-                    v-model="selected_auditores"
-                    @change="handleChange(item, $event)"
-                    :id="`checkbox_top_10${item.id}`"
-                    :value="item"
-                  />
-                  <span class="geekmark"></span>
-                  <span class="name-checkbox">{{ item.label }}</span>
-                </label>
+              <div class="">
+                <div class="col-md-6">
+                  <div
+                    v-for="(item, key) in middle(search.auditor, 1)"
+                    :key="key"
+                  >
+                    <label class="custon-checkboxs">
+                      <img
+                        style="width: 80px; margin-right: 5px;"
+                        :src="`./top10auditores/${item.id}.jpeg`"
+                        :alt="`${item.label}`"
+                      />
+                      <input
+                        type="checkbox"
+                        :name="`checkbox_top_10${item.id}`"
+                        v-model="selected_auditores"
+                        @change="handleChange(item, $event)"
+                        :id="`checkbox_top_10${item.id}`"
+                        :value="item"
+                      />
+                      <span class="geekmark"></span>
+                      <span class="name-checkbox">{{ item.label }}</span>
+                      <span class="num-fil"
+                        >({{ item.data | numeral("0,0") }})</span
+                      >
+                    </label>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div
+                    v-for="(item, key) in middle(search.auditor, 2)"
+                    :key="key"
+                  >
+                    <label class="custon-checkboxs">
+                      <img
+                        style="width: 80px; margin-right: 5px;"
+                        :src="`./top10auditores/${item.id}.jpeg`"
+                        :alt="`${item.label}`"
+                      />
+                      <input
+                        type="checkbox"
+                        :name="`checkbox_top_10${item.id}`"
+                        v-model="selected_auditores"
+                        @change="handleChange(item, $event)"
+                        :id="`checkbox_top_10${item.id}`"
+                        :value="item"
+                      />
+                      <span class="geekmark"></span>
+                      <span class="name-checkbox">{{ item.label }}</span>
+                      <span class="num-fil"
+                        >({{ item.data | numeral("0,0") }})</span
+                      >
+                    </label>
+                  </div>
+                </div>
               </div>
             </div>
           </el-collapse-item>
@@ -243,6 +285,11 @@
                               :key="key"
                             >
                               <label class="custon-checkboxs">
+                                <img
+                                  style="width: 80px; margin-right: 5px;"
+                                  :src="`./top10auditores/${item.id}.jpeg`"
+                                  :alt="`${item.label}`"
+                                />
                                 <input
                                   type="checkbox"
                                   :name="`checkbox_detalles_top_10${item.id}`"
@@ -284,11 +331,6 @@
                     <thead>
                       <tr>
                         <th scope="col">Razón social de la empresa</th>
-                        <!-- <th scope="col">NIF</th>
-                        <th scope="col">Provincia</th>
-                        <th scope="col">Localidad</th>
-                        <th scope="col">Último año cuentas disponibles</th> -->
-                        <!--<th scope="col">Ventas último año disponible (miles de €)</th>-->
                       </tr>
                     </thead>
                     <tbody>
@@ -308,16 +350,6 @@
                             </label>
                           </div>
                         </th>
-                        <!-- <td>{{ item.CIF }}</td>
-                        <td>{{ item.Provincia }}</td>
-                        <td>{{ item.Localidad }}</td>
-                        <td>
-                          {{
-                            item.UltimaCuentaAnual
-                              ? item.UltimaCuentaAnual.Ejercicio
-                              : ""
-                          }}
-                        </td> -->
                       </tr>
                     </tbody>
                   </table>
@@ -342,10 +374,6 @@
                     <thead>
                       <tr>
                         <th scope="col">Razón social de la empresa</th>
-                        <!-- <th scope="col">NIF</th>
-                        <th scope="col">Provincia</th>
-                        <th scope="col">Localidad</th>
-                        <th scope="col">Último año cuentas disponibles</th> -->
                       </tr>
                     </thead>
                     <tbody>
@@ -368,16 +396,6 @@
                             </label>
                           </div>
                         </th>
-                        <!-- <td>{{ item.CIF }}</td>
-                        <td>{{ item.Provincia }}</td>
-                        <td>{{ item.Localidad }}</td>
-                        <td>
-                          {{
-                            item.UltimaCuentaAnual
-                              ? item.UltimaCuentaAnual.Ejercicio
-                              : ""
-                          }}
-                        </td> -->
                       </tr>
                     </tbody>
                   </table>
@@ -489,8 +507,19 @@ export default {
         this.clean();
       }
     },
+    search: function() {
+      this.search.auditor.map((item) => {
+        console.log(item.id, " --- ", item.label);
+      });
+    },
   },
   methods: {
+    middle(items, part) {
+      let _items = [...items];
+      let m1 = _items.splice(0, _items.length / 2);
+      let m2 = _items.splice(0, _items.length);
+      return part === 1 ? m1 : m2;
+    },
     validateBormeAuditor() {
       if (this.dataFrm.length !== 0) {
         this.loadingValidar = true;
