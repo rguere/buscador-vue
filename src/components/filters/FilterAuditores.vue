@@ -507,11 +507,6 @@ export default {
         this.clean();
       }
     },
-    search: function() {
-      this.search.auditor.map((item) => {
-        console.log(item.id, " --- ", item.label);
-      });
-    },
   },
   methods: {
     middle(items, part) {
