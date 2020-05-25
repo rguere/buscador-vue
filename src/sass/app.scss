@@ -221,6 +221,24 @@ span.num-fil {
   overflow-y: scroll;
 }
 
+.div-scroll-400 {
+  height: 400px;
+  overflow-y: scroll;
+}
+
+.div-scroll-500 {
+  height: 500px;
+  overflow-y: scroll;
+}
+
+.m-0 {
+  margin: 0;
+}
+
+.p-0 {
+  padding: 0;
+}
+
 .m-r-5 {
   margin-right: 5px;
 }
@@ -431,6 +449,10 @@ span.num-fil {
   .vue-treeselect__option {
     background-color: #fff !important;
   }
+}
+
+.el-popover.el-popper {
+  z-index: 0 !important;
 }
 
 @import "media_queries.scss";

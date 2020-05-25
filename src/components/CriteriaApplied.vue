@@ -5,7 +5,7 @@
       v-if="orderFilters.length > 0"
       :body-style="{
         padding: '0px 20px 10px 20px',
-        maxHeight: '250px',
+        height: '48vh',
         overflowY: 'scroll',
       }"
     >
@@ -93,6 +93,8 @@ export default {
 
 <style lang="scss">
 .criteria-applied {
+  height: 55vh;
+  max-width: 55vh;
   .el-collapse {
     border-top: 1px solid #fff;
     border-bottom: 1px solid #fff;

@@ -27,6 +27,7 @@ import BtnVisualizarResultados from "./BtnVisualizarResultados.vue";
 import SelectedCompanies from "./SelectedCompanies.vue";
 import SelectTopic from "./SelectTopic.vue";
 import CriteriaApplied from "./CriteriaApplied.vue";
+import InforFooter from "./InforFooter.vue";
 
 [
   MenuInfocif,
@@ -55,6 +56,7 @@ import CriteriaApplied from "./CriteriaApplied.vue";
   SelectedCompanies,
   SelectTopic,
   CriteriaApplied,
+  InforFooter,
 ].forEach((Component) => {
   Vue.component(Component.name, Component);
 });

@@ -58,6 +58,7 @@
       <br />
       <div class="tab-content">
         <div
+          v-if="structure === `0.1`"
           id="Codigo_CNAE"
           class="tab-pane fade in active"
           style="margin-bottom: 10px;"
@@ -196,6 +197,132 @@
             <strong>Oh!</strong> datos no encontrados.
           </div>
         </div>
+
+        <div
+          v-if="structure === `0.2`"
+          id="Codigo_CNAE"
+          class="tab-pane fade in active"
+          style="margin-bottom: 10px;"
+        >
+          <div v-if="search.cnae && search.cnae.length != 0" class="invert">
+            <div class="row">
+              <div class="col-md-4">
+                <el-alert
+                  title="Navega a travez de los diferentes arboles de Grupos Cnae, o ingresa directamente el o los codigos que necesites incluir en tu busqueda."
+                  type="success"
+                  :closable="false"
+                >
+                </el-alert>
+                <div class="flex-search-cnae">
+                  <div v-for="(item, key) in search.cnae" :key="key">
+                    <el-popover
+                      placement="top"
+                      :title="item.id"
+                      width="200"
+                      trigger="click"
+                      :content="item.label"
+                    >
+                      <el-button slot="reference">
+                        <div>
+                          {{ item.id }}
+                        </div>
+                        <div>
+                          <span class="num-fil"
+                            >({{ item.data | numeral("0,0") }})</span
+                          >
+                        </div>
+                      </el-button>
+                    </el-popover>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-8">
+                <el-select
+                  id="SearchTheProvinceorTown"
+                  name="SearchTheProvinceorTown"
+                  v-model="valueSelect"
+                  multiple
+                  clearable
+                  filterable
+                  remote
+                  reserve-keyword
+                  placeholder="Introduce el código de uno o varios Códigos CNAE para “BUSCAR”"
+                  :popper-append-to-body="false"
+                  popper-class="SearchTheProvinceorTown"
+                  :remote-method="remoteMethod"
+                  :loading="loadingSelect"
+                  @change="changeMethod"
+                  @clear="changeClear"
+                  @remove-tag="changeRemoveTag"
+                >
+                  <el-option
+                    v-for="item in optionsSelect"
+                    :key="item.id"
+                    :label="`${item.id} - ${item.label}`"
+                    :value="item.id"
+                  ></el-option>
+                </el-select>
+                <br />
+                <br />
+                <dir class="div-scroll-400 m-0 p-0">
+                  <div v-for="(item, key) in search.cnae" :key="key">
+                    <div v-if="item.children && Array.isArray(item.children)">
+                      <div class="treeselect-items">
+                        <treeselect
+                          valueFormat="object"
+                          :name="`options-${key}`"
+                          :id="`options-${key}`"
+                          :multiple="true"
+                          :options="[item]"
+                          :always-open="true"
+                          :default-expand-level="0"
+                          :load-options="fetchSearch"
+                          :limit="0"
+                          :limitText="(t) => ''"
+                          :disableFuzzyMatching="true"
+                          @input="inputTreeselect"
+                          @select="selectTreeselect"
+                          @deselect="deselectTreeselect"
+                          placeholder="Seleccionar"
+                          search-nested
+                          v-model="selected_cnae"
+                        >
+                          <label
+                            slot="option-label"
+                            slot-scope="{
+                              node,
+                              shouldShowCount,
+                              count,
+                              labelClassName,
+                              countClassName,
+                            }"
+                            :class="labelClassName"
+                          >
+                            {{ node.id }} - {{ node.label }}
+                            <span class="num-fil" v-if="node.raw.id != 'all'"
+                              >({{ node.raw.data | numeral("0,0") }})</span
+                            >
+                            <span v-if="shouldShowCount" :class="countClassName"
+                              >({{ count }})</span
+                            >
+                          </label>
+                        </treeselect>
+                        <br />
+                      </div>
+                    </div>
+                  </div>
+                </dir>
+              </div>
+            </div>
+          </div>
+          <div
+            v-if="search.cnae && search.cnae.length === 0 && !loading"
+            class="alert alert-dismissible alert-primary"
+          >
+            <strong>Oh!</strong> datos no encontrados.
+          </div>
+        </div>
+
         <div id="Sector_INFOCIF" class="tab-pane fade">
           <div v-if="search.industria && search.industria.length != 0">
             <div class="max-height-400-overflow">
@@ -588,6 +715,7 @@ export default {
       selected_companies: "filters/selected_companies",
       applied_filters: "filters/applied_filters",
       filters: "filters/filters",
+      structure: "structure/structure",
     }),
     compareWithNewtoApply: function() {
       let stg = this.selected_cnae_string;
@@ -1038,5 +1166,21 @@ export default {
 .he-nav-btns {
   display: flex;
   justify-content: space-between;
+}
+.flex-search-cnae {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  > div {
+    width: 30%;
+    text-align: center;
+    font-weight: bold;
+    margin: 3px;
+    cursor: pointer;
+    .el-button {
+      width: 100%;
+      padding: 5px 0px;
+    }
+  }
 }
 </style>

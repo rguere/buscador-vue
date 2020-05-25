@@ -9,6 +9,7 @@
       <loading-full-page></loading-full-page>
       <filter-list-checkboxs :search="search"></filter-list-checkboxs>
     </div>
+    <infor-footer></infor-footer>
   </div>
 </template>
 

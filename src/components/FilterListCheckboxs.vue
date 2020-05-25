@@ -16,7 +16,7 @@
           v-if="structure === `0.2`"
           class="sidebar-menu"
           style="z-index: 1; background-color: rgb(255, 255, 255); max-width: 402.68px;"
-          :offset="{ top: 237, bottom: 0 }"
+          :offset="{ top: 237, bottom: 120 }"
           relative-element-selector="#example-content"
         >
           <div class="panel panel-default cd col_left">
