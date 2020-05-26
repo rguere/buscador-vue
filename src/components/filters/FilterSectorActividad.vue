@@ -1,5 +1,10 @@
 <template>
-  <div class="panel panel-default cd" id="filter_sector_actividad">
+  <div
+    :class="
+      `panel panel-default cd structure${structure === '0.2' ? '02' : '01'}`
+    "
+    id="filter_sector_actividad"
+  >
     <div class="panel-heading">
       <p class="panel-title roboto white">
         {{ title }}
@@ -208,7 +213,7 @@
             <div class="row">
               <div class="col-md-4">
                 <el-alert
-                  title="Navega a travez de los diferentes arboles de Grupos Cnae, o ingresa directamente el o los codigos que necesites incluir en tu busqueda."
+                  title="Navega a través de los diferentes arboles de Grupos Cnae, o ingresa directamente el o los códigos que necesites incluir en tu búsqueda."
                   type="success"
                   :closable="false"
                 >
@@ -1181,6 +1186,11 @@ export default {
       width: 100%;
       padding: 5px 0px;
     }
+  }
+}
+.structure02 {
+  .vue-treeselect__label {
+    font-size: 12.5px;
   }
 }
 </style>

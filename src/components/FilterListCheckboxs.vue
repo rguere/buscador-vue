@@ -15,7 +15,7 @@
         <affix
           v-if="structure === `0.2`"
           class="sidebar-menu"
-          style="z-index: 1; background-color: rgb(255, 255, 255); max-width: 402.68px;"
+          style="z-index: 1; background-color: rgb(255, 255, 255); max-width: 302.68px;"
           :offset="{ top: 237, bottom: 120 }"
           relative-element-selector="#example-content"
         >
@@ -35,7 +35,7 @@
         <affix
           class="sidebar-menu"
           v-if="structure === `0.2`"
-          style="z-index: 1; background-color: rgb(255, 255, 255); max-width: 857px;"
+          style="z-index: 1; background-color: rgb(255, 255, 255); max-width: 967.5px;"
           :offset="{ top: 237, bottom: 0 }"
           relative-element-selector="#example-content"
         >
@@ -120,8 +120,8 @@ export default {
         styles.conten_row = "row";
         styles.conten_row_flex = "row";
         styles.conten_item = "col-md-12";
-        styles.col_left = "col-md-4";
-        styles.col_main = "col-md-8";
+        styles.col_left = "col-md-3";
+        styles.col_main = "col-md-9";
         styles.panel_filtres_items = "panel panel-default cd m-t-20";
       }
       return styles;

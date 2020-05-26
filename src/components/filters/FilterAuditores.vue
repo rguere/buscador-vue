@@ -69,9 +69,9 @@
                     v-for="(item, key) in middle(search.auditor, 1)"
                     :key="key"
                   >
-                    <label class="custon-checkboxs">
+                    <label class="custon-checkboxs" style="font-size: 11px;">
                       <img
-                        style="width: 80px; margin-right: 5px;"
+                        style="width: 70px; margin-right: 5px;"
                         :src="`./top10auditores/${item.id}.jpeg`"
                         :alt="`${item.label}`"
                       />
@@ -84,8 +84,10 @@
                         :value="item"
                       />
                       <span class="geekmark"></span>
-                      <span class="name-checkbox">{{ item.label }}</span>
-                      <span class="num-fil"
+                      <span style="font-size: 11px;" class="name-checkbox">{{
+                        item.label
+                      }}</span>
+                      <span style="font-size: 11px;" class="num-fil"
                         >({{ item.data | numeral("0,0") }})</span
                       >
                     </label>
@@ -96,9 +98,9 @@
                     v-for="(item, key) in middle(search.auditor, 2)"
                     :key="key"
                   >
-                    <label class="custon-checkboxs">
+                    <label class="custon-checkboxs" style="font-size: 11px;">
                       <img
-                        style="width: 80px; margin-right: 5px;"
+                        style="width: 70px; margin-right: 5px;"
                         :src="`./top10auditores/${item.id}.jpeg`"
                         :alt="`${item.label}`"
                       />
@@ -111,8 +113,10 @@
                         :value="item"
                       />
                       <span class="geekmark"></span>
-                      <span class="name-checkbox">{{ item.label }}</span>
-                      <span class="num-fil"
+                      <span style="font-size: 11px;" class="name-checkbox">{{
+                        item.label
+                      }}</span>
+                      <span style="font-size: 11px;" class="num-fil"
                         >({{ item.data | numeral("0,0") }})</span
                       >
                     </label>
@@ -124,7 +128,14 @@
         </el-collapse>
         <br />
       </div>
-      <div class="flex-space-between-flex-end">
+      <div class="flex-space-between-flex-end" style="align-items: baseline;">
+        <el-alert
+          style="max-width: 450px;"
+          title="Puedes Añadir a tu Búsqueda entre nuestra Lista de Auditores Destacados o si lo prefieres realiza una búsqueda directa de uno o varios Auditores indicando el Numero Roac o por el Nombre o Razón Social del Auditor que requieras."
+          type="success"
+          :closable="false"
+        >
+        </el-alert>
         <div>
           <button class="btn btn-warning m-r-5" @click="showModal">
             Ver detalles
@@ -284,9 +295,12 @@
                               v-for="(item, key) in search.auditor"
                               :key="key"
                             >
-                              <label class="custon-checkboxs">
+                              <label
+                                class="custon-checkboxs"
+                                style="font-size: 11px;"
+                              >
                                 <img
-                                  style="width: 80px; margin-right: 5px;"
+                                  style="width: 70px; margin-right: 5px;"
                                   :src="`./top10auditores/${item.id}.jpeg`"
                                   :alt="`${item.label}`"
                                 />
@@ -298,10 +312,15 @@
                                   :id="`checkbox_detalles_top_10${item.id}`"
                                   :value="item"
                                 />
-                                <span class="geekmark"></span>
-                                <span class="name-checkbox">{{
-                                  item.label
-                                }}</span>
+                                <span
+                                  style="font-size: 11px;"
+                                  class="geekmark"
+                                ></span>
+                                <span
+                                  style="font-size: 11px;"
+                                  class="name-checkbox"
+                                  >{{ item.label }}</span
+                                >
                               </label>
                             </div>
                           </div>
