@@ -269,7 +269,7 @@
                 </el-select>
                 <br />
                 <br />
-                <dir class="div-scroll-400 m-0 p-0">
+                <dir class="m-0 p-0">
                   <div
                     v-if="
                       activeMiniTree.children &&

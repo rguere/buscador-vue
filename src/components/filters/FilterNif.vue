@@ -1,5 +1,10 @@
 <template>
-  <div class="panel panel-default cd" id="filter_nif">
+  <div
+    :class="
+      `panel panel-default cd structure${structure === '0.2' ? '02' : '01'}`
+    "
+    id="filter_nif"
+  >
     <div class="panel-heading">
       <p class="panel-title roboto white">
         {{ title }}
@@ -10,29 +15,27 @@
       </p>
     </div>
     <div class="panel-body">
-      <div class="form-group">
-        <textarea
-          v-model="dataFrm"
-          id="list_nif"
-          class="form-control"
-        ></textarea>
-      </div>
-      <div class="flex-space-between-flex-end">
-        <div></div>
-        <div>
-          <button
-            type="button"
-            class="btn btn-info"
-            @click="validateNif"
-            :disabled="dataFrm.length === 0 || loadingValidar"
-          >
-            BUSCAR
-            <i
-              :class="
-                loadingValidar ? 'fa  fa-spinner fa-spin' : 'fa  fa-search'
-              "
-            ></i>
-          </button>
+      <div class="form_items">
+        <div class="form-group">
+          <textarea
+            v-model="dataFrm"
+            id="list_nif"
+            class="form-control"
+          ></textarea>
+        </div>
+        <div class="flex-space-between-flex-end">
+          <div></div>
+          <div>
+            <button
+              type="button"
+              class="btn btn-info"
+              @click="validateNif"
+              :disabled="dataFrm.length === 0 || loadingValidar"
+            >
+              BUSCAR
+              <i :class="iconBtnBuscar"></i>
+            </button>
+          </div>
         </div>
       </div>
       <br />
@@ -42,19 +45,6 @@
       >
         <div class="panel-body">
           <div class="div-scroll-200">
-            <!-- <button
-              type="button"        
-              v-if="list_nif && list_nif.validos.length !== 0 && !search_edit && dataFrm.length !== 0"
-              class="btn btn-xs btn-info pull-right" @click="editSearch" 
-              :disabled="dataFrm.length === 0 || loadingValidar">
-                Editar búsqueda <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-edit'"></i>
-            </button>
-            <button
-              type="button"        
-              v-if="list_nif && list_nif.validos.length !== 0 && !search_edit && dataFrm.length === 0"
-              class="btn btn-xs btn-danger pull-right" @click="cleanFile">
-                Limpiar búsqueda <i :class="(loadingValidar)?'fa  fa-spinner fa-spin':'fa  fa-undo'"></i>
-            </button>-->
             <div v-for="(item, key) in list_nif.validos" :key="key">
               <label class="custon-checkboxs">
                 <input
@@ -295,13 +285,7 @@
                           :disabled="dataFrm.length === 0 || loadingValidar"
                         >
                           BUSCAR
-                          <i
-                            :class="
-                              loadingValidar
-                                ? 'fa  fa-spinner fa-spin'
-                                : 'fa  fa-search'
-                            "
-                          ></i>
+                          <i :class="iconBtnBuscar"></i>
                         </button>
                       </div>
                       <div style>
@@ -491,11 +475,15 @@ export default {
       selected_companies: "filters/selected_companies",
       applied_filters: "filters/applied_filters",
       filters: "filters/filters",
+      structure: "structure/structure",
     }),
     compareWithNewtoApply: function() {
       let stg = this.selected_list_nif_string;
       let obj = JSON.stringify(this.selected_list_nif);
       return stg === obj;
+    },
+    iconBtnBuscar: function() {
+      return this.loadingValidar ? "fa  fa-spinner fa-spin" : "fa  fa-search";
     },
   },
   data: () => ({
@@ -791,6 +779,19 @@ export default {
     :nth-child(2) {
       width: 100%;
       margin-bottom: 5px;
+    }
+  }
+}
+.structure02 {
+  .form_items {
+    display: flex;
+    justify-content: space-between;
+    > div:nth-child(1) {
+      flex: 1;
+    }
+    > div:nth-child(2) {
+      padding: 0 10px;
+      display: inline-block;
     }
   }
 }

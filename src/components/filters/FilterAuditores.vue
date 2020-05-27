@@ -1,5 +1,10 @@
 <template>
-  <div class="panel panel-default cd" id="filter_auditores">
+  <div
+    :class="
+      `panel panel-default cd structure${structure === '0.2' ? '02' : '01'}`
+    "
+    id="filter_auditores"
+  >
     <div class="panel-heading">
       <p class="panel-title roboto white">
         {{ title }}
@@ -11,28 +16,30 @@
     </div>
     <div class="panel-body">
       <form v-on:submit.prevent="validateBormeAuditor" class="m-b-10">
-        <div class="form-group">
-          <textarea
-            v-model="dataFrm"
-            id="auditores1"
-            class="form-control"
-            placeholder="Introduce los códigos Roac o nombres de los auditores, separados por coma o salto de línea, y clicar en “BUSCAR”"
-            title="Introduce los códigos Roac o nombres de los auditores, separados por coma o salto de línea, y clicar en “BUSCAR”"
-          ></textarea>
-        </div>
-        <div class="flex-space-between-flex-end">
-          <div></div>
-          <div>
-            <button
-              title="BUSCAR"
-              type="button"
-              class="btn btn-info"
-              @click="validateBormeAuditor"
-              :disabled="dataFrm.length === 0 || loadingValidar"
-            >
-              BUSCAR
-              <i :class="iconBtnBuscar"></i>
-            </button>
+        <div class="form_items">
+          <div class="form-group">
+            <textarea
+              v-model="dataFrm"
+              id="auditores1"
+              class="form-control"
+              placeholder="Introduce los códigos Roac o nombres de los auditores, separados por coma o salto de línea, y clicar en “BUSCAR”"
+              title="Introduce los códigos Roac o nombres de los auditores, separados por coma o salto de línea, y clicar en “BUSCAR”"
+            ></textarea>
+          </div>
+          <div class="flex-space-between-flex-end">
+            <div></div>
+            <div>
+              <button
+                title="BUSCAR"
+                type="button"
+                class="btn btn-info"
+                @click="validateBormeAuditor"
+                :disabled="dataFrm.length === 0 || loadingValidar"
+              >
+                BUSCAR
+                <i :class="iconBtnBuscar"></i>
+              </button>
+            </div>
           </div>
         </div>
       </form>
@@ -130,7 +137,8 @@
       </div>
       <div class="flex-space-between-flex-end" style="align-items: baseline;">
         <el-alert
-          style="max-width: 450px;"
+          v-if="structure === '0.2'"
+          style="max-width: 595px;"
           title="Puedes Añadir a tu Búsqueda entre nuestra Lista de Auditores Destacados o si lo prefieres realiza una búsqueda directa de uno o varios Auditores indicando el Numero Roac o por el Nombre o Razón Social del Auditor que requieras."
           type="success"
           :closable="false"
@@ -451,6 +459,7 @@ export default {
       selected_companies: "filters/selected_companies",
       applied_filters: "filters/applied_filters",
       filters: "filters/filters",
+      structure: "structure/structure",
     }),
     compareWithNewtoApply: function() {
       let stg = this.selected_auditores_string;
@@ -769,6 +778,19 @@ export default {
     :nth-child(2) {
       width: 100%;
       margin-bottom: 5px;
+    }
+  }
+}
+.structure02 {
+  .form_items {
+    display: flex;
+    justify-content: space-between;
+    > div:nth-child(1) {
+      flex: 1;
+    }
+    > div:nth-child(2) {
+      padding: 0 10px;
+      display: inline-block;
     }
   }
 }

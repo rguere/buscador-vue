@@ -20,8 +20,9 @@
             :key="key"
           >
             <template slot="title">
-              <div class="flex-2" v-if="item.apply">
-                <span> {{ item.name }} </span>
+              <div class="flex-2" v-if="item.apply" :title="item.name">
+                <span v-if="item.name.length < 19">{{ item.name }}</span>
+                <span v-else>{{ item.name.substring(0, 19) + "..." }}</span>
                 <span class="num-fil"
                   >( {{ item.quantity | numeral("0,0") }} )</span
                 >
@@ -43,6 +44,7 @@
     </el-card>
     <div v-if="orderFilters.length === 0">
       <el-alert
+        style="height: 55vh;"
         title="Aun no aplicado criterios a su búsqueda"
         type="info"
         :closable="false"

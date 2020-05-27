@@ -1,5 +1,10 @@
 <template>
-  <div class="panel panel-default cd" id="filter_tipo_de_cuentas">
+  <div
+    :class="
+      `panel panel-default cd structure${structure === '0.2' ? '02' : '01'}`
+    "
+    id="filter_tipo_de_cuentas"
+  >
     <div class="panel-heading">
       <p class="panel-title roboto white">
         {{ title }}
@@ -11,20 +16,28 @@
     </div>
     <div class="panel-body">
       <div v-if="search.tipo_cuentas && search.tipo_cuentas.length !== 0">
-        <div v-for="(item, key) in orderItems(search.tipo_cuentas)" :key="key">
-          <label class="custon-checkboxs" v-if="item.label !== 'incluir_null'">
-            <input
-              type="checkbox"
-              :name="`checkbox_TipoCuentas_${item.id}`"
-              v-model="tipo_cuentas"
-              @change="handleChange()"
-              :id="`checkbox_TipoCuentas_${item.id}`"
-              :value="item"
-            />
-            <span class="geekmark"></span>
-            <span class="name-checkbox">{{ inPlural(item.label) }}</span>
-            <span class="num-fil">({{ item.data | numeral("0,0") }})</span>
-          </label>
+        <div class="flex_tipoCuentas">
+          <div
+            v-for="(item, key) in orderItems(search.tipo_cuentas)"
+            :key="key"
+          >
+            <label
+              class="custon-checkboxs"
+              v-if="item.label !== 'incluir_null'"
+            >
+              <input
+                type="checkbox"
+                :name="`checkbox_TipoCuentas_${item.id}`"
+                v-model="tipo_cuentas"
+                @change="handleChange()"
+                :id="`checkbox_TipoCuentas_${item.id}`"
+                :value="item"
+              />
+              <span class="geekmark"></span>
+              <span class="name-checkbox">{{ inPlural(item.label) }}</span>
+              <span class="num-fil">({{ item.data | numeral("0,0") }})</span>
+            </label>
+          </div>
         </div>
         <div class="flex-space-between-flex-end">
           <div class="btns">
@@ -262,6 +275,7 @@ export default {
       selected_companies: "filters/selected_companies",
       applied_filters: "filters/applied_filters",
       filters: "filters/filters",
+      structure: "structure/structure",
     }),
     compareWithNewtoApply: function() {
       let stg = this.tipo_cuentas_string;
@@ -569,5 +583,14 @@ export default {
 
 .checkbox input[type="checkbox"] {
   margin-left: 15px;
+}
+
+.structure02 {
+  .flex_tipoCuentas {
+    display: flex;
+    > div {
+      margin-right: 30px;
+    }
+  }
 }
 </style>
