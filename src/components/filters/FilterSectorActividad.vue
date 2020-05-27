@@ -227,12 +227,12 @@
                       trigger="click"
                       :content="item.label"
                     >
-                      <el-button slot="reference">
-                        <div>
+                      <el-button slot="reference" @click="setMiniTree(item)">
+                        <div style="font-size: 12px;">
                           {{ item.id }}
                         </div>
                         <div>
-                          <span class="num-fil"
+                          <span style="font-size: 12px;" class="num-fil"
                             >({{ item.data | numeral("0,0") }})</span
                           >
                         </div>
@@ -270,50 +270,54 @@
                 <br />
                 <br />
                 <dir class="div-scroll-400 m-0 p-0">
-                  <div v-for="(item, key) in search.cnae" :key="key">
-                    <div v-if="item.children && Array.isArray(item.children)">
-                      <div class="treeselect-items">
-                        <treeselect
-                          valueFormat="object"
-                          :name="`options-${key}`"
-                          :id="`options-${key}`"
-                          :multiple="true"
-                          :options="[item]"
-                          :always-open="true"
-                          :default-expand-level="0"
-                          :load-options="fetchSearch"
-                          :limit="0"
-                          :limitText="(t) => ''"
-                          :disableFuzzyMatching="true"
-                          @input="inputTreeselect"
-                          @select="selectTreeselect"
-                          @deselect="deselectTreeselect"
-                          placeholder="Seleccionar"
-                          search-nested
-                          v-model="selected_cnae"
+                  <div
+                    v-if="
+                      activeMiniTree.children &&
+                        Array.isArray(activeMiniTree.children) &&
+                        activeMiniTree.children.length > 0
+                    "
+                  >
+                    <div class="treeselect-items">
+                      <treeselect
+                        valueFormat="object"
+                        :name="`options-activeMiniTree`"
+                        :id="`options-activeMiniTree`"
+                        :multiple="true"
+                        :options="[activeMiniTree]"
+                        :always-open="true"
+                        :default-expand-level="0"
+                        :load-options="fetchSearch"
+                        :limit="0"
+                        :limitText="(t) => ''"
+                        :disableFuzzyMatching="true"
+                        @input="inputTreeselect"
+                        @select="selectTreeselect"
+                        @deselect="deselectTreeselect"
+                        placeholder="Seleccionar"
+                        search-nested
+                        v-model="selected_cnae"
+                      >
+                        <label
+                          slot="option-label"
+                          slot-scope="{
+                            node,
+                            shouldShowCount,
+                            count,
+                            labelClassName,
+                            countClassName,
+                          }"
+                          :class="labelClassName"
                         >
-                          <label
-                            slot="option-label"
-                            slot-scope="{
-                              node,
-                              shouldShowCount,
-                              count,
-                              labelClassName,
-                              countClassName,
-                            }"
-                            :class="labelClassName"
+                          {{ node.id }} - {{ node.label }}
+                          <span class="num-fil" v-if="node.raw.id != 'all'"
+                            >({{ node.raw.data | numeral("0,0") }})</span
                           >
-                            {{ node.id }} - {{ node.label }}
-                            <span class="num-fil" v-if="node.raw.id != 'all'"
-                              >({{ node.raw.data | numeral("0,0") }})</span
-                            >
-                            <span v-if="shouldShowCount" :class="countClassName"
-                              >({{ count }})</span
-                            >
-                          </label>
-                        </treeselect>
-                        <br />
-                      </div>
+                          <span v-if="shouldShowCount" :class="countClassName"
+                            >({{ count }})</span
+                          >
+                        </label>
+                      </treeselect>
+                      <br />
                     </div>
                   </div>
                 </dir>
@@ -697,6 +701,8 @@
 <script>
 import { mapGetters } from "vuex";
 import swal from "sweetalert2";
+import { setIsDefaultExpanded } from "./../../utils";
+
 import {
   inArrayObjectTreeselect,
   howAnimation,
@@ -707,7 +713,6 @@ import {
   searchInArrayObject,
 } from "./../../utils";
 import { persistentData } from "./../../mixins/persistent-data";
-import $ from "jquery";
 
 export default {
   name: "filter-sector-actividad",
@@ -769,6 +774,13 @@ export default {
     loadingSelect: false,
     limitChildren: 3,
     collapseResumen: [],
+    activeMiniTree: {
+      children: [],
+      data: null,
+      id: null,
+      isDefaultExpanded: null,
+      label: null,
+    },
   }),
   watch: {
     selected_cnae: function(newCnae) {
@@ -795,6 +807,13 @@ export default {
     },
     search: function(newSearch) {
       this.options = newSearch && newSearch.cnae ? newSearch.cnae : [];
+      if (
+        newSearch.cnae &&
+        Array.isArray(newSearch.cnae) &&
+        newSearch.cnae.length > 0
+      ) {
+        this.activeMiniTree = setIsDefaultExpanded(newSearch.cnae[0]);
+      }
     },
     filterText(val) {
       this.$refs.tree.filter(val);
@@ -840,29 +859,12 @@ export default {
       }
       sendEvent("filtro-vaciado", "-");
     });
-
-    $(".collapse.in").each(function() {
-      $(this)
-        .siblings(".panel-heading")
-        .find(".glyphicon")
-        .addClass("rotate");
-    });
-
-    $(".collapse")
-      .on("show.bs.collapse", function() {
-        $(this)
-          .parent()
-          .find(".glyphicon")
-          .addClass("rotate");
-      })
-      .on("hide.bs.collapse", function() {
-        $(this)
-          .parent()
-          .find(".glyphicon")
-          .removeClass("rotate");
-      });
   },
   methods: {
+    setMiniTree(_item) {
+      let item = { ..._item };
+      this.activeMiniTree = setIsDefaultExpanded(item);
+    },
     middle(items, part) {
       let _items = [...items];
       let m1 = _items.splice(0, _items.length / 2);
@@ -1190,7 +1192,7 @@ export default {
 }
 .structure02 {
   .vue-treeselect__label {
-    font-size: 12.5px;
+    font-size: 10px;
   }
 }
 </style>

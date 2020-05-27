@@ -455,3 +455,21 @@ export const searchInArrayObject = (search = "", keyObj = "", myArray = []) => {
 
   return results;
 };
+
+export const setIsDefaultExpanded = (_item, isDefaultExpanded = true) => {
+  let item = { ..._item };
+  item.isDefaultExpanded = isDefaultExpanded;
+  if (item.children && Array.isArray(item.children)) {
+    item.children = item.children.map((_item) => {
+      _item.isDefaultExpanded = isDefaultExpanded;
+      if (_item.children && Array.isArray(_item.children)) {
+        _item.children = _item.children.map((__item) => {
+          __item.isDefaultExpanded = isDefaultExpanded;
+          return __item;
+        });
+      }
+      return _item;
+    });
+  }
+  return item;
+};
