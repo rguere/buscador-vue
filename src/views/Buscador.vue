@@ -1,6 +1,6 @@
 <template>
   <div class="home" id="page-wrapper">
-    <select-topic></select-topic>
+    <!-- <select-topic></select-topic> -->
     <banner-top
       banner-title="Buscador de Empresas"
       banner-subtitle="Buscador de Empresas"

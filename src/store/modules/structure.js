@@ -2,7 +2,7 @@ import * as types from "../mutation-types";
 
 const structure = localStorage.getItem("structure")
   ? localStorage.getItem("structure")
-  : "0.1";
+  : "0.2";
 
 // state
 export const state = {
