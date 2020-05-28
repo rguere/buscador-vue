@@ -21,9 +21,15 @@
           >
             <template slot="title">
               <div class="flex-2" v-if="item.apply" :title="item.name">
-                <span v-if="item.name.length < 19">{{ item.name }}</span>
-                <span v-else>{{ item.name.substring(0, 19) + "..." }}</span>
-                <span class="num-fil"
+                <span style="font-size: 11px;">
+                  {{
+                    `${item.name.length > 16}`
+                      ? item.name.substring(0, 16) + "..."
+                      : item.name
+                  }}
+                </span>
+
+                <span class="num-fil" style="font-size: 11px;"
                   >( {{ item.quantity | numeral("0,0") }} )</span
                 >
               </div>
