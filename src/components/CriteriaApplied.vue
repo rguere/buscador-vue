@@ -22,11 +22,7 @@
             <template slot="title">
               <div class="flex-2" v-if="item.apply" :title="item.name">
                 <span style="font-size: 11px;">
-                  {{
-                    `${item.name.length > 16}`
-                      ? item.name.substring(0, 16) + "..."
-                      : item.name
-                  }}
+                  {{ nameSubstring(item.name, 16) }}
                 </span>
 
                 <span class="num-fil" style="font-size: 11px;"
@@ -95,7 +91,16 @@ export default {
     },
   },
   mounted() {},
-  methods: {},
+  methods: {
+    nameSubstring(name, Substring) {
+      console.log(name, Substring);
+      if (name.length >= Substring) {
+        return name.substring(0, Substring) + "...";
+      } else {
+        return name;
+      }
+    },
+  },
 };
 </script>
 

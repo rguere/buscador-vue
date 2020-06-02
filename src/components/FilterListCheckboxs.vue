@@ -52,9 +52,9 @@
                 <filter-numero-empleados></filter-numero-empleados>
                 <filter-anios-cuentas-disponibles></filter-anios-cuentas-disponibles>
                 <filter-sector-actividad></filter-sector-actividad>
+                <filter-cargos></filter-cargos>
                 <!--<filter-estado></filter-estado>
-                <filter-informacion-financiera></filter-informacion-financiera>
-                <filter-cargos></filter-cargos>-->
+                <filter-informacion-financiera></filter-informacion-financiera>-->
               </div>
               <div>
                 <filter-codigo-postal></filter-codigo-postal>
@@ -85,6 +85,7 @@
                 <filter-tipo-cuentas></filter-tipo-cuentas>
                 <filter-sector-actividad></filter-sector-actividad>
                 <filter-auditores></filter-auditores>
+                <filter-cargos></filter-cargos>
               </div>
             </div>
           </div>

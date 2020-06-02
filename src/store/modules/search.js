@@ -169,6 +169,18 @@ export const actions = {
       });
     }
   },
+  async validateCargo({ commit }, razon_social) {
+    try {
+      const { data } = await axios.get(
+        `/cargo/buscar?RazonSocial=${razon_social}&page=0&size=500`
+      );
+      return data;
+    } catch (e) {
+      commit(types.LOADING_SEARCH, {
+        loading: false,
+      });
+    }
+  },
   async validateBormeAuditor({ commit }, AuditorBorme) {
     try {
       const { data } = await axios.post(`/buscador/auditor/buscar`, {
