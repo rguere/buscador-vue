@@ -93,7 +93,6 @@ export default {
   mounted() {},
   methods: {
     nameSubstring(name, Substring) {
-      console.log(name, Substring);
       if (name.length >= Substring) {
         return name.substring(0, Substring) + "...";
       } else {
