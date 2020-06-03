@@ -211,30 +211,6 @@ span.num-fil {
   margin-left: 3px;
 }
 
-.div-scroll-200 {
-  height: auto;
-  max-height: 200px;
-  overflow-y: auto;
-}
-
-.div-scroll-300 {
-  height: auto;
-  max-height: 300px;
-  overflow-y: auto;
-}
-
-.div-scroll-400 {
-  height: auto;
-  max-height: 400px;
-  overflow-y: auto;
-}
-
-.div-scroll-500 {
-  height: auto;
-  max-height: 500px;
-  overflow-y: auto;
-}
-
 .m-0 {
   margin: 0;
 }
@@ -457,6 +433,112 @@ span.num-fil {
 
 .el-popover.el-popper {
   z-index: 0 !important;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #337ab7bf !important;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.div-scroll-200 {
+  height: auto;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.div-scroll-300 {
+  height: auto;
+  max-height: 300px;
+  overflow-y: auto;
+
+  /* width */
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: #337ab7bf !important;
+    border-radius: 10px;
+  }
+
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+}
+
+.div-scroll-400 {
+  height: auto;
+  max-height: 400px;
+  overflow-y: auto;
+  /* width */
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: #337ab7bf !important;
+    border-radius: 10px;
+  }
+
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+}
+
+.div-scroll-500 {
+  height: auto;
+  max-height: 500px;
+  overflow-y: auto;
+  /* width */
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: #337ab7bf !important;
+    border-radius: 10px;
+  }
+
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
 }
 
 @import "media_queries.scss";

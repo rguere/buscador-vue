@@ -169,11 +169,9 @@ export const actions = {
       });
     }
   },
-  async validateCargo({ commit }, razon_social) {
+  async validateCargo({ commit }, cago) {
     try {
-      const { data } = await axios.get(
-        `/cargo/buscar?RazonSocial=${razon_social}&page=0&size=500`
-      );
+      const { data } = await axios.post(`/cargo/buscar`, { lista: cago });
       return data;
     } catch (e) {
       commit(types.LOADING_SEARCH, {

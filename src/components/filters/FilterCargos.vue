@@ -55,16 +55,11 @@
             <button
               type="button"
               class="btn btn-success"
-              v-if="
-                (selected_cargos.length !== 0 && !areApplied) ||
-                  (selected_cargos.length !== 0 && !compareWithNewtoApply)
-              "
+              v-if="activeAplicar"
               @click="apply"
             >
               Aplicar
-              <i
-                :class="loadingFrm ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'"
-              ></i>
+              <i :class="iconLoadingFrm"></i>
             </button>
             <button
               type="button"
@@ -101,18 +96,11 @@
                 <button
                   type="button"
                   class="btn btn-success"
-                  v-if="
-                    (selected_cargos.length !== 0 && !areApplied) ||
-                      (selected_cargos.length !== 0 && !compareWithNewtoApply)
-                  "
+                  v-if="activeAplicar"
                   @click="apply"
                 >
                   Aplicar
-                  <i
-                    :class="
-                      loadingFrm ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'
-                    "
-                  ></i>
+                  <i :class="iconLoadingFrm"></i>
                 </button>
                 <button
                   type="button"
@@ -179,6 +167,23 @@
                                 </label>
                               </div>
                             </div>
+                            <div class="flex-space-between-flex-end">
+                              <div></div>
+                              <div style="margin-top: 20px;">
+                                <el-switch
+                                  v-model="active"
+                                  :disabled="both"
+                                  active-text="Activos"
+                                  inactive-text="Inactivos"
+                                >
+                                </el-switch>
+                                <el-checkbox
+                                  style="margin-left: 20px;"
+                                  v-model="both"
+                                  >Ambos</el-checkbox
+                                >
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -193,83 +198,99 @@
                         </p>
                       </div>
                       <div class="panel-body">
-                        <!-- <div class="row">
-                        <div class="col-md-12">
-                          <div class="form-group">
-                            <label class="control-label"
-                              >Insertar la antigüedad de la(s) empresa(s) en
-                              número de años</label
-                            >
+                        <div class="div-nombramiento">
+                          <div>
+                            <div @click="clickPicker($event, 'desdePicker')">
+                              <label class="demonstration"
+                                >Fecha nombramiento Desde (incluido)</label
+                              >
+                              <el-date-picker
+                                id="desdePicker"
+                                @focus="focusPicker"
+                                ref="desdePicker"
+                                v-model="daterange[0]"
+                                format="dd/MM/yyyy"
+                                value-format="dd/MM/yyyy"
+                                type="date"
+                                popper-class="desdePicker"
+                                placeholder="(Introducir, en formato dd/mm/aaaa)"
+                                :picker-options="pickerOptions"
+                              ></el-date-picker>
+                            </div>
+                          </div>
+                          <div>
+                            <div @click="clickPicker($event, 'hastaPicker')">
+                              <label class="demonstration"
+                                >Fecha nombramiento Hasta (incluido)</label
+                              >
+                              <el-date-picker
+                                id="hastaPicker"
+                                @focus="focusPicker"
+                                ref="hastaPicker"
+                                v-model="daterange[1]"
+                                format="dd/MM/yyyy"
+                                value-format="dd/MM/yyyy"
+                                type="date"
+                                popper-class="hastaPicker"
+                                placeholder="(Introducir, en formato dd/mm/aaaa)"
+                                :picker-options="pickerOptions"
+                              ></el-date-picker>
+                            </div>
                           </div>
                         </div>
-                        <div class="col-md-4">
-                          <div
-                            class="form-group"
-                            :class="{
-                              'has-error has-feedback': $v.employees_from.$error,
-                            }"
-                          >
-                            <label class="control-label" for="employees_from">
-                              De (incluido)
-                              <img
-                                src="./../../assets/images/user-tie.svg"
-                                style="width: 20px;"
-                                alt="user-tie"
-                              />
-                            </label>
-                            <input
-                              type="text"
-                              v-model.trim="$v.employees_from.$model"
-                              required
-                              class="form-control"
-                              name="employees_from"
-                              id="employees_from"
-                            />
+                        <div class="div-nombramiento m-t-30">
+                          <div>
+                            <div @click="clickPicker($event, 'desdePicker')">
+                              <label class="demonstration"
+                                >Fecha destitución/renuncia Desde
+                                (incluido)</label
+                              >
+                              <el-date-picker
+                                id="desdePicker"
+                                @focus="focusPicker"
+                                ref="desdePicker"
+                                v-model="daterange2[0]"
+                                format="dd/MM/yyyy"
+                                value-format="dd/MM/yyyy"
+                                type="date"
+                                popper-class="desdePicker"
+                                placeholder="(Introducir, en formato dd/mm/aaaa)"
+                                :picker-options="pickerOptions"
+                              ></el-date-picker>
+                            </div>
+                          </div>
+                          <div>
+                            <div @click="clickPicker($event, 'hastaPicker')">
+                              <label class="demonstration"
+                                >Fecha destitución/renuncia Hasta
+                                (incluido)</label
+                              >
+                              <el-date-picker
+                                id="hastaPicker"
+                                @focus="focusPicker"
+                                ref="hastaPicker"
+                                v-model="daterange2[1]"
+                                format="dd/MM/yyyy"
+                                value-format="dd/MM/yyyy"
+                                type="date"
+                                popper-class="hastaPicker"
+                                placeholder="(Introducir, en formato dd/mm/aaaa)"
+                                :picker-options="pickerOptions"
+                              ></el-date-picker>
+                            </div>
                           </div>
                         </div>
-                        <div class="col-md-4">
-                          <div
-                            class="form-group"
-                            :class="{
-                              'has-error has-feedback': $v.employees_to.$error,
-                            }"
-                          >
-                            <label class="control-label" for="employees_to">
-                              Hasta (incluido)
-                              <img
-                                src="./../../assets/images/user-tie.svg"
-                                style="width: 20px;"
-                                alt="user-tie"
-                              />
-                            </label>
-                            <input
-                              type="text"
-                              v-model.trim="$v.employees_to.$model"
-                              required
-                              class="form-control"
-                              name="employees_to"
-                              id="employees_to"
-                            />
-                          </div>
-                        </div>
-                        <div class="col-md-4">
+                        <div>
                           <button
                             type="button"
                             class="btn btn-info"
-                            @click="applyCargos"
-                            :disabled="$v.$invalid || loadingCargos"
+                            @click="applyRangeNombramiento"
+                            :disabled="disabledRange && disabled2Range"
                           >
                             BUSCAR
-                            <i
-                              :class="
-                                loadingCargos
-                                  ? 'fa  fa-spinner fa-spin'
-                                  : 'fa  fa-search'
-                              "
-                            ></i>
+                            <i :class="iconBtnBuscarDaterange"></i>
                           </button>
                         </div>
-                      </div> -->
                       </div>
                     </div>
                   </div>
@@ -320,14 +341,14 @@
                         </label>
                       </li>
                       <li
-                        v-for="(item, key) in selected_industria"
+                        v-for="(item, key) in selected_cargos"
                         :key="`_${key}`"
                       >
                         <label class="custon-checkboxs">
                           <input
                             type="checkbox"
                             :name="`checkbox_list_${item.id}`"
-                            v-model="selected_industria"
+                            v-model="selected_cargos"
                             @change="handleChangeList(item, $event)"
                             :id="`checkbox_list_${item.id}`"
                             :value="item"
@@ -388,6 +409,27 @@ export default {
       let obj = JSON.stringify(this.selected_cargos);
       return stg === obj;
     },
+    iconBtnBuscarDaterange: function() {
+      return this.loadingDaterange ? "fa  fa-spinner fa-spin" : "fa  fa-search";
+    },
+    iconBtnBuscar: function() {
+      return this.loadingCargos ? "fa  fa-spinner fa-spin" : "fa  fa-search";
+    },
+    iconLoadingFrm: function() {
+      return this.loadingFrm ? "fa  fa-spinner fa-spin" : "fa  fa-search";
+    },
+    activeAplicar: function() {
+      return (
+        (this.selected_cargos.length !== 0 && !this.areApplied) ||
+        (this.selected_cargos.length !== 0 && !this.compareWithNewtoApply)
+      );
+    },
+    disabledRange: function() {
+      return this.daterange[0] === null || this.daterange[1] === null;
+    },
+    disabled2Range: function() {
+      return this.daterange2[0] === null || this.daterange2[1] === null;
+    },
   },
   data: () => ({
     title: "Cargos",
@@ -401,6 +443,9 @@ export default {
     loadingFrm: false,
     modalVisible: false,
     daterange: [],
+    daterange2: [],
+    daterangeFnombramiento: null,
+    daterangeFrenuncia: null,
     loadingDaterange: false,
     loadingCargos: false,
     daterange_incluir_null: false,
@@ -410,6 +455,12 @@ export default {
     all: false,
     active: true,
     both: false,
+    pickerOptions: {
+      disabledDate(time) {
+        return time.getTime() > Date.now();
+      },
+    },
+    eventApply: "apply",
   }),
   validations() {
     return {
@@ -442,6 +493,20 @@ export default {
     selected_companies: function() {
       howAnimation(document.querySelector(".selected_companies"));
     },
+    daterange: function(newDaterange) {
+      if (newDaterange.length === 2 && newDaterange[0] && newDaterange[1]) {
+        this.daterangeFnombramiento = `fnombramiento:${newDaterange.join("|")}`;
+      } else {
+        this.daterangeFnombramiento = null;
+      }
+    },
+    daterange2: function(newDaterange2) {
+      if (newDaterange2.length === 2 && newDaterange2[0] && newDaterange2[1]) {
+        this.daterangeFrenuncia = `frenuncia:${newDaterange2.join("|")}`;
+      } else {
+        this.daterangeFrenuncia = null;
+      }
+    },
   },
   mounted() {
     this.$root.$on("clean_filter", (filter) => {
@@ -462,6 +527,36 @@ export default {
   },
   methods: {
     fetchSearch() {},
+    clickPicker(event, elementRefs) {
+      let target = event.target;
+      if (target.classList.contains("el-icon-date")) {
+        this[elementRefs]++;
+        if (this[elementRefs] == 2) {
+          this.$refs[elementRefs].pickerVisible = false;
+        }
+      }
+      if (this[elementRefs] >= 2) {
+        this[elementRefs] = 0;
+      }
+    },
+    focusPicker(el) {
+      setTimeout(() => {
+        let modal = document.querySelector(`.el-popper.${el.id}`);
+        let LI = modal.querySelector(`._${el.id}`);
+        if (!LI) {
+          let node = document.createElement("LI");
+          node.classList.add(`_${el.id}`);
+          let textnode = document.createTextNode("X");
+          node.appendChild(textnode);
+          node.addEventListener("click", (event) => {
+            let target = event.target;
+            let _class = target.getAttribute("class");
+            this.$refs[_class.replace("_", "")].pickerVisible = false;
+          });
+          modal.appendChild(node);
+        }
+      }, 100);
+    },
     showModal() {
       this.$v.$reset();
       sendPageView(`filtro-cargos`, `Buscador - Filtro de Cargos`);
@@ -509,82 +604,40 @@ export default {
         ? true
         : false;
     },
-    apply() {
-      if (this.selected_cargos && this.selected_cargos.length !== 0) {
-        this.hideModal();
-        this.loadingFrm = true;
-        this.formatearDataPOST();
-        let beforeForm = beforeOrderFilters(
-          this.filters,
-          this.applied_filters,
-          this.form,
-          this.title
-        );
-        this.$store
-          .dispatch("search/filtrar", beforeForm)
-          .then((response) => {
-            this.updateNumberSelectedCompanies(response.cantidad);
-            this.$store.dispatch("filters/addFilters", {
-              name: this.title,
-              quantity: this.selected_by_cargos,
-              cantidades: response,
-              items: this.selected_cargos,
-            });
-            this.areApplied = true;
-            this.reapply = false;
-            this.loadingFrm = false;
-            this.selected_cargos_string = JSON.stringify(this.selected_cargos);
-            sendEvent(`filtro-aplicado`, this.title);
-          })
-          .catch(() => {
-            this.loadingFrm = false;
+    apply(apply = "apply") {
+      this.eventApply = apply;
+      this.hideModal();
+      this.loadingFrm = true;
+      this.formatearDataPOST();
+      let beforeForm = beforeOrderFilters(
+        this.filters,
+        this.applied_filters,
+        this.form,
+        this.title
+      );
+      this.$store
+        .dispatch("search/filtrar", beforeForm)
+        .then((response) => {
+          this.updateNumberSelectedCompanies(response.cantidad);
+          this.$store.dispatch("filters/addFilters", {
+            name: this.title,
+            quantity: this.selected_by_cargos,
+            cantidades: response,
+            items: this.selected_cargos,
           });
-      }
+          this.areApplied = true;
+          this.reapply = false;
+          this.loadingFrm = false;
+          this.selected_cargos_string = JSON.stringify(this.selected_cargos);
+          sendEvent(`filtro-aplicado`, this.title);
+        })
+        .catch(() => {
+          this.loadingFrm = false;
+        });
     },
-    applyCargos() {
-      this.$v.$touch();
-      if (!this.$v.$invalid) {
-        this.hideModal();
-        this.loadingCargos = true;
-        this.form.cargo = [];
-        this.selected_cargos = [];
-        this.selected_cargos_string = JSON.stringify(this.selected_cargos);
-        let employees_from = parseInt(this.employees_from, 10),
-          employees_to = parseInt(this.employees_to, 10),
-          mayor = 0,
-          menor = 0;
-        if (employees_from > employees_to) {
-          mayor = employees_from;
-          menor = employees_to;
-        } else {
-          mayor = employees_to;
-          menor = employees_from;
-        }
-        this.form.cargo.push(`cargos:${menor}|${mayor}`);
-        let beforeForm = beforeOrderFilters(
-          this.filters,
-          this.applied_filters,
-          this.form,
-          this.title
-        );
-        this.$store
-          .dispatch("search/filtrar", beforeForm)
-          .then((response) => {
-            this.updateNumberSelectedCompanies(response.cantidad);
-            this.$store.dispatch("filters/addFilters", {
-              name: this.title,
-              quantity: this.selected_by_cargos,
-              cantidades: response,
-              items: [],
-            });
-            this.areApplied = true;
-            this.reapply = false;
-            this.loadingCargos = false;
-            this.selected_cargos_string = JSON.stringify(this.selected_cargos);
-          })
-          .catch(() => {
-            this.loadingCargos = false;
-          });
+    applyRangeNombramiento() {
+      if (this.daterangeFnombramiento || this.daterangeFrenuncia) {
+        this.apply("applyRangeNombramiento");
       }
     },
     confirmClean() {
@@ -610,6 +663,10 @@ export default {
       this.form.cargo = [];
       this.selected_cargos = [];
       this.selected_cargos_string = "";
+      this.daterange = [];
+      this.daterange2 = [];
+      this.daterangeFnombramiento = null;
+      this.daterangeFrenuncia = null;
       if (this.applied_filters.length > 1) {
         let beforeForm = beforeOrderFilters(
           this.filters,
@@ -639,6 +696,10 @@ export default {
       this.form.cargo = [];
       this.selected_cargos = [];
       this.selected_cargos_string = "";
+      this.daterange = [];
+      this.daterange2 = [];
+      this.daterangeFnombramiento = null;
+      this.daterangeFrenuncia = null;
       this.updateNumberSelectedCompanies(0);
       this.selected_by_cargos = 0;
       this.$store.dispatch("filters/removeFilters", this.title);
@@ -666,6 +727,14 @@ export default {
           this.form.cargo.push("status:0");
         }
       }
+      if (this.eventApply === "applyRangeNombramiento") {
+        if (this.daterangeFnombramiento) {
+          this.form.cargo.push(this.daterangeFnombramiento);
+        }
+        if (this.daterangeFrenuncia) {
+          this.form.cargo.push(this.daterangeFrenuncia);
+        }
+      }
       return this.form;
     },
     selectAll() {
@@ -681,4 +750,12 @@ export default {
 
 <style lang="scss" scoped>
 @import "./../../sass/filters/filters";
+.div-nombramiento {
+  display: flex;
+  align-items: center;
+  .el-date-editor.el-input,
+  .el-date-editor.el-input__inner {
+    width: 90% !important;
+  }
+}
 </style>
