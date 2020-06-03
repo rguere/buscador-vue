@@ -64,8 +64,8 @@
         </div>
       </div>
       <div
-        class="form-group"
-        style="overflow-y: scroll; max-height: 130px;"
+        class="form-group div-scroll-200"
+        style="max-height: 130px;"
         v-if="list_nif && list_nif.invalidos.length !== 0 && !search_edit"
       >
         <p>NIF no encontrados</p>
@@ -374,8 +374,8 @@
                     </ul>
                   </div>
                   <div
-                    class="form-group"
-                    style="overflow-y: scroll; max-height: 130px;"
+                    class="form-group div-scroll-200"
+                    style="max-height: 130px;"
                     v-if="
                       list_nif &&
                         list_nif.invalidos.length !== 0 &&

@@ -320,10 +320,7 @@
                       }}</span>
                     </p>
                   </div>
-                  <div
-                    class="panel-body"
-                    style="max-height: 300px; overflow-y: scroll;"
-                  >
+                  <div class="panel-body div-scroll-300">
                     <ul class="ul_selected_cargos" id="ul_selected_cargos">
                       <li v-for="(item, key) in selected_cargos" :key="key">
                         <label class="custon-checkboxs">

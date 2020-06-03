@@ -334,7 +334,7 @@
 
         <div id="Sector_INFOCIF" class="tab-pane fade">
           <div v-if="search.industria && search.industria.length != 0">
-            <div class="max-height-400-overflow">
+            <div class="div-scroll-400">
               <div class="grid-3-columns-1fr">
                 <div v-for="(item, key) in search.industria" :key="key">
                   <label class="custon-checkboxs">
@@ -594,7 +594,7 @@
                 </div>
                 <div id="Modal_Sector_INFOCIF" class="tab-pane fade">
                   <div v-if="search.industria && search.industria.length != 0">
-                    <div class="max-height-400-overflow">
+                    <div class="div-scroll-400">
                       <div class="">
                         <div v-for="(item, key) in search.industria" :key="key">
                           <label class="custon-checkboxs">
@@ -641,10 +641,7 @@
                     }}</span>
                   </p>
                 </div>
-                <div
-                  class="panel-body"
-                  style="max-height: 300px; overflow-y: scroll;"
-                >
+                <div class="panel-body div-scroll-300">
                   <ul class="ul_selected_cnae" id="ul_selected_cnae">
                     <li v-for="(item, key) in selected_cnae" :key="key">
                       <label class="custon-checkboxs">
@@ -1155,10 +1152,6 @@ export default {
   width: 100%;
 }
 
-.max-height-400-overflow {
-  overflow-y: auto;
-  max-height: 400px;
-}
 .nav.nav-tabs {
   li.active a {
     color: #fff !important;

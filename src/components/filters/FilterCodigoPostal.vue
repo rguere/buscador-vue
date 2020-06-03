@@ -64,8 +64,8 @@
         </div>
       </div>
       <div
-        class="form-group"
-        style="overflow-y: scroll; max-height: 130px;"
+        class="form-group div-scroll-200"
+        style="max-height: 130px;"
         v-if="zip_codes && zip_codes.invalidos.length !== 0 && !search_edit"
       >
         <p>Códigos no encontrados</p>
@@ -444,8 +444,8 @@
                     </ul>
                   </div>
                   <div
-                    class="form-group"
-                    style="overflow-y: scroll; max-height: 130px;"
+                    class="form-group div-scroll-200"
+                    style="max-height: 130px;"
                     v-if="
                       zip_codes &&
                         zip_codes.invalidos.length !== 0 &&

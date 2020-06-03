@@ -15,7 +15,7 @@
           search.provincia_localidad && search.provincia_localidad.length != 0
         "
       >
-        <div class="max-height-400-overflow">
+        <div class="div-scroll-400">
           <div class="grid-3-columns-1fr">
             <div v-for="(item, key) in search.provincia_localidad" :key="key">
               <label class="custon-checkboxs">
@@ -273,10 +273,7 @@
                       }}</span>
                     </p>
                   </div>
-                  <div
-                    class="panel-body"
-                    style="max-height: 300px; overflow-y: scroll;"
-                  >
+                  <div class="panel-body div-scroll-300">
                     <ul
                       class="ul_selected_provinces_localidad"
                       id="ul_selected_provinces_localidad"
@@ -764,10 +761,5 @@ export default {
 
 .el-select.el-select--medium {
   width: 100%;
-}
-
-.max-height-400-overflow {
-  overflow-y: auto;
-  max-height: 400px;
 }
 </style>
