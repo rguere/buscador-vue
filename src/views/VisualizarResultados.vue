@@ -610,6 +610,17 @@ export default {
                   datas: selecteds,
                   data_quantity: countByProperty(selecteds, "data"),
                 });
+              } else if (element.title === "Cargos") {
+                this.filtros_aplicados.push({
+                  title: element.title,
+                  quantity: result.quantity,
+                  key: result.key,
+                  datas: element.selected_cargos,
+                  data_quantity: countByProperty(
+                    element.selected_cargos,
+                    "data"
+                  ),
+                });
               }
             }
           }
