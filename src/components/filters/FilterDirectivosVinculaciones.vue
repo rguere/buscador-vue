@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="panel panel-default cd div_capa_superpuesta"
-    id="filter_directivos_y_vinculaciones"
-  >
+  <div class="panel panel-default cd" id="filter_directivos_y_vinculaciones">
     <div class="panel-heading">
       <p class="panel-title roboto white">{{ title }}</p>
     </div>

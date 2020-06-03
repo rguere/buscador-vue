@@ -62,10 +62,7 @@
                 <filter-nif></filter-nif>
                 <filter-tipo-cuentas></filter-tipo-cuentas>
                 <filter-auditores></filter-auditores>
-                <!--
-                <el-badge value="Próximamente" class="item">
-                  <filter-directivos-vinculaciones></filter-directivos-vinculaciones>
-                </el-badge> -->
+                <filter-directivos-vinculaciones></filter-directivos-vinculaciones>
               </div>
             </div>
           </div>
@@ -86,6 +83,7 @@
                 <filter-sector-actividad></filter-sector-actividad>
                 <filter-auditores></filter-auditores>
                 <filter-cargos></filter-cargos>
+                <filter-directivos-vinculaciones></filter-directivos-vinculaciones>
               </div>
             </div>
           </div>

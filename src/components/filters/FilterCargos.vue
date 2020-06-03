@@ -26,7 +26,7 @@
                 :value="item"
               />
               <span class="geekmark"></span>
-              <span class="name-checkbox">{{ item.label }}</span>
+              <span class="name-checkbox t-t-capitalize">{{ item.label }}</span>
               <span class="num-fil">({{ item.data | numeral("0,0") }})</span>
             </label>
           </div>
@@ -37,6 +37,8 @@
             <el-switch
               v-model="active"
               :disabled="both"
+              active-color="#13ce66"
+              inactive-color="#ff4949"
               active-text="Activos"
               inactive-text="Inactivos"
             >
@@ -158,7 +160,7 @@
                                     :value="item"
                                   />
                                   <span class="geekmark"></span>
-                                  <span class="name-checkbox">{{
+                                  <span class="name-checkbox t-t-capitalize">{{
                                     item.label
                                   }}</span>
                                   <span class="num-fil"
@@ -173,6 +175,8 @@
                                 <el-switch
                                   v-model="active"
                                   :disabled="both"
+                                  active-color="#13ce66"
+                                  inactive-color="#ff4949"
                                   active-text="Activos"
                                   inactive-text="Inactivos"
                                 >
@@ -332,29 +336,7 @@
                             :value="item"
                           />
                           <span class="geekmark"></span>
-                          <span class="name-checkbox"
-                            >{{ item.id }} - {{ item.label }}</span
-                          >
-                          <span class="num-fil" v-if="item.id != 'all'"
-                            >({{ item.data | numeral("0,0") }})</span
-                          >
-                        </label>
-                      </li>
-                      <li
-                        v-for="(item, key) in selected_cargos"
-                        :key="`_${key}`"
-                      >
-                        <label class="custon-checkboxs">
-                          <input
-                            type="checkbox"
-                            :name="`checkbox_list_${item.id}`"
-                            v-model="selected_cargos"
-                            @change="handleChangeList(item, $event)"
-                            :id="`checkbox_list_${item.id}`"
-                            :value="item"
-                          />
-                          <span class="geekmark"></span>
-                          <span class="name-checkbox"
+                          <span class="name-checkbox t-t-capitalize"
                             >{{ item.id }} - {{ item.label }}</span
                           >
                           <span class="num-fil" v-if="item.id != 'all'"

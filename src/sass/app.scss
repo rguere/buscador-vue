@@ -435,6 +435,13 @@ span.num-fil {
   z-index: 0 !important;
 }
 
+.sidebar-menu.vue-affix.affix {
+  z-index: 2 !important;
+}
+
+.t-t-capitalize {
+  text-transform: capitalize;
+}
 /* width */
 ::-webkit-scrollbar {
   width: 10px;
