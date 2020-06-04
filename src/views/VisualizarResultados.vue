@@ -687,11 +687,7 @@ export default {
               } else {
                 item.anios_empresa = "-";
               }
-              if (
-                item.UltimaCuentaAnual &&
-                item.UltimaCuentaAnual.SumTotalEmpleados &&
-                item.UltimaCuentaAnual.SumTotalEmpleados !== 0
-              ) {
+              if (item.UltimaCuentaAnual) {
                 item.SumTotalEmpleados =
                   item.UltimaCuentaAnual.SumTotalEmpleados;
               } else {
