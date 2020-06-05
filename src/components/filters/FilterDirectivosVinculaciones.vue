@@ -97,27 +97,20 @@
             <i class="fa fa-undo"></i>
           </button>
         </div>
-        <!-- <div>
-          <div class="checkboxs-resaldado">
-            <label class="custon-checkboxs">
-              <input type="checkbox" />
-              <span class="geekmark"></span>
-              <span class="title"
-                >Aplicar en la búsqueda Solo sociedades o personas
-                juriducas</span
-              >
-            </label>
-          </div>
-          <div class="checkboxs-resaldado m-t-10">
-            <label class="custon-checkboxs">
-              <input type="checkbox" />
-              <span class="geekmark"></span>
-              <span class="title"
-                >Aplicar en la búsqueda Solo personas fisicas</span
-              >
-            </label>
-          </div>
-        </div> -->
+        <div>
+          <el-switch
+            v-model="active"
+            :disabled="both"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
+            active-text="Activos"
+            inactive-text="Inactivos"
+          >
+          </el-switch>
+          <el-checkbox style="margin-left: 20px;" v-model="both"
+            >Ambos</el-checkbox
+          >
+        </div>
       </div>
       <div
         class="row"
@@ -231,30 +224,22 @@
                         </div>
                       </form>
                     </div>
-                    <!-- <div class="col-md-5">
+                    <div class="col-md-5">
                       <div>
-                        <div class="checkboxs-resaldado">
-                          <label class="custon-checkboxs">
-                            <input type="checkbox" />
-                            <span class="geekmark"></span>
-                            <span class="title"
-                              >Aplicar en la búsqueda Solo sociedades o personas
-                              juriducas</span
-                            >
-                          </label>
-                        </div>
-                        <div class="checkboxs-resaldado m-t-10">
-                          <label class="custon-checkboxs">
-                            <input type="checkbox" />
-                            <span class="geekmark"></span>
-                            <span class="title"
-                              >Aplicar en la búsqueda Solo personas
-                              fisicas</span
-                            >
-                          </label>
-                        </div>
+                        <el-switch
+                          v-model="active"
+                          :disabled="both"
+                          active-color="#13ce66"
+                          inactive-color="#ff4949"
+                          active-text="Activos"
+                          inactive-text="Inactivos"
+                        >
+                        </el-switch>
+                        <el-checkbox style="margin-left: 20px;" v-model="both"
+                          >Ambos</el-checkbox
+                        >
                       </div>
-                    </div> -->
+                    </div>
                   </div>
                 </div>
               </div>
@@ -307,7 +292,7 @@
                         </th>
                         <td>{{ item.RazonSocial }}</td>
                         <td class="t-t-capitalize">{{ item.CargoEspejo }}</td>
-                        <td>{{ item.EstadoActivo }}</td>
+                        <td>{{ getEstado(item.EstadoActivo) }}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -362,7 +347,7 @@
                         </th>
                         <td>{{ item.RazonSocial }}</td>
                         <td class="t-t-capitalize">{{ item.CargoEspejo }}</td>
-                        <td>{{ item.EstadoActivo }}</td>
+                        <td>{{ getEstado(item.EstadoActivo) }}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -434,6 +419,8 @@ export default {
     loadingFile: false,
     file: {},
     collapseResumen: [],
+    active: true,
+    both: false,
   }),
   mounted() {
     this.$root.$on("clean_filter", (filter) => {
@@ -462,11 +449,30 @@ export default {
     },
   },
   methods: {
+    getEstado(estado) {
+      if (estado == 1) {
+        return "Activo";
+      } else if (estado == 0) {
+        return "Inactivo";
+      } else {
+        return "Ambos";
+      }
+    },
     validateCargo() {
       if (this.dataFrm.length !== 0) {
         this.loadingValidar = true;
+        let status = 1;
+        if (this.both) {
+          status = 2;
+        } else {
+          if (this.active) {
+            status = 1;
+          } else {
+            status = 0;
+          }
+        }
         this.$store
-          .dispatch("search/validateCargo", this.dataFrm)
+          .dispatch("search/validateCargo", { cargo: this.dataFrm, status })
           .then((response) => {
             if (
               response &&
@@ -508,8 +514,17 @@ export default {
         this.search_edit = false;
         this.search_add = false;
         this.form.vinculaciones = this.selected_direc_vinc.map((item) => {
-          return item.RazonSocial;
+          return item.CargoEspejo;
         });
+        if (this.both) {
+          this.form.vinculaciones.push("status:2");
+        } else {
+          if (this.active) {
+            this.form.vinculaciones.push("status:1");
+          } else {
+            this.form.vinculaciones.push("status:0");
+          }
+        }
         let beforeForm = beforeOrderFilters(
           this.filters,
           this.applied_filters,

@@ -169,10 +169,11 @@ export const actions = {
       });
     }
   },
-  async validateCargo({ commit }, cargo) {
+  async validateCargo({ commit }, datos) {
+    const { cargo, status } = datos;
     try {
       const { data } = await axios.post(
-        `/buscador/cargo/buscar?search=${cargo}&page=0&size=500`
+        `/buscador/cargo/buscar?search=${cargo}&status=${status}`
       );
       return data;
     } catch (e) {
