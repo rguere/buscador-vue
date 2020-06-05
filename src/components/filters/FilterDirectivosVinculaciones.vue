@@ -28,11 +28,7 @@
               :disabled="dataFrm.length === 0 || loadingValidar"
             >
               BUSCAR
-              <i
-                :class="
-                  loadingValidar ? 'fa  fa-spinner fa-spin' : 'fa  fa-search'
-                "
-              ></i>
+              <i :class="iconLoadingValidar"></i>
             </button>
           </span>
         </div>
@@ -54,14 +50,17 @@
               <label class="custon-checkboxs">
                 <input
                   type="checkbox"
-                  :name="`checkbox_${item.IdEmpresa}`"
+                  :name="`checkbox_${item.RazonSocial}`"
                   v-model="selected_direc_vinc"
                   @change="handleChange(item, $event)"
-                  :id="`checkbox_${item.IdEmpresa}`"
+                  :id="`checkbox_${item.RazonSocial}`"
                   :value="item"
                 />
                 <span class="geekmark"></span>
-                <span class="name-checkbox">{{ item.RazonSocial }}</span>
+                <span class="name-checkbox"
+                  >{{ item.Nombre }} -
+                  <span class="t-t-capitalize">{{ item.CargoEspejo }}</span>
+                </span>
               </label>
             </div>
           </div>
@@ -86,9 +85,7 @@
             @click="apply"
           >
             Aplicar
-            <i
-              :class="loadingApply ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'"
-            ></i>
+            <i :class="iconLoadingApply"></i>
           </button>
           <button
             type="button"
@@ -100,7 +97,7 @@
             <i class="fa fa-undo"></i>
           </button>
         </div>
-        <div>
+        <!-- <div>
           <div class="checkboxs-resaldado">
             <label class="custon-checkboxs">
               <input type="checkbox" />
@@ -120,13 +117,7 @@
               >
             </label>
           </div>
-        </div>
-      </div>
-      <div v-if="direc_vinc_json && direc_vinc_json.length !== 0">
-        <br />
-        <hr />
-        <b>Resultados: </b>
-        <pre class="div-scroll-500">{{ direc_vinc_json }}</pre>
+        </div> -->
       </div>
       <div
         class="row"
@@ -145,13 +136,14 @@
                     <label>
                       <input
                         type="checkbox"
-                        :name="`checkbox_resumen${item.IdEmpresa}`"
+                        :name="`checkbox_resumen${item.RazonSocial}`"
                         v-model="selected_direc_vinc"
                         @change="handleChangeList(item, $event)"
-                        :id="`checkbox_resumen${item.IdEmpresa}`"
+                        :id="`checkbox_resumen${item.RazonSocial}`"
                         :value="item"
                       />
-                      {{ item.RazonSocial }} - {{ item.CIF }}
+                      {{ item.Nombre }} -
+                      <span class="t-t-capitalize">{{ item.CargoEspejo }}</span>
                     </label>
                   </div>
                 </div>
@@ -191,11 +183,7 @@
                 @click="apply"
               >
                 Aplicar
-                <i
-                  :class="
-                    loadingApply ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'
-                  "
-                ></i>
+                <i :class="iconLoadingApply"></i>
               </button>
               <button
                 type="button"
@@ -237,19 +225,13 @@
                               :disabled="dataFrm.length === 0 || loadingValidar"
                             >
                               BUSCAR
-                              <i
-                                :class="
-                                  loadingValidar
-                                    ? 'fa  fa-spinner fa-spin'
-                                    : 'fa  fa-search'
-                                "
-                              ></i>
+                              <i :class="iconLoadingValidar"></i>
                             </button>
                           </span>
                         </div>
                       </form>
                     </div>
-                    <div class="col-md-5">
+                    <!-- <div class="col-md-5">
                       <div>
                         <div class="checkboxs-resaldado">
                           <label class="custon-checkboxs">
@@ -272,7 +254,7 @@
                           </label>
                         </div>
                       </div>
-                    </div>
+                    </div> -->
                   </div>
                 </div>
               </div>
@@ -300,12 +282,10 @@
                   <table class="table table-hover">
                     <thead>
                       <tr>
+                        <th scope="col">Nombre</th>
                         <th scope="col">Razón social de la empresa</th>
-                        <th scope="col">NIF</th>
-                        <th scope="col">Provincia</th>
-                        <th scope="col">Localidad</th>
-                        <th scope="col">Último año cuentas disponibles</th>
-                        <!--<th scope="col">Ventas último año disponible (miles de €)</th>-->
+                        <th scope="col">Cargo</th>
+                        <th scope="col">Estado</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -315,26 +295,19 @@
                             <label>
                               <input
                                 type="checkbox"
-                                :name="`checkbox_table_${item.IdEmpresa}`"
+                                :name="`checkbox_table_${item.RazonSocial}`"
                                 v-model="selected_direc_vinc"
                                 @change="handleChange(item, $event)"
-                                :id="`checkbox_table_${item.IdEmpresa}`"
+                                :id="`checkbox_table_${item.RazonSocial}`"
                                 :value="item"
                               />
-                              {{ item.RazonSocial }}
+                              {{ item.Nombre }}
                             </label>
                           </div>
                         </th>
-                        <td>{{ item.CIF }}</td>
-                        <td>{{ item.Provincia }}</td>
-                        <td>{{ item.Localidad }}</td>
-                        <td>
-                          {{
-                            item.UltimaCuentaAnual
-                              ? item.UltimaCuentaAnual.Ejercicio
-                              : ""
-                          }}
-                        </td>
+                        <td>{{ item.RazonSocial }}</td>
+                        <td class="t-t-capitalize">{{ item.CargoEspejo }}</td>
+                        <td>{{ item.EstadoActivo }}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -364,43 +337,32 @@
                   <table class="table table-hover">
                     <thead>
                       <tr>
+                        <th scope="col">Nombre</th>
                         <th scope="col">Razón social de la empresa</th>
-                        <th scope="col">NIF</th>
-                        <th scope="col">Provincia</th>
-                        <th scope="col">Localidad</th>
-                        <th scope="col">Último año cuentas disponibles</th>
+                        <th scope="col">Cargo</th>
+                        <th scope="col">Estado</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr
-                        v-for="(item, key) in list_selected_direc_vinc"
-                        :key="key"
-                      >
+                      <tr v-for="(item, key) in selected_direc_vinc" :key="key">
                         <th scope="row">
                           <div class="checkbox" id="selected_em">
                             <label>
                               <input
                                 type="checkbox"
-                                :name="`checkbox_table_${item.IdEmpresa}`"
+                                :name="`checkbox_table_${item.RazonSocial}`"
                                 v-model="selected_direc_vinc"
                                 @change="handleChangeList(item, $event)"
-                                :id="`checkbox_table_${item.IdEmpresa}`"
+                                :id="`checkbox_table_${item.RazonSocial}`"
                                 :value="item"
                               />
-                              {{ item.RazonSocial }}
+                              {{ item.Nombre }}
                             </label>
                           </div>
                         </th>
-                        <td>{{ item.CIF }}</td>
-                        <td>{{ item.Provincia }}</td>
-                        <td>{{ item.Localidad }}</td>
-                        <td>
-                          {{
-                            item.UltimaCuentaAnual
-                              ? item.UltimaCuentaAnual.Ejercicio
-                              : ""
-                          }}
-                        </td>
+                        <td>{{ item.RazonSocial }}</td>
+                        <td class="t-t-capitalize">{{ item.CargoEspejo }}</td>
+                        <td>{{ item.EstadoActivo }}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -436,6 +398,12 @@ export default {
       applied_filters: "filters/applied_filters",
       filters: "filters/filters",
     }),
+    iconLoadingValidar: function() {
+      return this.loadingValidar ? "fa  fa-spinner fa-spin" : "fa  fa-search";
+    },
+    iconLoadingApply: function() {
+      return this.loadingApply ? "fa  fa-spinner fa-spin" : "fa  fa-search";
+    },
     compareWithNewtoApply: function() {
       let stg = this.selected_direc_vinc_string;
       let obj = JSON.stringify(this.selected_direc_vinc);
@@ -447,13 +415,12 @@ export default {
     loadingValidar: false,
     search_edit: true,
     search_add: false,
-    dataFrm: "Antonio Aynat Eknes",
+    dataFrm: "Antonio",
     direc_vinc: {
       total: 0,
       cantidad: 0,
       empresas: [],
     },
-    direc_vinc_json: [],
     selected_direc_vinc_string: "",
     selected_direc_vinc: [],
     list_selected_direc_vinc: [],
@@ -503,40 +470,26 @@ export default {
           .then((response) => {
             if (
               response &&
-              response.empresas &&
-              this.direc_vinc.empresas.length !== 0 &&
-              this.search_add
+              Array.isArray(response) &&
+              response.length === 1 &&
+              Array.isArray(response[0])
             ) {
-              // response.empresas.map((item) => {
-              //   console.log(item);
-              //   this.direc_vinc.empresas.unshift(item);
-              // });
-              // this.direc_vinc.empresas = removeDuplicates(
-              //   this.direc_vinc.empresas,
-              //   "RazonSocial"
-              // );
+              const empresas = response[0];
+              empresas.map((item) => {
+                this.direc_vinc.empresas.push({
+                  ...item,
+                  data: 0,
+                  label: `${item.Nombre} - ${item.CargoEspejo}`,
+                });
+              });
+            } else {
+              swal.fire("Advertencia", "Datos no encontrados", "warning");
+              this.direc_vinc.empresas = [];
             }
-            this.direc_vinc_json = [];
-            response.empresas.map((item) => {
-              this.direc_vinc_json.unshift(item);
-            });
-            // else {
-            //   this.direc_vinc.empresas = response.empresas
-            //     ? response.empresas
-            //     : [];
-            // }
             this.loadingValidar = false;
             this.search_edit = false;
             this.search_add = false;
-            if (response.empresas.length === 0) {
-              swal.fire(
-                "Advertencia",
-                "Nombre o razón social no existe",
-                "warning"
-              );
-            } else {
-              //this.dataFrm = "";
-            }
+            // this.dataFrm = "";
           })
           .catch(() => {
             this.loadingValidar = false;
@@ -554,7 +507,7 @@ export default {
         this.loadingApply = true;
         this.search_edit = false;
         this.search_add = false;
-        this.form.razonSocial = this.selected_direc_vinc.map((item) => {
+        this.form.vinculaciones = this.selected_direc_vinc.map((item) => {
           return item.RazonSocial;
         });
         let beforeForm = beforeOrderFilters(
@@ -612,7 +565,7 @@ export default {
         });
     },
     clean() {
-      this.form.razonSocial = [];
+      this.form.vinculaciones = [];
       this.dataFrm = "";
       this.to_social_reason = "";
       this.selected_direc_vinc = [];
@@ -645,7 +598,7 @@ export default {
       sendEvent("filtro-limpiado", this.title);
     },
     emptyFilter() {
-      this.form.razonSocial = [];
+      this.form.vinculaciones = [];
       this.selected_direc_vinc = [];
       this.selected_direc_vinc_string = "";
       this.dataFrm = "";

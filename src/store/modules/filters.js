@@ -17,6 +17,7 @@ const initialState = () => {
       TipoCuentas: [],
       sector_actividad: [],
       cargo: [],
+      vinculaciones: [],
       filtros: [{}],
     },
     applied_filters: [],
