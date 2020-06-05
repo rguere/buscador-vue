@@ -415,7 +415,7 @@ export default {
     loadingValidar: false,
     search_edit: true,
     search_add: false,
-    dataFrm: "Antonio",
+    dataFrm: "",
     direc_vinc: {
       total: 0,
       cantidad: 0,
