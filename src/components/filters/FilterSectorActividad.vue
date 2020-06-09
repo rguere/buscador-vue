@@ -319,6 +319,13 @@
                         </label>
                       </treeselect>
                       <br />
+                      <el-checkbox v-model="selectAll"
+                        >Seleccionar todo</el-checkbox
+                      >
+                      <hr />
+                      <pre>
+                        {{ selected_cnae }}
+                      </pre>
                     </div>
                   </div>
                 </dir>
@@ -779,6 +786,7 @@ export default {
       isDefaultExpanded: null,
       label: null,
     },
+    selectAll: false,
   }),
   watch: {
     selected_cnae: function(newCnae) {
@@ -839,6 +847,22 @@ export default {
         });
       }
     },
+    selectAll: function(all) {
+      if (all) {
+        this.selected_cnae = [];
+        for (const cnaes of this.search.cnae) {
+          this.selected_cnae.push({
+            children: cnaes.children,
+            data: cnaes.data,
+            id: cnaes.id,
+            isDefaultExpanded: cnaes.isDefaultExpanded,
+            label: cnaes.label,
+          });
+        }
+      } else {
+        this.selected_cnae = [];
+      }
+    },
   },
   mounted() {
     this.$root.$on("clean_filter", (filter) => {
@@ -869,11 +893,7 @@ export default {
       let m2 = _items.splice(0, _items.length);
       return part === 1 ? m1 : m2;
     },
-    fetchSearch() {
-      // this.$store.dispatch('search/fetchSearch').then(() => {
-      //   this.options[0].children = (this.search && this.search.cnae) ? this.search.cnae : []
-      // })
-    },
+    fetchSearch() {},
     showModal() {
       sendPageView(
         `filtro-Sector-Actividad`,
