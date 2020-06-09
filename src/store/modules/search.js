@@ -185,10 +185,13 @@ export const actions = {
   async validateBormeAuditor({ commit }, AuditorBorme) {
     const { dataFrm, searchTab } = AuditorBorme;
     try {
-      const { data } = await axios.post(`/buscador/auditor/buscar`, {
-        lista: dataFrm,
-        searchTab,
-      });
+      const { data } = await axios.post(
+        `/buscador/auditor/buscar?searchTab=${searchTab}`,
+        {
+          lista: dataFrm,
+          searchTab,
+        }
+      );
       return data;
     } catch (e) {
       commit(types.LOADING_SEARCH, {

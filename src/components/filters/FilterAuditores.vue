@@ -83,7 +83,7 @@
             <div class="form_items">
               <div class="form-group">
                 <textarea
-                  v-model="dataFrm"
+                  v-model="dataFrm2"
                   id="auditoresTabBusquedaRazonSocial"
                   class="form-control"
                   placeholder="Introduce los Nombres de los auditores, separados por coma o salto de línea, y clicar en “BUSCAR”"
@@ -98,7 +98,7 @@
                     type="button"
                     class="btn btn-info"
                     @click="validateBormeAuditor"
-                    :disabled="dataFrm.length === 0 || loadingValidar"
+                    :disabled="dataFrm2.length === 0 || loadingValidar"
                   >
                     BUSCAR
                     <i :class="iconBtnBuscar"></i>
@@ -410,7 +410,7 @@
                             <div class="form_items">
                               <div class="form-group">
                                 <textarea
-                                  v-model="dataFrm"
+                                  v-model="dataFrm2"
                                   id="auditoresTabBusquedaRazonSocial"
                                   class="form-control"
                                   placeholder="Introduce los Nombres de los auditores, separados por coma o salto de línea, y clicar en “BUSCAR”"
@@ -426,7 +426,7 @@
                                     class="btn btn-info"
                                     @click="validateBormeAuditor"
                                     :disabled="
-                                      dataFrm.length === 0 || loadingValidar
+                                      dataFrm2.length === 0 || loadingValidar
                                     "
                                   >
                                     BUSCAR
@@ -634,6 +634,7 @@ export default {
     search_add: false,
     show_top_10: true,
     dataFrm: "",
+    dataFrm2: "",
     auditores: {
       total: 0,
       cantidad: 0,
@@ -689,63 +690,62 @@ export default {
       return part === 1 ? m1 : m2;
     },
     validateBormeAuditor() {
-      if (this.dataFrm.length !== 0) {
-        this.loadingValidar = true;
-        this.dataFrm = spacesByDashes(this.dataFrm);
-        this.$store
-          .dispatch("search/validateBormeAuditor", {
-            dataFrm: this.dataFrm,
-            searchTab: this.searchTab,
-          })
-          .then((response) => {
-            if (response && Array.isArray(response) && response.length > 0) {
-              const result = objectToArray(response);
-              response.empresas = result.map((item) => {
-                return {
-                  data: 0,
-                  id: item.roac_codigo,
-                  label: item.roac_Text,
-                  situacion: item.situacion,
-                };
-              });
-            }
-            if (
-              response &&
-              response.empresas &&
-              this.auditores.empresas.length !== 0 &&
-              this.search_add
-            ) {
-              response.empresas.map((item) => {
-                this.auditores.empresas.unshift(item);
-              });
-              this.auditores.empresas = removeDuplicates(
-                this.auditores.empresas,
-                "id"
-              );
-            } else {
-              this.auditores.empresas = response.empresas
-                ? response.empresas
-                : [];
-            }
+      this.loadingValidar = true;
+      let frm = this.searchTab === "roac" ? this.dataFrm : this.dataFrm2;
+      frm = spacesByDashes(frm);
+      this.$store
+        .dispatch("search/validateBormeAuditor", {
+          dataFrm: frm,
+          searchTab: this.searchTab,
+        })
+        .then((response) => {
+          if (response && Array.isArray(response) && response.length > 0) {
+            const result = objectToArray(response);
+            response.empresas = result.map((item) => {
+              return {
+                data: 0,
+                id: item.roac_codigo,
+                label: item.roac_Text,
+                situacion: item.situacion,
+              };
+            });
+          }
+          if (
+            response &&
+            response.empresas &&
+            this.auditores.empresas.length !== 0 &&
+            this.search_add
+          ) {
+            response.empresas.map((item) => {
+              this.auditores.empresas.unshift(item);
+            });
             this.auditores.empresas = removeDuplicates(
               this.auditores.empresas,
               "id"
             );
-            if (response.empresas.length === 0) {
-              swal.fire("Advertencia", "Auditores no existe", "warning");
-            } else {
-              this.dataFrm = "";
-            }
-            this.loadingValidar = false;
-            this.search_edit = false;
-            this.search_add = false;
-          })
-          .catch(() => {
-            this.loadingValidar = false;
-            this.auditores = { total: 0, cantidad: 0, empresas: [] };
-            this.selected_auditores = [];
-          });
-      }
+          } else {
+            this.auditores.empresas = response.empresas
+              ? response.empresas
+              : [];
+          }
+          this.auditores.empresas = removeDuplicates(
+            this.auditores.empresas,
+            "id"
+          );
+          if (response.empresas.length === 0) {
+            swal.fire("Advertencia", "Auditores no existe", "warning");
+          } else {
+            this.dataFrm = "";
+          }
+          this.loadingValidar = false;
+          this.search_edit = false;
+          this.search_add = false;
+        })
+        .catch(() => {
+          this.loadingValidar = false;
+          this.auditores = { total: 0, cantidad: 0, empresas: [] };
+          this.selected_auditores = [];
+        });
     },
     apply() {
       if (this.selected_auditores && this.selected_auditores.length !== 0) {
@@ -809,6 +809,7 @@ export default {
       this.form.auditores = [];
       this.show_top_10 = true;
       this.dataFrm = "";
+      this.dataFrm2 = "";
       this.to_social_reason = "";
       this.selected_auditores = [];
       this.selected_auditores_string = "";
@@ -845,6 +846,7 @@ export default {
       this.selected_auditores = [];
       this.selected_auditores_string = "";
       this.dataFrm = "";
+      this.dataFrm2 = "";
       this.to_social_reason = "";
       this.auditores = { total: 0, cantidad: 0, empresas: [] };
       this.list_selected_auditores = [];
