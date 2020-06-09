@@ -302,6 +302,13 @@ export const getColumnsSummary = () => {
       sortable: true,
     },
     {
+      prop: "CargosFiltrados",
+      label: "Cargos",
+      width: "210",
+      show: true,
+      sortable: true,
+    },
+    {
       prop: "IndustriaDescripcion",
       label: "Sector Infocif",
       width: "210",

@@ -696,6 +696,14 @@ export default {
               if (!item.Codigo_Postal) {
                 item.Codigo_Postal = "-";
               }
+              if (item.CargosFiltrados && Array.isArray(item.CargosFiltrados)) {
+                let CargosFiltrados = item.CargosFiltrados.map((item) => {
+                  return item.Valor;
+                });
+                item.CargosFiltrados = CargosFiltrados.join(",");
+              } else {
+                item.CargosFiltrados = "-";
+              }
               if (
                 item.CuentasDisponibles &&
                 Array.isArray(item.CuentasDisponibles)
