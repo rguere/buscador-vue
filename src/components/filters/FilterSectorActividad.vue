@@ -319,13 +319,9 @@
                         </label>
                       </treeselect>
                       <br />
-                      <el-checkbox v-model="selectAll"
-                        >Seleccionar todo</el-checkbox
-                      >
-                      <hr />
-                      <pre>
-                        {{ selected_cnae }}
-                      </pre>
+                      <el-checkbox v-model="selectAll">{{
+                        selectAll ? "Deseleccionar todo" : "Seleccionar todo"
+                      }}</el-checkbox>
                     </div>
                   </div>
                 </dir>
@@ -527,10 +523,25 @@
                       </p>
                     </div>
                     <div class="panel-body">
-                      <label class="control-label" for="SearchTheProvinceorTown"
-                        >Introduce el código de uno o varios Códigos CNAE para
-                        “BUSCAR”</label
+                      <div
+                        style="display: flex; justify-content: space-between;"
                       >
+                        <div>
+                          <label
+                            class="control-label"
+                            for="SearchTheProvinceorTown"
+                            >Introduce el código de uno o varios Códigos CNAE
+                            para “BUSCAR”</label
+                          >
+                        </div>
+                        <div>
+                          <el-checkbox v-model="selectAll">{{
+                            selectAll
+                              ? "Deseleccionar todo"
+                              : "Seleccionar todo"
+                          }}</el-checkbox>
+                        </div>
+                      </div>
                       <el-select
                         id="SearchTheProvinceorTown"
                         name="SearchTheProvinceorTown"
