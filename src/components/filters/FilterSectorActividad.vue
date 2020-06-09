@@ -218,6 +218,7 @@
                   :closable="false"
                 >
                 </el-alert>
+                <br />
                 <div class="flex-search-cnae">
                   <div v-for="(item, key) in search.cnae" :key="key">
                     <el-popover

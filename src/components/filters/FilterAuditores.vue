@@ -9,40 +9,106 @@
       <p class="panel-title roboto white">
         {{ title }}
         <span class="span-info-right" v-if="selected_by_auditores !== 0"
-          >({{ selected_by_auditores | numeral("0,0") }} empresas
-          seleccionadas)</span
+          >({{ selected_by_auditores | numeral("0,0") }} Auditor (es)
+          seleccionados)</span
         >
       </p>
     </div>
     <div class="panel-body">
-      <form v-on:submit.prevent="validateBormeAuditor" class="m-b-10">
-        <div class="form_items">
-          <div class="form-group">
-            <textarea
-              v-model="dataFrm"
-              id="auditores1"
-              class="form-control"
-              placeholder="Introduce los códigos Roac o nombres de los auditores, separados por coma o salto de línea, y clicar en “BUSCAR”"
-              title="Introduce los códigos Roac o nombres de los auditores, separados por coma o salto de línea, y clicar en “BUSCAR”"
-            ></textarea>
-          </div>
-          <div class="flex-space-between-flex-end">
-            <div></div>
-            <div>
-              <button
-                title="BUSCAR"
-                type="button"
-                class="btn btn-info"
-                @click="validateBormeAuditor"
-                :disabled="dataFrm.length === 0 || loadingValidar"
-              >
-                BUSCAR
-                <i :class="iconBtnBuscar"></i>
-              </button>
+      <ul class="nav nav-tabs">
+        <li :class="searchTab === 'roac' ? 'active' : ''">
+          <a
+            data-toggle="tab"
+            @click="setTab(`roac`)"
+            class="text-white"
+            href="#"
+            >Busqueda Roac</a
+          >
+        </li>
+        <li :class="searchTab === 'razonSocial' ? 'active' : ''">
+          <a
+            data-toggle="tab"
+            @click="setTab(`razonSocial`)"
+            class="text-white"
+            href="#"
+            >Busqueda Razon Social</a
+          >
+        </li>
+      </ul>
+      <div class="tab-content">
+        <div
+          id="tabBusquedaRoac"
+          :class="
+            searchTab === 'roac' ? 'tab-pane fade in active' : 'tab-pane fade'
+          "
+        >
+          <form v-on:submit.prevent="validateBormeAuditor" class="m-b-10">
+            <div class="form_items">
+              <div class="form-group">
+                <textarea
+                  v-model="dataFrm"
+                  id="auditoresTabBusquedaRoac"
+                  class="form-control"
+                  placeholder="Introduce los códigos Roac, separados por coma o salto de línea, y clicar en “BUSCAR”"
+                  title="Introduce los códigos Roac, separados por coma o salto de línea, y clicar en “BUSCAR”"
+                ></textarea>
+              </div>
+              <div class="flex-space-between-flex-end">
+                <div></div>
+                <div>
+                  <button
+                    title="BUSCAR"
+                    type="button"
+                    class="btn btn-info"
+                    @click="validateBormeAuditor"
+                    :disabled="dataFrm.length === 0 || loadingValidar"
+                  >
+                    BUSCAR
+                    <i :class="iconBtnBuscar"></i>
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
+          </form>
         </div>
-      </form>
+        <div
+          id="tabBusquedaRazonSocial"
+          :class="
+            searchTab === 'razonSocial'
+              ? 'tab-pane fade in active'
+              : 'tab-pane fade'
+          "
+        >
+          <form v-on:submit.prevent="validateBormeAuditor" class="m-b-10">
+            <div class="form_items">
+              <div class="form-group">
+                <textarea
+                  v-model="dataFrm"
+                  id="auditoresTabBusquedaRazonSocial"
+                  class="form-control"
+                  placeholder="Introduce los Nombres de los auditores, separados por coma o salto de línea, y clicar en “BUSCAR”"
+                  title="Introduce los Nombres de los auditores, separados por coma o salto de línea, y clicar en “BUSCAR”"
+                ></textarea>
+              </div>
+              <div class="flex-space-between-flex-end">
+                <div></div>
+                <div>
+                  <button
+                    title="BUSCAR"
+                    type="button"
+                    class="btn btn-info"
+                    @click="validateBormeAuditor"
+                    :disabled="dataFrm.length === 0 || loadingValidar"
+                  >
+                    BUSCAR
+                    <i :class="iconBtnBuscar"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
       <div
         class="panel panel-default cd"
         v-if="auditores && auditores.empresas.length !== 0 && !search_edit"
@@ -181,7 +247,7 @@
           <br />
           <el-collapse v-model="collapseResumen">
             <el-collapse-item
-              title="Resumen de empresas seleccionadas"
+              title="Resumen de Auditor (es) seleccionados"
               name="1"
             >
               <div class="div-scroll-200">
@@ -227,7 +293,6 @@
                 v-if="
                   selected_auditores &&
                     selected_auditores.length !== 0 &&
-                    !search_edit &&
                     !compareWithNewtoApply
                 "
                 :disabled="selected_auditores.length === 0 || loadingApply"
@@ -265,35 +330,114 @@
                 <div class="panel-body">
                   <div class="row">
                     <div class="col-md-7">
-                      <form
-                        v-on:submit.prevent="validateBormeAuditor"
-                        class="m-b-10"
-                      >
-                        <div class="form-group">
-                          <textarea
-                            v-model="dataFrm"
-                            id="auditores1"
-                            class="form-control"
-                            placeholder="Introduce los códigos Roac o nombres de los auditores, separados por coma o salto de línea, y clicar en “BUSCAR”"
-                            title="Introduce los códigos Roac o nombres de los auditores, separados por coma o salto de línea, y clicar en “BUSCAR”"
-                          ></textarea>
+                      <ul class="nav nav-tabs">
+                        <li :class="searchTab === 'roac' ? 'active' : ''">
+                          <a
+                            data-toggle="tab"
+                            @click="setTab(`roac`)"
+                            class="text-white"
+                            href="#"
+                            >Busqueda Roac</a
+                          >
+                        </li>
+                        <li
+                          :class="searchTab === 'razonSocial' ? 'active' : ''"
+                        >
+                          <a
+                            data-toggle="tab"
+                            @click="setTab(`razonSocial`)"
+                            class="text-white"
+                            href="#"
+                            >Busqueda Razon Social</a
+                          >
+                        </li>
+                      </ul>
+                      <div class="tab-content">
+                        <div
+                          id="tabBusquedaRoac"
+                          :class="
+                            searchTab === 'roac'
+                              ? 'tab-pane fade in active'
+                              : 'tab-pane fade'
+                          "
+                        >
+                          <form
+                            v-on:submit.prevent="validateBormeAuditor"
+                            class="m-b-10"
+                          >
+                            <div class="form_items">
+                              <div class="form-group">
+                                <textarea
+                                  v-model="dataFrm"
+                                  id="auditoresTabBusquedaRoac"
+                                  class="form-control"
+                                  placeholder="Introduce los códigos Roac, separados por coma o salto de línea, y clicar en “BUSCAR”"
+                                  title="Introduce los códigos Roac, separados por coma o salto de línea, y clicar en “BUSCAR”"
+                                ></textarea>
+                              </div>
+                              <div class="flex-space-between-flex-end">
+                                <div></div>
+                                <div>
+                                  <button
+                                    title="BUSCAR"
+                                    type="button"
+                                    class="btn btn-info"
+                                    @click="validateBormeAuditor"
+                                    :disabled="
+                                      dataFrm.length === 0 || loadingValidar
+                                    "
+                                  >
+                                    BUSCAR
+                                    <i :class="iconBtnBuscar"></i>
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </form>
                         </div>
-                        <div class="flex-space-between-flex-end">
-                          <div></div>
-                          <div>
-                            <button
-                              title="BUSCAR"
-                              type="button"
-                              class="btn btn-info"
-                              @click="validateBormeAuditor"
-                              :disabled="dataFrm.length === 0 || loadingValidar"
-                            >
-                              BUSCAR
-                              <i :class="iconBtnBuscar"></i>
-                            </button>
-                          </div>
+                        <div
+                          id="tabBusquedaRazonSocial"
+                          :class="
+                            searchTab === 'razonSocial'
+                              ? 'tab-pane fade in active'
+                              : 'tab-pane fade'
+                          "
+                        >
+                          <form
+                            v-on:submit.prevent="validateBormeAuditor"
+                            class="m-b-10"
+                          >
+                            <div class="form_items">
+                              <div class="form-group">
+                                <textarea
+                                  v-model="dataFrm"
+                                  id="auditoresTabBusquedaRazonSocial"
+                                  class="form-control"
+                                  placeholder="Introduce los Nombres de los auditores, separados por coma o salto de línea, y clicar en “BUSCAR”"
+                                  title="Introduce los Nombres de los auditores, separados por coma o salto de línea, y clicar en “BUSCAR”"
+                                ></textarea>
+                              </div>
+                              <div class="flex-space-between-flex-end">
+                                <div></div>
+                                <div>
+                                  <button
+                                    title="BUSCAR"
+                                    type="button"
+                                    class="btn btn-info"
+                                    @click="validateBormeAuditor"
+                                    :disabled="
+                                      dataFrm.length === 0 || loadingValidar
+                                    "
+                                  >
+                                    BUSCAR
+                                    <i :class="iconBtnBuscar"></i>
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </form>
                         </div>
-                      </form>
+                      </div>
                     </div>
                     <div class="col-md-5">
                       <el-collapse v-model="collapseTop10">
@@ -348,8 +492,8 @@
                     <span
                       class="span-info-right"
                       v-if="selected_by_auditores !== 0"
-                      >({{ selected_by_auditores | numeral("0,0") }} empresas
-                      seleccionadas)</span
+                      >({{ selected_by_auditores | numeral("0,0") }} Auditor
+                      (es) seleccionados)</span
                     >
                   </p>
                 </div>
@@ -387,12 +531,12 @@
               <div class="panel panel-default cd">
                 <div class="panel-heading">
                   <p class="panel-title roboto white">
-                    Resumen de empresas seleccionadas
+                    Resumen de Auditor (es) seleccionados
                     <span
                       class="span-info-right"
                       v-if="selected_by_auditores !== 0"
-                      >({{ selected_by_auditores | numeral("0,0") }} empresas
-                      seleccionadas)</span
+                      >({{ selected_by_auditores | numeral("0,0") }} Auditor
+                      (es) seleccionados)</span
                     >
                   </p>
                 </div>
@@ -509,6 +653,7 @@ export default {
     file: {},
     collapseResumen: [],
     collapseTop10: ["1"],
+    searchTab: "roac",
   }),
   mounted() {
     this.$root.$on("clean_filter", (filter) => {
@@ -548,7 +693,10 @@ export default {
         this.loadingValidar = true;
         this.dataFrm = spacesByDashes(this.dataFrm);
         this.$store
-          .dispatch("search/validateBormeAuditor", this.dataFrm)
+          .dispatch("search/validateBormeAuditor", {
+            dataFrm: this.dataFrm,
+            searchTab: this.searchTab,
+          })
           .then((response) => {
             if (response && Array.isArray(response) && response.length > 0) {
               const result = objectToArray(response);
@@ -579,6 +727,10 @@ export default {
                 ? response.empresas
                 : [];
             }
+            this.auditores.empresas = removeDuplicates(
+              this.auditores.empresas,
+              "id"
+            );
             if (response.empresas.length === 0) {
               swal.fire("Advertencia", "Auditores no existe", "warning");
             } else {
@@ -757,6 +909,9 @@ export default {
       sendPageView(``, `Buscador - Filtro`);
       this.modalVisible = false;
     },
+    setTab(tab) {
+      this.searchTab = tab;
+    },
   },
 };
 </script>
@@ -793,5 +948,13 @@ export default {
       display: inline-block;
     }
   }
+}
+.nav.nav-tabs {
+  li.active a {
+    color: #fff !important;
+  }
+}
+.nav-tabs {
+  border-bottom: none !important;
 }
 </style>
