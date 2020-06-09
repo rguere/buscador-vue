@@ -302,7 +302,7 @@ export const getColumnsSummary = () => {
       sortable: true,
     },
     {
-      prop: "CargosFiltrados",
+      prop: "cargos",
       label: "Cargos",
       width: "210",
       show: true,

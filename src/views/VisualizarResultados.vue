@@ -297,11 +297,13 @@
                                   :key="_key"
                                 >
                                   <span
+                                    class="t-t-capitalize"
                                     v-if="item.title === 'Sector/Actividad'"
                                   >
                                     {{ `${_item.id} - ${_item.label}` }}
                                   </span>
                                   <span
+                                    class="t-t-capitalize"
                                     v-if="item.title !== 'Sector/Actividad'"
                                   >
                                     {{
@@ -700,9 +702,9 @@ export default {
                 let CargosFiltrados = item.CargosFiltrados.map((item) => {
                   return item.Valor;
                 });
-                item.CargosFiltrados = CargosFiltrados.join(",");
+                item.cargos = CargosFiltrados.join(",");
               } else {
-                item.CargosFiltrados = "-";
+                item.cargos = "-";
               }
               if (
                 item.CuentasDisponibles &&
