@@ -164,7 +164,7 @@ const initialState = () => {
         items: [],
         quantity: 0,
         key: "vinculaciones",
-        disabled: false,
+        disabled: true,
       },
       {
         name: "Información Financiera",
