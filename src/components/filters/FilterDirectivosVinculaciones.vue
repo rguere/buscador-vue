@@ -518,6 +518,7 @@ export default {
   methods: {
     changeActive() {
       if (this.direc_vinc.empresas && this.dataFrm.length !== 0) {
+        this.direc_vinc.empresas = null;
         this.validateCargo();
       }
     },
