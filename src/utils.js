@@ -388,6 +388,11 @@ export const formatProvinciaLocalidad = (data) => {
             delete item["children"];
           }
         });
+      } else if (key === "cargos" && Array.isArray(element)) {
+        element.map((item) => {
+          item.label = capitalize(item.label);
+          return item;
+        });
       }
       newData[key] = element;
     }

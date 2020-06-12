@@ -10,29 +10,53 @@
       </p>
     </div>
     <div class="panel-body">
-      <form v-on:submit.prevent="validateCargo" class="m-b-10">
-        <div class="input-group">
-          <input
-            type="text"
-            v-model="dataFrm"
-            id="direc_vinc1"
-            class="form-control"
-            placeholder='escribe aqui el nombre de la empresa o sociedad que pertenece al Organo de Administracion y clica en "Buscar"'
-          />
-          <span class="input-group-btn">
-            <button
-              title="BUSCAR"
-              type="button"
-              class="btn btn-info"
-              @click="validateCargo"
-              :disabled="dataFrm.length === 0 || loadingValidar"
-            >
-              BUSCAR
-              <i :class="iconLoadingValidar"></i>
-            </button>
-          </span>
+      <div class="row">
+        <div class="col-md-8">
+          <form v-on:submit.prevent="validateCargo" class="m-b-10">
+            <div class="input-group">
+              <input
+                type="text"
+                v-model="dataFrm"
+                id="direc_vinc1"
+                class="form-control"
+                placeholder='escribe aqui el nombre de la empresa o sociedad que pertenece al Organo de Administracion y clica en "Buscar"'
+              />
+              <span class="input-group-btn">
+                <button
+                  title="BUSCAR"
+                  type="button"
+                  class="btn btn-info"
+                  @click="validateCargo"
+                  :disabled="dataFrm.length === 0 || loadingValidar"
+                >
+                  BUSCAR
+                  <i :class="iconLoadingValidar"></i>
+                </button>
+              </span>
+            </div>
+          </form>
         </div>
-      </form>
+        <div class="col-md-4" v-if="!loadingValidar">
+          <div v-if="dataFrm.length !== 0">
+            <el-switch
+              v-model="active"
+              :disabled="both"
+              active-color="#13ce66"
+              inactive-color="#ff4949"
+              active-text="Activos"
+              inactive-text="Inactivos"
+              @change="changeActive"
+            >
+            </el-switch>
+            <el-checkbox
+              style="margin-left: 20px;"
+              @change="changeActive"
+              v-model="both"
+              >Ambos</el-checkbox
+            >
+          </div>
+        </div>
+      </div>
       <div
         class="panel panel-default cd"
         v-if="direc_vinc && direc_vinc.empresas && !search_edit"
@@ -64,6 +88,11 @@
                       prop="RazonSocial"
                       label="Razón social de la empresa"
                     >
+                      <template slot-scope="scope">
+                        <a :href="scope.row.urlInfocif" target="_blank">{{
+                          scope.row.RazonSocial
+                        }}</a>
+                      </template>
                     </el-table-column>
                     <el-table-column prop="CargoEspejo" label="Cargo">
                     </el-table-column>
@@ -116,58 +145,7 @@
             <i class="fa fa-undo"></i>
           </button>
         </div>
-        <div>
-          <el-switch
-            v-model="active"
-            :disabled="both"
-            active-color="#13ce66"
-            inactive-color="#ff4949"
-            active-text="Activos"
-            inactive-text="Inactivos"
-            @change="changeActive"
-          >
-          </el-switch>
-          <el-checkbox
-            style="margin-left: 20px;"
-            @change="changeActive"
-            v-model="both"
-            >Ambos</el-checkbox
-          >
-        </div>
       </div>
-      <!-- <div
-        class="row"
-        v-if="list_selected_direc_vinc && list_selected_direc_vinc.length !== 0"
-      >
-        <div class="col-md-12">
-          <br />
-          <el-collapse v-model="collapseResumen">
-            <el-collapse-item
-              title="Resumen de empresas seleccionadas"
-              name="1"
-            >
-              <div class="div-scroll-200">
-                <div v-for="(item, key) in list_selected_direc_vinc" :key="key">
-                  <div class="checkbox" id="selected_em">
-                    <label>
-                      <input
-                        type="checkbox"
-                        :name="`checkbox_resumen${item.RazonSocial}`"
-                        v-model="selected_direc_vinc"
-                        @change="handleChangeList(item, $event)"
-                        :id="`checkbox_resumen${item.RazonSocial}`"
-                        :value="item"
-                      />
-                      {{ item.Nombre }} -
-                      <span class="t-t-capitalize">{{ item.CargoEspejo }}</span>
-                    </label>
-                  </div>
-                </div>
-              </div>
-            </el-collapse-item>
-          </el-collapse>
-        </div>
-      </div> -->
       <el-dialog
         :visible.sync="modalVisible"
         width="95%"
@@ -247,8 +225,8 @@
                         </div>
                       </form>
                     </div>
-                    <div class="col-md-5">
-                      <div>
+                    <div class="col-md-5" v-if="!loadingValidar">
+                      <div v-if="dataFrm.length !== 0">
                         <el-switch
                           v-model="active"
                           :disabled="both"
@@ -278,8 +256,7 @@
               <div class="panel panel-default cd">
                 <div class="panel-heading">
                   <p class="panel-title roboto white">
-                    Resultados de búsqueda<!-- Selecciona una o varias empresas y clique en “Aplicar” para
-                    incorporarlas a su búsqueda. -->
+                    Resultados de la búsqueda
                     <span
                       class="span-info-right"
                       v-if="selected_by_direc_vinc !== 0"
@@ -297,6 +274,7 @@
                         :name="key"
                       >
                         <template slot="title">
+                          <span :class="getActiveCollapse(key)"></span>
                           <span class="t-t-capitalize">{{
                             items[0].Nombre
                           }}</span>
@@ -330,93 +308,6 @@
                       </el-collapse-item>
                     </el-collapse>
                   </div>
-                  <!-- <table class="table table-hover">
-                    <thead>
-                      <tr>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Razón social de la empresa</th>
-                        <th scope="col">Cargo</th>
-                        <th scope="col">Estado</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr v-for="(item, key) in direc_vinc.empresas" :key="key">
-                        <th scope="row">
-                          <div class="checkbox">
-                            <label>
-                              <input
-                                type="checkbox"
-                                :name="`checkbox_table_${item.RazonSocial}`"
-                                v-model="selected_direc_vinc"
-                                @change="handleChange(item, $event)"
-                                :id="`checkbox_table_${item.RazonSocial}`"
-                                :value="item"
-                              />
-                              {{ item.Nombre }}
-                            </label>
-                          </div>
-                        </th>
-                        <td>{{ item.RazonSocial }}</td>
-                        <td class="t-t-capitalize">{{ item.CargoEspejo }}</td>
-                        <td>{{ getEstado(item.EstadoActivo) }}</td>
-                      </tr>
-                    </tbody>
-                  </table> -->
-                </div>
-              </div>
-            </div>
-            <div
-              class="col-md-12"
-              v-if="
-                list_selected_direc_vinc &&
-                  list_selected_direc_vinc.length !== 0
-              "
-            >
-              <div class="panel panel-default cd">
-                <div class="panel-heading">
-                  <p class="panel-title roboto white">
-                    Resumen de empresas seleccionadas
-                    <span
-                      class="span-info-right"
-                      v-if="selected_by_direc_vinc !== 0"
-                      >({{ selected_by_direc_vinc | numeral("0,0") }} empresas
-                      seleccionadas)</span
-                    >
-                  </p>
-                </div>
-                <div class="panel-body div-scroll-200">
-                  <table class="table table-hover">
-                    <thead>
-                      <tr>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Razón social de la empresa</th>
-                        <th scope="col">Cargo</th>
-                        <th scope="col">Estado</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr v-for="(item, key) in selected_direc_vinc" :key="key">
-                        <th scope="row">
-                          <div class="checkbox" id="selected_em">
-                            <label>
-                              <input
-                                type="checkbox"
-                                :name="`checkbox_table_${item.RazonSocial}`"
-                                v-model="selected_direc_vinc"
-                                @change="handleChangeList(item, $event)"
-                                :id="`checkbox_table_${item.RazonSocial}`"
-                                :value="item"
-                              />
-                              {{ item.Nombre }}
-                            </label>
-                          </div>
-                        </th>
-                        <td>{{ item.RazonSocial }}</td>
-                        <td class="t-t-capitalize">{{ item.CargoEspejo }}</td>
-                        <td>{{ getEstado(item.EstadoActivo) }}</td>
-                      </tr>
-                    </tbody>
-                  </table>
                 </div>
               </div>
             </div>
@@ -428,7 +319,7 @@
 </template>
 
 <script>
-const slugify = require("slugify");
+import slugify from "slugify";
 import { mapGetters } from "vuex";
 import swal from "sweetalert2";
 import {
@@ -572,11 +463,19 @@ export default {
                 if (empresas.hasOwnProperty(key)) {
                   const element = empresas[key];
                   if (element.Nombre) {
-                    const slug = slugify(element.Nombre);
+                    const slug = slugify(element.Nombre.toLowerCase());
                     this.activeCollapse.push(slug);
                     element.CargoEspejo = capitalize(element.CargoEspejo);
                     element.label = `${element.Nombre} - ${element.CargoEspejo}`;
                     element.data = 0;
+                    if (element.razonSocialNormalizadaURL301) {
+                      element.urlInfocif = `http://www.infocif.es/ficha-empresa/${element.razonSocialNormalizadaURL301}`;
+                    } else {
+                      let nameRazonSocial = slugify(
+                        element.RazonSocial.toLowerCase()
+                      );
+                      element.urlInfocif = `http://www.infocif.es/ficha-empresa/${nameRazonSocial}`;
+                    }
                     if (items[slug] && Array.isArray(items[slug])) {
                       items[slug].push(element);
                     } else {

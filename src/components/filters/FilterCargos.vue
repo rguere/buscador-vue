@@ -26,7 +26,7 @@
                 :value="item"
               />
               <span class="geekmark"></span>
-              <span class="name-checkbox t-t-capitalize">{{ item.label }}</span>
+              <span class="name-checkbox">{{ item.label }}</span>
               <span class="num-fil">({{ item.data | numeral("0,0") }})</span>
             </label>
           </div>
@@ -160,7 +160,7 @@
                                     :value="item"
                                   />
                                   <span class="geekmark"></span>
-                                  <span class="name-checkbox t-t-capitalize">{{
+                                  <span class="name-checkbox">{{
                                     item.label
                                   }}</span>
                                   <span class="num-fil"
@@ -333,9 +333,7 @@
                             :value="item"
                           />
                           <span class="geekmark"></span>
-                          <span class="name-checkbox t-t-capitalize"
-                            >{{ item.id }} - {{ item.label }}</span
-                          >
+                          <span class="name-checkbox">{{ item.label }}</span>
                           <span class="num-fil" v-if="item.id != 'all'"
                             >({{ item.data | numeral("0,0") }})</span
                           >
@@ -456,13 +454,13 @@ export default {
     };
   },
   watch: {
-    selected_cargos: function(newProvincesLocalidad) {
+    selected_cargos: function(newProvincesCargos) {
       this.selected_by_cargos = this.numberCompaniesSelected(
-        this.isAllProvincesLocalidad(newProvincesLocalidad)
+        this.isAllProvincesLocalidad(newProvincesCargos)
           ? this.search.cargos
-          : newProvincesLocalidad
+          : newProvincesCargos
       );
-      if (this.reapply && newProvincesLocalidad.length === 0) {
+      if (this.reapply && newProvincesCargos.length === 0) {
         this.clean();
       }
     },

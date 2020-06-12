@@ -395,6 +395,7 @@ import {
   sendEvent,
   getColumnsSummary,
   showColumnsSummary,
+  capitalize,
 } from "./../utils";
 import swal from "sweetalert2";
 import slugify from "slugify";
@@ -436,6 +437,7 @@ export default {
       prop: "razonSocial",
       order: "asc",
     },
+    label_cargos: [],
   }),
   validations() {
     return {
@@ -613,6 +615,9 @@ export default {
                   data_quantity: countByProperty(selecteds, "data"),
                 });
               } else if (element.title === "Cargos") {
+                element.selected_cargos.map((item) => {
+                  this.label_cargos.push(item.label.toLowerCase());
+                });
                 this.filtros_aplicados.push({
                   title: element.title,
                   quantity: result.quantity,
@@ -699,10 +704,14 @@ export default {
                 item.Codigo_Postal = "-";
               }
               if (item.CargosFiltrados && Array.isArray(item.CargosFiltrados)) {
-                let CargosFiltrados = item.CargosFiltrados.map((item) => {
-                  return item.Valor;
+                let CargosFiltrados = [];
+                item.CargosFiltrados.map((item) => {
+                  const Valor = item.Valor;
+                  if (this.label_cargos.includes(Valor.toLowerCase())) {
+                    CargosFiltrados.push(capitalize(Valor));
+                  }
                 });
-                item.cargos = CargosFiltrados.join(",");
+                item.cargos = CargosFiltrados.join(", ");
               } else {
                 item.cargos = "-";
               }
