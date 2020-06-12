@@ -53,6 +53,7 @@
                 :name="key"
               >
                 <template slot="title">
+                  <span :class="getActiveCollapse(key)"></span>
                   <span class="t-t-capitalize">{{ items[0].Nombre }}</span>
                 </template>
                 <div>
@@ -435,6 +436,7 @@ import {
   // removeDuplicates,
   sendPageView,
   sendEvent,
+  capitalize,
 } from "./../../utils";
 import { persistentData } from "./../../mixins/persistent-data";
 export default {
@@ -516,6 +518,11 @@ export default {
     },
   },
   methods: {
+    getActiveCollapse(key) {
+      return this.activeCollapse.includes(key)
+        ? "glyphicon glyphicon-minus"
+        : "glyphicon glyphicon-plus";
+    },
     changeActive() {
       if (this.direc_vinc.empresas && this.dataFrm.length !== 0) {
         this.direc_vinc.empresas = null;
@@ -567,6 +574,7 @@ export default {
                   if (element.Nombre) {
                     const slug = slugify(element.Nombre);
                     this.activeCollapse.push(slug);
+                    element.CargoEspejo = capitalize(element.CargoEspejo);
                     element.label = `${element.Nombre} - ${element.CargoEspejo}`;
                     element.data = 0;
                     if (items[slug] && Array.isArray(items[slug])) {
@@ -677,6 +685,7 @@ export default {
       this.to_social_reason = "";
       this.selected_direc_vinc = [];
       this.selected_direc_vinc_string = "";
+      this.activeCollapse = [];
       this.direc_vinc = { total: 0, cantidad: 0, empresas: null };
       this.list_selected_direc_vinc = [];
       this.collapseResumen = [];
@@ -708,6 +717,7 @@ export default {
       this.form.vinculaciones = [];
       this.selected_direc_vinc = [];
       this.selected_direc_vinc_string = "";
+      this.activeCollapse = [];
       this.dataFrm = "";
       this.to_social_reason = "";
       this.direc_vinc = { total: 0, cantidad: 0, empresas: null };

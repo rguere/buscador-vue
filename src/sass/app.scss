@@ -569,4 +569,13 @@ span.num-fil {
   }
 }
 
+#filter_directivos_y_vinculaciones {
+  .glyphicon {
+    margin-right: 10px;
+  }
+  .el-collapse-item__arrow {
+    display: none !important;
+  }
+}
+
 @import "media_queries.scss";
