@@ -35,7 +35,7 @@
       </form>
       <div
         class="panel panel-default cd"
-        v-if="direc_vinc && direc_vinc.empresas.length !== 0 && !search_edit"
+        v-if="direc_vinc && direc_vinc.empresas && !search_edit"
       >
         <div class="panel-body">
           <div class="row">
@@ -45,24 +45,42 @@
               </div>
             </div>
           </div>
-          <div class="div-scroll-200">
-            <div v-for="(item, key) in direc_vinc.empresas" :key="key">
-              <label class="custon-checkboxs">
-                <input
-                  type="checkbox"
-                  :name="`checkbox_${item.RazonSocial}`"
-                  v-model="selected_direc_vinc"
-                  @change="handleChange(item, $event)"
-                  :id="`checkbox_${item.RazonSocial}`"
-                  :value="item"
-                />
-                <span class="geekmark"></span>
-                <span class="name-checkbox"
-                  >{{ item.Nombre }} -
-                  <span class="t-t-capitalize">{{ item.CargoEspejo }}</span>
-                </span>
-              </label>
-            </div>
+          <div class="div-scroll-400">
+            <el-collapse v-model="activeCollapse">
+              <el-collapse-item
+                v-for="(items, key) in direc_vinc.empresas"
+                :key="key"
+                :name="key"
+              >
+                <template slot="title">
+                  <span class="t-t-capitalize">{{ items[0].Nombre }}</span>
+                </template>
+                <div>
+                  <el-table :data="items" style="width: 100%">
+                    <el-table-column prop="Nombre" label="Persona">
+                    </el-table-column>
+                    <el-table-column
+                      prop="RazonSocial"
+                      label="Razón social de la empresa"
+                    >
+                    </el-table-column>
+                    <el-table-column prop="CargoEspejo" label="Cargo">
+                    </el-table-column>
+                    <el-table-column
+                      width="150"
+                      prop="EstadoActivo"
+                      label="Status"
+                    >
+                      <template slot-scope="scope">
+                        <div :class="classEstatus(scope.row.EstadoActivo)">
+                          {{ getEstado(scope.row.EstadoActivo) }}
+                        </div>
+                      </template>
+                    </el-table-column>
+                  </el-table>
+                </div>
+              </el-collapse-item>
+            </el-collapse>
           </div>
         </div>
       </div>
@@ -105,14 +123,18 @@
             inactive-color="#ff4949"
             active-text="Activos"
             inactive-text="Inactivos"
+            @change="changeActive"
           >
           </el-switch>
-          <el-checkbox style="margin-left: 20px;" v-model="both"
+          <el-checkbox
+            style="margin-left: 20px;"
+            @change="changeActive"
+            v-model="both"
             >Ambos</el-checkbox
           >
         </div>
       </div>
-      <div
+      <!-- <div
         class="row"
         v-if="list_selected_direc_vinc && list_selected_direc_vinc.length !== 0"
       >
@@ -144,7 +166,7 @@
             </el-collapse-item>
           </el-collapse>
         </div>
-      </div>
+      </div> -->
       <el-dialog
         :visible.sync="modalVisible"
         width="95%"
@@ -233,9 +255,13 @@
                           inactive-color="#ff4949"
                           active-text="Activos"
                           inactive-text="Inactivos"
+                          @change="changeActive"
                         >
                         </el-switch>
-                        <el-checkbox style="margin-left: 20px;" v-model="both"
+                        <el-checkbox
+                          style="margin-left: 20px;"
+                          @change="changeActive"
+                          v-model="both"
                           >Ambos</el-checkbox
                         >
                       </div>
@@ -246,15 +272,13 @@
             </div>
             <div
               class="col-md-12"
-              v-if="
-                direc_vinc && direc_vinc.empresas.length !== 0 && !search_edit
-              "
+              v-if="direc_vinc && direc_vinc.empresas && !search_edit"
             >
               <div class="panel panel-default cd">
                 <div class="panel-heading">
                   <p class="panel-title roboto white">
-                    Selecciona una o varias empresas y clique en “Aplicar” para
-                    incorporarlas a su búsqueda.
+                    Resultados de búsqueda<!-- Selecciona una o varias empresas y clique en “Aplicar” para
+                    incorporarlas a su búsqueda. -->
                     <span
                       class="span-info-right"
                       v-if="selected_by_direc_vinc !== 0"
@@ -263,8 +287,49 @@
                     >
                   </p>
                 </div>
-                <div class="panel-body div-scroll-200">
-                  <table class="table table-hover">
+                <div class="panel-body">
+                  <div class="div-scroll-400">
+                    <el-collapse v-model="activeCollapse">
+                      <el-collapse-item
+                        v-for="(items, key) in direc_vinc.empresas"
+                        :key="key"
+                        :name="key"
+                      >
+                        <template slot="title">
+                          <span class="t-t-capitalize">{{
+                            items[0].Nombre
+                          }}</span>
+                        </template>
+                        <div>
+                          <el-table :data="items" style="width: 100%">
+                            <el-table-column prop="Nombre" label="Persona">
+                            </el-table-column>
+                            <el-table-column
+                              prop="RazonSocial"
+                              label="Razón social de la empresa"
+                            >
+                            </el-table-column>
+                            <el-table-column prop="CargoEspejo" label="Cargo">
+                            </el-table-column>
+                            <el-table-column
+                              width="150"
+                              prop="EstadoActivo"
+                              label="Status"
+                            >
+                              <template slot-scope="scope">
+                                <div
+                                  :class="classEstatus(scope.row.EstadoActivo)"
+                                >
+                                  {{ getEstado(scope.row.EstadoActivo) }}
+                                </div>
+                              </template>
+                            </el-table-column>
+                          </el-table>
+                        </div>
+                      </el-collapse-item>
+                    </el-collapse>
+                  </div>
+                  <!-- <table class="table table-hover">
                     <thead>
                       <tr>
                         <th scope="col">Nombre</th>
@@ -295,7 +360,7 @@
                         <td>{{ getEstado(item.EstadoActivo) }}</td>
                       </tr>
                     </tbody>
-                  </table>
+                  </table> -->
                 </div>
               </div>
             </div>
@@ -362,6 +427,7 @@
 </template>
 
 <script>
+const slugify = require("slugify");
 import { mapGetters } from "vuex";
 import swal from "sweetalert2";
 import {
@@ -404,7 +470,7 @@ export default {
     direc_vinc: {
       total: 0,
       cantidad: 0,
-      empresas: [],
+      empresas: null,
     },
     selected_direc_vinc_string: "",
     selected_direc_vinc: [],
@@ -421,6 +487,7 @@ export default {
     collapseResumen: [],
     active: true,
     both: false,
+    activeCollapse: [],
   }),
   mounted() {
     this.$root.$on("clean_filter", (filter) => {
@@ -449,6 +516,16 @@ export default {
     },
   },
   methods: {
+    changeActive() {
+      if (this.direc_vinc.empresas && this.dataFrm.length !== 0) {
+        this.validateCargo();
+      }
+    },
+    classEstatus(EstadoActivo) {
+      return EstadoActivo === 1
+        ? "alert-success text-center"
+        : "alert-danger text-center";
+    },
     getEstado(estado) {
       if (estado == 1) {
         return "Activo";
@@ -481,16 +558,30 @@ export default {
               Array.isArray(response[0])
             ) {
               const empresas = response[0];
-              empresas.map((item) => {
-                this.direc_vinc.empresas.push({
-                  ...item,
-                  data: 0,
-                  label: `${item.Nombre} - ${item.CargoEspejo}`,
-                });
-              });
+              const items = {};
+              this.activeCollapse = [];
+              for (const key in empresas) {
+                if (empresas.hasOwnProperty(key)) {
+                  const element = empresas[key];
+                  if (element.Nombre) {
+                    const slug = slugify(element.Nombre);
+                    this.activeCollapse.push(slug);
+                    element.label = `${element.Nombre} - ${element.CargoEspejo}`;
+                    element.data = 0;
+                    if (items[slug] && Array.isArray(items[slug])) {
+                      items[slug].push(element);
+                    } else {
+                      items[slug] = [];
+                      items[slug].push(element);
+                    }
+                  }
+                }
+              }
+
+              this.direc_vinc.empresas = items;
             } else {
               swal.fire("Advertencia", "Datos no encontrados", "warning");
-              this.direc_vinc.empresas = [];
+              this.direc_vinc.empresas = null;
             }
             this.loadingValidar = false;
             this.search_edit = false;
@@ -502,7 +593,7 @@ export default {
             this.direc_vinc = {
               total: 0,
               cantidad: 0,
-              empresas: [],
+              empresas: null,
             };
             this.selected_direc_vinc = [];
           });
@@ -551,7 +642,7 @@ export default {
             this.direc_vinc = {
               total: 0,
               cantidad: 0,
-              empresas: [],
+              empresas: null,
             };
             sendEvent(`filtro-aplicado`, this.title);
           })
@@ -585,7 +676,7 @@ export default {
       this.to_social_reason = "";
       this.selected_direc_vinc = [];
       this.selected_direc_vinc_string = "";
-      this.direc_vinc = { total: 0, cantidad: 0, empresas: [] };
+      this.direc_vinc = { total: 0, cantidad: 0, empresas: null };
       this.list_selected_direc_vinc = [];
       this.collapseResumen = [];
       if (this.applied_filters.length > 1) {
@@ -618,7 +709,7 @@ export default {
       this.selected_direc_vinc_string = "";
       this.dataFrm = "";
       this.to_social_reason = "";
-      this.direc_vinc = { total: 0, cantidad: 0, empresas: [] };
+      this.direc_vinc = { total: 0, cantidad: 0, empresas: null };
       this.list_selected_direc_vinc = [];
       this.updateNumberSelectedCompanies(0);
       this.selected_by_direc_vinc = 0;

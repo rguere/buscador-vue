@@ -2,7 +2,7 @@ import axios from "axios";
 import * as types from "../mutation-types";
 import { formatProvinciaLocalidad } from "./../../utils";
 import dataJson from "./../../assets/buscador-data.json";
-const local = false;
+const local = true;
 // state
 export const state = {
   loading: false,
