@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="panel panel-default cd div_capa_superpuesta"
-    id="filter_informacion_financiera"
-  >
+  <div class="panel panel-default cd" id="filter_informacion_financiera">
     <div class="panel-heading">
       <p class="panel-title roboto white">Información Financiera</p>
     </div>
