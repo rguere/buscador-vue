@@ -13,7 +13,7 @@
         <span class="panel-title roboto white">Criterios Aplicados</span>
       </div>
       <div>
-        <el-collapse v-model="activeNames">
+        <el-collapse v-model="activeCollapse">
           <el-collapse-item
             v-for="(item, key) in orderFilters"
             :name="key"
@@ -21,13 +21,26 @@
           >
             <template slot="title">
               <div class="flex-2" v-if="item.apply" :title="item.name">
-                <span style="font-size: 11px;">
-                  {{ nameSubstring(item.name, 16) }}
-                </span>
+                <div>
+                  <span :class="getActiveCollapse(key)"></span>
+                  <span style="font-size: 11px;">
+                    {{ nameSubstring(item.name, 14) }}
+                  </span>
 
-                <span class="num-fil" style="font-size: 11px;"
-                  >( {{ item.quantity | numeral("0,0") }} )</span
-                >
+                  <span class="num-fil" style="font-size: 11px;"
+                    >( {{ item.quantity | numeral("0,0") }} )</span
+                  >
+                </div>
+                <span class="span-el-button">
+                  <el-button
+                    @click="showModalFilter(item.name)"
+                    type="warning"
+                    icon="el-icon-edit"
+                    title="Editar selección"
+                    circle
+                    size="mini"
+                  ></el-button>
+                </span>
               </div>
             </template>
             <div v-for="(_item, _key) in item.items" :key="_key">
@@ -63,7 +76,7 @@ export default {
   name: "criteria-applied",
   data() {
     return {
-      activeNames: [],
+      activeCollapse: [],
     };
   },
   computed: {
@@ -99,6 +112,16 @@ export default {
         return name;
       }
     },
+    showModalFilter(filter) {
+      if (this.$route.name === "buscador") {
+        this.$root.$emit("show_modal_filter", filter);
+      }
+    },
+    getActiveCollapse(key) {
+      return this.activeCollapse.includes(key)
+        ? "glyphicon glyphicon-minus"
+        : "glyphicon glyphicon-plus";
+    },
   },
 };
 </script>
@@ -124,6 +147,8 @@ export default {
 .flex-2 {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 
 .el-card__header {
@@ -132,5 +157,10 @@ export default {
   background-color: #337ab7 !important;
   border-color: #dddddd !important;
   height: 43px;
+}
+
+.span-el-button {
+  margin-left: 3px;
+  display: flex;
 }
 </style>

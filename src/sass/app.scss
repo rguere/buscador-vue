@@ -444,7 +444,7 @@ span.num-fil {
 }
 /* width */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 6px;
 }
 
 /* Track */
@@ -470,7 +470,7 @@ span.num-fil {
 
   /* width */
   &::-webkit-scrollbar {
-    width: 10px;
+    width: 6px;
   }
 
   /* Track */
@@ -497,7 +497,7 @@ span.num-fil {
 
   /* width */
   &::-webkit-scrollbar {
-    width: 10px;
+    width: 6px;
   }
 
   /* Track */
@@ -523,7 +523,7 @@ span.num-fil {
   overflow-y: auto;
   /* width */
   &::-webkit-scrollbar {
-    width: 10px;
+    width: 6px;
   }
 
   /* Track */
@@ -549,7 +549,7 @@ span.num-fil {
   overflow-y: auto;
   /* width */
   &::-webkit-scrollbar {
-    width: 10px;
+    width: 6px;
   }
 
   /* Track */
@@ -569,7 +569,8 @@ span.num-fil {
   }
 }
 
-#filter_directivos_y_vinculaciones {
+#filter_directivos_y_vinculaciones,
+.criteria-applied {
   .glyphicon {
     margin-right: 10px;
   }
