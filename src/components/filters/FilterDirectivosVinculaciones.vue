@@ -170,6 +170,36 @@
           </button>
         </div>
       </div>
+      <div
+        class="row"
+        v-if="list_selected_direc_vinc && list_selected_direc_vinc.length !== 0"
+      >
+        <div class="col-md-12">
+          <br />
+          <el-collapse v-model="collapseResumen">
+            <el-collapse-item title="Resumen seleccionadas" name="1">
+              <div class="div-scroll-200">
+                <div v-for="(item, key) in list_selected_direc_vinc" :key="key">
+                  <div class="checkbox" id="selected_em">
+                    <label class="custon-checkboxs">
+                      <input
+                        type="checkbox"
+                        :name="`checkbox_list_${item.Nif}`"
+                        v-model="selected_direc_vinc"
+                        @change="handleChangeList(item, $event)"
+                        :id="`checkbox_list_${item.Nif}`"
+                        :value="item"
+                      />
+                      <span class="geekmark"></span>
+                      <span class="name-checkbox">{{ item.Nombre }}</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </el-collapse-item>
+          </el-collapse>
+        </div>
+      </div>
       <el-dialog
         :visible.sync="modalVisible"
         width="95%"
@@ -567,7 +597,6 @@ export default {
                   }
                 }
               }
-              console.log(items);
               this.direc_vinc.empresas = items;
             } else {
               swal.fire("Advertencia", "Datos no encontrados", "warning");
@@ -595,8 +624,6 @@ export default {
         this.search_edit = false;
         this.search_add = false;
         this.form.vinculaciones = this.selected_direc_vinc.map((item) => {
-          console.log(item);
-
           return item.Nif;
         });
         if (this.both) {
