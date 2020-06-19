@@ -435,6 +435,10 @@ span.num-fil {
   z-index: 0 !important;
 }
 
+.z-popover.el-popover.el-popper {
+  z-index: 2053 !important;
+}
+
 .sidebar-menu.vue-affix.affix {
   z-index: 2 !important;
 }
@@ -576,6 +580,12 @@ span.num-fil {
   }
   .el-collapse-item__arrow {
     display: none !important;
+  }
+}
+
+#filter_directivos_y_vinculaciones {
+  .el-card {
+    margin-bottom: 10px !important;
   }
 }
 

@@ -17,6 +17,7 @@ export const state = {
     industria: [],
     tipo_cuentas: [],
     cuentas_disponibles: [],
+    cargos: [],
   },
 };
 

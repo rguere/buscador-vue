@@ -70,47 +70,71 @@
             </div>
           </div>
           <div class="div-scroll-400">
-            <el-collapse v-model="activeCollapse">
-              <el-collapse-item
-                v-for="(items, key) in direc_vinc.empresas"
-                :key="key"
-                :name="key"
-              >
-                <template slot="title">
-                  <span :class="getActiveCollapse(key)"></span>
-                  <span class="t-t-capitalize">{{ items[0].Nombre }}</span>
-                </template>
-                <div>
-                  <el-table :data="items" style="width: 100%">
-                    <el-table-column prop="Nombre" label="Persona">
-                    </el-table-column>
-                    <el-table-column
-                      prop="RazonSocial"
-                      label="Razón social de la empresa"
-                    >
-                      <template slot-scope="scope">
-                        <a :href="scope.row.urlInfocif" target="_blank">{{
-                          scope.row.RazonSocial
-                        }}</a>
-                      </template>
-                    </el-table-column>
-                    <el-table-column prop="CargoEspejo" label="Cargo">
-                    </el-table-column>
-                    <el-table-column
-                      width="150"
-                      prop="EstadoActivo"
-                      label="Status"
-                    >
-                      <template slot-scope="scope">
-                        <div :class="classEstatus(scope.row.EstadoActivo)">
-                          {{ getEstado(scope.row.EstadoActivo) }}
-                        </div>
-                      </template>
-                    </el-table-column>
-                  </el-table>
+            <el-card
+              shadow="hover"
+              v-for="(items, key) in direc_vinc.empresas"
+              :key="key"
+              :name="key"
+            >
+              <div class="item-direc_vinc">
+                <div class="t-t-capitalize">
+                  <label class="custon-checkboxs">
+                    <input
+                      type="checkbox"
+                      :name="`checkbox_list_${items[0].Nif}`"
+                      v-model="selected_direc_vinc"
+                      @change="handleChangeList(items[0], $event)"
+                      :id="`checkbox_list_${items[0].Nif}`"
+                      :value="items[0]"
+                    />
+                    <span class="geekmark"></span>
+                    <span class="name-checkbox">{{ items[0].Nombre }}</span>
+                  </label>
                 </div>
-              </el-collapse-item>
-            </el-collapse>
+                <div class="z-popover">
+                  <el-popover
+                    placement="right"
+                    width="700"
+                    trigger="click"
+                    popper-class="z-popover"
+                  >
+                    <div class="div-scroll-200">
+                      <el-table :data="items" style="width: 100%">
+                        <el-table-column prop="Nombre" label="Persona">
+                        </el-table-column>
+                        <el-table-column
+                          prop="RazonSocial"
+                          label="Razón social de la empresa"
+                        >
+                          <template slot-scope="scope">
+                            <a :href="scope.row.urlInfocif" target="_blank">{{
+                              scope.row.RazonSocial
+                            }}</a>
+                          </template>
+                        </el-table-column>
+                        <el-table-column prop="CargoEspejo" label="Cargo">
+                        </el-table-column>
+                        <el-table-column
+                          width="150"
+                          prop="EstadoActivo"
+                          label="Status"
+                        >
+                          <template slot-scope="scope">
+                            <div :class="classEstatus(scope.row.EstadoActivo)">
+                              {{ getEstado(scope.row.EstadoActivo) }}
+                            </div>
+                          </template>
+                        </el-table-column>
+                      </el-table>
+                    </div>
+                    <el-button slot="reference">
+                      Ver Vinculaciones
+                      <span class="num-fil"> ({{ items.length }})</span>
+                    </el-button>
+                  </el-popover>
+                </div>
+              </div>
+            </el-card>
           </div>
         </div>
       </div>
@@ -267,46 +291,82 @@
                 </div>
                 <div class="panel-body">
                   <div class="div-scroll-400">
-                    <el-collapse v-model="activeCollapse">
-                      <el-collapse-item
-                        v-for="(items, key) in direc_vinc.empresas"
-                        :key="key"
-                        :name="key"
-                      >
-                        <template slot="title">
-                          <span :class="getActiveCollapse(key)"></span>
-                          <span class="t-t-capitalize">{{
-                            items[0].Nombre
-                          }}</span>
-                        </template>
-                        <div>
-                          <el-table :data="items" style="width: 100%">
-                            <el-table-column prop="Nombre" label="Persona">
-                            </el-table-column>
-                            <el-table-column
-                              prop="RazonSocial"
-                              label="Razón social de la empresa"
-                            >
-                            </el-table-column>
-                            <el-table-column prop="CargoEspejo" label="Cargo">
-                            </el-table-column>
-                            <el-table-column
-                              width="150"
-                              prop="EstadoActivo"
-                              label="Status"
-                            >
-                              <template slot-scope="scope">
-                                <div
-                                  :class="classEstatus(scope.row.EstadoActivo)"
-                                >
-                                  {{ getEstado(scope.row.EstadoActivo) }}
-                                </div>
-                              </template>
-                            </el-table-column>
-                          </el-table>
+                    <el-card
+                      shadow="hover"
+                      v-for="(items, key) in direc_vinc.empresas"
+                      :key="key"
+                      :name="key"
+                    >
+                      <div class="item-direc_vinc">
+                        <div class="t-t-capitalize">
+                          <label class="custon-checkboxs">
+                            <input
+                              type="checkbox"
+                              :name="`checkbox_list_${items[0].Nif}`"
+                              v-model="selected_direc_vinc"
+                              @change="handleChangeList(items[0], $event)"
+                              :id="`checkbox_list_${items[0].Nif}`"
+                              :value="items[0]"
+                            />
+                            <span class="geekmark"></span>
+                            <span class="name-checkbox">{{
+                              items[0].Nombre
+                            }}</span>
+                          </label>
                         </div>
-                      </el-collapse-item>
-                    </el-collapse>
+                        <div>
+                          <el-popover
+                            placement="right"
+                            width="700"
+                            trigger="click"
+                            popper-class="z-popover"
+                          >
+                            <div class="div-scroll-200">
+                              <el-table :data="items" style="width: 100%">
+                                <el-table-column prop="Nombre" label="Persona">
+                                </el-table-column>
+                                <el-table-column
+                                  prop="RazonSocial"
+                                  label="Razón social de la empresa"
+                                >
+                                  <template slot-scope="scope">
+                                    <a
+                                      :href="scope.row.urlInfocif"
+                                      target="_blank"
+                                      >{{ scope.row.RazonSocial }}</a
+                                    >
+                                  </template>
+                                </el-table-column>
+                                <el-table-column
+                                  prop="CargoEspejo"
+                                  label="Cargo"
+                                >
+                                </el-table-column>
+                                <el-table-column
+                                  width="150"
+                                  prop="EstadoActivo"
+                                  label="Status"
+                                >
+                                  <template slot-scope="scope">
+                                    <div
+                                      :class="
+                                        classEstatus(scope.row.EstadoActivo)
+                                      "
+                                    >
+                                      {{ getEstado(scope.row.EstadoActivo) }}
+                                    </div>
+                                  </template>
+                                </el-table-column>
+                              </el-table>
+                            </div>
+                            <el-button slot="reference">
+                              Ver Vinculaciones
+                              <span class="num-fil"> ({{ items.length }})</span>
+                            </el-button>
+                          </el-popover>
+                        </div>
+                      </div>
+                    </el-card>
                   </div>
                 </div>
               </div>
@@ -381,6 +441,28 @@ export default {
     active: true,
     both: false,
     activeCollapse: [],
+    gridData: [
+      {
+        date: "2016-05-02",
+        name: "Jack",
+        address: "New York City",
+      },
+      {
+        date: "2016-05-04",
+        name: "Jack",
+        address: "New York City",
+      },
+      {
+        date: "2016-05-01",
+        name: "Jack",
+        address: "New York City",
+      },
+      {
+        date: "2016-05-03",
+        name: "Jack",
+        address: "New York City",
+      },
+    ],
   }),
   mounted() {
     this.$root.$on("clean_filter", (filter) => {
@@ -485,7 +567,7 @@ export default {
                   }
                 }
               }
-
+              console.log(items);
               this.direc_vinc.empresas = items;
             } else {
               swal.fire("Advertencia", "Datos no encontrados", "warning");
@@ -513,7 +595,9 @@ export default {
         this.search_edit = false;
         this.search_add = false;
         this.form.vinculaciones = this.selected_direc_vinc.map((item) => {
-          return item.CargoEspejo;
+          console.log(item);
+
+          return item.Nif;
         });
         if (this.both) {
           this.form.vinculaciones.push("status:2");
@@ -694,6 +778,12 @@ export default {
 
 .top-10 {
   margin-top: 10px;
+}
+
+.item-direc_vinc {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 @media (min-width: 750px) and (max-width: 1100px) {
