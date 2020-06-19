@@ -401,6 +401,39 @@
                 </div>
               </div>
             </div>
+            <div class="col-md-12">
+              <div class="panel panel-default cd">
+                <div class="panel-body">
+                  <el-collapse v-model="collapseResumen">
+                    <el-collapse-item title="Resumen seleccionadas" name="1">
+                      <div class="div-scroll-200">
+                        <div
+                          v-for="(item, key) in list_selected_direc_vinc"
+                          :key="key"
+                        >
+                          <div class="checkbox" id="selected_em">
+                            <label class="custon-checkboxs">
+                              <input
+                                type="checkbox"
+                                :name="`checkbox_list_${item.Nif}`"
+                                v-model="selected_direc_vinc"
+                                @change="handleChangeList(item, $event)"
+                                :id="`checkbox_list_${item.Nif}`"
+                                :value="item"
+                              />
+                              <span class="geekmark"></span>
+                              <span class="name-checkbox">{{
+                                item.Nombre
+                              }}</span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </el-collapse-item>
+                  </el-collapse>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </el-dialog>
@@ -471,28 +504,6 @@ export default {
     active: true,
     both: false,
     activeCollapse: [],
-    gridData: [
-      {
-        date: "2016-05-02",
-        name: "Jack",
-        address: "New York City",
-      },
-      {
-        date: "2016-05-04",
-        name: "Jack",
-        address: "New York City",
-      },
-      {
-        date: "2016-05-01",
-        name: "Jack",
-        address: "New York City",
-      },
-      {
-        date: "2016-05-03",
-        name: "Jack",
-        address: "New York City",
-      },
-    ],
   }),
   mounted() {
     this.$root.$on("clean_filter", (filter) => {
@@ -644,6 +655,10 @@ export default {
         this.$store
           .dispatch("search/filtrar", beforeForm)
           .then((response) => {
+            this.loadingApply = false;
+            this.areApplied = true;
+            this.reapply = false;
+            this.dataFrm = "";
             this.$store.dispatch("filters/addFilters", {
               name: this.title,
               quantity: this.selected_by_direc_vinc,
@@ -651,10 +666,6 @@ export default {
               items: this.selected_direc_vinc,
             });
             this.updateNumberSelectedCompanies(response.cantidad);
-            this.areApplied = true;
-            this.reapply = false;
-            this.loadingApply = false;
-            this.dataFrm = "";
             this.selected_direc_vinc_string = JSON.stringify(
               this.selected_direc_vinc
             );
