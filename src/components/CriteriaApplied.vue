@@ -44,13 +44,10 @@
               </div>
             </template>
             <div v-for="(_item, _key) in item.items" :key="_key">
-              <div class="flex-2" v-if="item.name === 'Nombre o razón social'">
-                <span class="name-checkbox">{{ _item.RazonSocial }}</span>
-              </div>
-              <div class="flex-2" v-if="item.name !== 'Nombre o razón social'">
-                <span class="name-checkbox">{{ _item.label }}</span>
-                <span class="num-fil">({{ _item.data | numeral("0,0") }})</span>
-              </div>
+              <criteria-item
+                :item_name="item.name"
+                :item="_item"
+              ></criteria-item>
               <hr />
             </div>
           </el-collapse-item>

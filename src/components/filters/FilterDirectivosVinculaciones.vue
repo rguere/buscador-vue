@@ -85,7 +85,7 @@
                       v-model="selected_direc_vinc"
                       @change="handleChangeList(items[0], $event)"
                       :id="`checkbox_list_${items[0].Nif}`"
-                      :value="items[0]"
+                      :value="items"
                     />
                     <span class="geekmark"></span>
                     <span class="name-checkbox">{{ items[0].Nombre }}</span>
@@ -177,22 +177,76 @@
         <div class="col-md-12">
           <br />
           <el-collapse v-model="collapseResumen">
-            <el-collapse-item title="Resumen seleccionadas" name="1">
+            <el-collapse-item
+              title="Resumen vinculaciones seleccionadas"
+              name="1"
+            >
               <div class="div-scroll-200">
-                <div v-for="(item, key) in list_selected_direc_vinc" :key="key">
-                  <div class="checkbox" id="selected_em">
-                    <label class="custon-checkboxs">
-                      <input
-                        type="checkbox"
-                        :name="`checkbox_list_${item.Nif}`"
-                        v-model="selected_direc_vinc"
-                        @change="handleChangeList(item, $event)"
-                        :id="`checkbox_list_${item.Nif}`"
-                        :value="item"
-                      />
-                      <span class="geekmark"></span>
-                      <span class="name-checkbox">{{ item.Nombre }}</span>
-                    </label>
+                <div
+                  v-for="(items, key) in list_selected_direc_vinc"
+                  :key="key"
+                >
+                  <div class="item-direc_vinc" style="margin-bottom: 10px;">
+                    <div class="t-t-capitalize">
+                      <label class="custon-checkboxs">
+                        <input
+                          type="checkbox"
+                          :name="`checkbox_list_${items[0].Nif}`"
+                          v-model="selected_direc_vinc"
+                          @change="handleChangeList(items[0], $event)"
+                          :id="`checkbox_list_${items[0].Nif}`"
+                          :value="items"
+                        />
+                        <span class="geekmark"></span>
+                        <span class="name-checkbox">{{ items[0].Nombre }}</span>
+                      </label>
+                    </div>
+                    <div class="z-popover">
+                      <el-popover
+                        placement="right"
+                        width="700"
+                        trigger="click"
+                        popper-class="z-popover"
+                      >
+                        <div class="div-scroll-200">
+                          <el-table :data="items" style="width: 100%">
+                            <el-table-column prop="Nombre" label="Persona">
+                            </el-table-column>
+                            <el-table-column
+                              prop="RazonSocial"
+                              label="Razón social de la empresa"
+                            >
+                              <template slot-scope="scope">
+                                <a
+                                  :href="scope.row.urlInfocif"
+                                  target="_blank"
+                                  >{{ scope.row.RazonSocial }}</a
+                                >
+                              </template>
+                            </el-table-column>
+                            <el-table-column prop="CargoEspejo" label="Cargo">
+                            </el-table-column>
+                            <el-table-column
+                              width="150"
+                              prop="EstadoActivo"
+                              label="Status"
+                            >
+                              <template slot-scope="scope">
+                                <div
+                                  :class="classEstatus(scope.row.EstadoActivo)"
+                                >
+                                  {{ getEstado(scope.row.EstadoActivo) }}
+                                </div>
+                              </template>
+                            </el-table-column>
+                          </el-table>
+                        </div>
+                        <el-button slot="reference">
+                          Ver Vinculaciones
+                          <span class="num-fil"> ({{ items.length }})</span>
+                        </el-button>
+                      </el-popover>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -336,7 +390,7 @@
                               v-model="selected_direc_vinc"
                               @change="handleChangeList(items[0], $event)"
                               :id="`checkbox_list_${items[0].Nif}`"
-                              :value="items[0]"
+                              :value="items"
                             />
                             <span class="geekmark"></span>
                             <span class="name-checkbox">{{
@@ -405,27 +459,93 @@
               <div class="panel panel-default cd">
                 <div class="panel-body">
                   <el-collapse v-model="collapseResumen">
-                    <el-collapse-item title="Resumen seleccionadas" name="1">
+                    <el-collapse-item
+                      title="Resumen vinculaciones seleccionadas"
+                      name="1"
+                    >
                       <div class="div-scroll-200">
                         <div
-                          v-for="(item, key) in list_selected_direc_vinc"
+                          v-for="(items, key) in list_selected_direc_vinc"
                           :key="key"
                         >
-                          <div class="checkbox" id="selected_em">
-                            <label class="custon-checkboxs">
-                              <input
-                                type="checkbox"
-                                :name="`checkbox_list_${item.Nif}`"
-                                v-model="selected_direc_vinc"
-                                @change="handleChangeList(item, $event)"
-                                :id="`checkbox_list_${item.Nif}`"
-                                :value="item"
-                              />
-                              <span class="geekmark"></span>
-                              <span class="name-checkbox">{{
-                                item.Nombre
-                              }}</span>
-                            </label>
+                          <div
+                            class="item-direc_vinc"
+                            style="margin-bottom: 10px;"
+                          >
+                            <div class="t-t-capitalize">
+                              <label class="custon-checkboxs">
+                                <input
+                                  type="checkbox"
+                                  :name="`checkbox_list_${items[0].Nif}`"
+                                  v-model="selected_direc_vinc"
+                                  @change="handleChangeList(items[0], $event)"
+                                  :id="`checkbox_list_${items[0].Nif}`"
+                                  :value="items"
+                                />
+                                <span class="geekmark"></span>
+                                <span class="name-checkbox">{{
+                                  items[0].Nombre
+                                }}</span>
+                              </label>
+                            </div>
+                            <div class="z-popover">
+                              <el-popover
+                                placement="right"
+                                width="700"
+                                trigger="click"
+                                popper-class="z-popover"
+                              >
+                                <div class="div-scroll-200">
+                                  <el-table :data="items" style="width: 100%">
+                                    <el-table-column
+                                      prop="Nombre"
+                                      label="Persona"
+                                    >
+                                    </el-table-column>
+                                    <el-table-column
+                                      prop="RazonSocial"
+                                      label="Razón social de la empresa"
+                                    >
+                                      <template slot-scope="scope">
+                                        <a
+                                          :href="scope.row.urlInfocif"
+                                          target="_blank"
+                                          >{{ scope.row.RazonSocial }}</a
+                                        >
+                                      </template>
+                                    </el-table-column>
+                                    <el-table-column
+                                      prop="CargoEspejo"
+                                      label="Cargo"
+                                    >
+                                    </el-table-column>
+                                    <el-table-column
+                                      width="150"
+                                      prop="EstadoActivo"
+                                      label="Status"
+                                    >
+                                      <template slot-scope="scope">
+                                        <div
+                                          :class="
+                                            classEstatus(scope.row.EstadoActivo)
+                                          "
+                                        >
+                                          {{
+                                            getEstado(scope.row.EstadoActivo)
+                                          }}
+                                        </div>
+                                      </template>
+                                    </el-table-column>
+                                  </el-table>
+                                </div>
+                                <el-button slot="reference">
+                                  Ver Vinculaciones
+                                  <span class="num-fil">
+                                    ({{ items.length }})</span
+                                  >
+                                </el-button>
+                              </el-popover>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -635,7 +755,7 @@ export default {
         this.search_edit = false;
         this.search_add = false;
         this.form.vinculaciones = this.selected_direc_vinc.map((item) => {
-          return item.Nif;
+          return item[0].Nif;
         });
         if (this.both) {
           this.form.vinculaciones.push("status:2");

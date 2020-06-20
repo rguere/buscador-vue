@@ -27,6 +27,7 @@ import BtnVisualizarResultados from "./BtnVisualizarResultados.vue";
 import SelectedCompanies from "./SelectedCompanies.vue";
 import SelectTopic from "./SelectTopic.vue";
 import CriteriaApplied from "./CriteriaApplied.vue";
+import CriteriaItem from "./CriteriaItem.vue";
 import InforFooter from "./InforFooter.vue";
 
 [
@@ -56,6 +57,7 @@ import InforFooter from "./InforFooter.vue";
   SelectedCompanies,
   SelectTopic,
   CriteriaApplied,
+  CriteriaItem,
   InforFooter,
 ].forEach((Component) => {
   Vue.component(Component.name, Component);

@@ -98,7 +98,7 @@ const initialState = () => {
         items: [],
         quantity: 0,
         key: "informacion",
-        disabled: false,
+        disabled: true,
       },
       {
         name: "Código Postal",
