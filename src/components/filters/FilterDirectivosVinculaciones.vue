@@ -4,7 +4,7 @@
       <p class="panel-title roboto white">
         {{ title }}
         <span class="span-info-right" v-if="selected_by_direc_vinc !== 0"
-          >({{ selected_by_direc_vinc | numeral("0,0") }} empresas
+          >({{ selected_by_direc_vinc | numeral("0,0") }} vinculaciones
           seleccionadas)</span
         >
       </p>
@@ -368,8 +368,10 @@
                     <span
                       class="span-info-right"
                       v-if="selected_by_direc_vinc !== 0"
-                      >({{ selected_by_direc_vinc | numeral("0,0") }} empresas
-                      seleccionadas)</span
+                      >({{
+                        selected_by_direc_vinc | numeral("0,0")
+                      }}
+                      vinculaciones seleccionadas)</span
                     >
                   </p>
                 </div>
@@ -728,6 +730,12 @@ export default {
                   }
                 }
               }
+              // for (const key in items) {
+              //   if (items.hasOwnProperty(key)) {
+              //     const element = items[key];
+              //     console.log(element);
+              //   }
+              // }
               this.direc_vinc.empresas = items;
             } else {
               swal.fire("Advertencia", "Datos no encontrados", "warning");
@@ -754,9 +762,12 @@ export default {
         this.loadingApply = true;
         this.search_edit = false;
         this.search_add = false;
-        this.form.vinculaciones = this.selected_direc_vinc.map((item) => {
-          return item[0].Nif;
-        });
+        for (const items of this.selected_direc_vinc) {
+          for (const item of items) {
+            console.log(item.Nif);
+            this.form.vinculaciones.push(item.Nif);
+          }
+        }
         if (this.both) {
           this.form.vinculaciones.push("status:2");
         } else {
