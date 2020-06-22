@@ -764,7 +764,6 @@ export default {
         this.search_add = false;
         for (const items of this.selected_direc_vinc) {
           for (const item of items) {
-            console.log(item.Nif);
             this.form.vinculaciones.push(item.Nif);
           }
         }
