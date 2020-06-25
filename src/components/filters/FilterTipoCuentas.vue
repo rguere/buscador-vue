@@ -356,15 +356,16 @@ export default {
       return text;
     },
     orderItems(items) {
-      let order = [{}, {}, {}];
+      let order = [{}, {}];
       for (const item of items) {
         if (item.id === "1") {
           order[0] = item;
         } else if (item.id === "5") {
           order[1] = item;
-        } else if (item.id === "100") {
-          order[2] = item;
         }
+        // else if (item.id === "100") {
+        //   order[2] = item;
+        // }
       }
       return order;
     },

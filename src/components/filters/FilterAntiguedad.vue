@@ -62,7 +62,7 @@
             </button>
           </div>
           <div>
-            <div class="checkboxs-resaldado float-right" v-if="itemIncluirNull">
+            <!-- <div class="checkboxs-resaldado float-right" v-if="itemIncluirNull">
               <label class="custon-checkboxs">
                 <input
                   type="checkbox"
@@ -77,7 +77,7 @@
                   antigüedad</span
                 >
               </label>
-            </div>
+            </div> -->
           </div>
         </div>
         <div v-if="custom_antiquity.length !== 0">
@@ -326,7 +326,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="col-md-12">
+                      <!-- <div class="col-md-12">
                         <div
                           class="checkboxs-resaldado w-50-p"
                           v-if="itemIncluirNull"
@@ -346,7 +346,7 @@
                             >
                           </label>
                         </div>
-                      </div>
+                      </div> -->
                     </div>
                   </div>
                 </div>
@@ -426,7 +426,7 @@
                           ></i>
                         </button>
                       </div>
-                      <div class="col-md-12">
+                      <!-- <div class="col-md-12">
                         <div
                           class="checkboxs-resaldado w-50-p m-t-10"
                           v-if="itemIncluirNull"
@@ -446,7 +446,7 @@
                             >
                           </label>
                         </div>
-                      </div>
+                      </div> -->
                     </div>
                   </div>
                 </div>

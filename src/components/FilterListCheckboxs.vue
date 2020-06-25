@@ -53,7 +53,7 @@
                 <filter-anios-cuentas-disponibles></filter-anios-cuentas-disponibles>
                 <filter-sector-actividad></filter-sector-actividad>
                 <filter-cargos></filter-cargos>
-                <!-- <filter-informacion-financiera></filter-informacion-financiera> -->
+                <filter-informacion-financiera></filter-informacion-financiera>
                 <!--<filter-estado></filter-estado>-->
               </div>
               <div>
@@ -84,7 +84,8 @@
                 <filter-auditores></filter-auditores>
                 <filter-cargos></filter-cargos>
                 <filter-directivos-vinculaciones></filter-directivos-vinculaciones>
-                <!-- <filter-informacion-financiera></filter-informacion-financiera> -->
+                <filter-informacion-financiera></filter-informacion-financiera>
+                <div class="space"></div>
               </div>
             </div>
           </div>
@@ -134,4 +135,8 @@ export default {
 
 <style lang="scss" scoped>
 @import "./../sass/filters/filters";
+.space {
+  width: 100%;
+  height: 350px;
+}
 </style>

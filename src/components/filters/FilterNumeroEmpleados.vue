@@ -61,7 +61,7 @@
               <i class="fa fa-undo"></i>
             </button>
           </div>
-          <div>
+          <!-- <div>
             <div class="checkboxs-resaldado float-right" v-if="itemIncluirNull">
               <label class="custon-checkboxs">
                 <input
@@ -78,7 +78,7 @@
                 >
               </label>
             </div>
-          </div>
+          </div> -->
         </div>
         <div class="float-right margin-top-10">
           <p class="text-help">* Puedes elegir más de una opción</p>
@@ -179,7 +179,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="col-md-12">
+                      <!-- <div class="col-md-12">
                         <div
                           class="checkboxs-resaldado float-right"
                           v-if="itemIncluirNull"
@@ -199,7 +199,7 @@
                             >
                           </label>
                         </div>
-                      </div>
+                      </div> -->
                     </div>
                   </div>
                 </div>
@@ -288,7 +288,7 @@
                           ></i>
                         </button>
                       </div>
-                      <div class="col-md-12">
+                      <!-- <div class="col-md-12">
                         <div
                           class="checkboxs-resaldado w-50-p"
                           v-if="itemIncluirNull"
@@ -308,7 +308,7 @@
                             >
                           </label>
                         </div>
-                      </div>
+                      </div> -->
                     </div>
                   </div>
                 </div>
