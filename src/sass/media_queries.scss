@@ -1,5 +1,16 @@
-// @media (max-width: 991px) {
-// }
+@media (max-width: 991px) {
+  .footerjsload {
+    position: initial !important;
+  }
+
+  .popover_criteria-applied .criteria-applied {
+    height: auto !important;
+    width: 100% !important;
+    .el-alert {
+      height: auto !important;
+    }
+  }
+}
 
 @media (max-width: 950px) {
   .grid-5-columns-1fr {

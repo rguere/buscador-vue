@@ -56,7 +56,6 @@
     </el-card>
     <div v-if="orderFilters.length === 0">
       <el-alert
-        style="height: 55vh;"
         title="Aun no aplicado criterios a su búsqueda"
         type="info"
         :closable="false"
@@ -127,6 +126,9 @@ export default {
 .criteria-applied {
   height: 55vh;
   max-width: 55vh;
+  .el-alert {
+    height: 55vh;
+  }
   .el-collapse {
     border-top: 1px solid #fff;
     border-bottom: 1px solid #fff;

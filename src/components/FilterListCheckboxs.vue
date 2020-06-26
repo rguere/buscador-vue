@@ -1,7 +1,6 @@
 <template>
   <div>
-    <filter-buttons v-if="structure === `0.1`"></filter-buttons>
-    <div v-if="structure === `0.2`">
+    <div>
       <p
         class="filter-buttons_description text-center b"
         style="background-color: paleturquoise; padding: 5px;"
@@ -10,13 +9,11 @@
         posibilidades.
       </p>
     </div>
-    <div :class="stylesClass.conten_row">
-      <div :class="stylesClass.col_left">
+    <div class="row">
+      <div class="col-md-3">
         <affix
-          v-if="structure === `0.2`"
-          class="sidebar-menu"
-          style="z-index: 1; background-color: rgb(255, 255, 255); max-width: 302.68px;"
-          :offset="{ top: 237, bottom: 120 }"
+          class="sidebar-menu v-0-2_col_left"
+          :offset="offset_col_left"
           relative-element-selector="#example-content"
         >
           <div class="panel panel-default cd col_left">
@@ -31,45 +28,39 @@
           </div>
         </affix>
       </div>
-      <div :class="stylesClass.col_main">
+      <div class="col-md-9">
         <affix
-          class="sidebar-menu"
-          v-if="structure === `0.2`"
-          style="z-index: 1; background-color: rgb(255, 255, 255); max-width: 967.5px;"
-          :offset="{ top: 237, bottom: 0 }"
+          class="sidebar-menu v-0-2_col_main"
+          :offset="offset_col_main"
           relative-element-selector="#example-content"
         >
           <div class="panel panel-default cd" style="margin-bottom: 0px;">
-            <btns-filter class="m-b-10"></btns-filter>
-          </div>
-        </affix>
-        <div v-if="structure === `0.1`" class="panel panel-default cd">
-          <div class="panel-body" id="example-content">
-            <div class="conten-flex-70-30">
-              <div>
-                <filter-ubicacion></filter-ubicacion>
-                <filter-antiguedad></filter-antiguedad>
-                <filter-numero-empleados></filter-numero-empleados>
-                <filter-anios-cuentas-disponibles></filter-anios-cuentas-disponibles>
-                <filter-sector-actividad></filter-sector-actividad>
-                <filter-cargos></filter-cargos>
-                <filter-informacion-financiera></filter-informacion-financiera>
-                <!--<filter-estado></filter-estado>-->
-              </div>
-              <div>
-                <filter-codigo-postal></filter-codigo-postal>
-                <filter-razon-social></filter-razon-social>
-                <filter-nif></filter-nif>
-                <filter-tipo-cuentas></filter-tipo-cuentas>
-                <filter-auditores></filter-auditores>
-                <filter-directivos-vinculaciones></filter-directivos-vinculaciones>
-              </div>
+            <btns-filter></btns-filter>
+            <div class="btn_criteria_applied_movil">
+              <selected-companies></selected-companies>
+              <btn-visualizar-resultados
+                :class_btn="'btn-xs'"
+              ></btn-visualizar-resultados>
+              <btn-empty-filter :class_btn="'btn-xs'"></btn-empty-filter>
+              <el-popover
+                popper-class="popover_criteria-applied"
+                placement="right"
+                width="400"
+                trigger="click"
+              >
+                <div>
+                  <criteria-applied></criteria-applied>
+                </div>
+                <el-button slot="reference" type="primary" size="mini"
+                  ><i class="el-icon-s-tools"></i> Criterios</el-button
+                >
+              </el-popover>
             </div>
           </div>
-        </div>
+        </affix>
 
-        <div v-if="structure === `0.2`" class="panel panel-default cd m-t-20">
-          <div class="panel-body" id="example-content">
+        <div id="example-content" class="panel panel-default cd m-t-20">
+          <div class="panel-body">
             <div class="row">
               <div class="col-md-12">
                 <filter-ubicacion></filter-ubicacion>
@@ -96,39 +87,34 @@
 </template>
 
 <script>
-// structure = "0.1" "0.2"
-import { mapGetters } from "vuex";
+const offsetLeft = () => {
+  return window.innerWidth <= 767
+    ? { top: 170, bottom: 0 }
+    : { top: 224, bottom: 0 };
+};
+
+const offsetMain = () => {
+  return window.innerWidth <= 767
+    ? { top: 170, bottom: 0 }
+    : { top: 224, bottom: 0 };
+};
+
 export default {
   name: "filter-list-checkboxs",
   props: {
     search: Object,
   },
-  data: () => ({}),
-  computed: {
-    ...mapGetters({
-      structure: "structure/structure",
-    }),
-    stylesClass: function() {
-      let styles = {};
-      if (this.structure === "0.1") {
-        styles.conten_row = "";
-        styles.conten_row_flex = "conten-flex-70-30";
-        styles.conten_item = "";
-        styles.col_left = "";
-        styles.col_main = "";
-        styles.panel_filtres_items = "panel panel-default cd";
-      } else if (this.structure === "0.2") {
-        styles.conten_row = "row";
-        styles.conten_row_flex = "row";
-        styles.conten_item = "col-md-12";
-        styles.col_left = "col-md-3";
-        styles.col_main = "col-md-9";
-        styles.panel_filtres_items = "panel panel-default cd m-t-20";
-      }
-      return styles;
-    },
+  data: () => ({
+    offset_col_left: offsetLeft(),
+    offset_col_main: offsetMain(),
+  }),
+  computed: {},
+  mounted() {
+    window.onresize = () => {
+      this.offset_col_main = offsetMain();
+      this.offset_col_left = offsetLeft();
+    };
   },
-  mounted() {},
   methods: {},
 };
 </script>
@@ -138,5 +124,121 @@ export default {
 .space {
   width: 100%;
   height: 350px;
+}
+.sidebar-menu.v-0-2_col_main {
+  z-index: 1;
+  background-color: rgb(255, 255, 255);
+  max-width: 967.5px;
+  .m-b-10 {
+    margin: 0 !important;
+  }
+}
+
+.sidebar-menu.v-0-2_col_left {
+  z-index: 1;
+  background-color: rgb(255, 255, 255);
+  max-width: 302.68px;
+}
+
+.btn_criteria_applied_movil {
+  display: none;
+  background-color: #fff;
+  z-index: 7;
+  margin: 0 3px 3px 3px;
+}
+
+@media (max-width: 1330px) {
+  .sidebar-menu.v-0-2_col_main.vue-affix.affix {
+    max-width: 72.5% !important;
+  }
+}
+
+@media (max-width: 1212px) {
+  .sidebar-menu.v-0-2_col_left {
+    max-width: 273px !important;
+  }
+}
+
+@media (max-width: 1088px) {
+  .sidebar-menu.v-0-2_col_left {
+    max-width: 249px !important;
+  }
+}
+
+@media (max-width: 991px) {
+  .btn_criteria_applied_movil {
+    display: flex;
+    justify-content: center;
+    .selected_companies,
+    .btn-empty-filter {
+      margin: 0 5px 0 0 !important;
+    }
+
+    .btn-orange {
+      padding: 3px 5px !important;
+      margin: 0 5px 0 0 !important;
+    }
+
+    .criteria-applied {
+      height: auto !important;
+    }
+  }
+
+  .footerjsload {
+    position: initial !important;
+  }
+
+  .sidebar-menu.v-0-2_col_main.vue-affix.affix {
+    max-width: 97% !important;
+  }
+
+  .sidebar-menu.v-0-2_col_left {
+    z-index: 5 !important;
+    .panel.col_left {
+      position: fixed;
+      top: 97px;
+      left: -400px !important;
+      display: none !important;
+      width: 0 !important;
+      height: 0 !important;
+      opacity: 0 !important;
+    }
+  }
+}
+
+@media (max-width: 891px) {
+  .sidebar-menu.v-0-2_col_main.vue-affix.affix {
+    max-width: 96.5% !important;
+  }
+}
+
+@media (max-width: 791px) {
+  .sidebar-menu.v-0-2_col_main.vue-affix.affix {
+    max-width: 96% !important;
+  }
+}
+
+@media (max-width: 691px) {
+  .sidebar-menu.v-0-2_col_main.vue-affix.affix {
+    max-width: 95% !important;
+  }
+}
+
+@media (max-width: 591px) {
+  .sidebar-menu.v-0-2_col_main.vue-affix.affix {
+    max-width: 94.5% !important;
+  }
+}
+
+@media (max-width: 491px) {
+  .sidebar-menu.v-0-2_col_main.vue-affix.affix {
+    max-width: 93% !important;
+  }
+}
+
+@media (max-width: 391px) {
+  .sidebar-menu.v-0-2_col_main.vue-affix.affix {
+    max-width: 90% !important;
+  }
 }
 </style>

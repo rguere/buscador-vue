@@ -103,6 +103,7 @@
             <i class="fa fa-undo"></i>
           </button>
         </div>
+        <div></div>
       </div>
       <div
         class="row"
@@ -687,7 +688,6 @@ export default {
     flex-wrap: wrap;
     :nth-child(1),
     :nth-child(2) {
-      width: 100%;
       margin-bottom: 5px;
     }
   }

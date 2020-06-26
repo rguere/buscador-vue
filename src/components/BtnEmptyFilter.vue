@@ -1,6 +1,6 @@
 <template>
   <button
-    class="btn btn-primary btn-empty-filter"
+    :class="class_btn_defaul"
     :disabled="applied_filters.length === 0"
     @click="emptyFilter"
   >
@@ -14,13 +14,21 @@ import { mapGetters } from "vuex";
 import swal from "sweetalert2";
 export default {
   name: "btn-empty-filter",
+  props: ["class_btn"],
   data() {
-    return {};
+    return {
+      class_btn_defaul: "btn btn-primary btn-empty-filter",
+    };
   },
   computed: {
     ...mapGetters({
       applied_filters: "filters/applied_filters",
     }),
+  },
+  mounted() {
+    if (this.class_btn) {
+      this.class_btn_defaul = `${this.class_btn_defaul} ${this.class_btn}`;
+    }
   },
   methods: {
     emptyFilter() {
