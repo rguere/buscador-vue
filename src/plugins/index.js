@@ -6,4 +6,3 @@ import "./element-ui";
 import "./vuelidate";
 import "./bootstrap";
 import "./vue2-storage";
-import "./vue-affix";
