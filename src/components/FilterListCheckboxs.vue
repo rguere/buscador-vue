@@ -11,11 +11,7 @@
     </div>
     <div class="row">
       <div class="col-md-3">
-        <affix
-          class="sidebar-menu v-0-2_col_left"
-          :offset="offset_col_left"
-          relative-element-selector="#example-content"
-        >
+        <div :class="class_left">
           <div class="panel panel-default cd col_left">
             <div class="panel-body">
               <selected-companies></selected-companies>
@@ -26,14 +22,10 @@
               <criteria-applied></criteria-applied>
             </div>
           </div>
-        </affix>
+        </div>
       </div>
       <div class="col-md-9">
-        <affix
-          class="sidebar-menu v-0-2_col_main"
-          :offset="offset_col_main"
-          relative-element-selector="#example-content"
-        >
+        <div :class="class_main">
           <div class="panel panel-default cd" style="margin-bottom: 0px;">
             <btns-filter></btns-filter>
             <div class="btn_criteria_applied_movil">
@@ -57,7 +49,7 @@
               </el-popover>
             </div>
           </div>
-        </affix>
+        </div>
 
         <div id="example-content" class="panel panel-default cd m-t-20">
           <div class="panel-body">
@@ -87,35 +79,42 @@
 </template>
 
 <script>
-const offsetLeft = () => {
-  return window.innerWidth <= 767
-    ? { top: 170, bottom: 0 }
-    : { top: 224, bottom: 0 };
-};
-
-const offsetMain = () => {
-  return window.innerWidth <= 767
-    ? { top: 170, bottom: 0 }
-    : { top: 224, bottom: 0 };
-};
-
 export default {
   name: "filter-list-checkboxs",
   props: {
     search: Object,
   },
   data: () => ({
-    offset_col_left: offsetLeft(),
-    offset_col_main: offsetMain(),
+    class_main: "affix-div v-0-2_col_main",
+    class_left: "affix-div v-0-2_col_left",
   }),
   computed: {},
   mounted() {
-    window.onresize = () => {
-      this.offset_col_main = offsetMain();
-      this.offset_col_left = offsetLeft();
-    };
+    let last_known_scroll_position = 0;
+    let ticking = false;
+    const self = this;
+    window.addEventListener("scroll", () => {
+      last_known_scroll_position = window.scrollY;
+      if (!ticking) {
+        window.requestAnimationFrame(function() {
+          self.doSomething(last_known_scroll_position);
+          ticking = false;
+        });
+      }
+      ticking = true;
+    });
   },
-  methods: {},
+  methods: {
+    doSomething(scroll_pos) {
+      if (scroll_pos > 50) {
+        this.class_main = "affix-div v-0-2_col_main fixed-top";
+        this.class_left = "affix-div v-0-2_col_left fixed-top";
+      } else {
+        this.class_main = "affix-div v-0-2_col_main";
+        this.class_left = "affix-div v-0-2_col_left";
+      }
+    },
+  },
 };
 </script>
 
@@ -125,7 +124,7 @@ export default {
   width: 100%;
   height: 350px;
 }
-.sidebar-menu.v-0-2_col_main {
+.affix-div.v-0-2_col_main {
   z-index: 1;
   background-color: rgb(255, 255, 255);
   max-width: 967.5px;
@@ -134,7 +133,17 @@ export default {
   }
 }
 
-.sidebar-menu.v-0-2_col_left {
+.affix-div.v-0-2_col_main.fixed-top {
+  position: fixed;
+  top: 96px;
+}
+
+.affix-div.v-0-2_col_left.fixed-top {
+  position: fixed;
+  top: 97px;
+}
+
+.affix-div.v-0-2_col_left {
   z-index: 1;
   background-color: rgb(255, 255, 255);
   max-width: 302.68px;
@@ -144,23 +153,24 @@ export default {
   display: none;
   background-color: #fff;
   z-index: 7;
+  width: 100%;
   margin: 0 3px 3px 3px;
 }
 
 @media (max-width: 1330px) {
-  .sidebar-menu.v-0-2_col_main.vue-affix.affix {
+  .affix-div.v-0-2_col_main.fixed-top {
     max-width: 72.5% !important;
   }
 }
 
 @media (max-width: 1212px) {
-  .sidebar-menu.v-0-2_col_left {
+  .affix-div.v-0-2_col_left {
     max-width: 273px !important;
   }
 }
 
 @media (max-width: 1088px) {
-  .sidebar-menu.v-0-2_col_left {
+  .affix-div.v-0-2_col_left {
     max-width: 249px !important;
   }
 }
@@ -188,11 +198,11 @@ export default {
     position: initial !important;
   }
 
-  .sidebar-menu.v-0-2_col_main.vue-affix.affix {
+  .affix-div.v-0-2_col_main.fixed-top {
     max-width: 97% !important;
   }
 
-  .sidebar-menu.v-0-2_col_left {
+  .affix-div.v-0-2_col_left {
     z-index: 5 !important;
     .panel.col_left {
       position: fixed;
@@ -207,37 +217,55 @@ export default {
 }
 
 @media (max-width: 891px) {
-  .sidebar-menu.v-0-2_col_main.vue-affix.affix {
+  .affix-div.v-0-2_col_main.fixed-top {
     max-width: 96.5% !important;
   }
 }
 
 @media (max-width: 791px) {
-  .sidebar-menu.v-0-2_col_main.vue-affix.affix {
+  .affix-div.v-0-2_col_main.fixed-top {
     max-width: 96% !important;
   }
 }
 
+@media (max-width: 767px) {
+  .affix-div.v-0-2_col_main.fixed-top {
+    top: 42px !important;
+  }
+}
+
 @media (max-width: 691px) {
-  .sidebar-menu.v-0-2_col_main.vue-affix.affix {
+  .affix-div.v-0-2_col_main.fixed-top {
     max-width: 95% !important;
   }
 }
 
 @media (max-width: 591px) {
-  .sidebar-menu.v-0-2_col_main.vue-affix.affix {
+  .affix-div.v-0-2_col_main.fixed-top {
     max-width: 94.5% !important;
   }
 }
 
+@media (max-width: 564px) {
+  .btn_criteria_applied_movil {
+    flex-wrap: wrap;
+    h3 {
+      width: 100% !important;
+      text-align: center;
+      font-size: 25px !important;
+      padding: 0 0 5px 0 !important;
+    }
+  }
+}
+
 @media (max-width: 491px) {
-  .sidebar-menu.v-0-2_col_main.vue-affix.affix {
+  .affix-div.v-0-2_col_main.fixed-top {
     max-width: 93% !important;
   }
 }
 
 @media (max-width: 391px) {
-  .sidebar-menu.v-0-2_col_main.vue-affix.affix {
+  .affix-div.v-0-2_col_main.fixed-top {
     max-width: 90% !important;
   }
 }

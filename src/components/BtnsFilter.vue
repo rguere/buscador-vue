@@ -145,4 +145,30 @@ export default {
     }
   }
 }
+
+@media (max-width: 672px) {
+  .affix-div.v-0-2_col_main.fixed-top {
+    width: 100% !important;
+    .filter-btns {
+      flex-wrap: nowrap;
+      overflow-x: scroll;
+      width: 100% !important;
+      margin-bottom: 15px !important;
+      &::-webkit-scrollbar {
+        width: 6px !important;
+        height: 6px !important;
+      }
+      > div {
+        min-height: 40px !important;
+        width: 100% !important;
+        min-width: 200px;
+        flex: 1;
+        .btn {
+          white-space: nowrap !important;
+          width: 100% !important;
+        }
+      }
+    }
+  }
+}
 </style>

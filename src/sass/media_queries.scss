@@ -128,6 +128,17 @@
   .filter-btns div .btn {
     font-size: 12px !important;
   }
+
+  .flex-space-between-flex-end {
+    flex-direction: column;
+  }
+
+  .form_items {
+    flex-direction: column;
+    > div:nth-child(2) {
+      padding: 0 !important;
+    }
+  }
 }
 
 @media (max-width: 436px) {
