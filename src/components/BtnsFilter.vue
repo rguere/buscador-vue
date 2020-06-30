@@ -5,6 +5,7 @@
         :href="`#${filter.slug}`"
         class="btn btn-default"
         v-if="!filter.disabled"
+        @click="toggleClassFilter"
         v-scroll-to="{
           el: `#${filter.slug}`,
           offset: filter.offset_v2,
@@ -41,6 +42,7 @@ export default {
   computed: {
     ...mapGetters({
       filters: "filters/filters",
+      class_btns_filter: "class_btns_filter/class_btns_filter",
     }),
   },
   mounted() {},
@@ -68,6 +70,14 @@ export default {
     },
     onDone(element) {
       howAnimation(element);
+    },
+    toggleClassFilter() {
+      const class_btns_filter =
+        this.class_btns_filter === "" ? "show_filter" : "";
+      this.$store.dispatch(
+        "class_btns_filter/setClassBtnsFilter",
+        class_btns_filter
+      );
     },
   },
 };
@@ -154,6 +164,21 @@ export default {
         transition: all 0.5s;
       }
       margin-bottom: 15px !important;
+    }
+  }
+}
+
+@media (max-width: 378px) {
+  .filter-btns div.item {
+    display: none;
+  }
+  .affix-div.v-0-2_col_main.fixed-top {
+    .filter-btns {
+      margin-bottom: 5px !important;
+      > div {
+        min-height: 30px !important;
+        font-size: 12px !important;
+      }
     }
   }
 }

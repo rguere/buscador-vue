@@ -26,7 +26,10 @@
       </div>
       <div class="col-md-9">
         <div :class="class_main">
-          <div class="panel panel-default cd" style="margin-bottom: 0px;">
+          <div
+            class="panel panel_coten_main panel-default cd"
+            style="margin-bottom: 0px;"
+          >
             <btns-filter :class="class_btns_filter"></btns-filter>
             <div class="btn_criteria_applied_movil">
               <selected-companies></selected-companies>
@@ -87,6 +90,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   name: "filter-list-checkboxs",
   props: {
@@ -95,7 +99,6 @@ export default {
   data: () => ({
     class_main: "affix-div v-0-2_col_main",
     class_left: "affix-div v-0-2_col_left",
-    class_btns_filter: "",
   }),
   computed: {
     getToggleClassFilter() {
@@ -106,6 +109,9 @@ export default {
         ? "fa fa-close"
         : "fa fa-filter";
     },
+    ...mapGetters({
+      class_btns_filter: "class_btns_filter/class_btns_filter",
+    }),
   },
   mounted() {
     let last_known_scroll_position = 0;
@@ -133,8 +139,12 @@ export default {
       }
     },
     toggleClassFilter() {
-      this.class_btns_filter =
+      const class_btns_filter =
         this.class_btns_filter === "" ? "show_filter" : "";
+      this.$store.dispatch(
+        "class_btns_filter/setClassBtnsFilter",
+        class_btns_filter
+      );
     },
   },
 };
@@ -150,7 +160,7 @@ export default {
   display: none;
 }
 .affix-div.v-0-2_col_main {
-  z-index: 1;
+  z-index: 2;
   background-color: rgb(255, 255, 255);
   max-width: 967.5px;
   .m-b-10 {
@@ -268,6 +278,12 @@ export default {
     display: inline-block;
   }
   .affix-div.v-0-2_col_main.fixed-top {
+    > .panel_coten_main {
+      display: flex !important;
+      width: 100% !important;
+      flex-direction: column-reverse !important;
+    }
+
     max-width: 100% !important;
     left: 0 !important;
     right: 0 !important;
