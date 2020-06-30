@@ -24,5 +24,5 @@ export const SET_LAYOUT = "SET_LAYOUT";
 //localDatas.js
 export const SET_LOCAL_DATAS = "SET_LOCAL_DATAS";
 
-//structure.js
-export const SET_STRUCTURE = "SET_STRUCTURE";
+//class_btns_filter.js
+export const SET_CLASS_BTNS_FILTER = "SET_CLASS_BTNS_FILTER";

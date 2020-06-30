@@ -1,8 +1,6 @@
 <template>
   <div
-    :class="
-      `panel panel-default cd structure${structure === '0.2' ? '02' : '01'}`
-    "
+    :class="`panel panel-default cd structure02`"
     id="filter_tipo_de_cuentas"
   >
     <div class="panel-heading">
@@ -275,7 +273,6 @@ export default {
       selected_companies: "filters/selected_companies",
       applied_filters: "filters/applied_filters",
       filters: "filters/filters",
-      structure: "structure/structure",
     }),
     compareWithNewtoApply: function() {
       let stg = this.tipo_cuentas_string;

@@ -1,10 +1,5 @@
 <template>
-  <div
-    :class="
-      `panel panel-default cd structure${structure === '0.2' ? '02' : '01'}`
-    "
-    id="filter_auditores"
-  >
+  <div :class="`panel panel-default cd structure02`" id="filter_auditores">
     <div class="panel-heading">
       <p class="panel-title roboto white">
         {{ title }}
@@ -203,7 +198,6 @@
       </div>
       <div class="flex-space-between-flex-end" style="align-items: baseline;">
         <el-alert
-          v-if="structure === '0.2'"
           style="max-width: 595px;"
           title="Puedes Añadir a tu Búsqueda entre nuestra Lista de Auditores Destacados o si lo prefieres realiza una búsqueda directa de uno o varios Auditores indicando el Numero Roac o por el Nombre o Razón Social del Auditor que requieras."
           type="success"
@@ -603,7 +597,6 @@ export default {
       selected_companies: "filters/selected_companies",
       applied_filters: "filters/applied_filters",
       filters: "filters/filters",
-      structure: "structure/structure",
     }),
     compareWithNewtoApply: function() {
       let stg = this.selected_auditores_string;

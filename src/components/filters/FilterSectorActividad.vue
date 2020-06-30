@@ -1,8 +1,6 @@
 <template>
   <div
-    :class="
-      `panel panel-default cd structure${structure === '0.2' ? '02' : '01'}`
-    "
+    :class="`panel panel-default cd structure02`"
     id="filter_sector_actividad"
   >
     <div class="panel-heading">
@@ -63,7 +61,6 @@
       <br />
       <div class="tab-content">
         <div
-          v-if="structure === `0.1`"
           id="Codigo_CNAE"
           class="tab-pane fade in active"
           style="margin-bottom: 10px;"
@@ -204,7 +201,6 @@
         </div>
 
         <div
-          v-if="structure === `0.2`"
           id="Codigo_CNAE"
           class="tab-pane fade in active"
           style="margin-bottom: 10px;"
@@ -741,7 +737,6 @@ export default {
       selected_companies: "filters/selected_companies",
       applied_filters: "filters/applied_filters",
       filters: "filters/filters",
-      structure: "structure/structure",
     }),
     compareWithNewtoApply: function() {
       let stg = this.selected_cnae_string;

@@ -7,7 +7,7 @@
         v-if="!filter.disabled"
         v-scroll-to="{
           el: `#${filter.slug}`,
-          offset: structure === '0.1' ? filter.offset : filter.offset_v2,
+          offset: filter.offset_v2,
           onDone: onDone,
         }"
         :data-offset="filter.offset"
@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { handleScroll, howAnimation } from "./../utils";
+import { howAnimation } from "./../utils";
 import { mapGetters } from "vuex";
 import swal from "sweetalert2";
 export default {
@@ -41,20 +41,11 @@ export default {
   computed: {
     ...mapGetters({
       filters: "filters/filters",
-      structure: "structure/structure",
     }),
   },
-  mounted() {
-    if (this.structure === "0.1") {
-      window.addEventListener("scroll", handleScroll);
-    }
-  },
+  mounted() {},
   watch: {},
-  destroyed() {
-    if (this.structure === "0.1") {
-      window.removeEventListener("scroll", handleScroll);
-    }
-  },
+  destroyed() {},
   methods: {
     resetFilter(filter) {
       swal

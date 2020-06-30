@@ -25,7 +25,6 @@ import BtnsFilter from "./BtnsFilter.vue";
 import BtnEmptyFilter from "./BtnEmptyFilter.vue";
 import BtnVisualizarResultados from "./BtnVisualizarResultados.vue";
 import SelectedCompanies from "./SelectedCompanies.vue";
-import SelectTopic from "./SelectTopic.vue";
 import CriteriaApplied from "./CriteriaApplied.vue";
 import CriteriaItem from "./CriteriaItem.vue";
 import InforFooter from "./InforFooter.vue";
@@ -55,7 +54,6 @@ import InforFooter from "./InforFooter.vue";
   BtnEmptyFilter,
   BtnVisualizarResultados,
   SelectedCompanies,
-  SelectTopic,
   CriteriaApplied,
   CriteriaItem,
   InforFooter,

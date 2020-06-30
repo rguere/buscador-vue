@@ -1,10 +1,5 @@
 <template>
-  <div
-    :class="
-      `panel panel-default cd structure${structure === '0.2' ? '02' : '01'}`
-    "
-    id="filter_codigo_postal"
-  >
+  <div :class="`panel panel-default cd structure02`" id="filter_codigo_postal">
     <div class="panel-heading">
       <p class="panel-title roboto white">
         {{ title }}
@@ -548,7 +543,6 @@ export default {
       selected_companies: "filters/selected_companies",
       applied_filters: "filters/applied_filters",
       filters: "filters/filters",
-      structure: "structure/structure",
     }),
     compareWithNewtoApply: function() {
       let stg = this.selected_zip_codes_string;
