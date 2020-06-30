@@ -27,7 +27,7 @@
       <div class="col-md-9">
         <div :class="class_main">
           <div class="panel panel-default cd" style="margin-bottom: 0px;">
-            <btns-filter></btns-filter>
+            <btns-filter :class="class_btns_filter"></btns-filter>
             <div class="btn_criteria_applied_movil">
               <selected-companies></selected-companies>
               <btn-visualizar-resultados
@@ -47,6 +47,14 @@
                   ><i class="el-icon-s-tools"></i> Criterios</el-button
                 >
               </el-popover>
+              <el-button
+                class="m-l-5 btn-toggleClassFilter"
+                @click="toggleClassFilter"
+                :type="getToggleClassFilter"
+                size="mini"
+              >
+                <i :class="iconToggleClassFilter"></i> Filtros
+              </el-button>
             </div>
           </div>
         </div>
@@ -87,8 +95,18 @@ export default {
   data: () => ({
     class_main: "affix-div v-0-2_col_main",
     class_left: "affix-div v-0-2_col_left",
+    class_btns_filter: "",
   }),
-  computed: {},
+  computed: {
+    getToggleClassFilter() {
+      return this.class_btns_filter === "show_filter" ? "danger" : "primary";
+    },
+    iconToggleClassFilter() {
+      return this.class_btns_filter === "show_filter"
+        ? "fa fa-close"
+        : "fa fa-filter";
+    },
+  },
   mounted() {
     let last_known_scroll_position = 0;
     let ticking = false;
@@ -114,6 +132,10 @@ export default {
         this.class_left = "affix-div v-0-2_col_left";
       }
     },
+    toggleClassFilter() {
+      this.class_btns_filter =
+        this.class_btns_filter === "" ? "show_filter" : "";
+    },
   },
 };
 </script>
@@ -123,6 +145,9 @@ export default {
 .space {
   width: 100%;
   height: 350px;
+}
+.btn-toggleClassFilter {
+  display: none;
 }
 .affix-div.v-0-2_col_main {
   z-index: 1;
@@ -155,6 +180,9 @@ export default {
   z-index: 7;
   width: 100%;
   margin: 0 3px 3px 3px;
+  .m-l-5 {
+    margin-left: 5px !important;
+  }
 }
 
 @media (max-width: 1330px) {
@@ -179,6 +207,7 @@ export default {
   .btn_criteria_applied_movil {
     display: flex;
     justify-content: center;
+    align-items: center !important;
     .selected_companies,
     .btn-empty-filter {
       margin: 0 5px 0 0 !important;
@@ -234,15 +263,22 @@ export default {
   }
 }
 
-@media (max-width: 691px) {
-  .affix-div.v-0-2_col_main.fixed-top {
-    max-width: 95% !important;
+@media (max-width: 672px) {
+  .btn-toggleClassFilter {
+    display: inline-block;
   }
-}
-
-@media (max-width: 591px) {
   .affix-div.v-0-2_col_main.fixed-top {
-    max-width: 94.5% !important;
+    max-width: 100% !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    .btn_criteria_applied_movil {
+      padding: 5px !important;
+
+      .btn.btn-primary.btn-empty-filter.btn-xs {
+        padding: 3px 5px !important;
+      }
+    }
   }
 }
 
@@ -255,18 +291,6 @@ export default {
       font-size: 25px !important;
       padding: 0 0 5px 0 !important;
     }
-  }
-}
-
-@media (max-width: 491px) {
-  .affix-div.v-0-2_col_main.fixed-top {
-    max-width: 93% !important;
-  }
-}
-
-@media (max-width: 391px) {
-  .affix-div.v-0-2_col_main.fixed-top {
-    max-width: 90% !important;
   }
 }
 </style>
