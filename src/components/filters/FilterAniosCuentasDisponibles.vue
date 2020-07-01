@@ -101,6 +101,15 @@
               <i class="fa fa-undo"></i>
             </button>
           </div>
+          <div>
+            <div class="float-right">
+              <label class="custon-checkboxs" style="color: #333333c9;">
+                <input type="checkbox" name="5MM" disabled checked />
+                <span class="geekmark"></span>
+                <span class="name-checkbox">solo cuentas con +5MM</span>
+              </label>
+            </div>
+          </div>
           <!-- <div>
             <div class="checkboxs-resaldado float-right" v-if="itemIncluirNull">
               <label class="custon-checkboxs">
@@ -221,6 +230,25 @@
                               >
                             </label>
                           </div>
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="float-right">
+                          <label
+                            class="custon-checkboxs"
+                            style="color: #333333c9;"
+                          >
+                            <input
+                              type="checkbox"
+                              name="5MM"
+                              disabled
+                              checked
+                            />
+                            <span class="geekmark"></span>
+                            <span class="name-checkbox"
+                              >solo cuentas con +5MM</span
+                            >
+                          </label>
                         </div>
                       </div>
                       <!-- <div class="col-md-12">

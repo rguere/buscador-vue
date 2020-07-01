@@ -67,6 +67,15 @@
               <i class="fa fa-undo"></i>
             </button>
           </div>
+          <div>
+            <div class="float-right">
+              <label class="custon-checkboxs" style="color: #333333c9;">
+                <input type="checkbox" name="5MM" disabled checked />
+                <span class="geekmark"></span>
+                <span class="name-checkbox">solo cuentas con +5MM</span>
+              </label>
+            </div>
+          </div>
         </div>
         <div class="float-right margin-top-10">
           <p class="text-help">* Puedes elegir más de una opción</p>
@@ -160,6 +169,25 @@
                             }}</span>
                             <span class="num-fil"
                               >({{ item.data | numeral("0,0") }})</span
+                            >
+                          </label>
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="float-right">
+                          <label
+                            class="custon-checkboxs"
+                            style="color: #333333c9;"
+                          >
+                            <input
+                              type="checkbox"
+                              name="5MM"
+                              disabled
+                              checked
+                            />
+                            <span class="geekmark"></span>
+                            <span class="name-checkbox"
+                              >solo cuentas con +5MM</span
                             >
                           </label>
                         </div>
