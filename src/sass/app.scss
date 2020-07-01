@@ -453,6 +453,12 @@ span.num-fil {
   z-index: 2 !important;
 }
 
+#filter_informacion_financiera {
+  .vue-treeselect__menu-container {
+    z-index: 0 !important;
+  }
+}
+
 .t-t-capitalize {
   text-transform: capitalize;
 }
