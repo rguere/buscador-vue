@@ -13,46 +13,312 @@
     </div>
     <div class="panel-body">
       <div class="row">
-        <div class="col-md-12">
-          <div style="height: 300px; margin-top: 10px;">
-            <treeselect
-              valueFormat="object"
-              name="options"
-              id="options"
-              :multiple="true"
-              :options="options"
-              :always-open="true"
-              :default-expand-level="1"
-              :load-options="fetchSearch"
-              :limit="0"
-              :limitText="(t) => ''"
-              :disableFuzzyMatching="true"
-              @input="inputTreeselect"
-              @select="selectTreeselect"
-              @deselect="deselectTreeselect"
-              placeholder="Seleccionar"
-              search-nested
-              v-model="selected_cnae"
-            >
-              <label
-                slot="option-label"
-                slot-scope="{ node, shouldShowCount, count, labelClassName }"
-                :class="labelClassName"
+        <div class="col-md-6">
+          <div class="panel panel-default cd">
+            <div class="panel-heading">
+              <p class="panel-title roboto white">
+                Seleccione la partida de balance que desee agregar a su
+                estrategia de búsqueda
+              </p>
+            </div>
+            <div style="height: 300px;">
+              <treeselect
+                valueFormat="object"
+                name="options"
+                id="options"
+                :multiple="true"
+                :options="options"
+                :always-open="true"
+                :default-expand-level="1"
+                :load-options="fetchSearch"
+                :limit="0"
+                :limitText="(t) => ''"
+                :disableFuzzyMatching="true"
+                @input="inputTreeselect"
+                @select="selectTreeselect"
+                @deselect="deselectTreeselect"
+                placeholder="Seleccionar"
+                search-nested
+                v-model="selected_informacion_financiera"
               >
-                {{ node.label }}
-              </label>
-            </treeselect>
+                <label
+                  slot="option-label"
+                  slot-scope="{ node, shouldShowCount, count, labelClassName }"
+                  :class="labelClassName"
+                >
+                  {{ node.label }}
+                </label>
+              </treeselect>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="panel panel-default cd">
+            <div class="panel-heading">
+              <p class="panel-title roboto white">Seleccionar año(s)</p>
+            </div>
+            <div>
+              <div class="anios_checkboxs_content">
+                <div class="anios_checkboxs">
+                  <div>
+                    <label class="custon-checkboxs">
+                      <input
+                        type="checkbox"
+                        name
+                        v-model="selected_anios"
+                        value="2018"
+                      />
+                      <span class="geekmark"></span>
+                      <span class="title">2018</span>
+                    </label>
+                  </div>
+                  <div>
+                    <label class="custon-checkboxs">
+                      <input
+                        type="checkbox"
+                        name
+                        v-model="selected_anios"
+                        value="2017"
+                      />
+                      <span class="geekmark"></span>
+                      <span class="title">2017</span>
+                    </label>
+                  </div>
+                  <div>
+                    <label class="custon-checkboxs">
+                      <input
+                        type="checkbox"
+                        name
+                        v-model="selected_anios"
+                        value="2016"
+                      />
+                      <span class="geekmark"></span>
+                      <span class="title">2016</span>
+                    </label>
+                  </div>
+                </div>
+                <div class="anios_checkboxs">
+                  <div>
+                    <label class="custon-checkboxs">
+                      <input
+                        type="checkbox"
+                        name
+                        v-model="selected_anios"
+                        value="2015"
+                      />
+                      <span class="geekmark"></span>
+                      <span class="title">2015</span>
+                    </label>
+                  </div>
+                  <div>
+                    <label class="custon-checkboxs">
+                      <input
+                        type="checkbox"
+                        name
+                        v-model="selected_anios"
+                        value="2014"
+                      />
+                      <span class="geekmark"></span>
+                      <span class="title">2014</span>
+                    </label>
+                  </div>
+                  <div>
+                    <label class="custon-checkboxs">
+                      <input
+                        type="checkbox"
+                        name
+                        v-model="selected_anios"
+                        value="2013"
+                      />
+                      <span class="geekmark"></span>
+                      <span class="title">2013</span>
+                    </label>
+                  </div>
+                </div>
+                <div class="anios_checkboxs">
+                  <div>
+                    <label class="custon-checkboxs">
+                      <input
+                        type="checkbox"
+                        name
+                        v-model="selected_anios"
+                        value="2012"
+                      />
+                      <span class="geekmark"></span>
+                      <span class="title">2012</span>
+                    </label>
+                  </div>
+                  <div>
+                    <label class="custon-checkboxs">
+                      <input
+                        type="checkbox"
+                        name
+                        v-model="selected_anios"
+                        value="2011"
+                      />
+                      <span class="geekmark"></span>
+                      <span class="title">2011</span>
+                    </label>
+                  </div>
+                  <div>
+                    <label class="custon-checkboxs">
+                      <input
+                        type="checkbox"
+                        name
+                        v-model="selected_anios"
+                        value="2010"
+                      />
+                      <span class="geekmark"></span>
+                      <span class="title">2010</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex-space-between-flex-end">
+                <p></p>
+                <p class="text-help m-t-10">
+                  * Puedes elegir más de una opción
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="panel panel-default cd">
+            <div class="panel-heading">
+              <p class="panel-title roboto white">Seleccionar rango</p>
+            </div>
+            <div class="row content_seleccionar_rango">
+              <div class="col-md-6">
+                <div class="item_rango">
+                  <el-tag>Mínimo</el-tag>
+                  <div class="content_input_tag">
+                    <el-input
+                      placeholder="Mínimo"
+                      type="number"
+                      min="1"
+                      :max="monto2"
+                      v-model="monto1"
+                    ></el-input>
+                    <el-tag type="info">{{ selected_unidad.label }}</el-tag>
+                  </div>
+                </div>
+                <div class="item_rango">
+                  <el-tag>Máximo</el-tag>
+                  <div class="content_input_tag">
+                    <el-input
+                      placeholder="Mínimo"
+                      type="number"
+                      :min="monto1"
+                      v-model="monto2"
+                    ></el-input>
+                    <el-tag type="info">{{ selected_unidad.label }}</el-tag>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="m-t-10">
+                  <el-tag type="info">Unidad</el-tag>
+                  <el-select v-model="selected_unidad" placeholder="Unidad">
+                    <el-option
+                      v-for="item in unidades"
+                      :key="item.id"
+                      :label="item.label"
+                      :value="item"
+                    >
+                    </el-option>
+                  </el-select>
+                </div>
+                <div class="m-t-10">
+                  <div>
+                    <label class="custon-checkboxs">
+                      <input
+                        type="checkbox"
+                        name
+                        v-model="todas_las_empresas"
+                        :value="true"
+                      />
+                      <span class="geekmark"></span>
+                      <span class="title"
+                        >TODAS LAS EMPRESAS CON EL DATO DISPONIBLE.</span
+                      >
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+      <div class="flex-space-between-flex-end">
+        <div class="btns">
+          <button type="button" class="btn btn-warning" @click="showModal">
+            Ver detalles
+            <i class="fa fa-plus-circle"></i>
+          </button>
+          <button type="button" class="btn btn-success" @click="apply">
+            Aplicar
+            <i
+              :class="loadingFrm ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'"
+            ></i>
+          </button>
+          <button
+            type="button"
+            class="btn btn-info"
+            v-if="areApplied"
+            @click="confirmClean"
+          >
+            Limpiar
+            <i class="fa fa-undo"></i>
+          </button>
+        </div>
+        <p class="text-help">* Puedes elegir más de una opción</p>
+      </div>
+      <el-dialog
+        :visible.sync="modalVisible"
+        width="95%"
+        :modal-append-to-body="false"
+        :close-on-click-modal="false"
+        :show-close="false"
+        :destroy-on-close="true"
+        :center="true"
+        top="5vh"
+      >
+        <div>
+          <div class="btns-modal-header">
+            <div>
+              <button class="btn btn-warning" @click="hideModal">
+                <i class="fa fa-arrow-left"></i> Vover
+              </button>
+              <button class="btn btn-a">{{ title }}</button>
+            </div>
+            <div>
+              <button type="button" class="btn btn-success" @click="apply">
+                Aplicar
+                <i
+                  :class="loadingFrm ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'"
+                ></i>
+              </button>
+              <button
+                type="button"
+                class="btn btn-info"
+                v-if="areApplied"
+                @click="confirmClean"
+              >
+                Limpiar
+                <i class="fa fa-undo"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </el-dialog>
     </div>
   </div>
 </template>
 
 <script>
 import { persistentData } from "./../../mixins/persistent-data";
-
-import { sendEvent } from "./../../utils";
+import swal from "sweetalert2";
+import { beforeOrderFilters, sendEvent, sendPageView } from "./../../utils";
 
 export default {
   name: "filter-informacion-financiera",
@@ -60,239 +326,255 @@ export default {
   computed: {},
   data: () => ({
     title: "Información Financiera",
-    value: [],
+    loadingFrm: false,
+    modalVisible: false,
+    selected_informacion_financiera: [],
+    selected_anios: [],
+    monto1: "",
+    monto2: "",
+    selected_unidad: {
+      id: 1000,
+      label: "Miles de euros",
+    },
+    todas_las_empresas: false,
+    unidades: [
+      {
+        id: 1,
+        label: "Euros",
+      },
+      {
+        id: 1000,
+        label: "Miles de euros",
+      },
+      {
+        id: 1000000,
+        label: "Millones de euros",
+      },
+    ],
     options: [
       {
-        id: "activo",
+        id: "10000",
         label: "Activo",
         children: [
           {
-            id: "A) ACTIVO NO CORRIENTE",
-            label: "A) ACTIVO NO CORRIENTE",
+            id: "11000",
+            label: "ACTIVO NO CORRIENTE",
             children: [
               {
-                id: "I. Inmovilizado intangible",
-                label: "I. Inmovilizado intangible",
+                id: "11100",
+                label: "Inmovilizado intangible",
               },
               {
-                id: "II. Inmovilizado material",
-                label: "II. Inmovilizado material",
+                id: "11200",
+                label: "Inmovilizado material",
               },
               {
-                id: "III. Inversiones inmobiliarias",
-                label: "III. Inversiones inmobiliarias",
+                id: "11300",
+                label: "Inversiones inmobiliarias",
               },
               {
-                id:
-                  "IV. Inversiones en empresas del grupo y asociadas a largo plazo",
+                id: "11400",
                 label:
-                  "IV. Inversiones en empresas del grupo y asociadas a largo plazo",
+                  "Inversiones en empresas del grupo y asociadas a largo plazo",
               },
               {
-                id: "V. Inversiones financieras a largo plazo",
-                label: "V. Inversiones financieras a largo plazo",
+                id: "11500",
+                label: "Inversiones financieras a largo plazo",
               },
               {
-                id: "VI. Activos por impuesto diferido",
-                label: "VI. Activos por impuesto diferido",
+                id: "11600",
+                label: "Activos por impuesto diferido",
               },
               {
-                id: "VII. Deudas comerciales no corrientes",
-                label: "VII. Deudas comerciales no corrientes",
+                id: "11700",
+                label: "Deudas comerciales no corrientes",
               },
             ],
           },
           {
-            id: "B) ACTIVO CORRIENTE",
-            label: "B) ACTIVO CORRIENTE",
+            id: "12000",
+            label: "ACTIVO CORRIENTE",
             children: [
               {
-                id: "I. Activos no corrientes mantenidos para la venta",
-                label: "I. Activos no corrientes mantenidos para la venta",
+                id: "12100",
+                label: "Activos no corrientes mantenidos para la venta",
               },
               {
-                id: "II. Existencias",
-                label: "II. Existencias",
+                id: "12200",
+                label: "Existencias",
               },
               {
-                id: "III. Deudores comerciales y otras cuentas a cobrar",
-                label: "III. Deudores comerciales y otras cuentas a cobrar",
+                id: "12300",
+                label: "Deudores comerciales y otras cuentas a cobrar",
               },
               {
-                id:
-                  "IV. Inversiones en empresas del grupo y asociadas a corto plazo",
+                id: "12400",
                 label:
-                  "IV. Inversiones en empresas del grupo y asociadas a corto plazo",
+                  "Inversiones en empresas del grupo y asociadas a corto plazo",
               },
               {
-                id: "V. Inversiones financieras a corto plazo",
-                label: "V. Inversiones financieras a corto plazo",
+                id: "12500",
+                label: "Inversiones financieras a corto plazo",
               },
               {
-                id: "VI. Periodificaciones a corto plazo",
-                label: "VI. Periodificaciones a corto plazo",
+                id: "12600",
+                label: "Periodificaciones a corto plazo",
               },
               {
-                id: "VII. Efectivo y otros activos líquidos equivalentes",
-                label: "VII. Efectivo y otros activos líquidos equivalentes",
+                id: "12700",
+                label: "Efectivo y otros activos líquidos equivalentes",
               },
             ],
           },
         ],
       },
       {
-        id: "patrimonio_neto",
+        id: "20000",
         label: "Patrimonio Neto",
         children: [
           {
-            id: "A-1) Fondos propios",
-            label: "A-1) Fondos propios",
+            id: "21000",
+            label: "Fondos propios",
             children: [
               {
-                id: "II. Prima de emisión",
-                label: "II. Prima de emisión",
+                id: "21200",
+                label: "Prima de emisión",
               },
               {
-                id: "III. Reservas",
-                label: "III. Reservas",
+                id: "21300",
+                label: "Reservas",
               },
               {
-                id: "IV. (Acciones y participaciones en patrimonio propias)",
-                label: "IV. (Acciones y participaciones en patrimonio propias)",
+                id: "21400",
+                label: "(Acciones y participaciones en patrimonio propias)",
               },
               {
-                id: "V. Resultados de ejercicios anteriores",
-                label: "V. Resultados de ejercicios anteriores",
+                id: "21500",
+                label: "Resultados de ejercicios anteriores",
               },
               {
-                id: "VI. Otras aportaciones de socios",
-                label: "VI. Otras aportaciones de socios",
+                id: "21600",
+                label: "Otras aportaciones de socios",
               },
               {
-                id: "VII. Resultado del ejercicio",
-                label: "VII. Resultado del ejercicio",
+                id: "21700",
+                label: "Resultado del ejercicio",
               },
               {
-                id: "VIII. (Dividendo a cuenta)",
-                label: "VIII. (Dividendo a cuenta)",
+                id: "21800",
+                label: "(Dividendo a cuenta)",
               },
               {
-                id: "IX. Otros instrumentos de patrimonio neto",
-                label: "IX. Otros instrumentos de patrimonio neto",
+                id: "21900",
+                label: "Otros instrumentos de patrimonio neto",
               },
             ],
           },
           {
-            id: "A-2) Ajustes por cambios de valor",
-            label: "A-2) Ajustes por cambios de valor",
+            id: "22000",
+            label: "Ajustes por cambios de valor",
             children: [
               {
-                id: "I. Activos financieros disponibles para la venta",
-                label: "I. Activos financieros disponibles para la venta",
+                id: "22100",
+                label: "Activos financieros disponibles para la venta",
               },
               {
-                id: "II. Operaciones de cobertura",
-                label: "II. Operaciones de cobertura",
+                id: "22200",
+                label: "Operaciones de cobertura",
               },
               {
-                id:
-                  "III. Activos no corrientes y pasivos vinculados, mantenidos para la venta",
+                id: "22300",
                 label:
-                  "III. Activos no corrientes y pasivos vinculados, mantenidos para la venta",
+                  "Activos no corrientes y pasivos vinculados, mantenidos para la venta",
               },
               {
-                id: "IV. Diferencia de conversión",
-                label: "IV. Diferencia de conversión",
+                id: "22400",
+                label: "Diferencia de conversión",
               },
               {
-                id: "V. Otros",
-                label: "V. Otros",
+                id: "22500",
+                label: "Otros",
               },
             ],
           },
           {
-            id: "A-3) Subvenciones, donaciones y legados recibidos",
-            label: "A-3) Subvenciones, donaciones y legados recibidos",
+            id: "23000",
+            label: "Subvenciones, donaciones y legados recibidos",
           },
         ],
       },
       {
-        id: "pasivo",
+        id: "30000",
         label: "Pasivo",
         children: [
           {
-            id: "B) PASIVO NO CORRIENTE",
-            label: "B) PASIVO NO CORRIENTE",
+            id: "31000",
+            label: "PASIVO NO CORRIENTE",
             children: [
               {
-                id: "I. Provisiones a largo plazo",
-                label: "I. Provisiones a largo plazo",
+                id: "31100",
+                label: "Provisiones a largo plazo",
               },
               {
-                id: "II. Deudas a largo plazo",
-                label: "II. Deudas a largo plazo",
+                id: "31200",
+                label: "Deudas a largo plazo",
               },
               {
-                id:
-                  "III. Deudas con empresas del grupo y asociadas a largo plazo",
+                id: "31300",
                 label:
-                  "III. Deudas con empresas del grupo y asociadas a largo plazo",
+                  "Deudas con empresas del grupo y asociadas a largo plazo",
               },
               {
-                id: "IV. Pasivos por impuesto diferido",
-                label: "IV. Pasivos por impuesto diferido",
+                id: "31400",
+                label: "Pasivos por impuesto diferido",
               },
               {
-                id: "V. Periodificaciones a largo plazo",
-                label: "V. Periodificaciones a largo plazo",
+                id: "31500",
+                label: "Periodificaciones a largo plazo",
               },
               {
-                id: "VI. Acreedores comerciales no corrientes",
-                label: "VI. Acreedores comerciales no corrientes",
+                id: "31600",
+                label: "Acreedores comerciales no corrientes",
               },
               {
-                id: "VII. Deuda con características especiales a largo plazo",
-                label:
-                  "VII. Deuda con características especiales a largo plazo",
+                id: "31700",
+                label: "Deuda con características especiales a largo plazo",
               },
             ],
           },
           {
-            id: "C) PASIVO CORRIENTE",
-            label: "C) PASIVO CORRIENTE",
+            id: "32000",
+            label: "PASIVO CORRIENTE",
             children: [
               {
-                id:
-                  "I. Pasivos vinculados con activos no corrientes mantenidos para la venta",
+                id: "32100",
                 label:
-                  "I. Pasivos vinculados con activos no corrientes mantenidos para la venta",
+                  "Pasivos vinculados con activos no corrientes mantenidos para la venta",
               },
               {
-                id: "II. Provisiones a corto plazo",
-                label: "II. Provisiones a corto plazo",
+                id: "32200",
+                label: "Provisiones a corto plazo",
               },
               {
-                id: "III. Deudas a corto plazo",
-                label: "III. Deudas a corto plazo",
+                id: "32300",
+                label: "Deudas a corto plazo",
               },
               {
-                id:
-                  "IV. Deudas con empresas del grupo y asociadas a corto plazo",
+                id: "32400",
                 label:
-                  "IV. Deudas con empresas del grupo y asociadas a corto plazo",
+                  "Deudas con empresas del grupo y asociadas a corto plazo",
               },
               {
-                id: "V. Acreedores comerciales y otras cuentas a pagar",
-                label: "V. Acreedores comerciales y otras cuentas a pagar",
+                id: "32500",
+                label: "Acreedores comerciales y otras cuentas a pagar",
               },
               {
-                id: "VI. Periodificaciones a corto plazo",
-                label: "VI. Periodificaciones a corto plazo",
+                id: "32600",
+                label: "Periodificaciones a corto plazo",
               },
               {
-                id: "VII. Deuda con características especiales a corto plazo",
-                label:
-                  "VII. Deuda con características especiales a corto plazo",
+                id: "32700",
+                label: "Deuda con características especiales a corto plazo",
               },
             ],
           },
@@ -320,6 +602,88 @@ export default {
     });
   },
   methods: {
+    apply() {},
+    showModal() {
+      sendPageView(`filtro-ubicacion`, `Buscador - Filtro de Ubicacion`);
+      this.modalVisible = true;
+    },
+    hideModal() {
+      sendPageView(``, `Buscador - Filtro`);
+      this.modalVisible = false;
+      let treeselect__input = document.querySelector(
+        "#options input.vue-treeselect__input"
+      );
+      if (treeselect__input) treeselect__input.value = "";
+    },
+    confirmClean() {
+      swal
+        .fire({
+          icon: "question",
+          title: "Estas seguro?",
+          html: `deseas vaciar el filtro ${this.title}?`,
+          showCancelButton: true,
+          cancelButtonText: "Cancelar",
+          cancelButtonColor: "#d9534f",
+          showConfirmButton: true,
+          confirmButtonColor: "#337ab7",
+          confirmButtonText: "Si, seguro",
+        })
+        .then((result) => {
+          if (result.value) {
+            this.clean();
+          }
+        });
+    },
+    clean() {
+      this.selected_children = [];
+      this.form.comunidades = [];
+      this.form.Provincias = [];
+      this.form.Localidades = [];
+      this.selected_provinces_localidad = [];
+      this.valueSelect = [];
+      this.selected_provinces_localidad_string = "";
+      if (this.applied_filters.length > 1) {
+        let beforeForm = beforeOrderFilters(
+          this.filters,
+          this.applied_filters,
+          this.form,
+          this.title
+        );
+        this.$store.dispatch("search/filtrar", beforeForm).then((response) => {
+          this.updateNumberSelectedCompanies(response.cantidad);
+          this.$store.dispatch("filters/setCantidades", {
+            cantidades: response,
+          });
+        });
+      } else {
+        this.updateNumberSelectedCompanies(0);
+      }
+      this.selected_by_location = 0;
+      this.$store.dispatch("filters/removeFilters", this.title);
+      this.areApplied = false;
+      this.reapply = false;
+      this.loadingSearchTheProvinceorTown = false;
+      this.ResultTheProvinceorTown = [];
+      this.SearchTheProvinceorTown = "";
+      sendEvent("filtro-limpiado", this.title);
+    },
+    emptyFilter() {
+      this.selected_children = [];
+      this.form.comunidades = [];
+      this.form.Provincias = [];
+      this.form.Localidades = [];
+      this.selected_provinces_localidad = [];
+      this.valueSelect = [];
+      this.selected_provinces_localidad_string = "";
+      this.updateNumberSelectedCompanies(0);
+      this.selected_by_location = 0;
+      this.$store.dispatch("filters/removeFilters", this.title);
+      this.areApplied = false;
+      this.reapply = false;
+      this.loadingSearchTheProvinceorTown = false;
+      this.ResultTheProvinceorTown = [];
+      this.SearchTheProvinceorTown = "";
+    },
     fetchSearch() {},
     inputTreeselect() {},
     selectTreeselect() {
@@ -334,4 +698,53 @@ export default {
 
 <style lang="scss" scoped>
 @import "./../../sass/filters/filters";
+
+.anios_checkboxs_content {
+  display: flex;
+  justify-content: space-around;
+  .anios_checkboxs {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    flex: 1;
+    margin-left: 10px;
+    div {
+      margin: 0 10px 0 0;
+      label {
+        width: 100%;
+        font-size: 14px;
+        .title {
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}
+
+label.custon-checkboxs {
+  width: 100%;
+  font-size: 14px;
+  .title {
+    font-weight: bold;
+  }
+}
+
+.content_seleccionar_rango {
+  .el-tag {
+    width: 100%;
+    height: 36px;
+    padding: 5px 10px;
+    display: block;
+  }
+
+  .item_rango {
+    margin-top: 10px;
+  }
+
+  .content_input_tag {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
 </style>
