@@ -535,12 +535,12 @@ export default {
       this.reapply = false;
       this.selected_informacion_financiera = [];
       this.selected_anios = [];
-      this.monto1 = "";
       this.monto2 = "";
       this.selected_unidad = {
         id: 1000,
         label: "Miles de euros",
       };
+      this.monto1 = setMin(this.selected_unidad);
       this.todas_las_empresas = false;
       this.u_a_c_d = false;
 
@@ -570,7 +570,7 @@ export default {
       this.reapply = false;
       this.selected_informacion_financiera = [];
       this.selected_anios = [];
-      this.monto1 = "";
+      this.monto1 = setMin(this.selected_unidad);
       this.monto2 = "";
       this.selected_unidad = {
         id: 1000,
