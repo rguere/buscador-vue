@@ -384,12 +384,12 @@ export default {
     options_to_include: [
       {
         id: "todos:true",
-        label: "Aplicar en la búsqueda al menos uno de los años seleccionados",
+        label: "Aplicar en la búsqueda TODOS los años seleccionados",
         data: null,
       },
       {
         id: "todos:false",
-        label: "Aplicar en la búsqueda TODOS los años seleccionados",
+        label: "Aplicar en la búsqueda al menos uno de los años seleccionados",
         data: null,
       },
     ],
@@ -585,9 +585,7 @@ export default {
       this.updateNumberSelectedCompanies(0);
       this.$store.dispatch("filters/removeFilters", this.title);
     },
-    setSelectedUnidad() {
-      this.monto1 = setMin(this.selected_unidad);
-    },
+    setSelectedUnidad() {},
     setu_a_c_d() {
       if (this.u_a_c_d) {
         this.selected_anios = [];
