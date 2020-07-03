@@ -318,7 +318,6 @@ export default {
           balance.push(item.id);
         }
       }
-
       const monto1 =
         `${this.monto1}`.length === 0 || this.todas_las_empresas
           ? null
