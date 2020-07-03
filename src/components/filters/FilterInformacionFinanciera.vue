@@ -312,8 +312,13 @@ export default {
       const balance = [];
       const anios = [];
       for (const item of this.selected_anios) {
-        anios.push(item.id);
+        if (item.id !== "todos:true" && item.id !== "todos:false") {
+          anios.push(item.id);
+        } else {
+          balance.push(item.id);
+        }
       }
+
       const monto1 =
         `${this.monto1}`.length === 0 || this.todas_las_empresas
           ? null
