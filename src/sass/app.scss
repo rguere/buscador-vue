@@ -459,6 +459,12 @@ span.num-fil {
   }
 }
 
+.treeselect_informacion_financiera {
+  .vue-treeselect--open-below .vue-treeselect__menu {
+    max-height: 432px !important;
+  }
+}
+
 .t-t-capitalize {
   text-transform: capitalize;
 }

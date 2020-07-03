@@ -18,6 +18,7 @@ const initialState = () => {
       sector_actividad: [],
       cargo: [],
       vinculaciones: [],
+      balance: [],
       filtros: [{}],
     },
     applied_filters: [],
@@ -97,7 +98,7 @@ const initialState = () => {
         apply: false,
         items: [],
         quantity: 0,
-        key: "informacion",
+        key: "balance",
         disabled: false,
       },
       {

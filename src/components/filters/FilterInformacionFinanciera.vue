@@ -5,9 +5,11 @@
         {{ title }}
         <span
           class="span-info-right"
-          v-if="selected_by_code_cnae_and_industria !== 0"
-          >({{ selected_by_code_cnae_and_industria | numeral("0,0") }} empresas
-          seleccionadas)</span
+          v-if="selected_informacion_financiera.length !== 0"
+          >({{
+            selected_informacion_financiera.length | numeral("0,0")
+          }}
+          partida(s) seleccionada(s))</span
         >
       </p>
     </div>
@@ -21,7 +23,11 @@
                 estrategia de búsqueda
               </p>
             </div>
-            <div style="height: 300px;">
+            <div
+              style="height: 430px;"
+              class="treeselect_informacion_financiera"
+              v-if="showSearch"
+            >
               <treeselect
                 valueFormat="object"
                 name="options"
@@ -30,15 +36,7 @@
                 :options="options"
                 :always-open="true"
                 :default-expand-level="1"
-                :load-options="fetchSearch"
-                :limit="0"
-                :limitText="(t) => ''"
-                :disableFuzzyMatching="true"
-                @input="inputTreeselect"
-                @select="selectTreeselect"
-                @deselect="deselectTreeselect"
                 placeholder="Seleccionar"
-                search-nested
                 v-model="selected_informacion_financiera"
               >
                 <label
@@ -57,119 +55,59 @@
             <div class="panel-heading">
               <p class="panel-title roboto white">Seleccionar año(s)</p>
             </div>
-            <div>
+            <div class="panel-body">
               <div class="anios_checkboxs_content">
-                <div class="anios_checkboxs">
-                  <div>
+                <div
+                  v-for="(item, key) in options_anios"
+                  :key="key"
+                  :class="classAniosCheckboxs"
+                >
+                  <div v-for="(_item, _key) in item" :key="_key">
                     <label class="custon-checkboxs">
                       <input
                         type="checkbox"
                         name
                         v-model="selected_anios"
-                        value="2018"
+                        :disabled="u_a_c_d"
+                        :value="_item"
                       />
                       <span class="geekmark"></span>
-                      <span class="title">2018</span>
-                    </label>
-                  </div>
-                  <div>
-                    <label class="custon-checkboxs">
-                      <input
-                        type="checkbox"
-                        name
-                        v-model="selected_anios"
-                        value="2017"
-                      />
-                      <span class="geekmark"></span>
-                      <span class="title">2017</span>
-                    </label>
-                  </div>
-                  <div>
-                    <label class="custon-checkboxs">
-                      <input
-                        type="checkbox"
-                        name
-                        v-model="selected_anios"
-                        value="2016"
-                      />
-                      <span class="geekmark"></span>
-                      <span class="title">2016</span>
+                      <span class="title">{{ _item.label }}</span>
                     </label>
                   </div>
                 </div>
-                <div class="anios_checkboxs">
-                  <div>
-                    <label class="custon-checkboxs">
+              </div>
+              <div class="m-t-10">
+                <label class="custon-checkboxs">
+                  <input
+                    type="checkbox"
+                    name
+                    v-model="u_a_c_d"
+                    @change="setu_a_c_d"
+                    :value="true"
+                  />
+                  <span class="geekmark"></span>
+                  <span class="title">Último año con cuentas disponibles.</span>
+                </label>
+              </div>
+              <div class="m-t-10">
+                <div v-if="selected_anios.length > 1">
+                  <div v-for="(item, key) in options_to_include" :key="key">
+                    <label
+                      class="custon-checkboxs white"
+                      v-if="item.label !== 'incluir_null'"
+                    >
                       <input
                         type="checkbox"
-                        name
+                        :name="`checkbox___cuentas_disponibles__${item.id}`"
                         v-model="selected_anios"
-                        value="2015"
+                        :disabled="u_a_c_d"
+                        :id="`checkbox___cuentas_disponibles__${item.id}`"
+                        :value="item"
+                        @click="takeIntoAccount(item, $event)"
                       />
                       <span class="geekmark"></span>
-                      <span class="title">2015</span>
-                    </label>
-                  </div>
-                  <div>
-                    <label class="custon-checkboxs">
-                      <input
-                        type="checkbox"
-                        name
-                        v-model="selected_anios"
-                        value="2014"
-                      />
-                      <span class="geekmark"></span>
-                      <span class="title">2014</span>
-                    </label>
-                  </div>
-                  <div>
-                    <label class="custon-checkboxs">
-                      <input
-                        type="checkbox"
-                        name
-                        v-model="selected_anios"
-                        value="2013"
-                      />
-                      <span class="geekmark"></span>
-                      <span class="title">2013</span>
-                    </label>
-                  </div>
-                </div>
-                <div class="anios_checkboxs">
-                  <div>
-                    <label class="custon-checkboxs">
-                      <input
-                        type="checkbox"
-                        name
-                        v-model="selected_anios"
-                        value="2012"
-                      />
-                      <span class="geekmark"></span>
-                      <span class="title">2012</span>
-                    </label>
-                  </div>
-                  <div>
-                    <label class="custon-checkboxs">
-                      <input
-                        type="checkbox"
-                        name
-                        v-model="selected_anios"
-                        value="2011"
-                      />
-                      <span class="geekmark"></span>
-                      <span class="title">2011</span>
-                    </label>
-                  </div>
-                  <div>
-                    <label class="custon-checkboxs">
-                      <input
-                        type="checkbox"
-                        name
-                        v-model="selected_anios"
-                        value="2010"
-                      />
-                      <span class="geekmark"></span>
-                      <span class="title">2010</span>
+                      <span class="name-checkbox">{{ item.label }}</span>
                     </label>
                   </div>
                 </div>
@@ -187,50 +125,54 @@
             <div class="panel-heading">
               <p class="panel-title roboto white">Seleccionar rango</p>
             </div>
-            <div class="row content_seleccionar_rango">
-              <div class="col-md-6">
-                <div class="item_rango">
-                  <el-tag>Mínimo</el-tag>
-                  <div class="content_input_tag">
-                    <el-input
-                      placeholder="Mínimo"
-                      type="number"
-                      min="1"
-                      :max="monto2"
-                      v-model="monto1"
-                    ></el-input>
-                    <el-tag type="info">{{ selected_unidad.label }}</el-tag>
+            <div class="panel-body">
+              <div class="row content_seleccionar_rango">
+                <div class="col-md-7" style="padding: 0 0 0 10px;">
+                  <div class="item_rango">
+                    <el-tag>Mínimo</el-tag>
+                    <div class="content_input_tag">
+                      <el-input
+                        placeholder="Mínimo"
+                        type="number"
+                        min="1"
+                        :max="monto2"
+                        v-model="monto1"
+                      ></el-input>
+                      <el-tag type="info">{{ selected_unidad.label }}</el-tag>
+                    </div>
+                  </div>
+                  <div class="item_rango">
+                    <el-tag>Máximo</el-tag>
+                    <div class="content_input_tag">
+                      <el-input
+                        placeholder="Mínimo"
+                        type="number"
+                        :min="monto1"
+                        v-model="monto2"
+                      ></el-input>
+                      <el-tag type="info">{{ selected_unidad.label }}</el-tag>
+                    </div>
                   </div>
                 </div>
-                <div class="item_rango">
-                  <el-tag>Máximo</el-tag>
-                  <div class="content_input_tag">
-                    <el-input
-                      placeholder="Mínimo"
-                      type="number"
-                      :min="monto1"
-                      v-model="monto2"
-                    ></el-input>
-                    <el-tag type="info">{{ selected_unidad.label }}</el-tag>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="m-t-10">
-                  <el-tag type="info">Unidad</el-tag>
-                  <el-select v-model="selected_unidad" placeholder="Unidad">
-                    <el-option
-                      v-for="item in unidades"
-                      :key="item.id"
-                      :label="item.label"
-                      :value="item"
+                <div class="col-md-5">
+                  <div class="m-t-10">
+                    <el-tag type="info">Unidad</el-tag>
+                    <el-select
+                      v-model="selected_unidad"
+                      @change="setSelectedUnidad"
+                      placeholder="Unidad"
                     >
-                    </el-option>
-                  </el-select>
-                </div>
-                <div class="m-t-10">
-                  <div>
-                    <label class="custon-checkboxs">
+                      <el-option
+                        v-for="item in unidades"
+                        :key="item.id"
+                        :label="item.label"
+                        :value="item"
+                      >
+                      </el-option>
+                    </el-select>
+                  </div>
+                  <div class="m-t-10">
+                    <label class="custon-checkboxs ___">
                       <input
                         type="checkbox"
                         name
@@ -239,7 +181,7 @@
                       />
                       <span class="geekmark"></span>
                       <span class="title"
-                        >TODAS LAS EMPRESAS CON EL DATO DISPONIBLE.</span
+                        >Todas las empresas con el dato disponible.</span
                       >
                     </label>
                   </div>
@@ -255,7 +197,12 @@
             Ver detalles
             <i class="fa fa-plus-circle"></i>
           </button>
-          <button type="button" class="btn btn-success" @click="apply">
+          <button
+            v-if="showBrnApplied"
+            type="button"
+            class="btn btn-success"
+            @click="apply"
+          >
             Aplicar
             <i
               :class="loadingFrm ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'"
@@ -272,6 +219,12 @@
           </button>
         </div>
         <p class="text-help">* Puedes elegir más de una opción</p>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <h4>Esta es la información que se envía para aplicar el filtro</h4>
+          <pre>{{ balance }}</pre>
+        </div>
       </div>
       <el-dialog
         :visible.sync="modalVisible"
@@ -292,7 +245,12 @@
               <button class="btn btn-a">{{ title }}</button>
             </div>
             <div>
-              <button type="button" class="btn btn-success" @click="apply">
+              <button
+                v-if="showBrnApplied"
+                type="button"
+                class="btn btn-success"
+                @click="apply"
+              >
                 Aplicar
                 <i
                   :class="loadingFrm ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'"
@@ -318,16 +276,82 @@
 <script>
 import { persistentData } from "./../../mixins/persistent-data";
 import swal from "sweetalert2";
-import { beforeOrderFilters, sendEvent, sendPageView } from "./../../utils";
+
+import { mapGetters } from "vuex";
+import {
+  beforeOrderFilters,
+  sendEvent,
+  removeDuplicates,
+  sendPageView,
+} from "./../../utils";
+
+const setMin = (item) => {
+  return item.id;
+};
 
 export default {
   name: "filter-informacion-financiera",
   mixins: [persistentData],
-  computed: {},
+  computed: {
+    ...mapGetters({
+      search: "search/search",
+      loading: "search/loading",
+      form: "filters/form",
+      selected_companies: "filters/selected_companies",
+      applied_filters: "filters/applied_filters",
+      filters: "filters/filters",
+    }),
+    showSearch() {
+      return (
+        this.search &&
+        this.search.informacion_financiera &&
+        this.search.informacion_financiera.length !== 0
+      );
+    },
+    balance() {
+      const balance = [];
+      const anios = [];
+      for (const item of this.selected_anios) {
+        anios.push(item.id);
+      }
+      const monto1 =
+        `${this.monto1}`.length === 0 || this.todas_las_empresas
+          ? null
+          : this.monto1;
+      const monto2 =
+        `${this.monto2}`.length === 0 || this.todas_las_empresas
+          ? null
+          : this.monto2;
+
+      for (const item of this.selected_informacion_financiera) {
+        const _anios =
+          this.u_a_c_d || anios.length == 0 ? null : anios.join(",");
+        balance.push(`${_anios}|${item.id}|${monto1}|${monto2}`);
+      }
+
+      return balance;
+    },
+    classAniosCheckboxs() {
+      return this.u_a_c_d ? "anios_checkboxs disabled" : "anios_checkboxs";
+    },
+    showBrnApplied() {
+      return (
+        (this.balance.length !== 0 && !this.areApplied) ||
+        (this.balance.length !== 0 && !this.compareWithNewtoApply)
+      );
+    },
+    compareWithNewtoApply: function() {
+      let stg = this.balance_string;
+      let obj = JSON.stringify(this.balance);
+      return stg === obj;
+    },
+  },
   data: () => ({
     title: "Información Financiera",
     loadingFrm: false,
     modalVisible: false,
+    areApplied: false,
+    reapply: false,
     selected_informacion_financiera: [],
     selected_anios: [],
     monto1: "",
@@ -337,6 +361,7 @@ export default {
       label: "Miles de euros",
     },
     todas_las_empresas: false,
+    u_a_c_d: false,
     unidades: [
       {
         id: 1,
@@ -351,238 +376,72 @@ export default {
         label: "Millones de euros",
       },
     ],
-    options: [
+    options: [],
+    options_to_include: [
       {
-        id: "10000",
-        label: "Activo",
-        children: [
-          {
-            id: "11000",
-            label: "ACTIVO NO CORRIENTE",
-            children: [
-              {
-                id: "11100",
-                label: "Inmovilizado intangible",
-              },
-              {
-                id: "11200",
-                label: "Inmovilizado material",
-              },
-              {
-                id: "11300",
-                label: "Inversiones inmobiliarias",
-              },
-              {
-                id: "11400",
-                label:
-                  "Inversiones en empresas del grupo y asociadas a largo plazo",
-              },
-              {
-                id: "11500",
-                label: "Inversiones financieras a largo plazo",
-              },
-              {
-                id: "11600",
-                label: "Activos por impuesto diferido",
-              },
-              {
-                id: "11700",
-                label: "Deudas comerciales no corrientes",
-              },
-            ],
-          },
-          {
-            id: "12000",
-            label: "ACTIVO CORRIENTE",
-            children: [
-              {
-                id: "12100",
-                label: "Activos no corrientes mantenidos para la venta",
-              },
-              {
-                id: "12200",
-                label: "Existencias",
-              },
-              {
-                id: "12300",
-                label: "Deudores comerciales y otras cuentas a cobrar",
-              },
-              {
-                id: "12400",
-                label:
-                  "Inversiones en empresas del grupo y asociadas a corto plazo",
-              },
-              {
-                id: "12500",
-                label: "Inversiones financieras a corto plazo",
-              },
-              {
-                id: "12600",
-                label: "Periodificaciones a corto plazo",
-              },
-              {
-                id: "12700",
-                label: "Efectivo y otros activos líquidos equivalentes",
-              },
-            ],
-          },
-        ],
+        id: "todos:true",
+        label: "Aplicar en la búsqueda al menos uno de los años seleccionados",
+        data: null,
       },
       {
-        id: "20000",
-        label: "Patrimonio Neto",
-        children: [
-          {
-            id: "21000",
-            label: "Fondos propios",
-            children: [
-              {
-                id: "21200",
-                label: "Prima de emisión",
-              },
-              {
-                id: "21300",
-                label: "Reservas",
-              },
-              {
-                id: "21400",
-                label: "(Acciones y participaciones en patrimonio propias)",
-              },
-              {
-                id: "21500",
-                label: "Resultados de ejercicios anteriores",
-              },
-              {
-                id: "21600",
-                label: "Otras aportaciones de socios",
-              },
-              {
-                id: "21700",
-                label: "Resultado del ejercicio",
-              },
-              {
-                id: "21800",
-                label: "(Dividendo a cuenta)",
-              },
-              {
-                id: "21900",
-                label: "Otros instrumentos de patrimonio neto",
-              },
-            ],
-          },
-          {
-            id: "22000",
-            label: "Ajustes por cambios de valor",
-            children: [
-              {
-                id: "22100",
-                label: "Activos financieros disponibles para la venta",
-              },
-              {
-                id: "22200",
-                label: "Operaciones de cobertura",
-              },
-              {
-                id: "22300",
-                label:
-                  "Activos no corrientes y pasivos vinculados, mantenidos para la venta",
-              },
-              {
-                id: "22400",
-                label: "Diferencia de conversión",
-              },
-              {
-                id: "22500",
-                label: "Otros",
-              },
-            ],
-          },
-          {
-            id: "23000",
-            label: "Subvenciones, donaciones y legados recibidos",
-          },
-        ],
-      },
-      {
-        id: "30000",
-        label: "Pasivo",
-        children: [
-          {
-            id: "31000",
-            label: "PASIVO NO CORRIENTE",
-            children: [
-              {
-                id: "31100",
-                label: "Provisiones a largo plazo",
-              },
-              {
-                id: "31200",
-                label: "Deudas a largo plazo",
-              },
-              {
-                id: "31300",
-                label:
-                  "Deudas con empresas del grupo y asociadas a largo plazo",
-              },
-              {
-                id: "31400",
-                label: "Pasivos por impuesto diferido",
-              },
-              {
-                id: "31500",
-                label: "Periodificaciones a largo plazo",
-              },
-              {
-                id: "31600",
-                label: "Acreedores comerciales no corrientes",
-              },
-              {
-                id: "31700",
-                label: "Deuda con características especiales a largo plazo",
-              },
-            ],
-          },
-          {
-            id: "32000",
-            label: "PASIVO CORRIENTE",
-            children: [
-              {
-                id: "32100",
-                label:
-                  "Pasivos vinculados con activos no corrientes mantenidos para la venta",
-              },
-              {
-                id: "32200",
-                label: "Provisiones a corto plazo",
-              },
-              {
-                id: "32300",
-                label: "Deudas a corto plazo",
-              },
-              {
-                id: "32400",
-                label:
-                  "Deudas con empresas del grupo y asociadas a corto plazo",
-              },
-              {
-                id: "32500",
-                label: "Acreedores comerciales y otras cuentas a pagar",
-              },
-              {
-                id: "32600",
-                label: "Periodificaciones a corto plazo",
-              },
-              {
-                id: "32700",
-                label: "Deuda con características especiales a corto plazo",
-              },
-            ],
-          },
-        ],
+        id: "todos:false",
+        label: "Aplicar en la búsqueda TODOS los años seleccionados",
+        data: null,
       },
     ],
+    options_anios: [
+      [
+        {
+          id: 2018,
+          label: 2018,
+        },
+        {
+          id: 2017,
+          label: 2017,
+        },
+        {
+          id: 2016,
+          label: 2016,
+        },
+      ],
+      [
+        {
+          id: 2015,
+          label: 2015,
+        },
+        {
+          id: 2014,
+          label: 2014,
+        },
+        {
+          id: 2013,
+          label: 2013,
+        },
+      ],
+      [
+        {
+          id: 2012,
+          label: 2012,
+        },
+        {
+          id: 2011,
+          label: 2011,
+        },
+        {
+          id: 2010,
+          label: 2010,
+        },
+      ],
+    ],
+    balance_string: "",
   }),
-  watch: {},
+  watch: {
+    search: function(newSearch) {
+      if (newSearch && newSearch.informacion_financiera) {
+        this.options = newSearch.informacion_financiera;
+      }
+    },
+  },
   mounted() {
     this.$root.$on("clean_filter", (filter) => {
       if (filter === this.title) {
@@ -600,9 +459,44 @@ export default {
       }
       sendEvent("filtro-vaciado", "-");
     });
+    if (this.search && this.search.informacion_financiera) {
+      this.options = this.search.informacion_financiera;
+    }
+    this.monto1 = setMin(this.selected_unidad);
   },
   methods: {
-    apply() {},
+    apply() {
+      if (this.balance && this.balance.length !== 0) {
+        this.hideModal();
+        this.loadingFrm = true;
+        this.formatearDataPOST();
+        let beforeForm = beforeOrderFilters(
+          this.filters,
+          this.applied_filters,
+          this.form,
+          this.title
+        );
+        this.$store
+          .dispatch("search/filtrar", beforeForm)
+          .then((response) => {
+            this.updateNumberSelectedCompanies(response.cantidad);
+            this.$store.dispatch("filters/addFilters", {
+              name: this.title,
+              quantity: this.balance.length,
+              cantidades: response,
+              items: this.balance,
+            });
+            this.areApplied = true;
+            this.reapply = false;
+            this.loadingFrm = false;
+            this.balance_string = JSON.stringify(this.balance);
+            sendEvent(`filtro-aplicado`, this.title);
+          })
+          .catch(() => {
+            this.loadingFrm = false;
+          });
+      }
+    },
     showModal() {
       sendPageView(`filtro-ubicacion`, `Buscador - Filtro de Ubicacion`);
       this.modalVisible = true;
@@ -635,13 +529,21 @@ export default {
         });
     },
     clean() {
-      this.selected_children = [];
-      this.form.comunidades = [];
-      this.form.Provincias = [];
-      this.form.Localidades = [];
-      this.selected_provinces_localidad = [];
-      this.valueSelect = [];
-      this.selected_provinces_localidad_string = "";
+      this.loadingFrm = false;
+      this.modalVisible = false;
+      this.areApplied = false;
+      this.reapply = false;
+      this.selected_informacion_financiera = [];
+      this.selected_anios = [];
+      this.monto1 = "";
+      this.monto2 = "";
+      this.selected_unidad = {
+        id: 1000,
+        label: "Miles de euros",
+      };
+      this.todas_las_empresas = false;
+      this.u_a_c_d = false;
+
       if (this.applied_filters.length > 1) {
         let beforeForm = beforeOrderFilters(
           this.filters,
@@ -658,31 +560,34 @@ export default {
       } else {
         this.updateNumberSelectedCompanies(0);
       }
-      this.selected_by_location = 0;
       this.$store.dispatch("filters/removeFilters", this.title);
-      this.areApplied = false;
-      this.reapply = false;
-      this.loadingSearchTheProvinceorTown = false;
-      this.ResultTheProvinceorTown = [];
-      this.SearchTheProvinceorTown = "";
       sendEvent("filtro-limpiado", this.title);
     },
     emptyFilter() {
-      this.selected_children = [];
-      this.form.comunidades = [];
-      this.form.Provincias = [];
-      this.form.Localidades = [];
-      this.selected_provinces_localidad = [];
-      this.valueSelect = [];
-      this.selected_provinces_localidad_string = "";
-      this.updateNumberSelectedCompanies(0);
-      this.selected_by_location = 0;
-      this.$store.dispatch("filters/removeFilters", this.title);
+      this.loadingFrm = false;
+      this.modalVisible = false;
       this.areApplied = false;
       this.reapply = false;
-      this.loadingSearchTheProvinceorTown = false;
-      this.ResultTheProvinceorTown = [];
-      this.SearchTheProvinceorTown = "";
+      this.selected_informacion_financiera = [];
+      this.selected_anios = [];
+      this.monto1 = "";
+      this.monto2 = "";
+      this.selected_unidad = {
+        id: 1000,
+        label: "Miles de euros",
+      };
+      this.todas_las_empresas = false;
+      this.u_a_c_d = false;
+      this.updateNumberSelectedCompanies(0);
+      this.$store.dispatch("filters/removeFilters", this.title);
+    },
+    setSelectedUnidad() {
+      this.monto1 = setMin(this.selected_unidad);
+    },
+    setu_a_c_d() {
+      if (this.u_a_c_d) {
+        this.selected_anios = [];
+      }
     },
     fetchSearch() {},
     inputTreeselect() {},
@@ -691,6 +596,59 @@ export default {
     },
     deselectTreeselect() {
       //this.seeSeals(item, false);
+    },
+    takeIntoAccount(item, event = null) {
+      if (item.id === "todos:true") {
+        this.selected_anios = this.selected_anios.filter(
+          (item) => item.id !== "todos:false"
+        );
+        this.selected_anios.push(this.options_to_include[0]);
+      } else if (item.id === "todos:false") {
+        this.selected_anios = this.selected_anios.filter(
+          (item) => item.id !== "todos:true"
+        );
+        this.selected_anios.push(this.options_to_include[1]);
+      }
+      this.selected_anios = removeDuplicates(this.selected_anios, "id");
+      if (event && event.target && event.target.tagName === "INPUT") {
+        event.target.checked = true;
+      }
+    },
+    takeIntoAccountDefault() {
+      if (
+        this.selected_anios &&
+        this.selected_anios.length > 1 &&
+        this.options_to_include &&
+        this.options_to_include.length > 0
+      ) {
+        let tiene = this.selected_anios.filter(
+          (item) => item.id === "todos:false" || item.id === "todos:true"
+        );
+        if (tiene && tiene.length === 0) {
+          this.takeIntoAccount(this.options_to_include[0]);
+        }
+      }
+      if (this.selected_anios && this.selected_anios.length <= 2) {
+        this.selected_anios = this.selected_anios.filter(
+          (item) => item.id !== "todos:false"
+        );
+        this.selected_anios = this.selected_anios.filter(
+          (item) => item.id !== "todos:true"
+        );
+        this.selected_anios = removeDuplicates(this.selected_anios, "id");
+      }
+    },
+    formatearDataPOST() {
+      this.form.balance = [];
+      this.balance.forEach((item) => {
+        this.form.balance.push(item);
+      });
+      return this.form;
+    },
+    updateNumberSelectedCompanies(quantity) {
+      this.$store.dispatch("filters/updateNumberSelectedCompanies", {
+        quantity,
+      });
     },
   },
 };
@@ -703,6 +661,11 @@ export default {
   display: flex;
   justify-content: space-around;
   .anios_checkboxs {
+    &.disabled {
+      label {
+        cursor: not-allowed;
+      }
+    }
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
@@ -712,7 +675,6 @@ export default {
       margin: 0 10px 0 0;
       label {
         width: 100%;
-        font-size: 14px;
         .title {
           font-weight: bold;
         }
@@ -722,10 +684,13 @@ export default {
 }
 
 label.custon-checkboxs {
+  &.___ {
+    color: #909399;
+  }
   width: 100%;
-  font-size: 14px;
   .title {
     font-weight: bold;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   }
 }
 
@@ -745,6 +710,11 @@ label.custon-checkboxs {
     display: flex;
     justify-content: center;
     align-items: center;
+    .el-tag {
+      font-size: 12px !important;
+      padding: 5px 0 0 5px !important;
+      max-width: 110px !important;
+    }
   }
 }
 </style>
