@@ -19,6 +19,7 @@ const initialState = () => {
       cargo: [],
       vinculaciones: [],
       balance: [],
+      perdidas: [],
       filtros: [{}],
     },
     applied_filters: [],

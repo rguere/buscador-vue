@@ -1,22 +1,45 @@
 <template>
   <div class="panel panel-default cd" id="filter_informacion_financiera">
     <div class="panel-heading">
-      <p class="panel-title roboto white">
-        {{ title }}
-        <span
-          class="span-info-right"
-          v-if="selected_informacion_financiera.length !== 0"
-          >({{
-            selected_informacion_financiera.length | numeral("0,0")
-          }}
-          partida(s) seleccionada(s))</span
-        >
-      </p>
+      <div class="content_p_select">
+        <p class="panel-title roboto white">
+          {{ title }}
+          <span
+            class="span-info-right"
+            v-if="selected_informacion_financiera.length !== 0"
+            >({{
+              selected_informacion_financiera.length | numeral("0,0")
+            }}
+            partida(s) seleccionada(s))</span
+          >
+        </p>
+      </div>
     </div>
     <div class="panel-body">
       <div class="row">
         <div class="col-md-6">
-          <div class="panel panel-default cd">
+          <div class="m-b-10 content_tag_select_modo">
+            <el-tag type="info">Selecione</el-tag>
+            <el-select
+              v-model="modo"
+              @change="setModo"
+              placeholder="Selecione"
+              size="mini"
+            >
+              <el-option
+                v-for="item in modos"
+                :key="item.id"
+                :label="item.label"
+                :value="item.id"
+              >
+              </el-option>
+            </el-select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="panel panel-default cd" v-if="modo && modo === 'balance'">
             <div class="panel-heading">
               <p class="panel-title roboto white">
                 Seleccione la partida de balance que desee agregar a su
@@ -34,6 +57,47 @@
                 id="options"
                 :multiple="true"
                 :options="options"
+                :always-open="true"
+                :default-expand-level="1"
+                placeholder="Seleccionar"
+                v-model="selected_informacion_financiera"
+              >
+                <label
+                  slot="option-label"
+                  slot-scope="{ node, shouldShowCount, count, labelClassName }"
+                  :class="labelClassName"
+                >
+                  {{ node.label }}
+                </label>
+              </treeselect>
+            </div>
+            <!-- <div v-if="showSearch">
+              <pre>
+                {{ search.perdidas }}
+              </pre>
+            </div> -->
+          </div>
+          <div
+            class="panel panel-default cd"
+            v-if="modo && modo === 'perdidas'"
+          >
+            <div class="panel-heading">
+              <p class="panel-title roboto white">
+                Seleccione la partida de la cuenta de P y G que desee agregar a
+                su estrategia de búsqueda
+              </p>
+            </div>
+            <div
+              style="height: 430px;"
+              class="treeselect_informacion_financiera"
+              v-if="showSearch"
+            >
+              <treeselect
+                valueFormat="object"
+                name="options"
+                id="options"
+                :multiple="true"
+                :options="search.perdidas"
                 :always-open="true"
                 :default-expand-level="1"
                 placeholder="Seleccionar"
@@ -352,6 +416,21 @@ export default {
   },
   data: () => ({
     title: "Información Financiera",
+    modo: "balance",
+    modos: [
+      {
+        id: "balance",
+        label: "Balance",
+      },
+      {
+        id: "perdidas",
+        label: "Cuenta de Pérdidas y Ganancias",
+      },
+      // {
+      //   id: "Principales Ratios Económicos",
+      //   label: "Principales Ratios Económicos",
+      // },
+    ],
     loadingFrm: false,
     modalVisible: false,
     areApplied: false,
@@ -591,6 +670,9 @@ export default {
         this.selected_anios = [];
       }
     },
+    setModo() {
+      this.selected_informacion_financiera = [];
+    },
     fetchSearch() {},
     inputTreeselect() {},
     selectTreeselect() {
@@ -642,8 +724,13 @@ export default {
     },
     formatearDataPOST() {
       this.form.balance = [];
+      this.form.perdidas = [];
       this.balance.forEach((item) => {
-        this.form.balance.push(item);
+        if (this.modo === "balance") {
+          this.form.balance.push(item);
+        } else if (this.modo === "perdidas") {
+          this.form.perdidas.push(item);
+        }
       });
       return this.form;
     },
@@ -717,6 +804,12 @@ label.custon-checkboxs {
       padding: 5px 0 0 5px !important;
       max-width: 110px !important;
     }
+  }
+}
+.content_tag_select_modo {
+  display: flex;
+  .el-tag {
+    margin-right: 10px;
   }
 }
 </style>

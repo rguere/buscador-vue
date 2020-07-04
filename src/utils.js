@@ -629,6 +629,90 @@ export const formatProvinciaLocalidad = (data) => {
       ],
     },
   ];
+  newData.perdidas = [
+    {
+      id: "40100",
+      label: "Importe neto de la cifra de negocios",
+    },
+    {
+      id: "40200",
+      label:
+        "Variación de existencias de productos terminados y en curso de fabricación",
+    },
+    {
+      id: "40300",
+      label: "Trabajos realizados por la empresa para su activo",
+    },
+    {
+      id: "40400",
+      label: "Aprovisionamientos",
+    },
+    {
+      id: "40500",
+      label: "Otros ingresos de explotación",
+    },
+    {
+      id: "40600",
+      label: "Gastos de personal",
+    },
+    {
+      id: "40700",
+      label: "Otros gastos de explotación",
+    },
+    {
+      id: "40800",
+      label: "Amortización del inmovilizado",
+    },
+    {
+      id: "40900",
+      label: "Imputación de subvenciones de inmovilizado no financiero y otras",
+    },
+    {
+      id: "41000",
+      label: "Excesos de provisiones",
+    },
+    {
+      id: "41100",
+      label: "Deterioro y resultado por enajenaciones del inmovilizado",
+    },
+    {
+      id: "41200",
+      label: "Diferencia negativa de combinaciones de negocio",
+    },
+    {
+      id: "41300",
+      label: "Otros resultados",
+    },
+    {
+      id: "41400",
+      label: "Ingresos financieros",
+    },
+    {
+      id: "41500",
+      label: "Gastos financieros",
+    },
+    {
+      id: "41600",
+      label: "Variación de valor razonable en instrumentos financieros",
+    },
+    {
+      id: "41700",
+      label: "Diferencias de cambio",
+    },
+    {
+      id: "41800",
+      label:
+        "Deterioro y resultado por enajenaciones de instrumentos financieros",
+    },
+    {
+      id: "41900",
+      label: "Impuestos sobre beneficios",
+    },
+    {
+      id: "42100",
+      label: "Otros ingresos y gastos de carácter financiero",
+    },
+  ];
   return newData;
 };
 
