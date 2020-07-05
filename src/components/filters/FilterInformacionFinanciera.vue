@@ -18,99 +18,101 @@
     <div class="panel-body">
       <div class="row">
         <div class="col-md-6">
-          <div class="m-b-10 content_tag_select_modo">
-            <el-tag type="info">Selecione</el-tag>
-            <el-select
-              v-model="modo"
-              @change="setModo"
-              placeholder="Selecione"
-              size="mini"
+          <ul class="nav nav-tabs">
+            <li
+              v-for="(item, key) in modos"
+              :key="key"
+              :class="modo === item.id ? 'active' : ''"
             >
-              <el-option
-                v-for="item in modos"
-                :key="item.id"
-                :label="item.label"
-                :value="item.id"
+              <a
+                data-toggle="tab"
+                @click="setModo(item.id)"
+                class="text-white"
+                href="#"
+                >{{ item.label }}</a
               >
-              </el-option>
-            </el-select>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6">
-          <div class="panel panel-default cd" v-if="modo && modo === 'balance'">
-            <div class="panel-heading">
-              <p class="panel-title roboto white">
-                Seleccione la partida de balance que desee agregar a su
-                estrategia de búsqueda
-              </p>
-            </div>
-            <div
-              style="height: 430px;"
-              class="treeselect_informacion_financiera"
-              v-if="showSearch"
-            >
-              <treeselect
-                valueFormat="object"
-                name="options"
-                id="options"
-                :multiple="true"
-                :options="options"
-                :always-open="true"
-                :default-expand-level="1"
-                placeholder="Seleccionar"
-                v-model="selected_informacion_financiera"
-              >
-                <label
-                  slot="option-label"
-                  slot-scope="{ node, shouldShowCount, count, labelClassName }"
-                  :class="labelClassName"
+            </li>
+          </ul>
+          <div class="tab-content m-t-10">
+            <div :class="tabPaneClass('balance')">
+              <div class="panel panel-default cd">
+                <div class="panel-heading">
+                  <p class="panel-title roboto white">
+                    Seleccione la partida de balance que desee agregar a su
+                    estrategia de búsqueda
+                  </p>
+                </div>
+                <div
+                  style="height: 430px;"
+                  class="treeselect_informacion_financiera"
+                  v-if="showSearch"
                 >
-                  {{ node.label }}
-                </label>
-              </treeselect>
+                  <treeselect
+                    valueFormat="object"
+                    name="options"
+                    id="options"
+                    :multiple="true"
+                    :options="options"
+                    :always-open="true"
+                    :default-expand-level="1"
+                    placeholder="Seleccionar"
+                    v-model="selected_informacion_financiera"
+                  >
+                    <label
+                      slot="option-label"
+                      slot-scope="{
+                        node,
+                        shouldShowCount,
+                        count,
+                        labelClassName,
+                      }"
+                      :class="labelClassName"
+                    >
+                      {{ node.label }}
+                    </label>
+                  </treeselect>
+                </div>
+              </div>
             </div>
-            <!-- <div v-if="showSearch">
-              <pre>
-                {{ search.perdidas }}
-              </pre>
-            </div> -->
-          </div>
-          <div
-            class="panel panel-default cd"
-            v-if="modo && modo === 'perdidas'"
-          >
-            <div class="panel-heading">
-              <p class="panel-title roboto white">
-                Seleccione la partida de la cuenta de P y G que desee agregar a
-                su estrategia de búsqueda
-              </p>
-            </div>
-            <div
-              style="height: 430px;"
-              class="treeselect_informacion_financiera"
-              v-if="showSearch"
-            >
-              <treeselect
-                valueFormat="object"
-                name="options"
-                id="options"
-                :multiple="true"
-                :options="search.perdidas"
-                :always-open="true"
-                :default-expand-level="1"
-                placeholder="Seleccionar"
-                v-model="selected_informacion_financiera"
-              >
-                <label
-                  slot="option-label"
-                  slot-scope="{ node, shouldShowCount, count, labelClassName }"
-                  :class="labelClassName"
+            <div :class="tabPaneClass('perdidas')">
+              <div class="panel panel-default cd">
+                <div class="panel-heading">
+                  <p class="panel-title roboto white">
+                    Seleccione la partida de la cuenta de P y G que desee
+                    agregar a su estrategia de búsqueda
+                  </p>
+                </div>
+                <div
+                  style="height: 430px;"
+                  class="treeselect_informacion_financiera"
+                  v-if="showSearch"
                 >
-                  {{ node.label }}
-                </label>
-              </treeselect>
+                  <treeselect
+                    valueFormat="object"
+                    name="options"
+                    id="options"
+                    :multiple="true"
+                    :options="search.perdidas"
+                    :always-open="true"
+                    :default-expand-level="1"
+                    placeholder="Seleccionar"
+                    v-model="selected_informacion_financiera"
+                  >
+                    <label
+                      slot="option-label"
+                      slot-scope="{
+                        node,
+                        shouldShowCount,
+                        count,
+                        labelClassName,
+                      }"
+                      :class="labelClassName"
+                    >
+                      {{ node.label }}
+                    </label>
+                  </treeselect>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -611,6 +613,9 @@ export default {
           }
         });
     },
+    tabPaneClass(tap) {
+      return this.modo === tap ? "tab-pane fade in active" : "tab-pane fade";
+    },
     clean() {
       this.loadingFrm = false;
       this.modalVisible = false;
@@ -670,7 +675,8 @@ export default {
         this.selected_anios = [];
       }
     },
-    setModo() {
+    setModo(idModo) {
+      this.modo = idModo;
       this.selected_informacion_financiera = [];
     },
     fetchSearch() {},
@@ -811,5 +817,13 @@ label.custon-checkboxs {
   .el-tag {
     margin-right: 10px;
   }
+}
+.nav.nav-tabs {
+  li.active a {
+    color: #fff !important;
+  }
+}
+.nav-tabs {
+  border-bottom: none !important;
 }
 </style>
