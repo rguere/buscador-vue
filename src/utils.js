@@ -406,7 +406,7 @@ export const formatProvinciaLocalidad = (data) => {
   }
   newData.informacion_financiera = [
     {
-      id: "10000",
+      id: "children_activo",
       label: "Activo",
       children: [
         {
@@ -428,8 +428,7 @@ export const formatProvinciaLocalidad = (data) => {
             },
             {
               id: "11400",
-              label:
-                "Inversiones en empresas del grupo y asociadas a largo plazo",
+              label: "Inversiones en empresas del grupo a largo plazo",
             },
             {
               id: "11500",
@@ -437,11 +436,7 @@ export const formatProvinciaLocalidad = (data) => {
             },
             {
               id: "11600",
-              label: "Activos por impuesto diferido",
-            },
-            {
-              id: "11700",
-              label: "Deudas comerciales no corrientes",
+              label: "Otros activos a largo plazo",
             },
           ],
         },
@@ -451,21 +446,16 @@ export const formatProvinciaLocalidad = (data) => {
           isDefaultExpanded: true,
           children: [
             {
-              id: "12100",
-              label: "Activos no corrientes mantenidos para la venta",
-            },
-            {
               id: "12200",
               label: "Existencias",
             },
             {
               id: "12300",
-              label: "Deudores comerciales y otras cuentas a cobrar",
+              label: "Deudores comerciales",
             },
             {
               id: "12400",
-              label:
-                "Inversiones en empresas del grupo y asociadas a corto plazo",
+              label: "Inversiones en empresas del grupo a corto plazo",
             },
             {
               id: "12500",
@@ -473,13 +463,18 @@ export const formatProvinciaLocalidad = (data) => {
             },
             {
               id: "12600",
-              label: "Periodificaciones a corto plazo",
+              label: "Otros activos a corto plazo",
             },
             {
               id: "12700",
-              label: "Efectivo y otros activos líquidos equivalentes",
+              label: "Efectivo y activos líquidos equivalentes",
             },
           ],
+        },
+        {
+          id: "10000",
+          label: "Total activo",
+          isDefaultExpanded: false,
         },
       ],
     },
@@ -493,74 +488,27 @@ export const formatProvinciaLocalidad = (data) => {
           label: "Fondos propios",
           children: [
             {
-              id: "21200",
-              label: "Prima de emisión",
+              id: "21100",
+              label: "Capital",
             },
             {
               id: "21300",
               label: "Reservas",
             },
             {
-              id: "21400",
-              label: "(Acciones y participaciones en patrimonio propias)",
-            },
-            {
-              id: "21500",
-              label: "Resultados de ejercicios anteriores",
-            },
-            {
-              id: "21600",
-              label: "Otras aportaciones de socios",
-            },
-            {
               id: "21700",
               label: "Resultado del ejercicio",
-            },
-            {
-              id: "21800",
-              label: "(Dividendo a cuenta)",
-            },
-            {
-              id: "21900",
-              label: "Otros instrumentos de patrimonio neto",
-            },
-          ],
-        },
-        {
-          id: "22000",
-          label: "Ajustes por cambios de valor",
-          children: [
-            {
-              id: "22100",
-              label: "Activos financieros disponibles para la venta",
-            },
-            {
-              id: "22200",
-              label: "Operaciones de cobertura",
-            },
-            {
-              id: "22300",
-              label:
-                "Activos no corrientes y pasivos vinculados, mantenidos para la venta",
-            },
-            {
-              id: "22400",
-              label: "Diferencia de conversión",
-            },
-            {
-              id: "22500",
-              label: "Otros",
             },
           ],
         },
         {
           id: "23000",
-          label: "Subvenciones, donaciones y legados recibidos",
+          label: "Subvenciones y donaciones",
         },
       ],
     },
     {
-      id: "30000",
+      id: "children_pasivo",
       label: "Pasivo",
       isDefaultExpanded: true,
       children: [
@@ -578,23 +526,11 @@ export const formatProvinciaLocalidad = (data) => {
             },
             {
               id: "31300",
-              label: "Deudas con empresas del grupo y asociadas a largo plazo",
+              label: "Deudas con empresas del grupo a largo plazo",
             },
             {
               id: "31400",
-              label: "Pasivos por impuesto diferido",
-            },
-            {
-              id: "31500",
-              label: "Periodificaciones a largo plazo",
-            },
-            {
-              id: "31600",
-              label: "Acreedores comerciales no corrientes",
-            },
-            {
-              id: "31700",
-              label: "Deuda con características especiales a largo plazo",
+              label: "Otros pasivos a largo plazo",
             },
           ],
         },
@@ -602,11 +538,6 @@ export const formatProvinciaLocalidad = (data) => {
           id: "32000",
           label: "Pasivo corriente",
           children: [
-            {
-              id: "32100",
-              label:
-                "Pasivos vinculados con activos no corrientes mantenidos para la venta",
-            },
             {
               id: "32200",
               label: "Provisiones a corto plazo",
@@ -617,21 +548,17 @@ export const formatProvinciaLocalidad = (data) => {
             },
             {
               id: "32400",
-              label: "Deudas con empresas del grupo y asociadas a corto plazo",
+              label: "Deudas con empresas del grupo a corto plazo",
             },
             {
               id: "32500",
-              label: "Acreedores comerciales y otras cuentas a pagar",
-            },
-            {
-              id: "32600",
-              label: "Periodificaciones a corto plazo",
-            },
-            {
-              id: "32700",
-              label: "Deuda con características especiales a corto plazo",
+              label: "Acreedores comerciales",
             },
           ],
+        },
+        {
+          id: "30000",
+          label: "Total pasivo y patrimonio neto",
         },
       ],
     },
@@ -718,6 +645,26 @@ export const formatProvinciaLocalidad = (data) => {
     {
       id: "42100",
       label: "Otros ingresos y gastos de carácter financiero",
+    },
+    {
+      id: "1",
+      label: "Ingresos de explotación",
+    },
+    {
+      id: "2",
+      label: "Resultado de explotación",
+    },
+    {
+      id: "3",
+      label: "Resultado financiero",
+    },
+    {
+      id: "4",
+      label: "Resultado antes de impuestos",
+    },
+    {
+      id: "5",
+      label: "Resultado del ejercicio",
     },
   ];
   return newData;

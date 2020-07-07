@@ -82,7 +82,7 @@
                         <el-tooltip
                           class="item"
                           effect="dark"
-                          content="Limpiar seleccion"
+                          content="Limpiar selección"
                           placement="top-start"
                         >
                           <el-button
@@ -169,7 +169,7 @@
                         <el-tooltip
                           class="item"
                           effect="dark"
-                          content="Limpiar seleccion"
+                          content="Limpiar selección"
                           placement="top-start"
                         >
                           <el-button
@@ -534,25 +534,29 @@ export default {
     options_anios: [
       [
         {
+          id: 2019,
+          label: 2019,
+        },
+        {
           id: 2018,
           label: 2018,
         },
+      ],
+      [
         {
           id: 2017,
           label: 2017,
         },
-      ],
-      [
         {
           id: 2016,
           label: 2016,
         },
+      ],
+      [
         {
           id: 2015,
           label: 2015,
         },
-      ],
-      [
         {
           id: 2014,
           label: 2014,
@@ -620,7 +624,18 @@ export default {
         const item = this.selected_informacion_financiera[length_selected - 1];
         const _anios =
           this.u_a_c_d || anios.length == 0 ? null : anios.join(",");
-        balance.push(`${_anios}|${item.id}|${monto1}|${monto2}`);
+
+        if (
+          (item.id === "children_activo" || item.id === "children_pasivo") &&
+          item.children
+        ) {
+          for (const _item of item.children) {
+            balance.push(`${_anios}|${_item.id}|${monto1}|${monto2}`);
+          }
+        } else {
+          balance.push(`${_anios}|${item.id}|${monto1}|${monto2}`);
+        }
+
         this.treDisabled = true;
       }
       return balance;
