@@ -4,14 +4,14 @@
       <div class="content_p_select">
         <p class="panel-title roboto white">
           {{ title }}
-          <span
+          <!-- <span
             class="span-info-right"
             v-if="selected_informacion_financiera.length !== 0"
             >({{
               selected_informacion_financiera.length | numeral("0,0")
             }}
             partida(s) seleccionada(s))</span
-          >
+          > -->
         </p>
       </div>
     </div>
@@ -52,10 +52,14 @@
                     name="options"
                     id="options"
                     :multiple="true"
+                    :disabled="treDisabled"
                     :options="options"
                     :always-open="true"
                     :default-expand-level="1"
                     placeholder="Seleccionar"
+                    @input="inputTreeselect"
+                    @select="selectTreeselect"
+                    @deselect="deselectTreeselect"
                     v-model="selected_informacion_financiera"
                   >
                     <label
@@ -71,6 +75,52 @@
                       {{ node.label }}
                     </label>
                   </treeselect>
+                  <div v-if="ifSelectedTal" class="p-10">
+                    <el-card class="box-card" shadow="hover">
+                      <div>
+                        <span>Balance selecionado: </span>
+                        <el-tooltip
+                          class="item"
+                          effect="dark"
+                          content="Limpiar seleccion"
+                          placement="top-start"
+                        >
+                          <el-button
+                            type="danger"
+                            style="float: right;"
+                            icon="el-icon-delete"
+                            circle
+                            @click="resteSelet"
+                          ></el-button>
+                        </el-tooltip>
+                      </div>
+                      <hr />
+                      <div class="text item m-t-10 div-scroll-300">
+                        <b>{{ selected_informacion_financiera[0].label }}</b>
+                        <ul
+                          class="children_list"
+                          v-if="selected_informacion_financiera[0].children"
+                        >
+                          <li
+                            v-for="(item,
+                            key) in selected_informacion_financiera[0].children"
+                            :key="key"
+                          >
+                            <p>{{ item.label }}</p>
+
+                            <ul class="children_list" v-if="item.children">
+                              <li
+                                v-for="(_item, _key) in item.children"
+                                :key="_key"
+                              >
+                                <p>{{ _item.label }}</p>
+                              </li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </div>
+                    </el-card>
+                  </div>
                 </div>
               </div>
             </div>
@@ -92,6 +142,7 @@
                     name="options"
                     id="options"
                     :multiple="true"
+                    :disabled="treDisabled"
                     :options="search.perdidas"
                     :always-open="true"
                     :default-expand-level="1"
@@ -111,6 +162,31 @@
                       {{ node.label }}
                     </label>
                   </treeselect>
+                  <div v-if="ifSelectedTal" class="p-10">
+                    <el-card class="box-card" shadow="hover">
+                      <div>
+                        <span>Partida selecionado: </span>
+                        <el-tooltip
+                          class="item"
+                          effect="dark"
+                          content="Limpiar seleccion"
+                          placement="top-start"
+                        >
+                          <el-button
+                            type="danger"
+                            style="float: right;"
+                            icon="el-icon-delete"
+                            circle
+                            @click="resteSelet"
+                          ></el-button>
+                        </el-tooltip>
+                      </div>
+                      <hr />
+                      <div class="text item m-t-10">
+                        <b>{{ selected_informacion_financiera[0].label }}</b>
+                      </div>
+                    </el-card>
+                  </div>
                 </div>
               </div>
             </div>
@@ -134,7 +210,7 @@
                         type="checkbox"
                         name
                         v-model="selected_anios"
-                        :disabled="u_a_c_d"
+                        @change="changeAnios"
                         :value="_item"
                       />
                       <span class="geekmark"></span>
@@ -167,7 +243,7 @@
                         type="checkbox"
                         :name="`checkbox___cuentas_disponibles__${item.id}`"
                         v-model="selected_anios"
-                        :disabled="u_a_c_d"
+                        @change="changeAnios"
                         :id="`checkbox___cuentas_disponibles__${item.id}`"
                         :value="item"
                         @click="takeIntoAccount(item, $event)"
@@ -289,7 +365,7 @@
       <div class="row">
         <div class="col-md-12">
           <h4>Esta es la información que se envía para aplicar el filtro</h4>
-          <pre>{{ balance }}</pre>
+          <pre>{{ balance() }}</pre>
         </div>
       </div>
       <el-dialog
@@ -374,50 +450,31 @@ export default {
         this.search.informacion_financiera.length !== 0
       );
     },
-    balance() {
-      const balance = [];
-      const anios = [];
-      for (const item of this.selected_anios) {
-        if (item.id !== "todos:true" && item.id !== "todos:false") {
-          anios.push(item.id);
-        } else {
-          balance.push(item.id);
-        }
-      }
-      const monto1 =
-        `${this.monto1}`.length === 0 || this.todas_las_empresas
-          ? null
-          : this.monto1;
-      const monto2 =
-        `${this.monto2}`.length === 0 || this.todas_las_empresas
-          ? null
-          : this.monto2;
-
-      for (const item of this.selected_informacion_financiera) {
-        const _anios =
-          this.u_a_c_d || anios.length == 0 ? null : anios.join(",");
-        balance.push(`${_anios}|${item.id}|${monto1}|${monto2}`);
-      }
-
-      return balance;
-    },
     classAniosCheckboxs() {
-      return this.u_a_c_d ? "anios_checkboxs disabled" : "anios_checkboxs";
+      return this.u_a_c_d ? "anios_checkboxs" : "anios_checkboxs";
     },
     showBrnApplied() {
       return (
-        (this.balance.length !== 0 && !this.areApplied) ||
-        (this.balance.length !== 0 && !this.compareWithNewtoApply)
+        (this.balance().length !== 0 && !this.areApplied) ||
+        (this.balance().length !== 0 && !this.compareWithNewtoApply)
       );
     },
     compareWithNewtoApply: function() {
       let stg = this.balance_string;
-      let obj = JSON.stringify(this.balance);
+      let obj = JSON.stringify(this.balance());
       return stg === obj;
+    },
+    ifSelectedTal() {
+      return (
+        this.treDisabled &&
+        this.selected_informacion_financiera &&
+        this.selected_informacion_financiera.length >= 1
+      );
     },
   },
   data: () => ({
     title: "Información Financiera",
+    treDisabled: false,
     modo: "balance",
     modos: [
       {
@@ -446,7 +503,7 @@ export default {
       label: "Miles de euros",
     },
     todas_las_empresas: false,
-    u_a_c_d: false,
+    u_a_c_d: true,
     unidades: [
       {
         id: 1,
@@ -484,37 +541,21 @@ export default {
           id: 2017,
           label: 2017,
         },
+      ],
+      [
         {
           id: 2016,
           label: 2016,
         },
-      ],
-      [
         {
           id: 2015,
           label: 2015,
         },
-        {
-          id: 2014,
-          label: 2014,
-        },
-        {
-          id: 2013,
-          label: 2013,
-        },
       ],
       [
         {
-          id: 2012,
-          label: 2012,
-        },
-        {
-          id: 2011,
-          label: 2011,
-        },
-        {
-          id: 2010,
-          label: 2010,
+          id: 2014,
+          label: 2014,
         },
       ],
     ],
@@ -550,8 +591,47 @@ export default {
     this.monto1 = setMin(this.selected_unidad);
   },
   methods: {
+    balance() {
+      const balance = [];
+      const anios = [];
+      let monto1 =
+        `${this.monto1}`.length === 0 || this.todas_las_empresas
+          ? null
+          : this.monto1;
+      let monto2 =
+        `${this.monto2}`.length === 0 || this.todas_las_empresas
+          ? null
+          : this.monto2;
+
+      const length_selected = this.selected_informacion_financiera.length;
+
+      if (length_selected !== 0) {
+        for (const item of this.selected_anios) {
+          if (item.id !== "todos:true" && item.id !== "todos:false") {
+            anios.push(item.id);
+          } else {
+            balance.push(item.id);
+          }
+        }
+
+        monto1 = this.monto1 * this.selected_unidad.id;
+        monto2 = this.monto2 * this.selected_unidad.id;
+
+        const item = this.selected_informacion_financiera[length_selected - 1];
+        const _anios =
+          this.u_a_c_d || anios.length == 0 ? null : anios.join(",");
+        balance.push(`${_anios}|${item.id}|${monto1}|${monto2}`);
+        this.treDisabled = true;
+      }
+      return balance;
+    },
+    resteSelet() {
+      this.selected_informacion_financiera = [];
+      this.treDisabled = false;
+    },
     apply() {
-      if (this.balance && this.balance.length !== 0) {
+      const _balance = this.balance();
+      if (_balance && _balance.length !== 0) {
         this.hideModal();
         this.loadingFrm = true;
         this.formatearDataPOST();
@@ -567,14 +647,14 @@ export default {
             this.updateNumberSelectedCompanies(response.cantidad);
             this.$store.dispatch("filters/addFilters", {
               name: this.title,
-              quantity: this.balance.length,
+              quantity: _balance.length,
               cantidades: response,
-              items: this.balance,
+              items: _balance,
             });
             this.areApplied = true;
             this.reapply = false;
             this.loadingFrm = false;
-            this.balance_string = JSON.stringify(this.balance);
+            this.balance_string = JSON.stringify(_balance);
             sendEvent(`filtro-aplicado`, this.title);
           })
           .catch(() => {
@@ -678,15 +758,12 @@ export default {
     setModo(idModo) {
       this.modo = idModo;
       this.selected_informacion_financiera = [];
+      this.treDisabled = false;
     },
     fetchSearch() {},
     inputTreeselect() {},
-    selectTreeselect() {
-      //this.seeSeals(item, true);
-    },
-    deselectTreeselect() {
-      //this.seeSeals(item, false);
-    },
+    selectTreeselect() {},
+    deselectTreeselect() {},
     takeIntoAccount(item, event = null) {
       if (item.id === "todos:true") {
         this.selected_anios = this.selected_anios.filter(
@@ -731,7 +808,8 @@ export default {
     formatearDataPOST() {
       this.form.balance = [];
       this.form.perdidas = [];
-      this.balance.forEach((item) => {
+      const _balance = this.balance();
+      _balance.forEach((item) => {
         if (this.modo === "balance") {
           this.form.balance.push(item);
         } else if (this.modo === "perdidas") {
@@ -744,6 +822,13 @@ export default {
       this.$store.dispatch("filters/updateNumberSelectedCompanies", {
         quantity,
       });
+    },
+    changeAnios() {
+      if (this.selected_anios && this.selected_anios.length > 0) {
+        this.u_a_c_d = false;
+      } else {
+        this.u_a_c_d = true;
+      }
     },
   },
 };
@@ -825,5 +910,11 @@ label.custon-checkboxs {
 }
 .nav-tabs {
   border-bottom: none !important;
+}
+.children_list {
+  margin-left: 30px;
+  li {
+    list-style: circle;
+  }
 }
 </style>

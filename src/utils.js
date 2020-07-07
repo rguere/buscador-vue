@@ -404,7 +404,7 @@ export const formatProvinciaLocalidad = (data) => {
       children: [
         {
           id: "11000",
-          label: "ACTIVO NO CORRIENTE",
+          label: "Activo no corriente",
           isDefaultExpanded: true,
           children: [
             {
@@ -440,7 +440,7 @@ export const formatProvinciaLocalidad = (data) => {
         },
         {
           id: "12000",
-          label: "ACTIVO CORRIENTE",
+          label: "Activo corriente",
           isDefaultExpanded: true,
           children: [
             {
@@ -559,7 +559,7 @@ export const formatProvinciaLocalidad = (data) => {
       children: [
         {
           id: "31000",
-          label: "PASIVO NO CORRIENTE",
+          label: "Pasivo no corriente",
           children: [
             {
               id: "31100",
@@ -593,7 +593,7 @@ export const formatProvinciaLocalidad = (data) => {
         },
         {
           id: "32000",
-          label: "PASIVO CORRIENTE",
+          label: "Pasivo corriente",
           children: [
             {
               id: "32100",
