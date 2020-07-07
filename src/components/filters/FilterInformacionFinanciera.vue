@@ -621,6 +621,9 @@ export default {
         monto1 = this.monto1 * this.selected_unidad.id;
         monto2 = this.monto2 * this.selected_unidad.id;
 
+        monto1 = monto1 === 0 ? null : monto1;
+        monto2 = monto2 === 0 ? null : monto2;
+
         const item = this.selected_informacion_financiera[length_selected - 1];
         const _anios =
           this.u_a_c_d || anios.length == 0 ? null : anios.join(",");
