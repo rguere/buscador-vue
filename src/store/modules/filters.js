@@ -100,6 +100,7 @@ const initialState = () => {
         items: [],
         quantity: 0,
         key: "balance",
+        _key: "perdidas",
         disabled: false,
       },
       {

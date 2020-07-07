@@ -167,6 +167,13 @@ export const beforeOrderFilters = (filters, applied_filters, form, title) => {
         if (before_form[item.key].length !== 0) {
           arr[item.key] = before_form[item.key];
         }
+        if (
+          item._key &&
+          before_form[item._key] &&
+          before_form[item._key].length !== 0
+        ) {
+          arr[item._key] = before_form[item._key];
+        }
       }
       let aux = { ...arr };
       if (Object.keys(aux).length !== 0) {

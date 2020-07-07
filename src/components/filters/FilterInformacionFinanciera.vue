@@ -697,6 +697,9 @@ export default {
       return this.modo === tap ? "tab-pane fade in active" : "tab-pane fade";
     },
     clean() {
+      this.form.balance = [];
+      this.form.perdidas = [];
+      this.treDisabled = false;
       this.loadingFrm = false;
       this.modalVisible = false;
       this.areApplied = false;
@@ -710,7 +713,7 @@ export default {
       };
       this.monto1 = setMin(this.selected_unidad);
       this.todas_las_empresas = false;
-      this.u_a_c_d = false;
+      this.u_a_c_d = true;
 
       if (this.applied_filters.length > 1) {
         let beforeForm = beforeOrderFilters(
@@ -732,6 +735,9 @@ export default {
       sendEvent("filtro-limpiado", this.title);
     },
     emptyFilter() {
+      this.form.balance = [];
+      this.form.perdidas = [];
+      this.treDisabled = false;
       this.loadingFrm = false;
       this.modalVisible = false;
       this.areApplied = false;
@@ -745,7 +751,7 @@ export default {
         label: "Miles de euros",
       };
       this.todas_las_empresas = false;
-      this.u_a_c_d = false;
+      this.u_a_c_d = true;
       this.updateNumberSelectedCompanies(0);
       this.$store.dispatch("filters/removeFilters", this.title);
     },
