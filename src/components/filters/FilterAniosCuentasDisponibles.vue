@@ -14,12 +14,7 @@
         <div class="grid-2-columns-1fr">
           <div>
             <div class="grid-3-columns-1fr rows-auto-flow">
-              <div
-                v-for="(item, key) in filterAvailableAccounts(
-                  search.cuentas_disponibles
-                )"
-                :key="key"
-              >
+              <div v-for="(item, key) in search.cuentas_disponibles" :key="key">
                 <label
                   class="custon-checkboxs"
                   v-if="item.label !== 'incluir_null'"
@@ -177,9 +172,7 @@
                           v-if="hayCuentasDisponibles"
                         >
                           <div
-                            v-for="(item, key) in filterAvailableAccounts(
-                              search.cuentas_disponibles
-                            )"
+                            v-for="(item, key) in search.cuentas_disponibles"
                             :key="key"
                             class="checkbox"
                           >
@@ -494,31 +487,6 @@ export default {
     });
   },
   methods: {
-    filterAvailableAccounts(availableAccounts) {
-      const validos = [
-        "2014",
-        "2015",
-        "2016",
-        "2017",
-        "2018",
-        "2019",
-        "incluir_null",
-      ];
-      const data_value = {
-        "2014": 1037797,
-        "2015": 1048359,
-        "2016": 1042719,
-        "2017": 1008022,
-        "2018": 930712,
-        "2019": 17572,
-      };
-      return availableAccounts.filter((item) => {
-        if (validos.includes(item.id)) {
-          item.data = data_value[item.id];
-          return item;
-        }
-      });
-    },
     fetchSearch() {},
     showModal() {
       sendPageView(

@@ -357,6 +357,23 @@ export const showColumnsSummary = (newColumns) => {
 
 export const formatProvinciaLocalidad = (data) => {
   let newData = {};
+  const validos = [
+    "2014",
+    "2015",
+    "2016",
+    "2017",
+    "2018",
+    "2019",
+    "incluir_null",
+  ];
+  const data_value = {
+    "2014": 1037797,
+    "2015": 1048359,
+    "2016": 1042719,
+    "2017": 1008022,
+    "2018": 930712,
+    "2019": 17572,
+  };
   for (const key in data) {
     if (data.hasOwnProperty(key)) {
       const element = data[key];
@@ -401,6 +418,22 @@ export const formatProvinciaLocalidad = (data) => {
       } else if (key === "cargos" && Array.isArray(element)) {
         element.map((item) => {
           item.label = capitalize(item.label);
+          return item;
+        });
+      } else if (key === "cuentas_disponibles" && Array.isArray(element)) {
+        element.filter((item) => {
+          if (validos.includes(item.id)) {
+            item.data = data_value[item.id];
+            return item;
+          }
+        });
+      } else if (key === "tipo_cuentas" && Array.isArray(element)) {
+        element.filter((item) => {
+          if (item.id === "1") {
+            item.data = 2053474;
+          } else if (item.id === "5") {
+            item.data = 6844;
+          }
           return item;
         });
       }
