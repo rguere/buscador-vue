@@ -35,6 +35,9 @@ export const removeDuplicates = (originalArray, prop) => {
   return newArray;
 };
 
+export const removeDuplicateItem = (items) =>
+  items.filter((v, i) => items.indexOf(v) === i);
+
 /**
  * [inArrayObject description]
  * @param  {[type]} array  [description]

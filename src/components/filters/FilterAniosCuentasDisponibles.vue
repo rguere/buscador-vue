@@ -101,7 +101,7 @@
               <i class="fa fa-undo"></i>
             </button>
           </div>
-          <div>
+          <div v-if="selected_cuentas_disponibles.length !== 0">
             <div class="float-right">
               <label class="custon-checkboxs" style="color: #333333c9;">
                 <input type="checkbox" name="5MM" disabled checked />
@@ -233,7 +233,10 @@
                         </div>
                       </div>
                       <div class="col-md-12">
-                        <div class="float-right">
+                        <div
+                          class="float-right"
+                          v-if="selected_cuentas_disponibles.length !== 0"
+                        >
                           <label
                             class="custon-checkboxs"
                             style="color: #333333c9;"

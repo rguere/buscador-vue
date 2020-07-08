@@ -367,6 +367,13 @@
           <h4>Esta es la información que se envía para aplicar el filtro</h4>
           <pre>{{ balance() }}</pre>
         </div>
+        <hr />
+        <div class="col-md-12">
+          <h3>Combinaciones ya cargadas</h3>
+          <pre>
+            {{ selectBalance }}
+          </pre>
+        </div>
       </div>
       <el-dialog
         :visible.sync="modalVisible"
@@ -424,6 +431,7 @@ import {
   beforeOrderFilters,
   sendEvent,
   removeDuplicates,
+  removeDuplicateItem,
   sendPageView,
 } from "./../../utils";
 
@@ -475,6 +483,7 @@ export default {
   data: () => ({
     title: "Información Financiera",
     treDisabled: false,
+    selectBalance: [],
     modo: "balance",
     modos: [
       {
@@ -596,7 +605,7 @@ export default {
   },
   methods: {
     balance() {
-      const balance = [];
+      let balance = [];
       const anios = [];
       let monto1 =
         `${this.monto1}`.length === 0 || this.todas_las_empresas
@@ -639,6 +648,10 @@ export default {
           balance.push(`${_anios}|${item.id}|${monto1}|${monto2}`);
         }
 
+        balance = balance.concat(this.selectBalance);
+
+        balance = removeDuplicateItem(balance);
+
         this.treDisabled = true;
       }
       return balance;
@@ -669,9 +682,13 @@ export default {
               cantidades: response,
               items: _balance,
             });
+            this.selectBalance = this.selectBalance.concat(_balance);
+            this.selectBalance = removeDuplicateItem(this.selectBalance);
             this.areApplied = true;
             this.reapply = false;
             this.loadingFrm = false;
+            this.treDisabled = false;
+            this.selected_informacion_financiera = [];
             this.balance_string = JSON.stringify(_balance);
             sendEvent(`filtro-aplicado`, this.title);
           })
@@ -717,6 +734,7 @@ export default {
     clean() {
       this.form.balance = [];
       this.form.perdidas = [];
+      this.selectBalance = [];
       this.treDisabled = false;
       this.loadingFrm = false;
       this.modalVisible = false;
@@ -755,6 +773,7 @@ export default {
     emptyFilter() {
       this.form.balance = [];
       this.form.perdidas = [];
+      this.selectBalance = [];
       this.treDisabled = false;
       this.loadingFrm = false;
       this.modalVisible = false;
