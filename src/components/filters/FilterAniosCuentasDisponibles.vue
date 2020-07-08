@@ -3,23 +3,14 @@
     <div class="panel-heading">
       <p class="panel-title roboto white">
         {{ title }}
-        <span
-          class="span-info-right"
-          v-if="
-            selected_cuentas_disponibles.length !== 0 &&
-              selected_cuentas_disponibles.length < 2
-          "
+        <span class="span-info-right" v-if="mas2CuentasDisponibles"
           >({{ selected_by_cuentas_disponibles | numeral("0,0") }} empresas
           seleccionadas)</span
         >
       </p>
     </div>
     <div class="panel-body">
-      <div
-        v-if="
-          search.cuentas_disponibles && search.cuentas_disponibles.length !== 0
-        "
-      >
+      <div v-if="hayCuentasDisponibles">
         <div class="grid-2-columns-1fr">
           <div>
             <div class="grid-3-columns-1fr rows-auto-flow">
@@ -79,11 +70,7 @@
             <button
               type="button"
               class="btn btn-success"
-              v-if="
-                (selected_cuentas_disponibles.length !== 0 && !areApplied) ||
-                  (selected_cuentas_disponibles.length !== 0 &&
-                    !compareWithNewtoApply)
-              "
+              v-if="showAplicar"
               @click="apply"
             >
               Aplicar
@@ -153,12 +140,7 @@
                 <button
                   type="button"
                   class="btn btn-success"
-                  v-if="
-                    (selected_cuentas_disponibles.length !== 0 &&
-                      !areApplied) ||
-                      (selected_cuentas_disponibles.length !== 0 &&
-                        !compareWithNewtoApply)
-                  "
+                  v-if="showAplicar"
                   @click="apply"
                 >
                   Aplicar
@@ -179,13 +161,7 @@
                 </button>
               </div>
             </div>
-            <div
-              class="row"
-              v-if="
-                search.cuentas_disponibles &&
-                  search.cuentas_disponibles.length !== 0
-              "
-            >
+            <div class="row" v-if="hayCuentasDisponibles">
               <div class="col-md-6">
                 <div class="panel panel-default cd">
                   <div class="panel-heading">
@@ -198,7 +174,7 @@
                       <div class="col-md-12">
                         <div
                           class="div-scroll-300"
-                          v-if="search.cuentas_disponibles.length !== 0"
+                          v-if="hayCuentasDisponibles"
                         >
                           <div
                             v-for="(item, key) in filterAvailableAccounts(
@@ -431,6 +407,25 @@ export default {
       let obj = JSON.stringify(this.selected_cuentas_disponibles);
       return stg === obj;
     },
+    mas2CuentasDisponibles() {
+      return (
+        this.selected_cuentas_disponibles.length !== 0 &&
+        this.selected_cuentas_disponibles.length < 2
+      );
+    },
+    hayCuentasDisponibles() {
+      return (
+        this.search.cuentas_disponibles &&
+        this.search.cuentas_disponibles.length !== 0
+      );
+    },
+    showAplicar() {
+      return (
+        (this.selected_cuentas_disponibles.length !== 0 && !this.areApplied) ||
+        (this.selected_cuentas_disponibles.length !== 0 &&
+          !this.compareWithNewtoApply)
+      );
+    },
   },
   data: () => ({
     title: "Años con cuentas disponibles",
@@ -500,7 +495,7 @@ export default {
   },
   methods: {
     filterAvailableAccounts(availableAccounts) {
-      let validos = [
+      const validos = [
         "2014",
         "2015",
         "2016",
@@ -509,8 +504,17 @@ export default {
         "2019",
         "incluir_null",
       ];
+      const data_value = {
+        "2014": 1037797,
+        "2015": 1048359,
+        "2016": 1042719,
+        "2017": 1008022,
+        "2018": 930712,
+        "2019": 17572,
+      };
       return availableAccounts.filter((item) => {
         if (validos.includes(item.id)) {
+          item.data = data_value[item.id];
           return item;
         }
       });
