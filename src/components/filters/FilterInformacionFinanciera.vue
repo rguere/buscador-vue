@@ -4,14 +4,6 @@
       <div class="content_p_select">
         <p class="panel-title roboto white">
           {{ title }}
-          <!-- <span
-            class="span-info-right"
-            v-if="selected_informacion_financiera.length !== 0"
-            >({{
-              selected_informacion_financiera.length | numeral("0,0")
-            }}
-            partida(s) seleccionada(s))</span
-          > -->
         </p>
       </div>
     </div>
@@ -370,9 +362,7 @@
         <hr />
         <div class="col-md-12">
           <h3>Combinaciones ya cargadas</h3>
-          <pre>
-            {{ selectBalance }}
-          </pre>
+          <pre>{{ items_IF }}</pre>
         </div>
       </div>
       <el-dialog
@@ -433,6 +423,7 @@ import {
   removeDuplicates,
   removeDuplicateItem,
   sendPageView,
+  inArrayObjectTreeselect,
 } from "./../../utils";
 
 const setMin = (item) => {
@@ -484,6 +475,7 @@ export default {
     title: "Información Financiera",
     treDisabled: false,
     selectBalance: [],
+    items_IF: [],
     modo: "balance",
     modos: [
       {
@@ -676,14 +668,21 @@ export default {
           .dispatch("search/filtrar", beforeForm)
           .then((response) => {
             this.updateNumberSelectedCompanies(response.cantidad);
+            this.selectBalance = this.selectBalance.concat(_balance);
+            this.selectBalance = removeDuplicateItem(this.selectBalance);
+            this.items_IF = [];
+            for (const item of this.selectBalance) {
+              const result_item = this.getItemApplied(item);
+              if (result_item) {
+                this.items_IF.push(result_item);
+              }
+            }
             this.$store.dispatch("filters/addFilters", {
               name: this.title,
               quantity: _balance.length,
               cantidades: response,
-              items: _balance,
+              items: this.items_IF,
             });
-            this.selectBalance = this.selectBalance.concat(_balance);
-            this.selectBalance = removeDuplicateItem(this.selectBalance);
             this.areApplied = true;
             this.reapply = false;
             this.loadingFrm = false;
@@ -735,6 +734,7 @@ export default {
       this.form.balance = [];
       this.form.perdidas = [];
       this.selectBalance = [];
+      this.items_IF = [];
       this.treDisabled = false;
       this.loadingFrm = false;
       this.modalVisible = false;
@@ -774,6 +774,7 @@ export default {
       this.form.balance = [];
       this.form.perdidas = [];
       this.selectBalance = [];
+      this.items_IF = [];
       this.treDisabled = false;
       this.loadingFrm = false;
       this.modalVisible = false;
@@ -872,6 +873,43 @@ export default {
       } else {
         this.u_a_c_d = true;
       }
+    },
+    getItemApplied(item) {
+      let result = null;
+      const item_split = item.split("|");
+      if (item_split && item_split.length === 4) {
+        const item_id = item_split[1];
+        if (
+          this.search &&
+          this.search.informacion_financiera &&
+          this.search.informacion_financiera.length !== 0 &&
+          this.search.perdidas &&
+          this.search.perdidas.length !== 0
+        ) {
+          result = inArrayObjectTreeselect(
+            this.search.informacion_financiera,
+            item_id,
+            "id"
+          );
+          if (!result) {
+            result = inArrayObjectTreeselect(
+              this.search.perdidas,
+              item_id,
+              "id"
+            );
+          }
+        }
+        if (result) {
+          result.anios =
+            item_split[0] !== "null"
+              ? `Año(s) ${item_split[0]}`
+              : "Último año con cuentas disponibles";
+          result.rango = `Rango ${
+            item_split[2] !== "null" ? item_split[2] : 0
+          } - ${item_split[3] !== "null" ? item_split[3] : 0}`;
+        }
+      }
+      return result;
     },
   },
 };
