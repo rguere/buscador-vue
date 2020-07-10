@@ -354,15 +354,37 @@
         </div>
         <p class="text-help">* Puedes elegir más de una opción</p>
       </div>
-      <div class="row">
+      <!-- <div class="row">
         <div class="col-md-12">
           <h4>Esta es la información que se envía para aplicar el filtro</h4>
           <pre>{{ balance() }}</pre>
         </div>
-        <hr />
+      </div> -->
+      <div class="row" v-if="items_IF && items_IF.length > 0">
         <div class="col-md-12">
-          <h3>Combinaciones ya cargadas</h3>
-          <pre>{{ items_IF }}</pre>
+          <br />
+          <el-collapse v-model="collapseResumen">
+            <el-collapse-item
+              title="Resumen de combinaciones ya cargadas"
+              name="1"
+            >
+              <div class="div-scroll-200 ul_selected_cnae">
+                <el-card
+                  shadow="hover"
+                  v-for="(item, key) in items_IF"
+                  :key="key"
+                >
+                  <div>
+                    <p class="name-checkbox">
+                      <b>{{ item.label }}</b>
+                    </p>
+                    <p v-if="item.anios">{{ item.anios }}</p>
+                    <p v-if="item.rango">{{ item.rango }}</p>
+                  </div>
+                </el-card>
+              </div>
+            </el-collapse-item>
+          </el-collapse>
         </div>
       </div>
       <el-dialog
@@ -476,6 +498,7 @@ export default {
     treDisabled: false,
     selectBalance: [],
     items_IF: [],
+    collapseResumen: [],
     modo: "balance",
     modos: [
       {
