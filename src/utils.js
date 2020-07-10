@@ -430,9 +430,9 @@ export const formatProvinciaLocalidad = (data) => {
       } else if (key === "tipo_cuentas" && Array.isArray(element)) {
         element.filter((item) => {
           if (item.id === "1") {
-            item.data = 2053474;
+            item.data = 10224414;
           } else if (item.id === "5") {
-            item.data = 6844;
+            item.data = 32995;
           }
           return item;
         });
