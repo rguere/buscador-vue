@@ -448,153 +448,167 @@ export const formatProvinciaLocalidad = (data) => {
         {
           id: "11000",
           label: "Activo no corriente",
-          isDefaultExpanded: true,
-          children: [
-            {
-              id: "11100",
-              label: "Inmovilizado intangible",
-            },
-            {
-              id: "11200",
-              label: "Inmovilizado material",
-            },
-            {
-              id: "11300",
-              label: "Inversiones inmobiliarias",
-            },
-            {
-              id: "11400",
-              label: "Inversiones en empresas del grupo a largo plazo",
-            },
-            {
-              id: "11500",
-              label: "Inversiones financieras a largo plazo",
-            },
-            {
-              id: "11600",
-              label: "Otros activos a largo plazo",
-            },
-          ],
+          special: true,
+        },
+        {
+          id: "11100",
+          label: "Inmovilizado intangible",
+          special: false,
+        },
+        {
+          id: "11200",
+          label: "Inmovilizado material",
+          special: false,
+        },
+        {
+          id: "11300",
+          label: "Inversiones inmobiliarias",
+          special: false,
+        },
+        {
+          id: "11400",
+          label: "Inversiones en empresas del grupo a largo plazo",
+          special: false,
+        },
+        {
+          id: "11500",
+          label: "Inversiones financieras a largo plazo",
+          special: false,
+        },
+        {
+          id: "11600",
+          label: "Otros activos a largo plazo",
         },
         {
           id: "12000",
           label: "Activo corriente",
-          isDefaultExpanded: true,
-          children: [
-            {
-              id: "12200",
-              label: "Existencias",
-            },
-            {
-              id: "12300",
-              label: "Deudores comerciales",
-            },
-            {
-              id: "12400",
-              label: "Inversiones en empresas del grupo a corto plazo",
-            },
-            {
-              id: "12500",
-              label: "Inversiones financieras a corto plazo",
-            },
-            {
-              id: "12600",
-              label: "Otros activos a corto plazo",
-            },
-            {
-              id: "12700",
-              label: "Efectivo y activos líquidos equivalentes",
-            },
-          ],
+          special: true,
+        },
+        {
+          id: "12200",
+          label: "Existencias",
+          special: false,
+        },
+        {
+          id: "12300",
+          label: "Deudores comerciales",
+          special: false,
+        },
+        {
+          id: "12400",
+          label: "Inversiones en empresas del grupo a corto plazo",
+          special: false,
+        },
+        {
+          id: "12500",
+          label: "Inversiones financieras a corto plazo",
+          special: false,
+        },
+        {
+          id: "12600",
+          label: "Otros activos a corto plazo",
+          special: false,
+        },
+        {
+          id: "12700",
+          label: "Efectivo y activos líquidos equivalentes",
+          special: false,
         },
         {
           id: "10000",
           label: "Total activo",
-          isDefaultExpanded: false,
-        },
-      ],
-    },
-    {
-      id: "20000",
-      label: "Patrimonio Neto",
-      isDefaultExpanded: true,
-      children: [
-        {
-          id: "21000",
-          label: "Fondos propios",
-          children: [
-            {
-              id: "21100",
-              label: "Capital",
-            },
-            {
-              id: "21300",
-              label: "Reservas",
-            },
-            {
-              id: "21700",
-              label: "Resultado del ejercicio",
-            },
-          ],
-        },
-        {
-          id: "23000",
-          label: "Subvenciones y donaciones",
+          special: true,
         },
       ],
     },
     {
       id: "children_pasivo",
-      label: "Pasivo",
-      isDefaultExpanded: true,
+      label: "Pasivo y Patrimonio Neto",
       children: [
+        {
+          id: "20000",
+          label: "Patrimonio Neto",
+          special: true,
+        },
+        {
+          id: "21000",
+          label: "Fondos propios",
+          special: false,
+        },
+        {
+          id: "21100",
+          label: "Capital",
+          special: false,
+        },
+        {
+          id: "21300",
+          label: "Reservas",
+          special: false,
+        },
+        {
+          id: "21700",
+          label: "Resultado del ejercicio",
+          special: false,
+        },
+        {
+          id: "23000",
+          label: "Subvenciones y donaciones",
+          special: false,
+        },
         {
           id: "31000",
           label: "Pasivo no corriente",
-          children: [
-            {
-              id: "31100",
-              label: "Provisiones a largo plazo",
-            },
-            {
-              id: "31200",
-              label: "Deudas a largo plazo",
-            },
-            {
-              id: "31300",
-              label: "Deudas con empresas del grupo a largo plazo",
-            },
-            {
-              id: "31400",
-              label: "Otros pasivos a largo plazo",
-            },
-          ],
+          special: true,
+        },
+        {
+          id: "31100",
+          label: "Provisiones a largo plazo",
+          special: false,
+        },
+        {
+          id: "31200",
+          label: "Deudas a largo plazo",
+          special: false,
+        },
+        {
+          id: "31300",
+          label: "Deudas con empresas del grupo a largo plazo",
+          special: false,
+        },
+        {
+          id: "31400",
+          label: "Otros pasivos a largo plazo",
+          special: false,
         },
         {
           id: "32000",
           label: "Pasivo corriente",
-          children: [
-            {
-              id: "32200",
-              label: "Provisiones a corto plazo",
-            },
-            {
-              id: "32300",
-              label: "Deudas a corto plazo",
-            },
-            {
-              id: "32400",
-              label: "Deudas con empresas del grupo a corto plazo",
-            },
-            {
-              id: "32500",
-              label: "Acreedores comerciales",
-            },
-          ],
+          special: true,
+        },
+        {
+          id: "32200",
+          label: "Provisiones a corto plazo",
+          special: false,
+        },
+        {
+          id: "32300",
+          label: "Deudas a corto plazo",
+          special: false,
+        },
+        {
+          id: "32400",
+          label: "Deudas con empresas del grupo a corto plazo",
+          special: false,
+        },
+        {
+          id: "32500",
+          label: "Acreedores comerciales",
+          special: false,
         },
         {
           id: "30000",
           label: "Total pasivo y patrimonio neto",
+          special: true,
         },
       ],
     },

@@ -39,7 +39,7 @@
                   class="treeselect_informacion_financiera"
                   v-if="showSearch"
                 >
-                  <treeselect
+                  <!-- <treeselect
                     valueFormat="object"
                     name="options"
                     id="options"
@@ -66,7 +66,33 @@
                     >
                       {{ node.label }}
                     </label>
-                  </treeselect>
+                  </treeselect> -->
+                  <el-tabs type="border-card">
+                    <el-tab-pane v-for="item in options" :key="item.id">
+                      <span slot="label">
+                        {{ item.label }}
+                      </span>
+                      <div>
+                        <el-select
+                          value-key="id"
+                          v-model="valueSelect"
+                          filterable
+                          placeholder="Seleccione"
+                        >
+                          <el-option
+                            v-for="_item in item.children"
+                            :key="_item.id"
+                            :label="_item.label"
+                            :value="_item"
+                            :class="_item.special ? 'special' : ''"
+                          >
+                            <span>{{ _item.label }}</span>
+                          </el-option>
+                        </el-select>
+                      </div>
+                    </el-tab-pane>
+                  </el-tabs>
+
                   <div v-if="ifSelectedTal" class="p-10">
                     <el-card class="box-card" shadow="hover">
                       <div>
@@ -88,14 +114,10 @@
                       </div>
                       <hr />
                       <div class="text item m-t-10 div-scroll-300">
-                        <b>{{ selected_informacion_financiera[0].label }}</b>
-                        <ul
-                          class="children_list"
-                          v-if="selected_informacion_financiera[0].children"
-                        >
+                        <b>{{ valueSelect.label }}</b>
+                        <ul class="children_list" v-if="valueSelect.children">
                           <li
-                            v-for="(item,
-                            key) in selected_informacion_financiera[0].children"
+                            v-for="(item, key) in valueSelect.children"
                             :key="key"
                           >
                             <p>{{ item.label }}</p>
@@ -129,31 +151,20 @@
                   class="treeselect_informacion_financiera"
                   v-if="showSearch"
                 >
-                  <treeselect
-                    valueFormat="object"
-                    name="options"
-                    id="options"
-                    :multiple="true"
-                    :disabled="treDisabled"
-                    :options="search.perdidas"
-                    :always-open="true"
-                    :default-expand-level="1"
-                    placeholder="Seleccionar"
-                    v-model="selected_informacion_financiera"
+                  <el-select
+                    value-key="id"
+                    v-model="valueSelect"
+                    filterable
+                    placeholder="Seleccione"
                   >
-                    <label
-                      slot="option-label"
-                      slot-scope="{
-                        node,
-                        shouldShowCount,
-                        count,
-                        labelClassName,
-                      }"
-                      :class="labelClassName"
+                    <el-option
+                      v-for="item in search.perdidas"
+                      :key="item.id"
+                      :label="item.label"
+                      :value="item"
                     >
-                      {{ node.label }}
-                    </label>
-                  </treeselect>
+                    </el-option>
+                  </el-select>
                   <div v-if="ifSelectedTal" class="p-10">
                     <el-card class="box-card" shadow="hover">
                       <div>
@@ -175,7 +186,7 @@
                       </div>
                       <hr />
                       <div class="text item m-t-10">
-                        <b>{{ selected_informacion_financiera[0].label }}</b>
+                        <b>{{ valueSelect.label }}</b>
                       </div>
                     </el-card>
                   </div>
@@ -428,379 +439,8 @@
             </div>
           </div>
           <div class="conten-flex-70-30">
-            <div>
-              <div class="row">
-                <div class="col-md-6">
-                  <ul class="nav nav-tabs">
-                    <li
-                      v-for="(item, key) in modos"
-                      :key="key"
-                      :class="modo === item.id ? 'active' : ''"
-                    >
-                      <a
-                        data-toggle="tab"
-                        @click="setModo(item.id)"
-                        class="text-white"
-                        href="#"
-                        >{{ item.label }}</a
-                      >
-                    </li>
-                  </ul>
-                  <div class="tab-content m-t-10">
-                    <div :class="tabPaneClass('balance')">
-                      <div class="panel panel-default cd">
-                        <div class="panel-heading">
-                          <p class="panel-title roboto white">
-                            Seleccione la partida de balance que desee agregar a
-                            su estrategia de búsqueda
-                          </p>
-                        </div>
-                        <div
-                          style="height: 430px;"
-                          class="treeselect_informacion_financiera"
-                          v-if="showSearch"
-                        >
-                          <treeselect
-                            valueFormat="object"
-                            name="options"
-                            id="options"
-                            :multiple="true"
-                            :disabled="treDisabled"
-                            :options="options"
-                            :always-open="true"
-                            :default-expand-level="1"
-                            placeholder="Seleccionar"
-                            @input="inputTreeselect"
-                            @select="selectTreeselect"
-                            @deselect="deselectTreeselect"
-                            v-model="selected_informacion_financiera"
-                          >
-                            <label
-                              slot="option-label"
-                              slot-scope="{
-                                node,
-                                shouldShowCount,
-                                count,
-                                labelClassName,
-                              }"
-                              :class="labelClassName"
-                            >
-                              {{ node.label }}
-                            </label>
-                          </treeselect>
-                          <div v-if="ifSelectedTal" class="p-10">
-                            <el-card class="box-card" shadow="hover">
-                              <div>
-                                <span>Balance selecionado: </span>
-                                <el-tooltip
-                                  class="item"
-                                  effect="dark"
-                                  content="Limpiar selección"
-                                  placement="top-start"
-                                >
-                                  <el-button
-                                    type="danger"
-                                    style="float: right;"
-                                    icon="el-icon-delete"
-                                    circle
-                                    @click="resteSelet"
-                                  ></el-button>
-                                </el-tooltip>
-                              </div>
-                              <hr />
-                              <div class="text item m-t-10 div-scroll-300">
-                                <b>{{
-                                  selected_informacion_financiera[0].label
-                                }}</b>
-                                <ul
-                                  class="children_list"
-                                  v-if="
-                                    selected_informacion_financiera[0].children
-                                  "
-                                >
-                                  <li
-                                    v-for="(item,
-                                    key) in selected_informacion_financiera[0]
-                                      .children"
-                                    :key="key"
-                                  >
-                                    <p>{{ item.label }}</p>
-
-                                    <ul
-                                      class="children_list"
-                                      v-if="item.children"
-                                    >
-                                      <li
-                                        v-for="(_item, _key) in item.children"
-                                        :key="_key"
-                                      >
-                                        <p>{{ _item.label }}</p>
-                                      </li>
-                                    </ul>
-                                  </li>
-                                </ul>
-                              </div>
-                            </el-card>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div :class="tabPaneClass('perdidas')">
-                      <div class="panel panel-default cd">
-                        <div class="panel-heading">
-                          <p class="panel-title roboto white">
-                            Seleccione la partida de la cuenta de P y G que
-                            desee agregar a su estrategia de búsqueda
-                          </p>
-                        </div>
-                        <div
-                          style="height: 430px;"
-                          class="treeselect_informacion_financiera"
-                          v-if="showSearch"
-                        >
-                          <treeselect
-                            valueFormat="object"
-                            name="options"
-                            id="options"
-                            :multiple="true"
-                            :disabled="treDisabled"
-                            :options="search.perdidas"
-                            :always-open="true"
-                            :default-expand-level="1"
-                            placeholder="Seleccionar"
-                            v-model="selected_informacion_financiera"
-                          >
-                            <label
-                              slot="option-label"
-                              slot-scope="{
-                                node,
-                                shouldShowCount,
-                                count,
-                                labelClassName,
-                              }"
-                              :class="labelClassName"
-                            >
-                              {{ node.label }}
-                            </label>
-                          </treeselect>
-                          <div v-if="ifSelectedTal" class="p-10">
-                            <el-card class="box-card" shadow="hover">
-                              <div>
-                                <span>Partida selecionado: </span>
-                                <el-tooltip
-                                  class="item"
-                                  effect="dark"
-                                  content="Limpiar selección"
-                                  placement="top-start"
-                                >
-                                  <el-button
-                                    type="danger"
-                                    style="float: right;"
-                                    icon="el-icon-delete"
-                                    circle
-                                    @click="resteSelet"
-                                  ></el-button>
-                                </el-tooltip>
-                              </div>
-                              <hr />
-                              <div class="text item m-t-10">
-                                <b>{{
-                                  selected_informacion_financiera[0].label
-                                }}</b>
-                              </div>
-                            </el-card>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="panel panel-default cd">
-                    <div class="panel-heading">
-                      <p class="panel-title roboto white">Seleccionar año(s)</p>
-                    </div>
-                    <div class="panel-body">
-                      <div class="anios_checkboxs_content">
-                        <div
-                          v-for="(item, key) in options_anios"
-                          :key="key"
-                          :class="classAniosCheckboxs"
-                        >
-                          <div v-for="(_item, _key) in item" :key="_key">
-                            <label class="custon-checkboxs">
-                              <input
-                                type="checkbox"
-                                name
-                                v-model="selected_anios"
-                                @change="changeAnios"
-                                :value="_item"
-                              />
-                              <span class="geekmark"></span>
-                              <span class="title">{{ _item.label }}</span>
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="m-t-10">
-                        <label class="custon-checkboxs">
-                          <input
-                            type="checkbox"
-                            name
-                            v-model="u_a_c_d"
-                            @change="setu_a_c_d"
-                            :value="true"
-                          />
-                          <span class="geekmark"></span>
-                          <span class="title"
-                            >Último año con cuentas disponibles.</span
-                          >
-                        </label>
-                      </div>
-                      <div class="m-t-10">
-                        <div v-if="selected_anios.length > 1">
-                          <div
-                            v-for="(item, key) in options_to_include"
-                            :key="key"
-                          >
-                            <label
-                              class="custon-checkboxs white"
-                              v-if="item.label !== 'incluir_null'"
-                            >
-                              <input
-                                type="checkbox"
-                                :name="
-                                  `checkbox___cuentas_disponibles__${item.id}`
-                                "
-                                v-model="selected_anios"
-                                @change="changeAnios"
-                                :id="
-                                  `checkbox___cuentas_disponibles__${item.id}`
-                                "
-                                :value="item"
-                                @click="takeIntoAccount(item, $event)"
-                              />
-                              <span class="geekmark"></span>
-                              <span class="name-checkbox">{{
-                                item.label
-                              }}</span>
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="flex-space-between-flex-end">
-                        <p></p>
-                        <p class="text-help m-t-10">
-                          * Puedes elegir más de una opción
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="panel panel-default cd">
-                    <div class="panel-heading">
-                      <p class="panel-title roboto white">Seleccionar rango</p>
-                    </div>
-                    <div class="panel-body">
-                      <div class="row content_seleccionar_rango">
-                        <div class="col-md-7" style="padding: 0 0 0 10px;">
-                          <div class="item_rango">
-                            <el-tag>Mínimo</el-tag>
-                            <div class="content_input_tag">
-                              <el-input
-                                placeholder="Mínimo"
-                                type="number"
-                                min="1"
-                                :max="monto2"
-                                v-model="monto1"
-                              ></el-input>
-                              <el-tag type="info">{{
-                                selected_unidad.label
-                              }}</el-tag>
-                            </div>
-                          </div>
-                          <div class="item_rango">
-                            <el-tag>Máximo</el-tag>
-                            <div class="content_input_tag">
-                              <el-input
-                                placeholder="Mínimo"
-                                type="number"
-                                :min="monto1"
-                                v-model="monto2"
-                              ></el-input>
-                              <el-tag type="info">{{
-                                selected_unidad.label
-                              }}</el-tag>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-5">
-                          <div class="m-t-10">
-                            <el-tag type="info">Unidad</el-tag>
-                            <el-select
-                              v-model="selected_unidad"
-                              @change="setSelectedUnidad"
-                              placeholder="Unidad"
-                            >
-                              <el-option
-                                v-for="item in unidades"
-                                :key="item.id"
-                                :label="item.label"
-                                :value="item"
-                              >
-                              </el-option>
-                            </el-select>
-                          </div>
-                          <div class="m-t-10">
-                            <label class="custon-checkboxs ___">
-                              <input
-                                type="checkbox"
-                                name
-                                v-model="todas_las_empresas"
-                                :value="true"
-                              />
-                              <span class="geekmark"></span>
-                              <span class="title"
-                                >Todas las empresas con el dato
-                                disponible.</span
-                              >
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div>
-              <div class="row" v-if="items_IF && items_IF.length > 0">
-                <div class="col-md-12">
-                  <el-collapse v-model="collapseResumen2">
-                    <el-collapse-item
-                      title="Resumen de combinaciones ya cargadas"
-                      name="1"
-                    >
-                      <div class="div-scroll-400 ul_selected_cnae">
-                        <el-card
-                          shadow="hover"
-                          v-for="(item, key) in items_IF"
-                          :key="key"
-                        >
-                          <div>
-                            <p class="name-checkbox">
-                              <b>{{ item.label }}</b>
-                            </p>
-                            <p v-if="item.anios">{{ item.anios }}</p>
-                            <p v-if="item.rango">{{ item.rango }}</p>
-                          </div>
-                        </el-card>
-                      </div>
-                    </el-collapse-item>
-                  </el-collapse>
-                </div>
-              </div>
-            </div>
+            <div>1</div>
+            <div>2</div>
           </div>
         </div>
       </el-dialog>
@@ -862,8 +502,9 @@ export default {
     ifSelectedTal() {
       return (
         this.treDisabled &&
-        this.selected_informacion_financiera &&
-        this.selected_informacion_financiera.length >= 1
+        this.valueSelect &&
+        this.valueSelect.label &&
+        this.valueSelect.label.length !== 0
       );
     },
   },
@@ -878,11 +519,11 @@ export default {
     modos: [
       {
         id: "balance",
-        label: "Balance",
+        label: "Balance de Situación",
       },
       {
         id: "perdidas",
-        label: "Cuenta de Pérdidas y Ganancias",
+        label: "Cuenta de P & G",
       },
       // {
       //   id: "Principales Ratios Económicos",
@@ -963,6 +604,7 @@ export default {
       ],
     ],
     balance_string: "",
+    valueSelect: null,
   }),
   watch: {
     search: function(newSearch) {
@@ -1006,9 +648,11 @@ export default {
           ? null
           : this.monto2;
 
-      const length_selected = this.selected_informacion_financiera.length;
-
-      if (length_selected !== 0) {
+      if (
+        this.valueSelect &&
+        this.valueSelect.label &&
+        this.valueSelect.label.length !== 0
+      ) {
         for (const item of this.selected_anios) {
           if (item.id !== "todos:true" && item.id !== "todos:false") {
             anios.push(item.id);
@@ -1023,7 +667,7 @@ export default {
         monto1 = monto1 === 0 ? null : monto1;
         monto2 = monto2 === 0 ? null : monto2;
 
-        const item = this.selected_informacion_financiera[length_selected - 1];
+        const item = this.valueSelect;
         const _anios =
           this.u_a_c_d || anios.length == 0 ? null : anios.join(",");
 
@@ -1049,6 +693,7 @@ export default {
     resteSelet() {
       this.selected_informacion_financiera = [];
       this.treDisabled = false;
+      this.valueSelect = null;
     },
     apply() {
       const _balance = this.balance();
@@ -1201,6 +846,7 @@ export default {
       this.modo = idModo;
       this.selected_informacion_financiera = [];
       this.treDisabled = false;
+      this.valueSelect = null;
     },
     fetchSearch() {},
     inputTreeselect() {},
@@ -1394,6 +1040,21 @@ label.custon-checkboxs {
   margin-left: 30px;
   li {
     list-style: circle;
+  }
+}
+.treeselect_informacion_financiera {
+  .el-select {
+    width: 100%;
+  }
+}
+
+.el-select-dropdown__item.special {
+  background-color: #80a6cf !important;
+  color: #f9f9f9 !important;
+  &:hover,
+  &.selected {
+    background-color: #347ab7 !important;
+    color: #fff !important;
   }
 }
 </style>

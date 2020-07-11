@@ -472,6 +472,11 @@ span.num-fil {
 .t-t-capitalize {
   text-transform: capitalize;
 }
+
+.el-tabs__nav {
+  z-index: 1 !important;
+}
+
 /* width */
 ::-webkit-scrollbar {
   width: 6px;
