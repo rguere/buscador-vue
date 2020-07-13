@@ -283,7 +283,6 @@
                       <el-input
                         placeholder="Mínimo"
                         type="number"
-                        min="1"
                         :max="monto2"
                         v-model="monto1"
                       ></el-input>
@@ -307,6 +306,7 @@
                   <div class="m-t-10">
                     <el-tag type="info">Unidad</el-tag>
                     <el-select
+                      value-key="id"
                       v-model="selected_unidad"
                       @change="setSelectedUnidad"
                       placeholder="Unidad"
@@ -451,7 +451,7 @@
               </button>
             </div>
           </div>
-          <div class="conten-flex-70-30">
+          <!-- <div class="conten-flex-70-30">
             <div>
               <div class="row">
                 <div class="col-md-6">
@@ -759,6 +759,7 @@
                           <div class="m-t-10">
                             <el-tag type="info">Unidad</el-tag>
                             <el-select
+                              value-key="id"
                               v-model="selected_unidad"
                               @change="setSelectedUnidad"
                               placeholder="Unidad"
@@ -831,7 +832,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
       </el-dialog>
     </div>
