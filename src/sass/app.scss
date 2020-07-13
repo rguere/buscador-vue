@@ -479,7 +479,10 @@ span.num-fil {
 
 #filter_informacion_financiera {
   .el-input.is-disabled {
-    color: #555 !important;
+    input,
+    input::placeholder {
+      color: #555 !important;
+    }
   }
 }
 
