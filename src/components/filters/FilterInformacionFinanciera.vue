@@ -61,19 +61,26 @@
                             <span>{{ _item.label }}</span>
                           </el-option>
                         </el-select>
-                        <el-button
+                        <el-tooltip
                           v-if="ifSelectedTal"
-                          type="danger"
-                          style="float: right; float: right; position: absolute; right: 15px; opacity: 0;"
-                          icon="el-icon-delete"
-                          circle
-                          @click="resteSelet"
-                        ></el-button>
+                          class="item"
+                          effect="dark"
+                          content="Limpiar selección"
+                          placement="top-start"
+                        >
+                          <el-button
+                            type="danger"
+                            style="float: right; float: right; position: absolute; right: 15px; opacity: 0;"
+                            icon="el-icon-delete"
+                            circle
+                            @click="resteSelet"
+                          ></el-button>
+                        </el-tooltip>
                       </div>
                     </el-tab-pane>
                   </el-tabs>
 
-                  <div v-if="ifSelectedTal" class="p-10">
+                  <!-- <div v-if="ifSelectedTal" class="p-10">
                     <el-card class="box-card" shadow="hover">
                       <div>
                         <span>Balance selecionado: </span>
@@ -114,7 +121,7 @@
                         </ul>
                       </div>
                     </el-card>
-                  </div>
+                  </div> -->
                 </div>
               </div>
             </div>
@@ -146,16 +153,23 @@
                       >
                       </el-option>
                     </el-select>
-                    <el-button
+                    <el-tooltip
                       v-if="ifSelectedTal"
-                      type="danger"
-                      style="float: right; float: right; position: absolute; right: 15px; opacity: 0;"
-                      icon="el-icon-delete"
-                      circle
-                      @click="resteSelet"
-                    ></el-button>
+                      class="item"
+                      effect="dark"
+                      content="Limpiar selección"
+                      placement="top-start"
+                    >
+                      <el-button
+                        type="danger"
+                        style="float: right; float: right; position: absolute; right: 15px; opacity: 0;"
+                        icon="el-icon-delete"
+                        circle
+                        @click="resteSelet"
+                      ></el-button>
+                    </el-tooltip>
                   </div>
-                  <div v-if="ifSelectedTal" class="p-10">
+                  <!-- <div v-if="ifSelectedTal" class="p-10">
                     <el-card class="box-card" shadow="hover">
                       <div>
                         <span>Partida selecionado: </span>
@@ -179,7 +193,7 @@
                         <b>{{ valueSelect.label }}</b>
                       </div>
                     </el-card>
-                  </div>
+                  </div> -->
                 </div>
               </div>
             </div>
@@ -365,7 +379,7 @@
         <div class="col-md-12">
           <el-collapse v-model="collapseResumen">
             <el-collapse-item
-              title="Resumen de combinaciones ya cargadas"
+              title="Resumen de Información Financiera seleccionada"
               name="1"
             >
               <div class="div-scroll-200 ul_selected_cnae">
@@ -374,13 +388,22 @@
                   v-for="(item, key) in items_IF"
                   :key="key"
                 >
-                  <div>
-                    <p class="name-checkbox">
-                      <b>{{ item.label }}</b>
-                    </p>
-                    <p v-if="item.anios">{{ item.anios }}</p>
-                    <p v-if="item.rango">{{ item.rango }}</p>
-                  </div>
+                  <label class="custon-checkboxs">
+                    <input
+                      type="checkbox"
+                      v-model="items_IF"
+                      @change="changeResumen($event)"
+                      :name="`checkbox_list_${item.id}`"
+                      :value="item"
+                    />
+                    <span class="geekmark"></span>
+                    <span class="name-checkbox">
+                      <b>{{ item.label }}</b> </span
+                    >, <span v-if="item.anios">{{ item.anios }}</span
+                    >, <span v-if="item.unidad">{{ item.unidad }}</span
+                    >,
+                    <span v-if="item.rango">{{ item.rango }}</span>
+                  </label>
                 </el-card>
               </div>
             </el-collapse-item>
@@ -776,7 +799,7 @@
                 <div class="col-md-12">
                   <el-collapse v-model="collapseResumen2">
                     <el-collapse-item
-                      title="Resumen de combinaciones ya cargadas"
+                      title="Resumen de Información Financiera seleccionada"
                       name="1"
                     >
                       <div class="div-scroll-200 ul_selected_cnae">
@@ -785,13 +808,22 @@
                           v-for="(item, key) in items_IF"
                           :key="key"
                         >
-                          <div>
-                            <p class="name-checkbox">
-                              <b>{{ item.label }}</b>
-                            </p>
-                            <p v-if="item.anios">{{ item.anios }}</p>
-                            <p v-if="item.rango">{{ item.rango }}</p>
-                          </div>
+                          <label class="custon-checkboxs">
+                            <input
+                              type="checkbox"
+                              v-model="items_IF"
+                              @change="changeResumen($event)"
+                              :name="`checkbox_list_${item.id}`"
+                              :value="item"
+                            />
+                            <span class="geekmark"></span>
+                            <span class="name-checkbox">
+                              <b>{{ item.label }}</b> </span
+                            >, <span v-if="item.anios">{{ item.anios }}</span
+                            >, <span v-if="item.unidad">{{ item.unidad }}</span
+                            >,
+                            <span v-if="item.rango">{{ item.rango }}</span>
+                          </label>
                         </el-card>
                       </div>
                     </el-collapse-item>
@@ -881,7 +913,7 @@ export default {
       },
       {
         id: "perdidas",
-        label: "Cuenta de P & G",
+        label: "Cuenta de Perdidas y ganancias",
       },
       // {
       //   id: "Principales Ratios Económicos",
@@ -1056,6 +1088,33 @@ export default {
       this.disabledValueSelect = false;
       this.valueSelect = null;
     },
+    changeResumen(event) {
+      event.preventDefault();
+      let checkboxs = document.querySelectorAll(
+        '.ul_selected_cnae input[type="checkbox"]'
+      );
+      checkboxs.forEach((item) => {
+        item.checked = true;
+      });
+
+      const balance = this.balance();
+      for (const key in this.items_IF) {
+        if (this.items_IF.hasOwnProperty(key)) {
+          const element = this.items_IF[key];
+          for (const key in balance) {
+            if (balance.hasOwnProperty(key)) {
+              const b_element = balance[key];
+              if (b_element === element.item) {
+                this.selectBalance = this.selectBalance.filter(
+                  (item) => item !== b_element
+                );
+                this.areApplied = false;
+              }
+            }
+          }
+        }
+      }
+    },
     apply() {
       const _balance = this.balance();
       if (_balance && _balance.length !== 0) {
@@ -1093,6 +1152,7 @@ export default {
             this.treDisabled = false;
             this.disabledValueSelect = false;
             this.selected_informacion_financiera = [];
+            // this.valueSelect = null;
             this.balance_string = JSON.stringify(_balance);
             sendEvent(`filtro-aplicado`, this.title);
           })
@@ -1108,10 +1168,6 @@ export default {
     hideModal() {
       sendPageView(``, `Buscador - Filtro`);
       this.modalVisible = false;
-      let treeselect__input = document.querySelector(
-        "#options input.vue-treeselect__input"
-      );
-      if (treeselect__input) treeselect__input.value = "";
     },
     confirmClean() {
       swal
@@ -1316,6 +1372,8 @@ export default {
           result.rango = `Rango ${
             item_split[2] !== "null" ? item_split[2] : 0
           } - ${item_split[3] !== "null" ? item_split[3] : 0}`;
+          result.unidad = this.selected_unidad.label;
+          result.item = item;
         }
       }
       return result;

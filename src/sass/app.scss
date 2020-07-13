@@ -477,6 +477,12 @@ span.num-fil {
   z-index: 1 !important;
 }
 
+#filter_informacion_financiera {
+  .el-input.is-disabled {
+    color: #555 !important;
+  }
+}
+
 /* width */
 ::-webkit-scrollbar {
   width: 6px;
