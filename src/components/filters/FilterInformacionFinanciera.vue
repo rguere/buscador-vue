@@ -35,38 +35,9 @@
                   </p>
                 </div>
                 <div
-                  style="height: 430px;"
                   class="treeselect_informacion_financiera"
                   v-if="showSearch"
                 >
-                  <!-- <treeselect
-                    valueFormat="object"
-                    name="options"
-                    id="options"
-                    :multiple="true"
-                    :disabled="treDisabled"
-                    :options="options"
-                    :always-open="true"
-                    :default-expand-level="1"
-                    placeholder="Seleccionar"
-                    @input="inputTreeselect"
-                    @select="selectTreeselect"
-                    @deselect="deselectTreeselect"
-                    v-model="selected_informacion_financiera"
-                  >
-                    <label
-                      slot="option-label"
-                      slot-scope="{
-                        node,
-                        shouldShowCount,
-                        count,
-                        labelClassName,
-                      }"
-                      :class="labelClassName"
-                    >
-                      {{ node.label }}
-                    </label>
-                  </treeselect> -->
                   <el-tabs type="border-card">
                     <el-tab-pane v-for="item in options" :key="item.id">
                       <span slot="label">
@@ -78,6 +49,7 @@
                           v-model="valueSelect"
                           filterable
                           placeholder="Seleccione"
+                          :disabled="disabledValueSelect"
                         >
                           <el-option
                             v-for="_item in item.children"
@@ -89,6 +61,14 @@
                             <span>{{ _item.label }}</span>
                           </el-option>
                         </el-select>
+                        <el-button
+                          v-if="ifSelectedTal"
+                          type="danger"
+                          style="float: right; float: right; position: absolute; right: 15px; opacity: 0;"
+                          icon="el-icon-delete"
+                          circle
+                          @click="resteSelet"
+                        ></el-button>
                       </div>
                     </el-tab-pane>
                   </el-tabs>
@@ -147,24 +127,34 @@
                   </p>
                 </div>
                 <div
-                  style="height: 430px;"
                   class="treeselect_informacion_financiera"
                   v-if="showSearch"
                 >
-                  <el-select
-                    value-key="id"
-                    v-model="valueSelect"
-                    filterable
-                    placeholder="Seleccione"
-                  >
-                    <el-option
-                      v-for="item in search.perdidas"
-                      :key="item.id"
-                      :label="item.label"
-                      :value="item"
+                  <div>
+                    <el-select
+                      value-key="id"
+                      v-model="valueSelect"
+                      filterable
+                      placeholder="Seleccione"
+                      :disabled="disabledValueSelect"
                     >
-                    </el-option>
-                  </el-select>
+                      <el-option
+                        v-for="item in search.perdidas"
+                        :key="item.id"
+                        :label="item.label"
+                        :value="item"
+                      >
+                      </el-option>
+                    </el-select>
+                    <el-button
+                      v-if="ifSelectedTal"
+                      type="danger"
+                      style="float: right; float: right; position: absolute; right: 15px; opacity: 0;"
+                      icon="el-icon-delete"
+                      circle
+                      @click="resteSelet"
+                    ></el-button>
+                  </div>
                   <div v-if="ifSelectedTal" class="p-10">
                     <el-card class="box-card" shadow="hover">
                       <div>
@@ -605,6 +595,7 @@ export default {
     ],
     balance_string: "",
     valueSelect: null,
+    disabledValueSelect: false,
   }),
   watch: {
     search: function(newSearch) {
@@ -687,12 +678,14 @@ export default {
         balance = removeDuplicateItem(balance);
 
         this.treDisabled = true;
+        this.disabledValueSelect = true;
       }
       return balance;
     },
     resteSelet() {
       this.selected_informacion_financiera = [];
       this.treDisabled = false;
+      this.disabledValueSelect = false;
       this.valueSelect = null;
     },
     apply() {
@@ -730,6 +723,7 @@ export default {
             this.reapply = false;
             this.loadingFrm = false;
             this.treDisabled = false;
+            this.disabledValueSelect = false;
             this.selected_informacion_financiera = [];
             this.balance_string = JSON.stringify(_balance);
             sendEvent(`filtro-aplicado`, this.title);
@@ -779,6 +773,7 @@ export default {
       this.selectBalance = [];
       this.items_IF = [];
       this.treDisabled = false;
+      this.disabledValueSelect = false;
       this.loadingFrm = false;
       this.modalVisible = false;
       this.areApplied = false;
@@ -819,6 +814,7 @@ export default {
       this.selectBalance = [];
       this.items_IF = [];
       this.treDisabled = false;
+      this.disabledValueSelect = false;
       this.loadingFrm = false;
       this.modalVisible = false;
       this.areApplied = false;
@@ -846,6 +842,7 @@ export default {
       this.modo = idModo;
       this.selected_informacion_financiera = [];
       this.treDisabled = false;
+      this.disabledValueSelect = false;
       this.valueSelect = null;
     },
     fetchSearch() {},
