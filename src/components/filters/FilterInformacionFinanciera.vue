@@ -1289,7 +1289,7 @@ export default {
 
         result.rango = `min ${
           itemApplied.monto1 !== "" ? itemApplied.monto1 : 0
-        } y max ${itemApplied.monto1 !== "" ? itemApplied.monto1 : 0}`;
+        } y max ${itemApplied.monto2 !== "" ? itemApplied.monto2 : 0}`;
 
         result.unidad = itemApplied.selected_unidad.label;
         result.label = itemApplied.valueSelect.label;
