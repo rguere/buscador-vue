@@ -1126,6 +1126,7 @@ export default {
         : "tab-pane fade";
     },
     clean() {
+      this.itemsApplied = {};
       this.form.balance = [];
       this.form.perdidas = [];
       this.selectBalance = [];
@@ -1168,6 +1169,7 @@ export default {
       sendEvent("filtro-limpiado", this.title);
     },
     emptyFilter() {
+      this.itemsApplied = {};
       this.form.balance = [];
       this.form.perdidas = [];
       this.selectBalance = [];

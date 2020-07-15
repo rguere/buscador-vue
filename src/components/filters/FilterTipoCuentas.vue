@@ -73,10 +73,14 @@
                 class="custon-checkboxs"
                 style="color: rgba(51, 51, 51, 0.79);font-size: 12px;max-width: 320px;margin-bottom: 15px;"
               >
-                <span class="name-checkbox"
-                  >Con este filtro agregas a tu búsqueda exclusivamente las
-                  empresas que componen al ranking de Infocif</span
+                <el-alert
+                  title="Con este filtro agregas a tu búsqueda
+                              exclusivamente las empresas que componen al
+                              ranking de Infocif"
+                  type="info"
+                  :closable="false"
                 >
+                </el-alert>
               </label>
             </div>
           </div>
@@ -186,11 +190,14 @@
                             class="custon-checkboxs"
                             style="color: rgba(51, 51, 51, 0.79);color: rgba(51, 51, 51, 0.79);font-size: 12px;max-width: 320px;word-break: break-word;"
                           >
-                            <span class="name-checkbox"
-                              >Con este filtro agregas a tu búsqueda
+                            <el-alert
+                              title="Con este filtro agregas a tu búsqueda
                               exclusivamente las empresas que componen al
-                              ranking de Infocif</span
+                              ranking de Infocif"
+                              type="info"
+                              :closable="false"
                             >
+                            </el-alert>
                           </label>
                         </div>
                       </div>
