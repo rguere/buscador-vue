@@ -69,10 +69,14 @@
           </div>
           <div v-if="tipo_cuentas.length !== 0">
             <div class="float-right">
-              <label class="custon-checkboxs" style="color: #333333c9;">
-                <input type="checkbox" name="5MM" disabled checked />
-                <span class="geekmark"></span>
-                <span class="name-checkbox">solo cuentas con +5MM</span>
+              <label
+                class="custon-checkboxs"
+                style="color: rgba(51, 51, 51, 0.79);font-size: 12px;max-width: 320px;margin-bottom: 15px;"
+              >
+                <span class="name-checkbox"
+                  >Con este filtro agregas a tu búsqueda exclusivamente las
+                  empresas que componen al ranking de Infocif</span
+                >
               </label>
             </div>
           </div>
@@ -180,17 +184,12 @@
                         >
                           <label
                             class="custon-checkboxs"
-                            style="color: #333333c9;"
+                            style="color: rgba(51, 51, 51, 0.79);color: rgba(51, 51, 51, 0.79);font-size: 12px;max-width: 320px;word-break: break-word;"
                           >
-                            <input
-                              type="checkbox"
-                              name="5MM"
-                              disabled
-                              checked
-                            />
-                            <span class="geekmark"></span>
                             <span class="name-checkbox"
-                              >solo cuentas con +5MM</span
+                              >Con este filtro agregas a tu búsqueda
+                              exclusivamente las empresas que componen al
+                              ranking de Infocif</span
                             >
                           </label>
                         </div>

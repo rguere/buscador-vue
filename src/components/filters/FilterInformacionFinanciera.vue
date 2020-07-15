@@ -750,7 +750,6 @@ import {
   removeDuplicates,
   removeDuplicateItem,
   sendPageView,
-  inArrayObjectTreeselect,
 } from "./../../utils";
 
 const setMin = (item) => {
@@ -901,6 +900,7 @@ export default {
     balance_string: "",
     valueSelect: null,
     disabledValueSelect: false,
+    itemsApplied: {},
   }),
   watch: {
     search: function(newSearch) {
@@ -972,10 +972,26 @@ export default {
           item.children
         ) {
           for (const _item of item.children) {
-            balance.push(`${_anios}|${_item.id}|${monto1}|${monto2}`);
+            const item_balance = `${_anios}|${_item.id}|${monto1}|${monto2}`;
+            balance.push(item_balance);
+            this.itemsApplied[item_balance] = {
+              valueSelect: this.valueSelect,
+              anios: _anios,
+              monto1: this.monto1,
+              monto2: this.monto2,
+              selected_unidad: this.selected_unidad,
+            };
           }
         } else {
-          balance.push(`${_anios}|${item.id}|${monto1}|${monto2}`);
+          const item_balance = `${_anios}|${item.id}|${monto1}|${monto2}`;
+          balance.push(item_balance);
+          this.itemsApplied[item_balance] = {
+            valueSelect: this.valueSelect,
+            anios: _anios,
+            monto1: this.monto1,
+            monto2: this.monto2,
+            selected_unidad: this.selected_unidad,
+          };
         }
 
         balance = balance.concat(this.selectBalance);
@@ -1264,40 +1280,20 @@ export default {
     },
     getItemApplied(item) {
       let result = null;
-      const item_split = item.split("|");
-      if (item_split && item_split.length === 4) {
-        const item_id = item_split[1];
-        if (
-          this.search &&
-          this.search.informacion_financiera &&
-          this.search.informacion_financiera.length !== 0 &&
-          this.search.perdidas &&
-          this.search.perdidas.length !== 0
-        ) {
-          result = inArrayObjectTreeselect(
-            this.search.informacion_financiera,
-            item_id,
-            "id"
-          );
-          if (!result) {
-            result = inArrayObjectTreeselect(
-              this.search.perdidas,
-              item_id,
-              "id"
-            );
-          }
-        }
-        if (result) {
-          result.anios =
-            item_split[0] !== "null"
-              ? `Año(s) ${item_split[0]}`
-              : "Último año con cuentas disponibles";
-          result.rango = `Rango ${
-            item_split[2] !== "null" ? item_split[2] : 0
-          } - ${item_split[3] !== "null" ? item_split[3] : 0}`;
-          result.unidad = this.selected_unidad.label;
-          result.item = item;
-        }
+      const itemApplied = this.itemsApplied[item];
+      if (itemApplied && itemApplied.selected_unidad) {
+        result = {};
+        result.anios = itemApplied.anios
+          ? `Año(s) ${itemApplied.anios}`
+          : "Último año con cuentas disponibles";
+
+        result.rango = `min ${
+          itemApplied.monto1 !== "" ? itemApplied.monto1 : 0
+        } y max ${itemApplied.monto1 !== "" ? itemApplied.monto1 : 0}`;
+
+        result.unidad = itemApplied.selected_unidad.label;
+        result.label = itemApplied.valueSelect.label;
+        result.id = itemApplied.valueSelect.id;
       }
       return result;
     },

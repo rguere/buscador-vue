@@ -393,7 +393,7 @@ export default {
       return this.loadingCargos ? "fa  fa-spinner fa-spin" : "fa  fa-search";
     },
     iconLoadingFrm: function() {
-      return this.loadingFrm ? "fa  fa-spinner fa-spin" : "fa  fa-search";
+      return this.loadingFrm ? "fa  fa-spinner fa-spin" : "fa  fa-send";
     },
     activeAplicar: function() {
       return (

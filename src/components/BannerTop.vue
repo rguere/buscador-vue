@@ -54,10 +54,10 @@
               </p>
             </div>
             <div class="col-md-6">
-              <p>Utilice el nuevo Buscador de empresas de Infocif para:</p>
+              <p>Utiliza el nuevo Buscador de empresas de Infocif para:</p>
               <ul>
                 <li>
-                  Realizar análisis exhaustivos del sector en el que opera su
+                  Realizar análisis exhaustivos del sector en el que opera tu
                   empresa en base a la recopilación e interpretación de la
                   información de la compañías de la competencia
                 </li>
