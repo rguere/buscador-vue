@@ -30,7 +30,7 @@
               <div class="panel panel-default cd">
                 <div class="panel-heading">
                   <p class="panel-title roboto white">
-                    Seleccione la partida de balance que desee agregar a su
+                    Selecciona la partida de balance que desees agregar a tu
                     estrategia de búsqueda
                   </p>
                 </div>
@@ -38,17 +38,33 @@
                   class="treeselect_informacion_financiera"
                   v-if="showSearch"
                 >
-                  <el-tabs type="border-card">
-                    <el-tab-pane v-for="item in options" :key="item.id">
-                      <span slot="label">
-                        {{ item.label }}
-                      </span>
+                  <ul class="nav nav-tabs">
+                    <li
+                      v-for="(item, key) in search.informacion_financiera"
+                      :key="key"
+                      :class="tabActivo === item.id ? 'active' : ''"
+                    >
+                      <a
+                        data-toggle="tab"
+                        @click="setTabActivo(item.id)"
+                        class="text-white"
+                        href="#"
+                        >{{ item.label }}</a
+                      >
+                    </li>
+                  </ul>
+                  <div class="tab-content m-t-10">
+                    <div
+                      v-for="(item, key) in search.informacion_financiera"
+                      :key="key"
+                      :class="tabActivoClassClass(item.id)"
+                    >
                       <div>
                         <el-select
                           value-key="id"
                           v-model="valueSelect"
                           filterable
-                          placeholder="Seleccione"
+                          placeholder="Selecciona"
                           :disabled="disabledValueSelect"
                         >
                           <el-option
@@ -77,51 +93,8 @@
                           ></el-button>
                         </el-tooltip>
                       </div>
-                    </el-tab-pane>
-                  </el-tabs>
-
-                  <!-- <div v-if="ifSelectedTal" class="p-10">
-                    <el-card class="box-card" shadow="hover">
-                      <div>
-                        <span>Balance selecionado: </span>
-                        <el-tooltip
-                          class="item"
-                          effect="dark"
-                          content="Limpiar selección"
-                          placement="top-start"
-                        >
-                          <el-button
-                            type="danger"
-                            style="float: right;"
-                            icon="el-icon-delete"
-                            circle
-                            @click="resteSelet"
-                          ></el-button>
-                        </el-tooltip>
-                      </div>
-                      <hr />
-                      <div class="text item m-t-10 div-scroll-300">
-                        <b>{{ valueSelect.label }}</b>
-                        <ul class="children_list" v-if="valueSelect.children">
-                          <li
-                            v-for="(item, key) in valueSelect.children"
-                            :key="key"
-                          >
-                            <p>{{ item.label }}</p>
-
-                            <ul class="children_list" v-if="item.children">
-                              <li
-                                v-for="(_item, _key) in item.children"
-                                :key="_key"
-                              >
-                                <p>{{ _item.label }}</p>
-                              </li>
-                            </ul>
-                          </li>
-                        </ul>
-                      </div>
-                    </el-card>
-                  </div> -->
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -129,8 +102,8 @@
               <div class="panel panel-default cd">
                 <div class="panel-heading">
                   <p class="panel-title roboto white">
-                    Seleccione la partida de la cuenta de P y G que desee
-                    agregar a su estrategia de búsqueda
+                    Selecciona la partida de la cuenta de perdidas y ganancias
+                    que desees agregar a tu estrategia de búsqueda
                   </p>
                 </div>
                 <div
@@ -142,7 +115,7 @@
                       value-key="id"
                       v-model="valueSelect"
                       filterable
-                      placeholder="Seleccione"
+                      placeholder="Selecciona"
                       :disabled="disabledValueSelect"
                     >
                       <el-option
@@ -169,31 +142,6 @@
                       ></el-button>
                     </el-tooltip>
                   </div>
-                  <!-- <div v-if="ifSelectedTal" class="p-10">
-                    <el-card class="box-card" shadow="hover">
-                      <div>
-                        <span>Partida selecionado: </span>
-                        <el-tooltip
-                          class="item"
-                          effect="dark"
-                          content="Limpiar selección"
-                          placement="top-start"
-                        >
-                          <el-button
-                            type="danger"
-                            style="float: right;"
-                            icon="el-icon-delete"
-                            circle
-                            @click="resteSelet"
-                          ></el-button>
-                        </el-tooltip>
-                      </div>
-                      <hr />
-                      <div class="text item m-t-10">
-                        <b>{{ valueSelect.label }}</b>
-                      </div>
-                    </el-card>
-                  </div> -->
                 </div>
               </div>
             </div>
@@ -369,12 +317,6 @@
         </div>
         <p class="text-help">* Puedes elegir más de una opción</p>
       </div>
-      <!-- <div class="row">
-        <div class="col-md-12">
-          <h4>Esta es la información que se envía para aplicar el filtro</h4>
-          <pre>{{ balance() }}</pre>
-        </div>
-      </div> -->
       <div class="row" v-if="items_IF && items_IF.length > 0">
         <div class="col-md-12">
           <el-collapse v-model="collapseResumen">
@@ -451,7 +393,7 @@
               </button>
             </div>
           </div>
-          <!-- <div class="conten-flex-70-30">
+          <div class="conten-flex-70-30">
             <div>
               <div class="row">
                 <div class="col-md-6">
@@ -475,25 +417,43 @@
                       <div class="panel panel-default cd">
                         <div class="panel-heading">
                           <p class="panel-title roboto white">
-                            Seleccione la partida de balance que desee agregar a
-                            su estrategia de búsqueda
+                            Selecciona la partida de balance que desees agregar
+                            a tu estrategia de búsqueda
                           </p>
                         </div>
                         <div
                           class="treeselect_informacion_financiera"
                           v-if="showSearch"
                         >
-                          <el-tabs type="border-card">
-                            <el-tab-pane v-for="item in options" :key="item.id">
-                              <span slot="label">
-                                {{ item.label }}
-                              </span>
+                          <ul class="nav nav-tabs">
+                            <li
+                              v-for="(item,
+                              key) in search.informacion_financiera"
+                              :key="key"
+                              :class="tabActivo === item.id ? 'active' : ''"
+                            >
+                              <a
+                                data-toggle="tab"
+                                @click="setTabActivo(item.id)"
+                                class="text-white"
+                                href="#"
+                                >{{ item.label }}</a
+                              >
+                            </li>
+                          </ul>
+                          <div class="tab-content m-t-10">
+                            <div
+                              v-for="(item,
+                              key) in search.informacion_financiera"
+                              :key="key"
+                              :class="tabActivoClassClass(item.id)"
+                            >
                               <div>
                                 <el-select
                                   value-key="id"
                                   v-model="valueSelect"
                                   filterable
-                                  placeholder="Seleccione"
+                                  placeholder="Selecciona"
                                   :disabled="disabledValueSelect"
                                 >
                                   <el-option
@@ -506,23 +466,8 @@
                                     <span>{{ _item.label }}</span>
                                   </el-option>
                                 </el-select>
-                                <el-button
-                                  v-if="ifSelectedTal"
-                                  type="danger"
-                                  style="float: right; float: right; position: absolute; right: 15px; opacity: 0;"
-                                  icon="el-icon-delete"
-                                  circle
-                                  @click="resteSelet"
-                                ></el-button>
-                              </div>
-                            </el-tab-pane>
-                          </el-tabs>
-
-                          <div v-if="ifSelectedTal" class="p-10">
-                            <el-card class="box-card" shadow="hover">
-                              <div>
-                                <span>Balance selecionado: </span>
                                 <el-tooltip
+                                  v-if="ifSelectedTal"
                                   class="item"
                                   effect="dark"
                                   content="Limpiar selección"
@@ -530,41 +475,14 @@
                                 >
                                   <el-button
                                     type="danger"
-                                    style="float: right;"
+                                    style="float: right; float: right; position: absolute; right: 15px; opacity: 0;"
                                     icon="el-icon-delete"
                                     circle
                                     @click="resteSelet"
                                   ></el-button>
                                 </el-tooltip>
                               </div>
-                              <hr />
-                              <div class="text item m-t-10 div-scroll-300">
-                                <b>{{ valueSelect.label }}</b>
-                                <ul
-                                  class="children_list"
-                                  v-if="valueSelect.children"
-                                >
-                                  <li
-                                    v-for="(item, key) in valueSelect.children"
-                                    :key="key"
-                                  >
-                                    <p>{{ item.label }}</p>
-
-                                    <ul
-                                      class="children_list"
-                                      v-if="item.children"
-                                    >
-                                      <li
-                                        v-for="(_item, _key) in item.children"
-                                        :key="_key"
-                                      >
-                                        <p>{{ _item.label }}</p>
-                                      </li>
-                                    </ul>
-                                  </li>
-                                </ul>
-                              </div>
-                            </el-card>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -573,8 +491,9 @@
                       <div class="panel panel-default cd">
                         <div class="panel-heading">
                           <p class="panel-title roboto white">
-                            Seleccione la partida de la cuenta de P y G que
-                            desee agregar a su estrategia de búsqueda
+                            Selecciona la partida de la cuenta de perdidas y
+                            ganancias que desees agregar a tu estrategia de
+                            búsqueda
                           </p>
                         </div>
                         <div
@@ -586,7 +505,7 @@
                               value-key="id"
                               v-model="valueSelect"
                               filterable
-                              placeholder="Seleccione"
+                              placeholder="Selecciona"
                               :disabled="disabledValueSelect"
                             >
                               <el-option
@@ -597,39 +516,21 @@
                               >
                               </el-option>
                             </el-select>
-                            <el-button
+                            <el-tooltip
                               v-if="ifSelectedTal"
-                              type="danger"
-                              style="float: right; float: right; position: absolute; right: 15px; opacity: 0;"
-                              icon="el-icon-delete"
-                              circle
-                              @click="resteSelet"
-                            ></el-button>
-                          </div>
-                          <div v-if="ifSelectedTal" class="p-10">
-                            <el-card class="box-card" shadow="hover">
-                              <div>
-                                <span>Partida selecionado: </span>
-                                <el-tooltip
-                                  class="item"
-                                  effect="dark"
-                                  content="Limpiar selección"
-                                  placement="top-start"
-                                >
-                                  <el-button
-                                    type="danger"
-                                    style="float: right;"
-                                    icon="el-icon-delete"
-                                    circle
-                                    @click="resteSelet"
-                                  ></el-button>
-                                </el-tooltip>
-                              </div>
-                              <hr />
-                              <div class="text item m-t-10">
-                                <b>{{ valueSelect.label }}</b>
-                              </div>
-                            </el-card>
+                              class="item"
+                              effect="dark"
+                              content="Limpiar selección"
+                              placement="top-start"
+                            >
+                              <el-button
+                                type="danger"
+                                style="float: right; float: right; position: absolute; right: 15px; opacity: 0;"
+                                icon="el-icon-delete"
+                                circle
+                                @click="resteSelet"
+                              ></el-button>
+                            </el-tooltip>
                           </div>
                         </div>
                       </div>
@@ -731,7 +632,6 @@
                               <el-input
                                 placeholder="Mínimo"
                                 type="number"
-                                min="1"
                                 :max="monto2"
                                 v-model="monto1"
                               ></el-input>
@@ -832,7 +732,7 @@
                 </div>
               </div>
             </div>
-          </div> -->
+          </div>
         </div>
       </el-dialog>
     </div>
@@ -876,6 +776,9 @@ export default {
         this.search.informacion_financiera.length !== 0
       );
     },
+    showOptions() {
+      return this.options && this.options.length && this.options.length !== 0;
+    },
     classAniosCheckboxs() {
       return this.u_a_c_d ? "anios_checkboxs" : "anios_checkboxs";
     },
@@ -906,6 +809,7 @@ export default {
     items_IF: [],
     collapseResumen: [],
     collapseResumen2: ["1"],
+    tabActivo: "children_activo",
     modo: "balance",
     modos: [
       {
@@ -1098,6 +1002,8 @@ export default {
         item.checked = true;
       });
 
+      this.reapply = this.areApplied ? true : this.areApplied;
+
       const balance = this.balance();
       for (const key in this.items_IF) {
         if (this.items_IF.hasOwnProperty(key)) {
@@ -1114,6 +1020,10 @@ export default {
             }
           }
         }
+      }
+
+      if (this.items_IF && this.items_IF.length === 0) {
+        this.clean();
       }
     },
     apply() {
@@ -1159,6 +1069,8 @@ export default {
           })
           .catch(() => {
             this.loadingFrm = false;
+            this.treDisabled = false;
+            this.disabledValueSelect = false;
           });
       }
     },
@@ -1192,11 +1104,17 @@ export default {
     tabPaneClass(tap) {
       return this.modo === tap ? "tab-pane fade in active" : "tab-pane fade";
     },
+    tabActivoClassClass(tap) {
+      return this.tabActivo === tap
+        ? "tab-pane fade in active"
+        : "tab-pane fade";
+    },
     clean() {
       this.form.balance = [];
       this.form.perdidas = [];
       this.selectBalance = [];
       this.items_IF = [];
+      this.valueSelect = null;
       this.treDisabled = false;
       this.disabledValueSelect = false;
       this.loadingFrm = false;
@@ -1238,6 +1156,7 @@ export default {
       this.form.perdidas = [];
       this.selectBalance = [];
       this.items_IF = [];
+      this.valueSelect = null;
       this.treDisabled = false;
       this.disabledValueSelect = false;
       this.loadingFrm = false;
@@ -1269,6 +1188,9 @@ export default {
       this.treDisabled = false;
       this.disabledValueSelect = false;
       this.valueSelect = null;
+    },
+    setTabActivo(tab) {
+      this.tabActivo = tab;
     },
     fetchSearch() {},
     inputTreeselect() {},

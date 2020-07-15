@@ -56,7 +56,7 @@
     </el-card>
     <div v-if="orderFilters.length === 0">
       <el-alert
-        title="Aun no aplicado criterios a su búsqueda"
+        title="Aun no has aplicado criterios a tu búsqueda"
         type="info"
         :closable="false"
       >
