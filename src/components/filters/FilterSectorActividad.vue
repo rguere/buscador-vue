@@ -374,7 +374,7 @@
                   >
                     <div class="panel-heading">
                       <p class="panel-title roboto white">
-                        Seleccione los Códigos CNAE que desee agregar a su
+                        Selecciona los Códigos CNAE que desee agregar a su
                         estrategia de búsqueda.
                       </p>
                     </div>
