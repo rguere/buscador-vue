@@ -125,7 +125,7 @@
                     <div class="panel panel-default cd">
                       <div class="panel-heading">
                         <p class="panel-title roboto white">
-                          Selecciona el(los) cargo(s) que desee incorporar a su
+                          Selecciona el(los) cargo(s) que desees incorporar a tu
                           estrategia de búsqueda
                           <span
                             class="span-info-right"
