@@ -123,6 +123,7 @@
                         :key="item.id"
                         :label="item.label"
                         :value="item"
+                        :class="item.special ? 'special' : ''"
                       >
                       </el-option>
                     </el-select>

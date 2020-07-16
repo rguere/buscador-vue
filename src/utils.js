@@ -615,106 +615,131 @@ export const formatProvinciaLocalidad = (data) => {
   ];
   newData.perdidas = [
     {
+      id: "1",
+      label: "Ingresos de explotación",
+      special: true,
+    },
+    {
       id: "40100",
       label: "Importe neto de la cifra de negocios",
+      special: false,
     },
     {
       id: "40200",
       label:
         "Variación de existencias de productos terminados y en curso de fabricación",
+      special: false,
     },
     {
       id: "40300",
       label: "Trabajos realizados por la empresa para su activo",
+      special: false,
     },
     {
       id: "40400",
       label: "Aprovisionamientos",
+      special: false,
     },
     {
       id: "40500",
       label: "Otros ingresos de explotación",
+      special: false,
     },
     {
       id: "40600",
       label: "Gastos de personal",
+      special: false,
     },
     {
       id: "40700",
       label: "Otros gastos de explotación",
+      special: false,
     },
     {
       id: "40800",
       label: "Amortización del inmovilizado",
+      special: false,
     },
     {
       id: "40900",
       label: "Imputación de subvenciones de inmovilizado no financiero y otras",
+      special: false,
     },
     {
       id: "41000",
       label: "Excesos de provisiones",
+      special: false,
     },
     {
       id: "41100",
       label: "Deterioro y resultado por enajenaciones del inmovilizado",
+      special: false,
     },
     {
       id: "41200",
       label: "Diferencia negativa de combinaciones de negocio",
+      special: false,
     },
     {
       id: "41300",
       label: "Otros resultados",
+      special: false,
+    },
+    {
+      id: "2",
+      label: "Resultado de explotación",
+      special: true,
     },
     {
       id: "41400",
       label: "Ingresos financieros",
+      special: false,
     },
     {
       id: "41500",
       label: "Gastos financieros",
+      special: false,
     },
     {
       id: "41600",
       label: "Variación de valor razonable en instrumentos financieros",
+      special: false,
     },
     {
       id: "41700",
       label: "Diferencias de cambio",
+      special: false,
     },
     {
       id: "41800",
       label:
         "Deterioro y resultado por enajenaciones de instrumentos financieros",
-    },
-    {
-      id: "41900",
-      label: "Impuestos sobre beneficios",
+      special: false,
     },
     {
       id: "42100",
       label: "Otros ingresos y gastos de carácter financiero",
-    },
-    {
-      id: "1",
-      label: "Ingresos de explotación",
-    },
-    {
-      id: "2",
-      label: "Resultado de explotación",
+      special: false,
     },
     {
       id: "3",
       label: "Resultado financiero",
+      special: true,
     },
     {
       id: "4",
       label: "Resultado antes de impuestos",
+      special: true,
+    },
+    {
+      id: "41900",
+      label: "Impuestos sobre beneficios",
+      special: false,
     },
     {
       id: "5",
       label: "Resultado del ejercicio",
+      special: true,
     },
   ];
   return newData;
