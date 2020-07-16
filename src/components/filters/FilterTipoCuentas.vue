@@ -394,7 +394,7 @@ export default {
       for (const item of items) {
         if (item.id === "1") {
           order[0] = item;
-        } else if (item.id === "5") {
+        } else if (item.id === "2") {
           order[1] = item;
         }
         // else if (item.id === "100") {

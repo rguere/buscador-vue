@@ -431,7 +431,7 @@ export const formatProvinciaLocalidad = (data) => {
         element.filter((item) => {
           if (item.id === "1") {
             item.data = 10224414;
-          } else if (item.id === "5") {
+          } else if (item.id === "2") {
             item.data = 32995;
           }
           return item;
