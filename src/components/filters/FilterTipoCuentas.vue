@@ -75,7 +75,7 @@
               >
                 <el-alert
                   title="Con este filtro agregas a tu búsqueda
-                              exclusivamente las empresas que componen al
+                              exclusivamente las empresas que componen el
                               ranking de Infocif"
                   type="info"
                   :closable="false"
@@ -192,7 +192,7 @@
                           >
                             <el-alert
                               title="Con este filtro agregas a tu búsqueda
-                              exclusivamente las empresas que componen al
+                              exclusivamente las empresas que componen el
                               ranking de Infocif"
                               type="info"
                               :closable="false"
