@@ -513,6 +513,7 @@
                                 v-for="item in search.perdidas"
                                 :key="item.id"
                                 :label="item.label"
+                                :class="item.special ? 'special' : ''"
                                 :value="item"
                               >
                               </el-option>
