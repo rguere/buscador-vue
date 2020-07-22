@@ -11,61 +11,104 @@
     </div>
     <div class="panel-body">
       <div v-if="search.estados && search.estados.length !== 0">
-        <div class="treeselect_estado">
-          <ul class="nav nav-tabs">
-            <li
-              v-for="(item, key) in search.estados"
-              :key="key"
-              :class="tabActivo === item.id ? 'active' : ''"
-            >
-              <a
-                data-toggle="tab"
-                @click="setTabActivo(item.id)"
-                class="text-white"
-                href="#"
-                >{{ item.label }}</a
+        <div class="panel panel-default cd">
+          <div class="panel-heading">
+            <p class="panel-title roboto white">
+              Seleccione los estados que desee agregar a su estrategia de
+              búsqueda.
+            </p>
+          </div>
+          <div class="treeselect_estado m-b-10">
+            <ul class="nav nav-tabs">
+              <li
+                v-for="(item, key) in search.estados"
+                :key="key"
+                :class="tabActivo === item.id ? 'active' : ''"
               >
-            </li>
-          </ul>
-          <div class="tab-content m-t-10">
-            <div
-              v-for="(item, key) in search.estados"
-              :key="key"
-              :class="tabActivoClassClass(item.id)"
-            >
-              <div>
-                <el-select
-                  value-key="id"
-                  v-model="selected_estados"
-                  filterable
-                  placeholder="Selecciona"
-                  :disabled="disabledselected_estados"
+                <a
+                  data-toggle="tab"
+                  @click="setTabActivo(item.id)"
+                  class="text-white"
+                  href="#"
+                  >{{ item.label }}</a
                 >
-                  <el-option
-                    v-for="_item in item.children"
-                    :key="_item.id"
-                    :label="_item.label"
-                    :value="_item"
-                    :class="_item.special ? 'special' : ''"
-                  >
-                    <span>{{ _item.label }}</span>
-                  </el-option>
-                </el-select>
-                <el-tooltip
-                  v-if="ifSelectedTal"
-                  class="item"
-                  effect="dark"
-                  content="Limpiar selección"
-                  placement="top-start"
+              </li>
+            </ul>
+            <div class="panel-body">
+              <div class="tab-content m-t-10">
+                <div
+                  v-for="(item, key) in search.estados"
+                  :key="key"
+                  :class="tabActivoClassClass(item.id)"
                 >
-                  <el-button
-                    type="danger"
-                    style="float: right; float: right; position: absolute; right: 15px; opacity: 0;"
-                    icon="el-icon-delete"
-                    circle
-                    @click="resteSelet"
-                  ></el-button>
-                </el-tooltip>
+                  <div>
+                    <el-select
+                      value-key="id"
+                      v-model="selected_estados"
+                      filterable
+                      placeholder="Selecciona"
+                      :disabled="disabledselected_estados"
+                    >
+                      <el-option
+                        v-for="_item in item.children"
+                        :key="_item.id"
+                        :label="_item.label"
+                        :value="_item"
+                        :class="_item.special ? 'special' : ''"
+                      >
+                        <span>{{ _item.label }}</span>
+                      </el-option>
+                    </el-select>
+                    <el-tooltip
+                      v-if="ifSelectedTal"
+                      class="item"
+                      effect="dark"
+                      content="Limpiar selección"
+                      placement="top-start"
+                    >
+                      <el-button
+                        type="danger"
+                        style="float: right; float: right; position: absolute; right: 15px; opacity: 0;"
+                        icon="el-icon-delete"
+                        circle
+                        @click="resteSelet"
+                      ></el-button>
+                    </el-tooltip>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="panel-body">
+            <div class="row" v-if="showSelecCustomEstados">
+              <div class="col-md-12">
+                <el-collapse v-model="collapseResumen">
+                  <el-collapse-item title="Resumen de Estado" name="1">
+                    <div class="div-scroll-200 ul_selected_cnae">
+                      <el-card
+                        shadow="hover"
+                        v-for="(item, key) in selected_custom_estados"
+                        :key="key"
+                      >
+                        <label class="custon-checkboxs">
+                          <input
+                            type="checkbox"
+                            v-model="selected_custom_estados"
+                            @change="changeResumen($event)"
+                            :name="`checkbox_list_${item.id}`"
+                            :value="item"
+                          />
+                          <span class="geekmark"></span>
+                          <span class="name-checkbox">
+                            <b>
+                              {{ item.label }}
+                            </b>
+                          </span>
+                        </label>
+                      </el-card>
+                    </div>
+                  </el-collapse-item>
+                </el-collapse>
               </div>
             </div>
           </div>
@@ -96,32 +139,6 @@
               Limpiar
               <i class="fa fa-undo"></i>
             </button>
-          </div>
-        </div>
-        <div v-if="custom_estados.length !== 0">
-          <hr />
-          <p style="margin: 0 0 10px 19px;">Renglon personalizado</p>
-          <div
-            v-for="(item, key) in custom_estados"
-            :key="key"
-            class="checkbox"
-          >
-            <label
-              class="custon-checkboxs"
-              v-if="item.label !== 'incluir_null'"
-            >
-              <input
-                type="checkbox"
-                :name="`__checkbox_empleados__${item.id}`"
-                v-model="selected_custom_estados"
-                @change="handleChange()"
-                :id="`__checkbox_empleados__${item.id}`"
-                :value="item"
-              />
-              <span class="geekmark"></span>
-              <span class="name-checkbox">{{ item.label }}</span>
-              <span class="num-fil">({{ item.data | numeral("0,0") }})</span>
-            </label>
           </div>
         </div>
         <div class="float-right margin-top-10">
@@ -173,10 +190,114 @@
               class="row"
               v-if="search.estados && search.estados.length !== 0"
             >
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos
-              voluptatum facilis atque optio, distinctio laborum. Repellat
-              suscipit soluta fugit consequuntur velit quibusdam quidem est
-              distinctio qui, nulla doloribus enim id.
+              <div class="col-md-7">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="panel panel-default cd">
+                      <div class="panel-heading">
+                        <p class="panel-title roboto white">
+                          Seleccione los estados que desee agregar a su
+                          estrategia de búsqueda.
+                        </p>
+                      </div>
+                      <div class="treeselect_estado m-b-10">
+                        <ul class="nav nav-tabs">
+                          <li
+                            v-for="(item, key) in search.estados"
+                            :key="key"
+                            :class="tabActivo === item.id ? 'active' : ''"
+                          >
+                            <a
+                              data-toggle="tab"
+                              @click="setTabActivo(item.id)"
+                              class="text-white"
+                              href="#"
+                              >{{ item.label }}</a
+                            >
+                          </li>
+                        </ul>
+                        <div class="panel-body">
+                          <div class="tab-content m-t-10">
+                            <div
+                              v-for="(item, key) in search.estados"
+                              :key="key"
+                              :class="tabActivoClassClass(item.id)"
+                            >
+                              <div>
+                                <el-select
+                                  value-key="id"
+                                  v-model="selected_estados"
+                                  filterable
+                                  placeholder="Selecciona"
+                                  :disabled="disabledselected_estados"
+                                >
+                                  <el-option
+                                    v-for="_item in item.children"
+                                    :key="_item.id"
+                                    :label="_item.label"
+                                    :value="_item"
+                                    :class="_item.special ? 'special' : ''"
+                                  >
+                                    <span>{{ _item.label }}</span>
+                                  </el-option>
+                                </el-select>
+                                <el-tooltip
+                                  v-if="ifSelectedTal"
+                                  class="item"
+                                  effect="dark"
+                                  content="Limpiar selección"
+                                  placement="top-start"
+                                >
+                                  <el-button
+                                    type="danger"
+                                    style="float: right; float: right; position: absolute; right: 15px; opacity: 0;"
+                                    icon="el-icon-delete"
+                                    circle
+                                    @click="resteSelet"
+                                  ></el-button>
+                                </el-tooltip>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-5">
+                <div class="row" v-if="showSelecCustomEstados">
+                  <div class="col-md-12">
+                    <el-collapse v-model="collapseResumen2">
+                      <el-collapse-item title="Resumen de Estado" name="1">
+                        <div class="div-scroll-200 ul_selected_cnae">
+                          <el-card
+                            shadow="hover"
+                            v-for="(item, key) in selected_custom_estados"
+                            :key="key"
+                          >
+                            <label class="custon-checkboxs">
+                              <input
+                                type="checkbox"
+                                v-model="selected_custom_estados"
+                                @change="changeResumen($event)"
+                                :name="`checkbox_list_${item.id}`"
+                                :value="item"
+                              />
+                              <span class="geekmark"></span>
+                              <span class="name-checkbox">
+                                <b>
+                                  {{ item.label }}
+                                </b>
+                              </span>
+                            </label>
+                          </el-card>
+                        </div>
+                      </el-collapse-item>
+                    </el-collapse>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </el-dialog>
@@ -198,6 +319,7 @@ import {
   inArrayObjectTreeselect,
   howAnimation,
   beforeOrderFilters,
+  removeDuplicates,
   sendPageView,
   sendEvent,
 } from "./../../utils";
@@ -215,6 +337,11 @@ export default {
       filters: "filters/filters",
     }),
     compareWithNewtoApply: function() {
+      let stg = this.selected_custom_estados_string;
+      let obj = JSON.stringify(this.selected_custom_estados);
+      return stg === obj;
+    },
+    compareWithNewtoApplySelectedEstados: function() {
       let stg = this.selected_estados_string;
       let obj = JSON.stringify(this.selected_estados);
       return stg === obj;
@@ -226,6 +353,11 @@ export default {
         this.selected_estados.label.length !== 0
       );
     },
+    showSelecCustomEstados() {
+      return (
+        this.selected_custom_estados && this.selected_custom_estados.length > 0
+      );
+    },
     showApplyBtn() {
       return (
         (this.selected_estados &&
@@ -235,16 +367,19 @@ export default {
         (this.selected_estados &&
           this.selected_estados.label &&
           this.selected_estados.label.length !== 0 &&
-          !this.compareWithNewtoApply)
+          !this.compareWithNewtoApply) ||
+        (this.areApplied && !this.compareWithNewtoApplySelectedEstados)
       );
     },
   },
   data: () => ({
     title: "Estado",
+    collapseResumen: [],
+    collapseResumen2: ["1"],
     tabActivo: "children_activas",
     disabledselected_estados: false,
     treDisabled: false,
-    selected_estados_string: "",
+    selected_custom_estados_string: "",
     selected_estados: null,
     list_estados: [],
     selected_by_estados: 0,
@@ -280,12 +415,9 @@ export default {
     selected_custom_estados: [],
   }),
   watch: {
-    selected_estados: function(newProvincesLocalidad) {
-      const isSE =
-        newProvincesLocalidad &&
-        newProvincesLocalidad.label &&
-        newProvincesLocalidad.label.length > 0;
-      this.selected_by_estados = newProvincesLocalidad && isSE ? 1 : 0;
+    selected_estados: function(newEstado) {
+      const isSE = newEstado && newEstado.label && newEstado.label.length > 0;
+      this.selected_by_estados = newEstado && isSE ? 1 : 0;
       if (isSE) {
         this.disabledselected_estados = true;
       }
@@ -323,6 +455,24 @@ export default {
     });
   },
   methods: {
+    changeResumen(event) {
+      event.preventDefault();
+      let checkboxs = document.querySelectorAll(
+        '.ul_selected_cnae input[type="checkbox"]'
+      );
+      checkboxs.forEach((item) => {
+        item.checked = true;
+      });
+
+      this.reapply = this.areApplied ? true : this.areApplied;
+
+      if (
+        this.selected_custom_estados &&
+        this.selected_custom_estados.length === 0
+      ) {
+        this.clean();
+      }
+    },
     resteSelet() {
       this.treDisabled = false;
       this.disabledselected_estados = false;
@@ -437,16 +587,24 @@ export default {
         this.$store
           .dispatch("search/filtrar", beforeForm)
           .then((response) => {
+            this.selected_custom_estados.push(this.selected_estados);
+            this.selected_custom_estados = removeDuplicates(
+              this.selected_custom_estados,
+              "id"
+            );
             this.updateNumberSelectedCompanies(response.cantidad);
             this.$store.dispatch("filters/addFilters", {
               name: this.title,
               quantity: this.selected_by_estados,
               cantidades: response,
-              items: this.selected_estados,
+              items: this.selected_custom_estados,
             });
             this.areApplied = true;
             this.reapply = false;
             this.loadingFrm = false;
+            this.selected_custom_estados_string = JSON.stringify(
+              this.selected_custom_estados
+            );
             this.selected_estados_string = JSON.stringify(
               this.selected_estados
             );
@@ -482,6 +640,7 @@ export default {
     clean() {
       this.form.estado = [];
       this.selected_estados = null;
+      this.selected_custom_estados_string = "";
       this.selected_estados_string = "";
       this.resteSelet();
       if (this.applied_filters.length > 1) {
@@ -509,11 +668,13 @@ export default {
       this.ahnos_from = "";
       this.ahnos_to = "";
       this.custom_estados = [];
+      this.selected_custom_estados = [];
       sendEvent("filtro-limpiado", this.title);
     },
     emptyFilter() {
       this.form.estado = [];
       this.selected_estados = null;
+      this.selected_custom_estados_string = "";
       this.selected_estados_string = "";
       this.resteSelet();
       this.updateNumberSelectedCompanies(0);
@@ -526,16 +687,23 @@ export default {
       this.ahnos_from = "";
       this.ahnos_to = "";
       this.custom_estados = [];
+      this.selected_custom_estados = [];
     },
     handleChange() {
       //province, event
       this.reapply = this.areApplied ? true : this.areApplied;
     },
     formatearDataPOST() {
-      this.form.estado =
-        this.selected_estados && this.selected_estados.id
-          ? this.selected_estados.id
-          : null;
+      let estados = [];
+      this.form.estado = [];
+      this.selected_custom_estados.forEach((item) => {
+        estados.push(item.id);
+      });
+      if (this.selected_estados && this.selected_estados.id) {
+        estados.push(this.selected_estados.id);
+      }
+      estados = removeDuplicates(estados, "id");
+      this.form.estado = estados;
       return this.form;
     },
   },

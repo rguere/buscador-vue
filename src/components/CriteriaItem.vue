@@ -36,6 +36,10 @@
       <span class="name-checkbox">{{ item.RazonSocial }}</span>
     </div>
 
+    <div class="flex-2" v-if="item_name === 'Estado'">
+      <span class="name-checkbox">{{ item.label }}</span>
+    </div>
+
     <div
       class="flex-item_IF"
       v-if="item_name === 'Información Financiera' && item"
