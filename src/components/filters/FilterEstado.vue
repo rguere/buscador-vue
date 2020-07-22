@@ -492,6 +492,9 @@ export default {
       this.treDisabled = false;
       this.disabledselected_estados = false;
       this.selected_estados = null;
+      this.selected_custom_estados = this.selected_custom_estados.filter(
+        (item) => item.apply === true
+      );
     },
     setTabActivo(tab) {
       this.tabActivo = tab;
