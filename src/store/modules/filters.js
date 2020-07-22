@@ -178,7 +178,7 @@ const initialState = () => {
         items: [],
         quantity: 0,
         key: "estado",
-        disabled: true,
+        disabled: false,
       },
     ],
     cantidades: {},

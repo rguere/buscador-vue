@@ -79,6 +79,7 @@
                 <filter-cargos></filter-cargos>
                 <filter-directivos-vinculaciones></filter-directivos-vinculaciones>
                 <filter-informacion-financiera></filter-informacion-financiera>
+                <filter-estado></filter-estado>
                 <div class="space"></div>
               </div>
             </div>

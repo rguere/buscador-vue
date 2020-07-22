@@ -742,6 +742,60 @@ export const formatProvinciaLocalidad = (data) => {
       special: true,
     },
   ];
+  newData.estados = [
+    {
+      id: "Activas",
+      label: "Activas",
+      data: 36,
+      children: [
+        {
+          id: "Activa Con Cuentas Anuales",
+          label: "Activa Con Cuentas Anuales",
+          data: 6,
+        },
+        {
+          id: "Activa Reciente Constitución",
+          label: "Activa Reciente Constitución",
+          data: 2,
+        },
+        {
+          id: "Activa Sin Cuentas Últimos 3 Años",
+          label: "Activa Sin Cuentas Últimos 3 Años",
+          data: 3,
+        },
+        {
+          id: "Activa Desconocido",
+          label: "Activa Desconocido",
+          data: 9,
+        },
+        {
+          id: "Escisión Parcial",
+          label: "Escisión Parcial",
+          data: 9,
+        },
+        {
+          id: "Escisión Total",
+          label: "Escisión Total",
+          data: 2,
+        },
+        {
+          id: "Reapertura Hoja Registral (Con Cuentas)",
+          label: "Reapertura Hoja Registral (Con Cuentas)",
+          data: 1,
+        },
+        {
+          id: "Segregación",
+          label: "Segregación",
+          data: 4,
+        },
+      ],
+    },
+    {
+      id: "Cerradas",
+      label: "Cerradas",
+      data: 23,
+    },
+  ];
   return newData;
 };
 
