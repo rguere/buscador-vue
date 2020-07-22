@@ -477,7 +477,8 @@ span.num-fil {
   z-index: 1 !important;
 }
 
-#filter_informacion_financiera {
+#filter_informacion_financiera,
+#filter_estado {
   .el-input.is-disabled {
     input,
     input::placeholder {

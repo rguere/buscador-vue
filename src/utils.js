@@ -744,56 +744,154 @@ export const formatProvinciaLocalidad = (data) => {
   ];
   newData.estados = [
     {
-      id: "Activas",
+      id: "children_activas",
       label: "Activas",
-      data: 36,
+      data: null,
       children: [
         {
-          id: "Activa Con Cuentas Anuales",
-          label: "Activa Con Cuentas Anuales",
-          data: 6,
+          id: 1,
+          label: "Activa",
+          data: 0,
         },
         {
-          id: "Activa Reciente Constitución",
-          label: "Activa Reciente Constitución",
-          data: 2,
+          id: 2,
+          label: "Activa reciente constitución",
+          data: 10,
         },
         {
-          id: "Activa Sin Cuentas Últimos 3 Años",
-          label: "Activa Sin Cuentas Últimos 3 Años",
-          data: 3,
+          id: 3,
+          label: "Activa con cuentas anuales",
+          data: 20,
         },
         {
-          id: "Activa Desconocido",
-          label: "Activa Desconocido",
-          data: 9,
+          id: 4,
+          label: "Activa sin cuentas Ult. 3 años",
+          data: 30,
         },
         {
-          id: "Escisión Parcial",
-          label: "Escisión Parcial",
-          data: 9,
+          id: 7,
+          label: "Activa. Aprobación Judicial del Convenio",
+          data: 50,
         },
         {
-          id: "Escisión Total",
-          label: "Escisión Total",
-          data: 2,
-        },
-        {
-          id: "Reapertura Hoja Registral (Con Cuentas)",
-          label: "Reapertura Hoja Registral (Con Cuentas)",
-          data: 1,
-        },
-        {
-          id: "Segregación",
-          label: "Segregación",
-          data: 4,
+          id: 18,
+          label: "Activa. Reactivada",
+          data: 120,
         },
       ],
     },
     {
-      id: "Cerradas",
-      label: "Cerradas",
-      data: 23,
+      id: "children_proceso_concursal",
+      label: "Proceso concursal",
+      data: null,
+      children: [
+        {
+          id: 5,
+          label: "Activa. En concurso",
+          data: 40,
+        },
+        {
+          id: 15,
+          label: "Suspensión de pagos",
+          data: 100,
+        },
+        {
+          id: 16,
+          label: "Activa. Sale de situación concursal",
+          data: 110,
+        },
+      ],
+    },
+    {
+      id: "children_en_extinción",
+      label: "En extinción",
+      data: null,
+      children: [
+        {
+          id: 6,
+          label: "Liquidación",
+          data: 41,
+        },
+        {
+          id: 8,
+          label: "Disolución",
+          data: 60,
+        },
+        {
+          id: 9,
+          label: "Extinción",
+          data: 70,
+        },
+        {
+          id: 17,
+          label: "Liquidación",
+          data: 111,
+        },
+      ],
+    },
+    {
+      id: "children_proceso_de_union_segregación",
+      label: "Proceso de unión/segregación",
+      data: null,
+      children: [
+        {
+          id: 11,
+          label: "Fusión",
+          data: 91,
+        },
+        {
+          id: 20,
+          label: "Cesión global",
+          data: 71,
+        },
+        {
+          id: 21,
+          label: "Escisión Total",
+          data: 72,
+        },
+        {
+          id: 22,
+          label: "Escisión parcial",
+          data: 130,
+        },
+        {
+          id: 23,
+          label: "Segregación",
+          data: 140,
+        },
+      ],
+    },
+    {
+      id: "children_otras",
+      label: "Otras",
+      data: null,
+      children: [
+        {
+          id: 12,
+          label: "Baja",
+          data: 92,
+        },
+        {
+          id: 13,
+          label: "Cierre provisional",
+          data: 93,
+        },
+        {
+          id: 14,
+          label: "Reapertura Hoja Registral (sin cuentas)",
+          data: 94,
+        },
+        {
+          id: 19,
+          label: "Otras",
+          data: 1,
+        },
+        {
+          id: 10,
+          label: "Cierre provisional",
+          data: 90,
+        },
+      ],
     },
   ];
   return newData;

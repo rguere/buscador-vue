@@ -11,24 +11,63 @@
     </div>
     <div class="panel-body">
       <div v-if="search.estados && search.estados.length !== 0">
-        <div class="grid-3-columns-1fr">
-          <div v-for="(item, key) in search.estados" :key="key">
-            <label
-              class="custon-checkboxs"
-              v-if="item.label !== 'incluir_null'"
+        <div class="treeselect_estado">
+          <ul class="nav nav-tabs">
+            <li
+              v-for="(item, key) in search.estados"
+              :key="key"
+              :class="tabActivo === item.id ? 'active' : ''"
             >
-              <input
-                type="checkbox"
-                :name="`checkbox_antiguedad_${item.id}`"
-                v-model="selected_estados"
-                @change="handleChange()"
-                :id="`checkbox_antiguedad_${item.id}`"
-                :value="item"
-              />
-              <span class="geekmark"></span>
-              <span class="name-checkbox">{{ item.label }}</span>
-              <span class="num-fil">({{ item.data | numeral("0,0") }})</span>
-            </label>
+              <a
+                data-toggle="tab"
+                @click="setTabActivo(item.id)"
+                class="text-white"
+                href="#"
+                >{{ item.label }}</a
+              >
+            </li>
+          </ul>
+          <div class="tab-content m-t-10">
+            <div
+              v-for="(item, key) in search.estados"
+              :key="key"
+              :class="tabActivoClassClass(item.id)"
+            >
+              <div>
+                <el-select
+                  value-key="id"
+                  v-model="selected_estados"
+                  filterable
+                  placeholder="Selecciona"
+                  :disabled="disabledselected_estados"
+                >
+                  <el-option
+                    v-for="_item in item.children"
+                    :key="_item.id"
+                    :label="_item.label"
+                    :value="_item"
+                    :class="_item.special ? 'special' : ''"
+                  >
+                    <span>{{ _item.label }}</span>
+                  </el-option>
+                </el-select>
+                <el-tooltip
+                  v-if="ifSelectedTal"
+                  class="item"
+                  effect="dark"
+                  content="Limpiar selección"
+                  placement="top-start"
+                >
+                  <el-button
+                    type="danger"
+                    style="float: right; float: right; position: absolute; right: 15px; opacity: 0;"
+                    icon="el-icon-delete"
+                    circle
+                    @click="resteSelet"
+                  ></el-button>
+                </el-tooltip>
+              </div>
+            </div>
           </div>
         </div>
         <div class="flex-space-between-flex-end">
@@ -40,10 +79,7 @@
             <button
               type="button"
               class="btn btn-success"
-              v-if="
-                (selected_estados.length !== 0 && !areApplied) ||
-                  (selected_estados.length !== 0 && !compareWithNewtoApply)
-              "
+              v-if="showApplyBtn"
               @click="apply"
             >
               Aplicar
@@ -61,30 +97,12 @@
               <i class="fa fa-undo"></i>
             </button>
           </div>
-          <div>
-            <!-- <div class="checkboxs-resaldado float-right" v-if="itemIncluirNull">
-              <label class="custon-checkboxs">
-                <input
-                  type="checkbox"
-                  v-model="selected_estados"
-                  :value="itemIncluirNull"
-                  @change="handleChange()"
-                  name
-                />
-                <span class="geekmark"></span>
-                <span class="title"
-                  >Incluir aquellas empresas en las que se desconoce su
-                  Estado</span
-                >
-              </label>
-            </div> -->
-          </div>
         </div>
-        <div v-if="custom_antiquity.length !== 0">
+        <div v-if="custom_estados.length !== 0">
           <hr />
           <p style="margin: 0 0 10px 19px;">Renglon personalizado</p>
           <div
-            v-for="(item, key) in custom_antiquity"
+            v-for="(item, key) in custom_estados"
             :key="key"
             class="checkbox"
           >
@@ -130,10 +148,7 @@
                 <button
                   type="button"
                   class="btn btn-success"
-                  v-if="
-                    (selected_estados.length !== 0 && !areApplied) ||
-                      (selected_estados.length !== 0 && !compareWithNewtoApply)
-                  "
+                  v-if="showApplyBtn"
                   @click="apply"
                 >
                   Aplicar
@@ -179,7 +194,6 @@
 <script>
 import { mapGetters } from "vuex";
 import swal from "sweetalert2";
-import { required, maxLength, numeric } from "vuelidate/lib/validators";
 import {
   inArrayObjectTreeselect,
   howAnimation,
@@ -200,22 +214,38 @@ export default {
       applied_filters: "filters/applied_filters",
       filters: "filters/filters",
     }),
-    itemIncluirNull: function() {
-      let include = this.search.estados.filter(function(item) {
-        return item.label === "incluir_null";
-      });
-      return include ? include[0] : null;
-    },
     compareWithNewtoApply: function() {
       let stg = this.selected_estados_string;
       let obj = JSON.stringify(this.selected_estados);
       return stg === obj;
     },
+    ifSelectedTal() {
+      return (
+        this.selected_estados &&
+        this.selected_estados.label &&
+        this.selected_estados.label.length !== 0
+      );
+    },
+    showApplyBtn() {
+      return (
+        (this.selected_estados &&
+          this.selected_estados.label &&
+          this.selected_estados.label.length !== 0 &&
+          !this.areApplied) ||
+        (this.selected_estados &&
+          this.selected_estados.label &&
+          this.selected_estados.label.length !== 0 &&
+          !this.compareWithNewtoApply)
+      );
+    },
   },
   data: () => ({
     title: "Estado",
+    tabActivo: "children_activas",
+    disabledselected_estados: false,
+    treDisabled: false,
     selected_estados_string: "",
-    selected_estados: [],
+    selected_estados: null,
     list_estados: [],
     selected_by_estados: 0,
     options: [
@@ -246,31 +276,20 @@ export default {
     },
     desdePicker: 0,
     hastaPicker: 0,
-    custom_antiquity: [],
+    custom_estados: [],
     selected_custom_estados: [],
   }),
-  validations() {
-    return {
-      ahnos_from: {
-        required,
-        between: maxLength(3),
-        numeric,
-      },
-      ahnos_to: {
-        required,
-        between: maxLength(3),
-        numeric,
-      },
-    };
-  },
   watch: {
     selected_estados: function(newProvincesLocalidad) {
-      this.selected_by_estados = this.numberCompaniesSelected(
-        this.isAllProvincesLocalidad(newProvincesLocalidad)
-          ? this.search.estados
-          : newProvincesLocalidad
-      );
-      if (this.reapply && newProvincesLocalidad.length === 0) {
+      const isSE =
+        newProvincesLocalidad &&
+        newProvincesLocalidad.label &&
+        newProvincesLocalidad.label.length > 0;
+      this.selected_by_estados = newProvincesLocalidad && isSE ? 1 : 0;
+      if (isSE) {
+        this.disabledselected_estados = true;
+      }
+      if (this.reapply && !isSE) {
         this.clean();
       }
     },
@@ -280,7 +299,7 @@ export default {
       }
     },
     selected_by_estados: function(newValue) {
-      if (newValue === 0) this.selected_estados = [];
+      if (newValue === 0) this.selected_estados = null;
     },
     selected_companies: function() {
       howAnimation(document.querySelector(".selected_companies"));
@@ -304,6 +323,20 @@ export default {
     });
   },
   methods: {
+    resteSelet() {
+      this.treDisabled = false;
+      this.disabledselected_estados = false;
+      this.selected_estados = null;
+    },
+    setTabActivo(tab) {
+      this.tabActivo = tab;
+      this.resteSelet();
+    },
+    tabActivoClassClass(tap) {
+      return this.tabActivo === tap
+        ? "tab-pane fade in active"
+        : "tab-pane fade";
+    },
     clickPicker(event, elementRefs) {
       let target = event.target;
       if (target.classList.contains("el-icon-date")) {
@@ -341,12 +374,12 @@ export default {
     },
     showModal() {
       sendPageView(`filtro-estado`, `Buscador - Estado`);
-      this.$v.$reset();
+
       this.modalVisible = true;
     },
     hideModal() {
       sendPageView(``, `Buscador - Filtro`);
-      this.$v.$reset();
+
       this.modalVisible = false;
     },
     /**
@@ -387,7 +420,11 @@ export default {
         : false;
     },
     apply() {
-      if (this.selected_estados && this.selected_estados.length !== 0) {
+      if (
+        this.selected_estados &&
+        this.selected_estados.label &&
+        this.selected_estados.label.length !== 0
+      ) {
         this.hideModal();
         this.loadingFrm = true;
         this.formatearDataPOST();
@@ -415,131 +452,11 @@ export default {
             );
             this.ahnos_from = "";
             this.ahnos_to = "";
-            this.custom_antiquity = [];
-            this.$v.$reset();
+            this.custom_estados = [];
             sendEvent(`filtro-aplicado`, this.title);
           })
           .catch(() => {
             this.loadingFrm = false;
-          });
-      }
-    },
-    applyRange() {
-      if (
-        this.daterange &&
-        this.daterange.length !== 0 &&
-        this.daterange[0] !== 0 &&
-        this.daterange[1] !== 0
-      ) {
-        this.hideModal();
-        this.loadingDaterange = true;
-        this.form.antiguedad = [];
-        this.form.antiguedad.push(`fechas:${this.daterange.join("|")}`);
-        let beforeForm = beforeOrderFilters(
-          this.filters,
-          this.applied_filters,
-          this.form,
-          this.title
-        );
-        this.$store
-          .dispatch("search/filtrar", beforeForm)
-          .then((response) => {
-            this.updateNumberSelectedCompanies(response.cantidad);
-            this.$store.dispatch("filters/addFilters", {
-              name: this.title,
-              quantity: this.selected_by_estados,
-              cantidades: response,
-              items: this.selected_estados,
-            });
-            this.areApplied = true;
-            this.reapply = false;
-            this.loadingDaterange = false;
-            this.selected_estados_string = JSON.stringify(
-              this.selected_estados
-            );
-            this.ahnos_from = "";
-            this.ahnos_to = "";
-            this.custom_antiquity = [];
-            this.$v.$reset();
-            sendEvent(`filtro-aplicado`, this.title);
-          })
-          .catch(() => {
-            this.loadingDaterange = false;
-          });
-      }
-    },
-    applyAhnos() {
-      if (this.custom_antiquity && this.custom_antiquity.length > 0) {
-        this.loadingAhnos = true;
-        this.form.antiguedad = [];
-        this.selected_estados = [];
-        this.form.antiguedad.push(this.custom_antiquity[0].id);
-        let beforeForm = beforeOrderFilters(
-          this.filters,
-          this.applied_filters,
-          this.form,
-          this.title
-        );
-        this.$store
-          .dispatch("search/filtrar", beforeForm)
-          .then((response) => {
-            this.updateNumberSelectedCompanies(response.cantidad);
-            this.$store.dispatch("filters/addFilters", {
-              name: this.title,
-              quantity: this.selected_by_estados,
-              cantidades: response,
-              items: this.selected_custom_estados,
-            });
-            this.areApplied = true;
-            this.reapply = false;
-            this.loadingAhnos = false;
-            this.selected_estados_string = JSON.stringify(
-              this.selected_estados
-            );
-            this.hideModal();
-            sendEvent(`filtro-aplicado`, this.title);
-          })
-          .catch(() => {
-            this.loadingAhnos = false;
-          });
-      }
-    },
-    searchAhnos() {
-      this.$v.$touch();
-      if (!this.$v.$invalid) {
-        this.loadingAhnos = true;
-        this.form.antiguedad = [];
-        this.ahnos_to = Number.parseInt(this.ahnos_to);
-        this.ahnos_from = Number.parseInt(this.ahnos_from);
-        let major =
-          this.ahnos_to > this.ahnos_from ? this.ahnos_to : this.ahnos_from;
-        let smaller =
-          this.ahnos_to > this.ahnos_from ? this.ahnos_from : this.ahnos_to;
-        this.form.antiguedad.push(`ahnos:${smaller}|${major}`);
-        let beforeForm = beforeOrderFilters(
-          this.filters,
-          this.applied_filters,
-          this.form,
-          this.title
-        );
-        this.$store
-          .dispatch("search/filtrar", beforeForm)
-          .then((response) => {
-            if (response && response.cantidad) {
-              this.custom_antiquity = [];
-              this.selected_custom_estados = [];
-              let item = {
-                id: `ahnos:${smaller}|${major}`,
-                data: response.cantidad,
-                label: `De ${smaller} a ${major} años`,
-              };
-              this.custom_antiquity[0] = item;
-              this.selected_custom_estados[0] = item;
-            }
-            this.loadingAhnos = false;
-          })
-          .catch(() => {
-            this.loadingAhnos = false;
           });
       }
     },
@@ -563,9 +480,10 @@ export default {
         });
     },
     clean() {
-      this.form.antiguedad = [];
-      this.selected_estados = [];
+      this.form.estado = [];
+      this.selected_estados = null;
       this.selected_estados_string = "";
+      this.resteSelet();
       if (this.applied_filters.length > 1) {
         let beforeForm = beforeOrderFilters(
           this.filters,
@@ -590,13 +508,14 @@ export default {
       this.incluir_null = false;
       this.ahnos_from = "";
       this.ahnos_to = "";
-      this.custom_antiquity = [];
+      this.custom_estados = [];
       sendEvent("filtro-limpiado", this.title);
     },
     emptyFilter() {
-      this.form.antiguedad = [];
-      this.selected_estados = [];
+      this.form.estado = [];
+      this.selected_estados = null;
       this.selected_estados_string = "";
+      this.resteSelet();
       this.updateNumberSelectedCompanies(0);
       this.selected_by_estados = 0;
       (this.daterange = [null, null]),
@@ -606,17 +525,17 @@ export default {
       this.incluir_null = false;
       this.ahnos_from = "";
       this.ahnos_to = "";
-      this.custom_antiquity = [];
+      this.custom_estados = [];
     },
     handleChange() {
       //province, event
       this.reapply = this.areApplied ? true : this.areApplied;
     },
     formatearDataPOST() {
-      this.form.antiguedad = [];
-      this.selected_estados.forEach((item) => {
-        this.form.antiguedad.push(item.id);
-      });
+      this.form.estado =
+        this.selected_estados && this.selected_estados.id
+          ? this.selected_estados.id
+          : null;
       return this.form;
     },
   },
@@ -625,7 +544,19 @@ export default {
 
 <style lang="scss" scoped>
 @import "./../../sass/filters/filters";
-
+.nav.nav-tabs {
+  li.active a {
+    color: #fff !important;
+  }
+}
+.nav-tabs {
+  border-bottom: none !important;
+}
+.treeselect_estado {
+  .el-select {
+    width: 100%;
+  }
+}
 .block {
   display: flex;
   flex-direction: column;
