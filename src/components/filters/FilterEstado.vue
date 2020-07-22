@@ -68,7 +68,7 @@
                     >
                       <el-button
                         type="danger"
-                        style="float: right; float: right; position: absolute; right: 15px; opacity: 0;"
+                        style="float: right; float: right; position: absolute; right: 33px; opacity: 0;"
                         icon="el-icon-delete"
                         circle
                         @click="resteSelet"
@@ -250,7 +250,7 @@
                                 >
                                   <el-button
                                     type="danger"
-                                    style="float: right; float: right; position: absolute; right: 15px; opacity: 0;"
+                                    style="float: right; float: right; position: absolute; right: 33px; opacity: 0;"
                                     icon="el-icon-delete"
                                     circle
                                     @click="resteSelet"
@@ -367,8 +367,14 @@ export default {
         (this.selected_estados &&
           this.selected_estados.label &&
           this.selected_estados.label.length !== 0 &&
-          !this.compareWithNewtoApply) ||
-        (this.areApplied && !this.compareWithNewtoApplySelectedEstados)
+          !this.compareWithNewtoApply)
+
+        //   ||
+        // (this.selected_estados &&
+        //   this.selected_estados.label &&
+        //   this.selected_estados.label.length !== 0 &&
+        //   this.areApplied &&
+        //   !this.compareWithNewtoApplySelectedEstados)
       );
     },
   },
@@ -420,6 +426,15 @@ export default {
       this.selected_by_estados = newEstado && isSE ? 1 : 0;
       if (isSE) {
         this.disabledselected_estados = true;
+        this.selected_estados.apply = false;
+        this.selected_custom_estados = this.selected_custom_estados.filter(
+          (item) => item.apply === true
+        );
+        this.selected_custom_estados.push(this.selected_estados);
+        this.selected_custom_estados = removeDuplicates(
+          this.selected_custom_estados,
+          "id"
+        );
       }
       if (this.reapply && !isSE) {
         this.clean();
@@ -592,6 +607,10 @@ export default {
               this.selected_custom_estados,
               "id"
             );
+            this.selected_custom_estados.map((item) => {
+              item.apply = true;
+              return item;
+            });
             this.updateNumberSelectedCompanies(response.cantidad);
             this.$store.dispatch("filters/addFilters", {
               name: this.title,
