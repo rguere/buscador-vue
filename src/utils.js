@@ -177,6 +177,13 @@ export const beforeOrderFilters = (filters, applied_filters, form, title) => {
         ) {
           arr[item._key] = before_form[item._key];
         }
+        if (
+          item.__key &&
+          before_form[item.__key] &&
+          before_form[item.__key].length !== 0
+        ) {
+          arr[item.__key] = before_form[item.__key];
+        }
       }
       let aux = { ...arr };
       if (Object.keys(aux).length !== 0) {
@@ -890,6 +897,107 @@ export const formatProvinciaLocalidad = (data) => {
           id: 10,
           label: "Cierre provisional",
           data: 90,
+        },
+      ],
+    },
+  ];
+  newData.ratios = [
+    {
+      id: "children_ratios_de_rentabilidad",
+      label: "Ratios de rentabilidad",
+      children: [
+        {
+          id: "Ebitda",
+          label: "Ebitda",
+          special: false,
+        },
+        {
+          id: "Roa",
+          label: "Roa",
+          special: false,
+        },
+        {
+          id: "Roe",
+          label: "Roe",
+          special: false,
+        },
+        {
+          id: "Ros",
+          label: "Ros",
+          special: false,
+        },
+      ],
+    },
+    {
+      id: "children_eatios_operativos",
+      label: "Ratios operativos",
+      children: [
+        {
+          id: "Periodo medio de cobro (PMC)",
+          label: "Periodo medio de cobro (PMC)",
+          special: false,
+        },
+        {
+          id: "Periodo medio de pago (PMP)",
+          label: "Periodo medio de pago (PMP)",
+          special: false,
+        },
+      ],
+    },
+    {
+      id: "children_ratios_de_endeudamiento",
+      label: "Ratios de endeudamiento",
+      children: [
+        {
+          id: "Deuda financiera bruta / EBITDA",
+          label: "Deuda financiera bruta / EBITDA",
+          special: false,
+        },
+        {
+          id: "Deuda financiera neta / EBITDA",
+          label: "Deuda financiera neta / EBITDA",
+          special: false,
+        },
+        {
+          id: "Apalancamiento",
+          label: "Apalancamiento",
+          special: false,
+        },
+        {
+          id: "Deuda financiera neta / Fondos propios",
+          label: "Deuda financiera neta / Fondos propios",
+          special: false,
+        },
+      ],
+    },
+    {
+      id: "children_ratios_de_equilibrio",
+      label: "Ratios de equilibrio",
+      children: [
+        {
+          id: "Fondo de maniobra",
+          label: "Fondo de maniobra",
+          special: false,
+        },
+        {
+          id: "Necesidades operativas de fondos",
+          label: "Necesidades operativas de fondos",
+          special: false,
+        },
+        {
+          id: "Ratio de liquidez",
+          label: "Ratio de liquidez",
+          special: false,
+        },
+        {
+          id: "Ratio de solvencia",
+          label: "Ratio de solvencia",
+          special: false,
+        },
+        {
+          id: "Ratio de tesorería o prueba ácida",
+          label: "Ratio de tesorería o prueba ácida",
+          special: false,
         },
       ],
     },

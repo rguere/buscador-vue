@@ -628,6 +628,17 @@ export default {
                     "data"
                   ),
                 });
+              } else if (element.title === "Estado") {
+                this.filtros_aplicados.push({
+                  title: element.title,
+                  quantity: result.quantity,
+                  key: result.key,
+                  datas: element.selected_custom_estados,
+                  data_quantity: countByProperty(
+                    element.selected_custom_estados,
+                    "data"
+                  ),
+                });
               }
             }
           }

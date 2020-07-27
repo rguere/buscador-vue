@@ -721,10 +721,6 @@ export default {
       this.selected_custom_estados.forEach((item) => {
         estados.push(item.id);
       });
-      if (this.selected_estados && this.selected_estados.id) {
-        estados.push(this.selected_estados.id);
-      }
-      estados = removeDuplicates(estados, "id");
       this.form.estado = estados;
       return this.form;
     },

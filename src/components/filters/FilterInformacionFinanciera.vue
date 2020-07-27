@@ -34,10 +34,7 @@
                     estrategia de búsqueda
                   </p>
                 </div>
-                <div
-                  class="treeselect_informacion_financiera"
-                  v-if="showSearch"
-                >
+                <div class="select-el100" v-if="showSearch">
                   <ul class="nav nav-tabs">
                     <li
                       v-for="(item, key) in search.informacion_financiera"
@@ -106,10 +103,7 @@
                     que desees agregar a tu estrategia de búsqueda
                   </p>
                 </div>
-                <div
-                  class="treeselect_informacion_financiera"
-                  v-if="showSearch"
-                >
+                <div class="select-el100" v-if="showSearch">
                   <div>
                     <el-select
                       value-key="id"
@@ -142,6 +136,75 @@
                         @click="resteSelet"
                       ></el-button>
                     </el-tooltip>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div :class="tabPaneClass('ratios')">
+              <div class="panel panel-default cd">
+                <div class="panel-heading">
+                  <p class="panel-title roboto white">
+                    Seleccione la principales ratios económicos que desee
+                    agregar a su estrategia de búsqueda
+                  </p>
+                </div>
+                <div class="select-el100" v-if="showSearch">
+                  <ul class="nav nav-tabs">
+                    <li
+                      v-for="(item, key) in search.ratios"
+                      :key="key"
+                      :class="tabActivo2 === item.id ? 'active' : ''"
+                    >
+                      <a
+                        data-toggle="tab"
+                        @click="setTabActivo2(item.id)"
+                        class="text-white"
+                        href="#"
+                        >{{ item.label }}</a
+                      >
+                    </li>
+                  </ul>
+                  <div class="tab-content m-t-10">
+                    <div
+                      v-for="(item, key) in search.ratios"
+                      :key="key"
+                      :class="tabActivoClassClass2(item.id)"
+                    >
+                      <div>
+                        <el-select
+                          value-key="id"
+                          v-model="valueSelect"
+                          filterable
+                          placeholder="Selecciona"
+                          :disabled="disabledValueSelect"
+                        >
+                          <el-option
+                            v-for="_item in item.children"
+                            :key="_item.id"
+                            :label="_item.label"
+                            :value="_item"
+                            :class="_item.special ? 'special' : ''"
+                          >
+                            <span>{{ _item.label }}</span>
+                          </el-option>
+                        </el-select>
+                        <el-tooltip
+                          v-if="ifSelectedTal"
+                          class="item"
+                          effect="dark"
+                          content="Limpiar selección"
+                          placement="top-start"
+                        >
+                          <el-button
+                            type="danger"
+                            style="float: right; float: right; position: absolute; right: 15px; opacity: 0;"
+                            icon="el-icon-delete"
+                            circle
+                            @click="resteSelet"
+                          ></el-button>
+                        </el-tooltip>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -318,6 +381,11 @@
         </div>
         <p class="text-help">* Puedes elegir más de una opción</p>
       </div>
+      <div class="row">
+        <div class="col-md-12">
+          <pre>{{ balance() }}</pre>
+        </div>
+      </div>
       <div class="row" v-if="items_IF && items_IF.length > 0">
         <div class="col-md-12">
           <el-collapse v-model="collapseResumen">
@@ -422,10 +490,7 @@
                             a tu estrategia de búsqueda
                           </p>
                         </div>
-                        <div
-                          class="treeselect_informacion_financiera"
-                          v-if="showSearch"
-                        >
+                        <div class="select-el100" v-if="showSearch">
                           <ul class="nav nav-tabs">
                             <li
                               v-for="(item,
@@ -497,10 +562,7 @@
                             búsqueda
                           </p>
                         </div>
-                        <div
-                          class="treeselect_informacion_financiera"
-                          v-if="showSearch"
-                        >
+                        <div class="select-el100" v-if="showSearch">
                           <div>
                             <el-select
                               value-key="id"
@@ -774,7 +836,11 @@ export default {
       return (
         this.search &&
         this.search.informacion_financiera &&
-        this.search.informacion_financiera.length !== 0
+        this.search.informacion_financiera.length !== 0 &&
+        this.search.estados &&
+        this.search.estados.length !== 0 &&
+        this.search.ratios &&
+        this.search.ratios.length !== 0
       );
     },
     showOptions() {
@@ -811,6 +877,7 @@ export default {
     collapseResumen: [],
     collapseResumen2: ["1"],
     tabActivo: "children_activo",
+    tabActivo2: "children_ratios_de_rentabilidad",
     modo: "balance",
     modos: [
       {
@@ -821,10 +888,10 @@ export default {
         id: "perdidas",
         label: "Cuenta de Perdidas y ganancias",
       },
-      // {
-      //   id: "Principales Ratios Económicos",
-      //   label: "Principales Ratios Económicos",
-      // },
+      {
+        id: "ratios",
+        label: "Principales Ratios Económicos",
+      },
     ],
     loadingFrm: false,
     modalVisible: false,
@@ -1127,6 +1194,11 @@ export default {
         ? "tab-pane fade in active"
         : "tab-pane fade";
     },
+    tabActivoClassClass2(tap) {
+      return this.tabActivo2 === tap
+        ? "tab-pane fade in active"
+        : "tab-pane fade";
+    },
     clean() {
       this.itemsApplied = {};
       this.form.balance = [];
@@ -1212,6 +1284,9 @@ export default {
     setTabActivo(tab) {
       this.tabActivo = tab;
     },
+    setTabActivo2(tab) {
+      this.tabActivo2 = tab;
+    },
     fetchSearch() {},
     inputTreeselect() {},
     selectTreeselect() {},
@@ -1266,6 +1341,8 @@ export default {
           this.form.balance.push(item);
         } else if (this.modo === "perdidas") {
           this.form.perdidas.push(item);
+        } else if (this.modo === "ratios") {
+          this.form.ratios.push(item);
         }
       });
       return this.form;
@@ -1388,7 +1465,7 @@ label.custon-checkboxs {
     list-style: circle;
   }
 }
-.treeselect_informacion_financiera {
+.select-el100 {
   .el-select {
     width: 100%;
   }

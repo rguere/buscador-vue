@@ -20,6 +20,7 @@ const initialState = () => {
       vinculaciones: [],
       balance: [],
       perdidas: [],
+      ratios: [],
       estado: [],
       filtros: [{}],
     },
@@ -102,6 +103,7 @@ const initialState = () => {
         quantity: 0,
         key: "balance",
         _key: "perdidas",
+        __key: "ratios",
         disabled: false,
       },
       {
