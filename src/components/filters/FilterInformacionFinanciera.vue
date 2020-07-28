@@ -381,11 +381,6 @@
         </div>
         <p class="text-help">* Puedes elegir más de una opción</p>
       </div>
-      <div class="row">
-        <div class="col-md-12">
-          <pre>{{ balance() }}</pre>
-        </div>
-      </div>
       <div class="row" v-if="items_IF && items_IF.length > 0">
         <div class="col-md-12">
           <el-collapse v-model="collapseResumen">
@@ -595,6 +590,75 @@
                                 @click="resteSelet"
                               ></el-button>
                             </el-tooltip>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div :class="tabPaneClass('ratios')">
+                      <div class="panel panel-default cd">
+                        <div class="panel-heading">
+                          <p class="panel-title roboto white">
+                            Seleccione la principales ratios económicos que
+                            desee agregar a su estrategia de búsqueda
+                          </p>
+                        </div>
+                        <div class="select-el100" v-if="showSearch">
+                          <ul class="nav nav-tabs">
+                            <li
+                              v-for="(item, key) in search.ratios"
+                              :key="key"
+                              :class="tabActivo2 === item.id ? 'active' : ''"
+                            >
+                              <a
+                                data-toggle="tab"
+                                @click="setTabActivo2(item.id)"
+                                class="text-white"
+                                href="#"
+                                >{{ item.label }}</a
+                              >
+                            </li>
+                          </ul>
+                          <div class="tab-content m-t-10">
+                            <div
+                              v-for="(item, key) in search.ratios"
+                              :key="key"
+                              :class="tabActivoClassClass2(item.id)"
+                            >
+                              <div>
+                                <el-select
+                                  value-key="id"
+                                  v-model="valueSelect"
+                                  filterable
+                                  placeholder="Selecciona"
+                                  :disabled="disabledValueSelect"
+                                >
+                                  <el-option
+                                    v-for="_item in item.children"
+                                    :key="_item.id"
+                                    :label="_item.label"
+                                    :value="_item"
+                                    :class="_item.special ? 'special' : ''"
+                                  >
+                                    <span>{{ _item.label }}</span>
+                                  </el-option>
+                                </el-select>
+                                <el-tooltip
+                                  v-if="ifSelectedTal"
+                                  class="item"
+                                  effect="dark"
+                                  content="Limpiar selección"
+                                  placement="top-start"
+                                >
+                                  <el-button
+                                    type="danger"
+                                    style="float: right; float: right; position: absolute; right: 15px; opacity: 0;"
+                                    icon="el-icon-delete"
+                                    circle
+                                    @click="resteSelet"
+                                  ></el-button>
+                                </el-tooltip>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>

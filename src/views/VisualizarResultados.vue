@@ -296,7 +296,11 @@
                                   v-for="(_item, _key) in item.datas"
                                   :key="_key"
                                 >
-                                  <span
+                                  <criteria-item
+                                    :item_name="item.title"
+                                    :item="_item"
+                                  ></criteria-item>
+                                  <!-- <span
                                     class="t-t-capitalize"
                                     v-if="item.title === 'Sector/Actividad'"
                                   >
@@ -311,7 +315,7 @@
                                         ? _item.label
                                         : `Empresas en las que se desconoce su ${item.title.toLowerCase()}`
                                     }}
-                                  </span>
+                                  </span> -->
                                 </li>
                               </ul>
                               <el-divider></el-divider>
@@ -638,6 +642,15 @@ export default {
                     element.selected_custom_estados,
                     "data"
                   ),
+                });
+              } else if (element.title === "Información Financiera") {
+                console.log(element.items_IF);
+                this.filtros_aplicados.push({
+                  title: element.title,
+                  quantity: result.quantity,
+                  key: result.key,
+                  datas: element.items_IF,
+                  data_quantity: countByProperty(element.items_IF, "data"),
                 });
               }
             }

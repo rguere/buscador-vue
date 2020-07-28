@@ -829,11 +829,11 @@ export const formatProvinciaLocalidad = (data) => {
           label: "Extinción",
           data: 70,
         },
-        {
-          id: 17,
-          label: "Liquidación",
-          data: 111,
-        },
+        // {
+        //   id: 17,
+        //   label: "Liquidación",
+        //   data: 111,
+        // },
       ],
     },
     {
@@ -890,7 +890,7 @@ export const formatProvinciaLocalidad = (data) => {
         },
         {
           id: 19,
-          label: "Otras",
+          label: "Desconocido",
           data: 1,
         },
         {
@@ -907,23 +907,23 @@ export const formatProvinciaLocalidad = (data) => {
       label: "Ratios de rentabilidad",
       children: [
         {
-          id: "Ebitda",
-          label: "Ebitda",
+          id: "EBITDA",
+          label: "EBITDA",
           special: false,
         },
         {
-          id: "Roa",
-          label: "Roa",
+          id: "ROA",
+          label: "ROA",
           special: false,
         },
         {
-          id: "Roe",
-          label: "Roe",
+          id: "ROE",
+          label: "ROE",
           special: false,
         },
         {
-          id: "Ros",
-          label: "Ros",
+          id: "ROS",
+          label: "ROS",
           special: false,
         },
       ],

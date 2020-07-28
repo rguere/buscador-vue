@@ -44,14 +44,14 @@
       class="flex-item_IF"
       v-if="item_name === 'Información Financiera' && item"
     >
-      <label class="custon-checkboxs">
-        <span class="name-checkbox">
-          <b>{{ item.label }}</b> </span
+      <p class="">
+        <span class="">
+          <span>{{ item.label }}</span> </span
         >, <span v-if="item.anios">{{ item.anios }}</span
         >, <span v-if="item.unidad">{{ item.unidad }}</span
         >,
         <span v-if="item.rango">{{ item.rango }}</span>
-      </label>
+      </p>
     </div>
 
     <div
