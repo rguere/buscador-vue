@@ -300,22 +300,6 @@
                                     :item_name="item.title"
                                     :item="_item"
                                   ></criteria-item>
-                                  <!-- <span
-                                    class="t-t-capitalize"
-                                    v-if="item.title === 'Sector/Actividad'"
-                                  >
-                                    {{ `${_item.id} - ${_item.label}` }}
-                                  </span>
-                                  <span
-                                    class="t-t-capitalize"
-                                    v-if="item.title !== 'Sector/Actividad'"
-                                  >
-                                    {{
-                                      _item.label !== "incluir_null"
-                                        ? _item.label
-                                        : `Empresas en las que se desconoce su ${item.title.toLowerCase()}`
-                                    }}
-                                  </span> -->
                                 </li>
                               </ul>
                               <el-divider></el-divider>
@@ -644,7 +628,6 @@ export default {
                   ),
                 });
               } else if (element.title === "Información Financiera") {
-                console.log(element.items_IF);
                 this.filtros_aplicados.push({
                   title: element.title,
                   quantity: result.quantity,
