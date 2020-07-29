@@ -374,12 +374,12 @@ export const formatProvinciaLocalidad = (data) => {
     "incluir_null",
   ];
   const data_value = {
-    "2014": 1037797,
-    "2015": 1048359,
-    "2016": 1042719,
-    "2017": 1008022,
-    "2018": 930712,
-    "2019": 17572,
+    "2014": 1037945,
+    "2015": 1048623,
+    "2016": 1043337,
+    "2017": 1008999,
+    "2018": 932970,
+    "2019": 32568,
   };
   for (const key in data) {
     if (data.hasOwnProperty(key)) {

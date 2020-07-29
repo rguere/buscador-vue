@@ -1,9 +1,6 @@
 <template>
   <div class="home" id="page-wrapper">
-    <banner-top
-      banner-title="Buscador de Empresas"
-      banner-subtitle="Visualizar resultados"
-    ></banner-top>
+    <banner-top banner-title="Buscador de Empresas" banner-subtitle="Visualizar resultados"></banner-top>
     <div class="container">
       <loading-full-page></loading-full-page>
       <div class="banner">
@@ -39,8 +36,7 @@
                           <a
                             target="_blank"
                             href="http://www.infocif.es/gestion/gestion-registro.asp"
-                            >http://www.infocif.es/gestion/gestion-registro.asp</a
-                          >
+                          >http://www.infocif.es/gestion/gestion-registro.asp</a>
                         </p>
                       </div>
                     </div>
@@ -119,12 +115,7 @@
                         />
                       </div>
                       <span slot="footer" class="dialog-footer">
-                        <button
-                          @click="dialogCorreoVisible = false"
-                          class="btn btn-danger"
-                        >
-                          Cerrar
-                        </button>
+                        <button @click="dialogCorreoVisible = false" class="btn btn-danger">Cerrar</button>
                         <button
                           @click="enviarResultadosCorreo"
                           :disabled="loadingCorreo"
@@ -154,8 +145,7 @@
                             <a
                               target="_blank"
                               href="http://www.infocif.es/gestion/gestion-registro.asp"
-                              >http://www.infocif.es/gestion/gestion-registro.asp</a
-                            >
+                            >http://www.infocif.es/gestion/gestion-registro.asp</a>
                           </p>
                         </div>
                       </div>
@@ -197,12 +187,7 @@
                         />
                       </div>
                       <span slot="footer" class="dialog-footer">
-                        <button
-                          @click="dialogCorreoVisible2 = false"
-                          class="btn btn-danger"
-                        >
-                          Cerrar
-                        </button>
+                        <button @click="dialogCorreoVisible2 = false" class="btn btn-danger">Cerrar</button>
                         <button
                           @click="descargarExcel"
                           :disabled="loadingExcel"
@@ -232,8 +217,7 @@
                             <a
                               target="_blank"
                               href="http://www.infocif.es/gestion/gestion-registro.asp"
-                              >http://www.infocif.es/gestion/gestion-registro.asp</a
-                            >
+                            >http://www.infocif.es/gestion/gestion-registro.asp</a>
                           </p>
                         </div>
                       </div>
@@ -270,9 +254,7 @@
                               alt="infocif"
                             />
                             <h1 class="text-center fs20">
-                              <strong class="title-lg"
-                                >Ficha Resumen de la Búsqueda</strong
-                              >
+                              <strong class="title-lg">Ficha Resumen de la Búsqueda</strong>
                             </h1>
                             <img
                               src="./../assets/images/buscador-logo.png"
@@ -286,26 +268,19 @@
                         <div class="col-md-8">
                           <h4>Estrategia de Búsqueda</h4>
                           <ul class="ul_filtros_aplicados">
-                            <li
-                              v-for="(item, key) in filtros_aplicados"
-                              :key="key"
-                            >
+                            <li v-for="(item, key) in filtros_aplicados" :key="key">
                               {{ item.title }}
                               <ul v-if="item.datas">
-                                <li
-                                  v-for="(_item, _key) in item.datas"
-                                  :key="_key"
-                                >
-                                  <criteria-item
-                                    :item_name="item.title"
-                                    :item="_item"
-                                  ></criteria-item>
+                                <li v-for="(_item, _key) in item.datas" :key="_key">
+                                  <criteria-item :item_name="item.title" :item="_item"></criteria-item>
                                 </li>
                               </ul>
                               <el-divider></el-divider>
-                              <span class="_right">{{
+                              <span class="_right">
+                                {{
                                 item.quantity | numeral("0,0")
-                              }}</span>
+                                }}
+                              </span>
                             </li>
                           </ul>
                         </div>
@@ -345,11 +320,8 @@
                         :href="scope.row.urlInfocif"
                         v-if="item.prop === 'RazonSocial'"
                         target="_blank"
-                        >{{ scope.row.RazonSocial }}</a
-                      >
-                      <p v-if="item.prop !== 'RazonSocial'">
-                        {{ scope.row[item.prop] }}
-                      </p>
+                      >{{ scope.row.RazonSocial }}</a>
+                      <p v-if="item.prop !== 'RazonSocial'">{{ scope.row[item.prop] }}</p>
                     </template>
                   </el-table-column>
                 </el-table>
@@ -448,7 +420,7 @@ export default {
       cantidades: "filters/cantidades",
       user: "auth/user",
     }),
-    orderFilters: function() {
+    orderFilters: function () {
       let order = orderFilters(this.filters, this.applied_filters, this.form);
       for (const prop in this.cantidades) {
         let split = prop.split(".");
@@ -864,6 +836,7 @@ export default {
           data[key] = this.form[key];
           let result = inArrayObject(this.filtros_aplicados, key, "key");
           if (result) {
+            console.log(result);
             arr[key] = this.form[key];
             let aux = { ...arr };
             data.filtros.push({
@@ -879,10 +852,7 @@ export default {
               let label = _copy[0] ? _copy[0] : "";
               label = label.split(":");
               label[0] = label[0] === "ahnos" ? "años" : label[0];
-              label = label
-                .join(": ")
-                .split("|")
-                .join(" | ");
+              label = label.join(": ").split("|").join(" | ");
               result.datas.push({
                 label,
               });

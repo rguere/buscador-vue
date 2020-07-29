@@ -2,27 +2,20 @@
   <div class="panel panel-default cd" id="filter_informacion_financiera">
     <div class="panel-heading">
       <div class="content_p_select">
-        <p class="panel-title roboto white">
-          {{ title }}
-        </p>
+        <p class="panel-title roboto white">{{ title }}</p>
       </div>
     </div>
     <div class="panel-body">
       <div class="row">
         <div class="col-md-6">
           <ul class="nav nav-tabs">
-            <li
-              v-for="(item, key) in modos"
-              :key="key"
-              :class="modo === item.id ? 'active' : ''"
-            >
+            <li v-for="(item, key) in modos" :key="key" :class="modo === item.id ? 'active' : ''">
               <a
                 data-toggle="tab"
                 @click="setModo(item.id)"
                 class="text-white"
                 href="#"
-                >{{ item.label }}</a
-              >
+              >{{ item.label }}</a>
             </li>
           </ul>
           <div class="tab-content m-t-10">
@@ -46,8 +39,7 @@
                         @click="setTabActivo(item.id)"
                         class="text-white"
                         href="#"
-                        >{{ item.label }}</a
-                      >
+                      >{{ item.label }}</a>
                     </li>
                   </ul>
                   <div class="tab-content m-t-10">
@@ -118,8 +110,7 @@
                         :label="item.label"
                         :value="item"
                         :class="item.special ? 'special' : ''"
-                      >
-                      </el-option>
+                      ></el-option>
                     </el-select>
                     <el-tooltip
                       v-if="ifSelectedTal"
@@ -160,8 +151,7 @@
                         @click="setTabActivo2(item.id)"
                         class="text-white"
                         href="#"
-                        >{{ item.label }}</a
-                      >
+                      >{{ item.label }}</a>
                     </li>
                   </ul>
                   <div class="tab-content m-t-10">
@@ -218,11 +208,7 @@
             </div>
             <div class="panel-body">
               <div class="anios_checkboxs_content">
-                <div
-                  v-for="(item, key) in options_anios"
-                  :key="key"
-                  :class="classAniosCheckboxs"
-                >
+                <div v-for="(item, key) in options_anios" :key="key" :class="classAniosCheckboxs">
                   <div v-for="(_item, _key) in item" :key="_key">
                     <label class="custon-checkboxs">
                       <input
@@ -240,13 +226,7 @@
               </div>
               <div class="m-t-10">
                 <label class="custon-checkboxs">
-                  <input
-                    type="checkbox"
-                    name
-                    v-model="u_a_c_d"
-                    @change="setu_a_c_d"
-                    :value="true"
-                  />
+                  <input type="checkbox" name v-model="u_a_c_d" @change="setu_a_c_d" :value="true" />
                   <span class="geekmark"></span>
                   <span class="title">Último año con cuentas disponibles.</span>
                 </label>
@@ -254,10 +234,7 @@
               <div class="m-t-10">
                 <div v-if="selected_anios.length > 1">
                   <div v-for="(item, key) in options_to_include" :key="key">
-                    <label
-                      class="custon-checkboxs white"
-                      v-if="item.label !== 'incluir_null'"
-                    >
+                    <label class="custon-checkboxs white" v-if="item.label !== 'incluir_null'">
                       <input
                         type="checkbox"
                         :name="`checkbox___cuentas_disponibles__${item.id}`"
@@ -276,9 +253,7 @@
 
               <div class="flex-space-between-flex-end">
                 <p></p>
-                <p class="text-help m-t-10">
-                  * Puedes elegir más de una opción
-                </p>
+                <p class="text-help m-t-10">* Puedes elegir más de una opción</p>
               </div>
             </div>
           </div>
@@ -292,24 +267,14 @@
                   <div class="item_rango">
                     <el-tag>Mínimo</el-tag>
                     <div class="content_input_tag">
-                      <el-input
-                        placeholder="Mínimo"
-                        type="number"
-                        :max="monto2"
-                        v-model="monto1"
-                      ></el-input>
+                      <el-input placeholder="Mínimo" type="number" :max="monto2" v-model="monto1"></el-input>
                       <el-tag type="info">{{ selected_unidad.label }}</el-tag>
                     </div>
                   </div>
                   <div class="item_rango">
                     <el-tag>Máximo</el-tag>
                     <div class="content_input_tag">
-                      <el-input
-                        placeholder="Mínimo"
-                        type="number"
-                        :min="monto1"
-                        v-model="monto2"
-                      ></el-input>
+                      <el-input placeholder="Mínimo" type="number" :min="monto1" v-model="monto2"></el-input>
                       <el-tag type="info">{{ selected_unidad.label }}</el-tag>
                     </div>
                   </div>
@@ -328,22 +293,14 @@
                         :key="item.id"
                         :label="item.label"
                         :value="item"
-                      >
-                      </el-option>
+                      ></el-option>
                     </el-select>
                   </div>
                   <div class="m-t-10">
                     <label class="custon-checkboxs ___">
-                      <input
-                        type="checkbox"
-                        name
-                        v-model="todas_las_empresas"
-                        :value="true"
-                      />
+                      <input type="checkbox" name v-model="todas_las_empresas" :value="true" />
                       <span class="geekmark"></span>
-                      <span class="title"
-                        >Todas las empresas con el dato disponible.</span
-                      >
+                      <span class="title">Todas las empresas con el dato disponible.</span>
                     </label>
                   </div>
                 </div>
@@ -358,42 +315,28 @@
             Ver detalles
             <i class="fa fa-plus-circle"></i>
           </button>
-          <button
-            v-if="showBrnApplied"
-            type="button"
-            class="btn btn-success"
-            @click="apply"
-          >
+          <button v-if="showBrnApplied" type="button" class="btn btn-success" @click="apply">
             Aplicar
-            <i
-              :class="loadingFrm ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'"
-            ></i>
+            <i :class="loadingFrm ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'"></i>
           </button>
-          <button
-            type="button"
-            class="btn btn-info"
-            v-if="areApplied"
-            @click="confirmClean"
-          >
+          <button type="button" class="btn btn-info" v-if="areApplied" @click="confirmClean">
             Limpiar
             <i class="fa fa-undo"></i>
           </button>
         </div>
         <p class="text-help">* Puedes elegir más de una opción</p>
       </div>
+      <div class="row">
+        <div class="col-md-12">
+          <pre>{{ balance() }}</pre>
+        </div>
+      </div>
       <div class="row" v-if="items_IF && items_IF.length > 0">
         <div class="col-md-12">
           <el-collapse v-model="collapseResumen">
-            <el-collapse-item
-              title="Resumen de Información Financiera seleccionada"
-              name="1"
-            >
+            <el-collapse-item title="Resumen de Información Financiera seleccionada" name="1">
               <div class="div-scroll-200 ul_selected_cnae">
-                <el-card
-                  shadow="hover"
-                  v-for="(item, key) in items_IF"
-                  :key="key"
-                >
+                <el-card shadow="hover" v-for="(item, key) in items_IF" :key="key">
                   <label class="custon-checkboxs">
                     <input
                       type="checkbox"
@@ -404,10 +347,10 @@
                     />
                     <span class="geekmark"></span>
                     <span class="name-checkbox">
-                      <b>{{ item.label }}</b> </span
-                    >, <span v-if="item.anios">{{ item.anios }}</span
-                    >, <span v-if="item.unidad">{{ item.unidad }}</span
-                    >,
+                      <b>{{ item.label }}</b>
+                    </span>,
+                    <span v-if="item.anios">{{ item.anios }}</span>,
+                    <span v-if="item.unidad">{{ item.unidad }}</span>,
                     <span v-if="item.rango">{{ item.rango }}</span>
                   </label>
                 </el-card>
@@ -435,23 +378,11 @@
               <button class="btn btn-a">{{ title }}</button>
             </div>
             <div>
-              <button
-                v-if="showBrnApplied"
-                type="button"
-                class="btn btn-success"
-                @click="apply"
-              >
+              <button v-if="showBrnApplied" type="button" class="btn btn-success" @click="apply">
                 Aplicar
-                <i
-                  :class="loadingFrm ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'"
-                ></i>
+                <i :class="loadingFrm ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'"></i>
               </button>
-              <button
-                type="button"
-                class="btn btn-info"
-                v-if="areApplied"
-                @click="confirmClean"
-              >
+              <button type="button" class="btn btn-info" v-if="areApplied" @click="confirmClean">
                 Limpiar
                 <i class="fa fa-undo"></i>
               </button>
@@ -472,8 +403,7 @@
                         @click="setModo(item.id)"
                         class="text-white"
                         href="#"
-                        >{{ item.label }}</a
-                      >
+                      >{{ item.label }}</a>
                     </li>
                   </ul>
                   <div class="tab-content m-t-10">
@@ -498,8 +428,7 @@
                                 @click="setTabActivo(item.id)"
                                 class="text-white"
                                 href="#"
-                                >{{ item.label }}</a
-                              >
+                              >{{ item.label }}</a>
                             </li>
                           </ul>
                           <div class="tab-content m-t-10">
@@ -572,8 +501,7 @@
                                 :label="item.label"
                                 :class="item.special ? 'special' : ''"
                                 :value="item"
-                              >
-                              </el-option>
+                              ></el-option>
                             </el-select>
                             <el-tooltip
                               v-if="ifSelectedTal"
@@ -614,8 +542,7 @@
                                 @click="setTabActivo2(item.id)"
                                 class="text-white"
                                 href="#"
-                                >{{ item.label }}</a
-                              >
+                              >{{ item.label }}</a>
                             </li>
                           </ul>
                           <div class="tab-content m-t-10">
@@ -702,17 +629,12 @@
                             :value="true"
                           />
                           <span class="geekmark"></span>
-                          <span class="title"
-                            >Último año con cuentas disponibles.</span
-                          >
+                          <span class="title">Último año con cuentas disponibles.</span>
                         </label>
                       </div>
                       <div class="m-t-10">
                         <div v-if="selected_anios.length > 1">
-                          <div
-                            v-for="(item, key) in options_to_include"
-                            :key="key"
-                          >
+                          <div v-for="(item, key) in options_to_include" :key="key">
                             <label
                               class="custon-checkboxs white"
                               v-if="item.label !== 'incluir_null'"
@@ -731,9 +653,11 @@
                                 @click="takeIntoAccount(item, $event)"
                               />
                               <span class="geekmark"></span>
-                              <span class="name-checkbox">{{
+                              <span class="name-checkbox">
+                                {{
                                 item.label
-                              }}</span>
+                                }}
+                              </span>
                             </label>
                           </div>
                         </div>
@@ -741,9 +665,7 @@
 
                       <div class="flex-space-between-flex-end">
                         <p></p>
-                        <p class="text-help m-t-10">
-                          * Puedes elegir más de una opción
-                        </p>
+                        <p class="text-help m-t-10">* Puedes elegir más de una opción</p>
                       </div>
                     </div>
                   </div>
@@ -763,9 +685,11 @@
                                 :max="monto2"
                                 v-model="monto1"
                               ></el-input>
-                              <el-tag type="info">{{
+                              <el-tag type="info">
+                                {{
                                 selected_unidad.label
-                              }}</el-tag>
+                                }}
+                              </el-tag>
                             </div>
                           </div>
                           <div class="item_rango">
@@ -777,9 +701,11 @@
                                 :min="monto1"
                                 v-model="monto2"
                               ></el-input>
-                              <el-tag type="info">{{
+                              <el-tag type="info">
+                                {{
                                 selected_unidad.label
-                              }}</el-tag>
+                                }}
+                              </el-tag>
                             </div>
                           </div>
                         </div>
@@ -797,8 +723,7 @@
                                 :key="item.id"
                                 :label="item.label"
                                 :value="item"
-                              >
-                              </el-option>
+                              ></el-option>
                             </el-select>
                           </div>
                           <div class="m-t-10">
@@ -810,10 +735,10 @@
                                 :value="true"
                               />
                               <span class="geekmark"></span>
-                              <span class="title"
-                                >Todas las empresas con el dato
-                                disponible.</span
-                              >
+                              <span class="title">
+                                Todas las empresas con el dato
+                                disponible.
+                              </span>
                             </label>
                           </div>
                         </div>
@@ -832,11 +757,7 @@
                       name="1"
                     >
                       <div class="div-scroll-200 ul_selected_cnae">
-                        <el-card
-                          shadow="hover"
-                          v-for="(item, key) in items_IF"
-                          :key="key"
-                        >
+                        <el-card shadow="hover" v-for="(item, key) in items_IF" :key="key">
                           <label class="custon-checkboxs">
                             <input
                               type="checkbox"
@@ -847,10 +768,10 @@
                             />
                             <span class="geekmark"></span>
                             <span class="name-checkbox">
-                              <b>{{ item.label }}</b> </span
-                            >, <span v-if="item.anios">{{ item.anios }}</span
-                            >, <span v-if="item.unidad">{{ item.unidad }}</span
-                            >,
+                              <b>{{ item.label }}</b>
+                            </span>,
+                            <span v-if="item.anios">{{ item.anios }}</span>,
+                            <span v-if="item.unidad">{{ item.unidad }}</span>,
                             <span v-if="item.rango">{{ item.rango }}</span>
                           </label>
                         </el-card>
@@ -919,7 +840,7 @@ export default {
         (this.balance().length !== 0 && !this.compareWithNewtoApply)
       );
     },
-    compareWithNewtoApply: function() {
+    compareWithNewtoApply: function () {
       let stg = this.balance_string;
       let obj = JSON.stringify(this.balance());
       return stg === obj;
@@ -1036,7 +957,7 @@ export default {
     itemsApplied: {},
   }),
   watch: {
-    search: function(newSearch) {
+    search: function (newSearch) {
       if (newSearch && newSearch.informacion_financiera) {
         this.options = newSearch.informacion_financiera;
       }
@@ -1105,7 +1026,7 @@ export default {
           item.children
         ) {
           for (const _item of item.children) {
-            const item_balance = `${_anios}|${_item.id}|${monto1}|${monto2}`;
+            const item_balance = `${_anios}|${item.id}-${item.label}|${monto1}|${monto2}`;
             balance.push(item_balance);
             this.itemsApplied[item_balance] = {
               valueSelect: this.valueSelect,
@@ -1116,7 +1037,7 @@ export default {
             };
           }
         } else {
-          const item_balance = `${_anios}|${item.id}|${monto1}|${monto2}`;
+          const item_balance = `${_anios}|${item.id}-${item.label}|${monto1}|${monto2}`;
           balance.push(item_balance);
           this.itemsApplied[item_balance] = {
             valueSelect: this.valueSelect,
