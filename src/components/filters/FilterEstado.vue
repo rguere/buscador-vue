@@ -3,10 +3,10 @@
     <div class="panel-heading">
       <p class="panel-title roboto white">
         {{ title }}
-        <span class="span-info-right" v-if="selected_by_estados !== 0"
-          >({{ selected_by_estados | numeral("0,0") }} empresas
-          seleccionadas)</span
-        >
+        <span class="span-info-right" v-if="selected_by_estados !== 0">
+          ({{ selected_by_estados | numeral("0,0") }} empresas
+          seleccionadas)
+        </span>
       </p>
     </div>
     <div class="panel-body">
@@ -30,8 +30,7 @@
                   @click="setTabActivo(item.id)"
                   class="text-white"
                   href="#"
-                  >{{ item.label }}</a
-                >
+                >{{ item.label }}</a>
               </li>
             </ul>
             <div class="panel-body">
@@ -100,9 +99,7 @@
                           />
                           <span class="geekmark"></span>
                           <span class="name-checkbox">
-                            <b>
-                              {{ item.label }}
-                            </b>
+                            <b>{{ item.label }}</b>
                           </span>
                         </label>
                       </el-card>
@@ -119,23 +116,11 @@
               Ver detalles
               <i class="fa fa-plus-circle"></i>
             </button>
-            <button
-              type="button"
-              class="btn btn-success"
-              v-if="showApplyBtn"
-              @click="apply"
-            >
+            <button type="button" class="btn btn-success" v-if="showApplyBtn" @click="apply">
               Aplicar
-              <i
-                :class="loadingFrm ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'"
-              ></i>
+              <i :class="loadingFrm ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'"></i>
             </button>
-            <button
-              type="button"
-              class="btn btn-info"
-              v-if="areApplied"
-              @click="confirmClean"
-            >
+            <button type="button" class="btn btn-info" v-if="areApplied" @click="confirmClean">
               Limpiar
               <i class="fa fa-undo"></i>
             </button>
@@ -162,12 +147,7 @@
                 <button class="btn btn-a">{{ title }}</button>
               </div>
               <div>
-                <button
-                  type="button"
-                  class="btn btn-success"
-                  v-if="showApplyBtn"
-                  @click="apply"
-                >
+                <button type="button" class="btn btn-success" v-if="showApplyBtn" @click="apply">
                   Aplicar
                   <i
                     :class="
@@ -175,21 +155,13 @@
                     "
                   ></i>
                 </button>
-                <button
-                  type="button"
-                  class="btn btn-info"
-                  v-if="areApplied"
-                  @click="confirmClean"
-                >
+                <button type="button" class="btn btn-info" v-if="areApplied" @click="confirmClean">
                   Limpiar
                   <i class="fa fa-undo"></i>
                 </button>
               </div>
             </div>
-            <div
-              class="row"
-              v-if="search.estados && search.estados.length !== 0"
-            >
+            <div class="row" v-if="search.estados && search.estados.length !== 0">
               <div class="col-md-7">
                 <div class="row">
                   <div class="col-md-12">
@@ -212,8 +184,7 @@
                               @click="setTabActivo(item.id)"
                               class="text-white"
                               href="#"
-                              >{{ item.label }}</a
-                            >
+                            >{{ item.label }}</a>
                           </li>
                         </ul>
                         <div class="panel-body">
@@ -286,9 +257,7 @@
                               />
                               <span class="geekmark"></span>
                               <span class="name-checkbox">
-                                <b>
-                                  {{ item.label }}
-                                </b>
+                                <b>{{ item.label }}</b>
                               </span>
                             </label>
                           </el-card>
@@ -336,12 +305,12 @@ export default {
       applied_filters: "filters/applied_filters",
       filters: "filters/filters",
     }),
-    compareWithNewtoApply: function() {
+    compareWithNewtoApply: function () {
       let stg = this.selected_custom_estados_string;
       let obj = JSON.stringify(this.selected_custom_estados);
       return stg === obj;
     },
-    compareWithNewtoApplySelectedEstados: function() {
+    compareWithNewtoApplySelectedEstados: function () {
       let stg = this.selected_estados_string;
       let obj = JSON.stringify(this.selected_estados);
       return stg === obj;
@@ -421,7 +390,7 @@ export default {
     selected_custom_estados: [],
   }),
   watch: {
-    selected_estados: function(newEstado) {
+    selected_estados: function (newEstado) {
       const isSE = newEstado && newEstado.label && newEstado.label.length > 0;
       this.selected_by_estados = newEstado && isSE ? 1 : 0;
       if (isSE) {
@@ -440,15 +409,15 @@ export default {
         this.clean();
       }
     },
-    selected_custom_estados: function(selected_custom) {
+    selected_custom_estados: function (selected_custom) {
       if (this.reapply && selected_custom.length === 0) {
         this.clean();
       }
     },
-    selected_by_estados: function(newValue) {
+    selected_by_estados: function (newValue) {
       if (newValue === 0) this.selected_estados = null;
     },
-    selected_companies: function() {
+    selected_companies: function () {
       howAnimation(document.querySelector(".selected_companies"));
     },
   },
@@ -719,6 +688,9 @@ export default {
       let estados = [];
       this.form.estado = [];
       this.selected_custom_estados.forEach((item) => {
+        if (item.id === 6) {
+          estados.push(17);
+        }
         estados.push(item.id);
       });
       this.form.estado = estados;
