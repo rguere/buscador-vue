@@ -1,29 +1,40 @@
 <template>
   <div>
     <div class="flex-2" v-if="item_name === 'Antigüedad'">
-      <span class="name-checkbox">{{
+      <span class="name-checkbox">
+        {{
         item.label !== "incluir_null"
-          ? item.label
-          : "Incluir aquellas empresas en las que se desconoce su antigüedad"
-      }}</span>
+        ? item.label
+        : "Incluir aquellas empresas en las que se desconoce su antigüedad"
+        }}
+      </span>
       <span class="num-fil">({{ item.data | numeral("0,0") }})</span>
     </div>
 
     <div class="flex-2" v-if="item_name === 'Número de empleados'">
-      <span class="name-checkbox">{{
+      <span class="name-checkbox">
+        {{
         item.label !== "incluir_null"
-          ? item.label
-          : "Incluir aquellas empresas en las que se desconoce su número de empleados"
-      }}</span>
+        ? item.label
+        : "Incluir aquellas empresas en las que se desconoce su número de empleados"
+        }}
+      </span>
       <span class="num-fil">({{ item.data | numeral("0,0") }})</span>
     </div>
 
     <div class="flex-2" v-if="item_name === 'Años con cuentas disponibles'">
-      <span class="name-checkbox">{{
+      <span class="name-checkbox">
+        {{
         item.label !== "incluir_null"
-          ? item.label
-          : "Incluir aquellas empresas de las que no hay cuentas disponibles"
-      }}</span>
+        ? item.label
+        : "Incluir aquellas empresas de las que no hay cuentas disponibles"
+        }}
+      </span>
+      <span class="num-fil">({{ item.data | numeral("0,0") }})</span>
+    </div>
+
+    <div class="flex-2" v-if="item_name === 'Sector/Actividad'">
+      <span class="name-checkbox">{{ item.id }} - {{ item.label }}</span>
       <span class="num-fil">({{ item.data | numeral("0,0") }})</span>
     </div>
 
@@ -40,63 +51,49 @@
       <span class="name-checkbox">{{ item.label }}</span>
     </div>
 
-    <div
-      class="flex-item_IF"
-      v-if="item_name === 'Información Financiera' && item"
-    >
-      <p class="">
-        <span class="">
-          <span>{{ item.label }}</span> </span
-        >, <span v-if="item.anios">{{ item.anios }}</span
-        >, <span v-if="item.unidad">{{ item.unidad }}</span
-        >,
+    <div class="flex-item_IF" v-if="item_name === 'Información Financiera' && item">
+      <p class>
+        <span class>
+          <span>{{ item.label }}</span>
+        </span>,
+        <span v-if="item.anios">{{ item.anios }}</span>,
+        <span v-if="item.unidad">{{ item.unidad }}</span>,
         <span v-if="item.rango">{{ item.rango }}</span>
       </p>
     </div>
 
-    <div
-      class="item-direc_vinc"
-      v-if="item_name === 'Directivos y Vinculaciones'"
-    >
+    <div class="item-direc_vinc" v-if="item_name === 'Directivos y Vinculaciones'">
       <div class="t-t-capitalize">
         <span class="name-checkbox">{{ item[0].Nombre }}</span>
       </div>
       <div style="margin-bottom: 10px;">
         <div class="z-popover">
-          <el-popover
-            placement="right"
-            width="700"
-            trigger="click"
-            popper-class="z-popover"
-          >
+          <el-popover placement="right" width="700" trigger="click" popper-class="z-popover">
             <div class="div-scroll-200">
               <el-table :data="item" style="width: 100%">
-                <el-table-column prop="Nombre" label="Persona">
-                </el-table-column>
-                <el-table-column
-                  prop="RazonSocial"
-                  label="Razón social de la empresa"
-                >
+                <el-table-column prop="Nombre" label="Persona"></el-table-column>
+                <el-table-column prop="RazonSocial" label="Razón social de la empresa">
                   <template slot-scope="scope">
-                    <a :href="scope.row.urlInfocif" target="_blank">{{
+                    <a :href="scope.row.urlInfocif" target="_blank">
+                      {{
                       scope.row.RazonSocial
-                    }}</a>
+                      }}
+                    </a>
                   </template>
                 </el-table-column>
-                <el-table-column prop="CargoEspejo" label="Cargo">
-                </el-table-column>
+                <el-table-column prop="CargoEspejo" label="Cargo"></el-table-column>
                 <el-table-column width="150" prop="EstadoActivo" label="Status">
                   <template slot-scope="scope">
-                    <div :class="classEstatus(scope.row.EstadoActivo)">
-                      {{ getEstado(scope.row.EstadoActivo) }}
-                    </div>
+                    <div
+                      :class="classEstatus(scope.row.EstadoActivo)"
+                    >{{ getEstado(scope.row.EstadoActivo) }}</div>
                   </template>
                 </el-table-column>
               </el-table>
             </div>
             <el-button slot="reference" size="mini" title="Ver Vinculaciones">
               Ver
-              <span class="num-fil"> ({{ item.length }})</span>
+              <span class="num-fil">({{ item.length }})</span>
             </el-button>
           </el-popover>
         </div>
@@ -120,7 +117,6 @@ export default {
         item_name === "Código Postal" ||
         item_name === "NIF" ||
         item_name === "Tipo de cuentas" ||
-        item_name === "Sector/Actividad" ||
         item_name === "Auditores" ||
         item_name === "Cargos"
       );
