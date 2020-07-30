@@ -868,10 +868,10 @@ export default {
         id: "perdidas",
         label: "Cuenta de Perdidas y ganancias",
       },
-      // {
-      //   id: "ratios",
-      //   label: "Principales Ratios Económicos",
-      // },
+      {
+        id: "ratios",
+        label: "Principales Ratios Económicos",
+      },
     ],
     loadingFrm: false,
     modalVisible: false,
