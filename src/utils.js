@@ -346,6 +346,20 @@ export const getColumnsSummary = () => {
       show: true,
       sortable: true,
     },
+    {
+      prop: "informacion_financiera",
+      label: "Balance",
+      width: "300",
+      show: true,
+      sortable: true,
+    },
+    {
+      prop: "perdidas",
+      label: "Perdidas",
+      width: "300",
+      show: true,
+      sortable: true,
+    },
   ];
 };
 

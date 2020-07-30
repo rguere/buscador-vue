@@ -747,6 +747,103 @@ export default {
               } else {
                 item.TipoCuentasAnuales = "-";
               }
+              item.informacion_financiera = "-";
+              item.perdidas = "-";
+
+              if (
+                item.InformacionFinanciera &&
+                Array.isArray(item.InformacionFinanciera)
+              ) {
+                // console.log(item.InformacionFinanciera);
+                const informacion_financiera = this.filtros_aplicados.find(
+                  (item) => item.title === "Información Financiera"
+                );
+                if (
+                  informacion_financiera &&
+                  informacion_financiera.datas &&
+                  Array.isArray(informacion_financiera.datas)
+                ) {
+                  for (const itemData of informacion_financiera.datas) {
+                    const arrIF = [];
+                    item.InformacionFinanciera.filter((I_F) => {
+                      if (
+                        itemData.anios === "Último año con cuentas disponibles"
+                      ) {
+                        if (`${I_F.Codigo}` === `${itemData.id}`) {
+                          arrIF.push(
+                            `${itemData.label}, Monto: ${I_F.ValorEnEuros}, ${itemData.anios}`
+                          );
+                        }
+                      } else {
+                        const arr = itemData.anios.split("Año(s) ");
+                        if (arr && arr.length && arr.length === 2) {
+                          for (const anio of arr[1].split(",")) {
+                            if (
+                              `${anio}` === `${I_F.Ejercicio}` &&
+                              `${I_F.Codigo}` === `${itemData.id}`
+                            ) {
+                              arrIF.push(
+                                `${itemData.label}, Monto: ${I_F.ValorEnEuros}, ${itemData.anios}`
+                              );
+                            }
+                          }
+                        }
+                      }
+                    });
+                    if (arrIF && Array.isArray(arrIF)) {
+                      item.informacion_financiera = arrIF.join(" | ");
+                    } else {
+                      item.informacion_financiera = "-";
+                    }
+                  }
+                }
+              }
+
+              if (item.Perdida && Array.isArray(item.Perdida)) {
+                const perdidas = this.filtros_aplicados.find(
+                  (item) => item.title === "Información Financiera"
+                );
+                if (
+                  perdidas &&
+                  perdidas.datas &&
+                  Array.isArray(perdidas.datas)
+                ) {
+                  for (const itemData of perdidas.datas) {
+                    const arrIP = [];
+                    item.Perdida.filter((I_P) => {
+                      if (
+                        itemData.anios === "Último año con cuentas disponibles"
+                      ) {
+                        if (`${I_P.Codigo}` === `${itemData.id}`) {
+                          arrIP.push(
+                            `${itemData.label}, Monto: ${I_P.ValorEnEuros}, ${itemData.anios}`
+                          );
+                        }
+                      } else {
+                        const arr = itemData.anios.split("Año(s) ");
+                        if (arr && arr.length && arr.length === 2) {
+                          for (const anio of arr[1].split(",")) {
+                            if (
+                              `${anio}` === `${I_P.Ejercicio}` &&
+                              `${I_P.Codigo}` === `${itemData.id}`
+                            ) {
+                              arrIP.push(
+                                `${itemData.label}, Monto: ${I_P.ValorEnEuros}, ${itemData.anios}`
+                              );
+                            }
+                          }
+                        }
+                      }
+                    });
+                    if (arrIP && Array.isArray(arrIP)) {
+                      item.perdidas = arrIP.join(" | ");
+                    } else {
+                      item.perdidas = "-";
+                    }
+                  }
+                }
+              }
+
               item.FechaConstitucionOrigen = item.FechaConstitucionOrigen.length
                 ? item.FechaConstitucionOrigen
                 : "-";
@@ -836,7 +933,6 @@ export default {
           data[key] = this.form[key];
           let result = inArrayObject(this.filtros_aplicados, key, "key");
           if (result) {
-            console.log(result);
             arr[key] = this.form[key];
             let aux = { ...arr };
             data.filtros.push({

@@ -15,9 +15,7 @@
           <div class="panel panel-default cd col_left">
             <div class="panel-body">
               <selected-companies></selected-companies>
-              <btn-visualizar-resultados
-                class="m-b-10"
-              ></btn-visualizar-resultados>
+              <btn-visualizar-resultados class="m-b-10"></btn-visualizar-resultados>
               <btn-empty-filter class="m-b-10"></btn-empty-filter>
               <criteria-applied></criteria-applied>
             </div>
@@ -26,16 +24,11 @@
       </div>
       <div class="col-md-9">
         <div :class="class_main">
-          <div
-            class="panel panel_coten_main panel-default cd"
-            style="margin-bottom: 0px;"
-          >
+          <div class="panel panel_coten_main panel-default cd" style="margin-bottom: 0px;">
             <btns-filter :class="class_btns_filter"></btns-filter>
             <div class="btn_criteria_applied_movil">
               <selected-companies></selected-companies>
-              <btn-visualizar-resultados
-                :class_btn="'btn-xs'"
-              ></btn-visualizar-resultados>
+              <btn-visualizar-resultados :class_btn="'btn-xs'"></btn-visualizar-resultados>
               <btn-empty-filter :class_btn="'btn-xs'"></btn-empty-filter>
               <el-popover
                 popper-class="popover_criteria-applied"
@@ -46,9 +39,9 @@
                 <div>
                   <criteria-applied></criteria-applied>
                 </div>
-                <el-button slot="reference" type="primary" size="mini"
-                  ><i class="el-icon-s-tools"></i> Criterios</el-button
-                >
+                <el-button slot="reference" type="primary" size="mini">
+                  <i class="el-icon-s-tools"></i> Criterios
+                </el-button>
               </el-popover>
               <el-button
                 class="m-l-5 btn-toggleClassFilter"
@@ -79,7 +72,7 @@
                 <filter-cargos></filter-cargos>
                 <filter-directivos-vinculaciones></filter-directivos-vinculaciones>
                 <filter-informacion-financiera></filter-informacion-financiera>
-                <filter-estado></filter-estado>
+                <!-- <filter-estado></filter-estado> -->
                 <div class="space"></div>
               </div>
             </div>
@@ -121,7 +114,7 @@ export default {
     window.addEventListener("scroll", () => {
       last_known_scroll_position = window.scrollY;
       if (!ticking) {
-        window.requestAnimationFrame(function() {
+        window.requestAnimationFrame(function () {
           self.doSomething(last_known_scroll_position);
           ticking = false;
         });

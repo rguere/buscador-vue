@@ -326,11 +326,6 @@
         </div>
         <p class="text-help">* Puedes elegir más de una opción</p>
       </div>
-      <div class="row">
-        <div class="col-md-12">
-          <pre>{{ balance() }}</pre>
-        </div>
-      </div>
       <div class="row" v-if="items_IF && items_IF.length > 0">
         <div class="col-md-12">
           <el-collapse v-model="collapseResumen">
@@ -873,10 +868,10 @@ export default {
         id: "perdidas",
         label: "Cuenta de Perdidas y ganancias",
       },
-      {
-        id: "ratios",
-        label: "Principales Ratios Económicos",
-      },
+      // {
+      //   id: "ratios",
+      //   label: "Principales Ratios Económicos",
+      // },
     ],
     loadingFrm: false,
     modalVisible: false,
@@ -1026,7 +1021,7 @@ export default {
           item.children
         ) {
           for (const _item of item.children) {
-            const item_balance = `${_anios}|${item.id}-${item.label}|${monto1}|${monto2}`;
+            const item_balance = `${_anios}|${_item.id}-${_item.label}|${monto1}|${monto2}`;
             balance.push(item_balance);
             this.itemsApplied[item_balance] = {
               valueSelect: this.valueSelect,
