@@ -921,22 +921,22 @@ export const formatProvinciaLocalidad = (data) => {
       label: "Ratios de rentabilidad",
       children: [
         {
-          id: "EBITDA",
+          id: 99016,
           label: "EBITDA",
           special: false,
         },
         {
-          id: "ROA",
+          id: 99026,
           label: "ROA",
           special: false,
         },
         {
-          id: "ROE",
+          id: 99025,
           label: "ROE",
           special: false,
         },
         {
-          id: "ROS",
+          id: 99033,
           label: "ROS",
           special: false,
         },
@@ -947,12 +947,12 @@ export const formatProvinciaLocalidad = (data) => {
       label: "Ratios operativos",
       children: [
         {
-          id: "Periodo medio de cobro (PMC)",
+          id: 99012,
           label: "Periodo medio de cobro (PMC)",
           special: false,
         },
         {
-          id: "Periodo medio de pago (PMP)",
+          id: 99013,
           label: "Periodo medio de pago (PMP)",
           special: false,
         },
@@ -963,22 +963,22 @@ export const formatProvinciaLocalidad = (data) => {
       label: "Ratios de endeudamiento",
       children: [
         {
-          id: "Deuda financiera bruta / EBITDA",
+          id: 99049,
           label: "Deuda financiera bruta / EBITDA",
           special: false,
         },
         {
-          id: "Deuda financiera neta / EBITDA",
+          id: 99050,
           label: "Deuda financiera neta / EBITDA",
           special: false,
         },
         {
-          id: "Apalancamiento",
+          id: 99022,
           label: "Apalancamiento",
           special: false,
         },
         {
-          id: "Deuda financiera neta / Fondos propios",
+          id: 99051,
           label: "Deuda financiera neta / Fondos propios",
           special: false,
         },
@@ -989,27 +989,27 @@ export const formatProvinciaLocalidad = (data) => {
       label: "Ratios de equilibrio",
       children: [
         {
-          id: "Fondo de maniobra",
+          id: 99024,
           label: "Fondo de maniobra",
           special: false,
         },
         {
-          id: "Necesidades operativas de fondos",
+          id: 99052,
           label: "Necesidades operativas de fondos",
           special: false,
         },
         {
-          id: "Ratio de liquidez",
+          id: 99035,
           label: "Ratio de liquidez",
           special: false,
         },
         {
-          id: "Ratio de solvencia",
+          id: 99036,
           label: "Ratio de solvencia",
           special: false,
         },
         {
-          id: "Ratio de tesorería o prueba ácida",
+          id: 99048,
           label: "Ratio de tesorería o prueba ácida",
           special: false,
         },
