@@ -1315,6 +1315,7 @@ export default {
     formatearDataPOST() {
       this.form.balance = [];
       this.form.perdidas = [];
+      this.form.ratios = [];
       const _balance = this.balance();
       _balance.forEach((item) => {
         if (this.modo === "balance") {
