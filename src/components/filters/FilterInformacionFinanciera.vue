@@ -171,11 +171,12 @@
                           <el-option
                             v-for="_item in item.children"
                             :key="_item.id"
-                            :label="_item.label"
+                            :label="`${_item.label} ${_item.unit}`"
                             :value="_item"
                             :class="_item.special ? 'special' : ''"
                           >
                             <span>{{ _item.label }}</span>
+                            <span style="float: right;">{{ ` ${_item.unit}` }}</span>
                           </el-option>
                         </el-select>
                         <el-tooltip
@@ -257,7 +258,7 @@
               </div>
             </div>
           </div>
-          <div class="panel panel-default cd">
+          <div v-if="modo !== 'ratios'" class="panel panel-default cd">
             <div class="panel-heading">
               <p class="panel-title roboto white">Seleccionar rango</p>
             </div>
@@ -326,6 +327,11 @@
         </div>
         <p class="text-help">* Puedes elegir más de una opción</p>
       </div>
+      <!-- <div class="row">
+        <div class="col-md-12">
+          <pre>{{ balance() }}</pre>
+        </div>
+      </div>-->
       <div class="row" v-if="items_IF && items_IF.length > 0">
         <div class="col-md-12">
           <el-collapse v-model="collapseResumen">
@@ -1011,6 +1017,9 @@ export default {
 
         monto1 = monto1 === 0 ? null : monto1;
         monto2 = monto2 === 0 ? null : monto2;
+
+        monto1 = this.modo === "ratios" ? null : monto1;
+        monto2 = this.modo === "ratios" ? null : monto2;
 
         const item = this.valueSelect;
         const _anios =
