@@ -327,11 +327,13 @@
         </div>
         <p class="text-help">* Puedes elegir más de una opción</p>
       </div>
-      <!-- <div class="row">
+      <div class="row">
         <div class="col-md-12">
-          <pre>{{ balance() }}</pre>
+          <pre>{{ selectBalance }}</pre>
+          <hr />
+          <pre>{{ items_IF }}</pre>
         </div>
-      </div>-->
+      </div>
       <div class="row" v-if="items_IF && items_IF.length > 0">
         <div class="col-md-12">
           <el-collapse v-model="collapseResumen">
@@ -342,7 +344,7 @@
                     <input
                       type="checkbox"
                       v-model="items_IF"
-                      @change="changeResumen($event)"
+                      @change="changeResumen($event, item)"
                       :name="`checkbox_list_${item.id}`"
                       :value="item"
                     />
@@ -763,7 +765,7 @@
                             <input
                               type="checkbox"
                               v-model="items_IF"
-                              @change="changeResumen($event)"
+                              @change="changeResumen($event, item)"
                               :name="`checkbox_list_${item.id}`"
                               :value="item"
                             />
@@ -836,15 +838,16 @@ export default {
       return this.u_a_c_d ? "anios_checkboxs" : "anios_checkboxs";
     },
     showBrnApplied() {
-      return (
-        (this.balance().length !== 0 && !this.areApplied) ||
-        (this.balance().length !== 0 && !this.compareWithNewtoApply)
-      );
+      return !this.compareWithNewtoApply;
+      // return (
+      //   (this.balance().length !== 0 && !this.areApplied) ||
+      //   (this.balance().length !== 0 && !this.compareWithNewtoApply)
+      // );
     },
     compareWithNewtoApply: function () {
       let stg = this.balance_string;
       let obj = JSON.stringify(this.balance());
-      return stg === obj;
+      return stg.length === obj.length;
     },
     ifSelectedTal() {
       return (
@@ -952,7 +955,7 @@ export default {
         },
       ],
     ],
-    balance_string: "",
+    balance_string: "[]",
     valueSelect: null,
     disabledValueSelect: false,
     itemsApplied: {},
@@ -1052,13 +1055,13 @@ export default {
           };
         }
 
-        balance = balance.concat(this.selectBalance);
-
-        balance = removeDuplicateItem(balance);
-
         this.treDisabled = true;
         this.disabledValueSelect = true;
       }
+
+      balance = this.selectBalance.concat(balance);
+
+      balance = removeDuplicateItem(balance);
       return balance;
     },
     resteSelet() {
@@ -1067,7 +1070,7 @@ export default {
       this.disabledValueSelect = false;
       this.valueSelect = null;
     },
-    changeResumen(event) {
+    changeResumen(event, itemResumen) {
       event.preventDefault();
       let checkboxs = document.querySelectorAll(
         '.ul_selected_cnae input[type="checkbox"]'
@@ -1078,23 +1081,27 @@ export default {
 
       this.reapply = this.areApplied ? true : this.areApplied;
 
-      const balance = this.balance();
-      for (const key in this.items_IF) {
-        if (this.items_IF.hasOwnProperty(key)) {
-          const element = this.items_IF[key];
-          for (const key in balance) {
-            if (balance.hasOwnProperty(key)) {
-              const b_element = balance[key];
-              if (b_element === element.item) {
-                this.selectBalance = this.selectBalance.filter(
-                  (item) => item !== b_element
-                );
-                this.areApplied = false;
-              }
-            }
-          }
-        }
-      }
+      this.selectBalance = this.selectBalance.filter((item) => {
+        return item !== itemResumen.itemSelect;
+      });
+
+      // const balance = this.balance();
+      // for (const key in this.items_IF) {
+      //   if (this.items_IF.hasOwnProperty(key)) {
+      //     const element = this.items_IF[key];
+      //     // for (const key in balance) {
+      //     //   if (balance.hasOwnProperty(key)) {
+      //     //     const b_element = balance[key];
+      //     //     if (b_element === element.item) {
+      //     //       this.selectBalance = this.selectBalance.filter(
+      //     //         (item) => item !== b_element
+      //     //       );
+      //     //       this.areApplied = false;
+      //     //     }
+      //     //   }
+      //     // }
+      //   }
+      // }
 
       if (this.items_IF && this.items_IF.length === 0) {
         this.clean();
@@ -1122,7 +1129,10 @@ export default {
             for (const item of this.selectBalance) {
               const result_item = this.getItemApplied(item);
               if (result_item) {
-                this.items_IF.push(result_item);
+                this.items_IF.push({
+                  itemSelect: item,
+                  ...result_item,
+                });
               }
             }
             this.$store.dispatch("filters/addFilters", {
@@ -1137,7 +1147,7 @@ export default {
             this.treDisabled = false;
             this.disabledValueSelect = false;
             this.selected_informacion_financiera = [];
-            // this.valueSelect = null;
+            this.valueSelect = null;
             this.balance_string = JSON.stringify(_balance);
             sendEvent(`filtro-aplicado`, this.title);
           })
