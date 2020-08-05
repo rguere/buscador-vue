@@ -689,9 +689,9 @@ export default {
       this.form.estado = [];
       this.selected_custom_estados.forEach((item) => {
         if (item.id === 6) {
-          estados.push(17);
+          estados.push(`17-${item.label}`);
         }
-        estados.push(item.id);
+        estados.push(`${item.id}-${item.label}`);
       });
       this.form.estado = estados;
       return this.form;

@@ -258,29 +258,32 @@
               </div>
             </div>
           </div>
-          <div v-if="modo !== 'ratios'" class="panel panel-default cd">
+          <div class="panel panel-default cd">
             <div class="panel-heading">
               <p class="panel-title roboto white">Seleccionar rango</p>
             </div>
             <div class="panel-body">
               <div class="row content_seleccionar_rango">
-                <div class="col-md-7" style="padding: 0 0 0 10px;">
+                <div
+                  :class="modo !== 'ratios'? 'col-md-7': 'col-md-12'"
+                  style="padding: 0 0 0 10px;"
+                >
                   <div class="item_rango">
                     <el-tag>Mínimo</el-tag>
                     <div class="content_input_tag">
                       <el-input placeholder="Mínimo" type="number" :max="monto2" v-model="monto1"></el-input>
-                      <el-tag type="info">{{ selected_unidad.label }}</el-tag>
+                      <el-tag type="info">{{ labelRango }}</el-tag>
                     </div>
                   </div>
                   <div class="item_rango">
                     <el-tag>Máximo</el-tag>
                     <div class="content_input_tag">
                       <el-input placeholder="Mínimo" type="number" :min="monto1" v-model="monto2"></el-input>
-                      <el-tag type="info">{{ selected_unidad.label }}</el-tag>
+                      <el-tag type="info">{{ labelRango }}</el-tag>
                     </div>
                   </div>
                 </div>
-                <div class="col-md-5">
+                <div v-if="modo !== 'ratios'" class="col-md-5">
                   <div class="m-t-10">
                     <el-tag type="info">Unidad</el-tag>
                     <el-select
@@ -327,13 +330,6 @@
         </div>
         <p class="text-help">* Puedes elegir más de una opción</p>
       </div>
-      <!-- <div class="row">
-        <div class="col-md-12">
-          <pre>{{ selectBalance }}</pre>
-          <hr />
-          <pre>{{ items_IF }}</pre>
-        </div>
-      </div>-->
       <div class="row" v-if="items_IF && items_IF.length > 0">
         <div class="col-md-12">
           <el-collapse v-model="collapseResumen">
@@ -673,13 +669,16 @@
                       </div>
                     </div>
                   </div>
-                  <div v-if="modo !== 'ratios'" class="panel panel-default cd">
+                  <div class="panel panel-default cd">
                     <div class="panel-heading">
                       <p class="panel-title roboto white">Seleccionar rango</p>
                     </div>
                     <div class="panel-body">
                       <div class="row content_seleccionar_rango">
-                        <div class="col-md-7" style="padding: 0 0 0 10px;">
+                        <div
+                          :class="modo !== 'ratios'? 'col-md-7': 'col-md-12'"
+                          style="padding: 0 0 0 10px;"
+                        >
                           <div class="item_rango">
                             <el-tag>Mínimo</el-tag>
                             <div class="content_input_tag">
@@ -689,7 +688,7 @@
                                 :max="monto2"
                                 v-model="monto1"
                               ></el-input>
-                              <el-tag type="info">{{ selected_unidad.label }}</el-tag>
+                              <el-tag type="info">{{ labelRango }}</el-tag>
                             </div>
                           </div>
                           <div class="item_rango">
@@ -701,11 +700,11 @@
                                 :min="monto1"
                                 v-model="monto2"
                               ></el-input>
-                              <el-tag type="info">{{ selected_unidad.label }}</el-tag>
+                              <el-tag type="info">{{ labelRango }}</el-tag>
                             </div>
                           </div>
                         </div>
-                        <div class="col-md-5">
+                        <div v-if="modo !== 'ratios'" class="col-md-5">
                           <div class="m-t-10">
                             <el-tag type="info">Unidad</el-tag>
                             <el-select
@@ -829,10 +828,6 @@ export default {
     },
     showBrnApplied() {
       return !this.compareWithNewtoApply;
-      // return (
-      //   (this.balance().length !== 0 && !this.areApplied) ||
-      //   (this.balance().length !== 0 && !this.compareWithNewtoApply)
-      // );
     },
     compareWithNewtoApply: function () {
       let stg = this.balance_string;
@@ -846,6 +841,15 @@ export default {
         this.valueSelect.label &&
         this.valueSelect.label.length !== 0
       );
+    },
+    labelRango() {
+      return this.modo !== "ratios"
+        ? this.selected_unidad.label
+        : this.valueSelect &&
+          this.valueSelect.unit &&
+          this.valueSelect.unit.length > 0
+        ? this.valueSelect.unit
+        : "";
     },
   },
   data: () => ({
@@ -1005,14 +1009,16 @@ export default {
           }
         }
 
-        monto1 = this.monto1 * this.selected_unidad.id;
-        monto2 = this.monto2 * this.selected_unidad.id;
+        if (this.modo !== "ratios") {
+          monto1 = this.monto1 * this.selected_unidad.id;
+          monto2 = this.monto2 * this.selected_unidad.id;
+        }
 
         monto1 = monto1 === 0 ? null : monto1;
         monto2 = monto2 === 0 ? null : monto2;
 
-        monto1 = this.modo === "ratios" ? null : monto1;
-        monto2 = this.modo === "ratios" ? null : monto2;
+        // monto1 = this.modo === "ratios" ? null : monto1;
+        // monto2 = this.modo === "ratios" ? null : monto2;
 
         const item = this.valueSelect;
         const _anios =
@@ -1030,7 +1036,10 @@ export default {
               anios: _anios,
               monto1: this.monto1,
               monto2: this.monto2,
-              selected_unidad: this.selected_unidad,
+              selected_unidad: {
+                label: this.labelRango,
+                id: this.selected_unidad.id,
+              },
             };
           }
         } else {
@@ -1041,7 +1050,10 @@ export default {
             anios: _anios,
             monto1: this.monto1,
             monto2: this.monto2,
-            selected_unidad: this.selected_unidad,
+            selected_unidad: {
+              label: this.labelRango,
+              id: this.selected_unidad.id,
+            },
           };
         }
 
@@ -1208,6 +1220,7 @@ export default {
         id: 1000,
         label: "Miles de euros",
       };
+      this.balance_string = "[]";
       this.monto1 = setMin(this.selected_unidad);
       this.todas_las_empresas = false;
       this.u_a_c_d = true;
@@ -1252,6 +1265,7 @@ export default {
         id: 1000,
         label: "Miles de euros",
       };
+      this.balance_string = "[]";
       this.todas_las_empresas = false;
       this.u_a_c_d = true;
       this.updateNumberSelectedCompanies(0);
