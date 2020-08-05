@@ -327,13 +327,13 @@
         </div>
         <p class="text-help">* Puedes elegir más de una opción</p>
       </div>
-      <div class="row">
+      <!-- <div class="row">
         <div class="col-md-12">
           <pre>{{ selectBalance }}</pre>
           <hr />
           <pre>{{ items_IF }}</pre>
         </div>
-      </div>
+      </div>-->
       <div class="row" v-if="items_IF && items_IF.length > 0">
         <div class="col-md-12">
           <el-collapse v-model="collapseResumen">
@@ -565,11 +565,12 @@
                                   <el-option
                                     v-for="_item in item.children"
                                     :key="_item.id"
-                                    :label="_item.label"
+                                    :label="`${_item.label} ${_item.unit}`"
                                     :value="_item"
                                     :class="_item.special ? 'special' : ''"
                                   >
                                     <span>{{ _item.label }}</span>
+                                    <span style="float: right;">{{ ` ${_item.unit}` }}</span>
                                   </el-option>
                                 </el-select>
                                 <el-tooltip
@@ -672,7 +673,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="panel panel-default cd">
+                  <div v-if="modo !== 'ratios'" class="panel panel-default cd">
                     <div class="panel-heading">
                       <p class="panel-title roboto white">Seleccionar rango</p>
                     </div>
@@ -688,11 +689,7 @@
                                 :max="monto2"
                                 v-model="monto1"
                               ></el-input>
-                              <el-tag type="info">
-                                {{
-                                selected_unidad.label
-                                }}
-                              </el-tag>
+                              <el-tag type="info">{{ selected_unidad.label }}</el-tag>
                             </div>
                           </div>
                           <div class="item_rango">
@@ -704,11 +701,7 @@
                                 :min="monto1"
                                 v-model="monto2"
                               ></el-input>
-                              <el-tag type="info">
-                                {{
-                                selected_unidad.label
-                                }}
-                              </el-tag>
+                              <el-tag type="info">{{ selected_unidad.label }}</el-tag>
                             </div>
                           </div>
                         </div>
@@ -738,10 +731,7 @@
                                 :value="true"
                               />
                               <span class="geekmark"></span>
-                              <span class="title">
-                                Todas las empresas con el dato
-                                disponible.
-                              </span>
+                              <span class="title">Todas las empresas con el dato disponible.</span>
                             </label>
                           </div>
                         </div>
