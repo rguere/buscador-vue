@@ -660,6 +660,26 @@ export default {
         .then((response) => {
           if (response && response.empresas) {
             this.results.empresas = response.empresas.map((item) => {
+              item.estado = "-";
+              if (
+                item.EstadoEspecialEmpresa ||
+                item.EstadoEspecialEmpresa === 0
+              ) {
+                const estado = this.filtros_aplicados.find(
+                  (item) => item.title === "Estado"
+                );
+                if (estado && estado.datas && Array.isArray(estado.datas)) {
+                  const itemEstado = estado.datas.find((_data) => {
+                    return _data.id === item.EstadoEspecialEmpresa;
+                  });
+                  if (itemEstado && itemEstado.label) {
+                    item.estado = itemEstado.label;
+                  }
+                }
+              } else {
+                item.estado = "-";
+              }
+
               if (item.razonSocialNormalizadaURL301) {
                 item.urlInfocif = `http://www.infocif.es/ficha-empresa/${item.razonSocialNormalizadaURL301}`;
               } else {
@@ -748,20 +768,23 @@ export default {
                 item.TipoCuentasAnuales = "-";
               }
               item.informacion_financiera = "-";
+              item.ratios = "-";
               item.perdidas = "-";
 
               if (
                 item.InformacionFinanciera &&
-                Array.isArray(item.InformacionFinanciera)
+                Array.isArray(item.InformacionFinanciera) &&
+                item.InformacionFinanciera.length > 0
               ) {
-                // console.log(item.InformacionFinanciera);
                 const informacion_financiera = this.filtros_aplicados.find(
                   (item) => item.title === "Información Financiera"
                 );
+
                 if (
                   informacion_financiera &&
                   informacion_financiera.datas &&
-                  Array.isArray(informacion_financiera.datas)
+                  Array.isArray(informacion_financiera.datas) &&
+                  informacion_financiera.datas.length > 0
                 ) {
                   for (const itemData of informacion_financiera.datas) {
                     const arrIF = [];
@@ -790,16 +813,24 @@ export default {
                         }
                       }
                     });
-                    if (arrIF && Array.isArray(arrIF)) {
+                    if (arrIF && Array.isArray(arrIF) && arrIF.length > 0) {
                       item.informacion_financiera = arrIF.join(" | ");
                     } else {
                       item.informacion_financiera = "-";
                     }
                   }
+                } else {
+                  item.informacion_financiera = "-";
                 }
+              } else {
+                item.informacion_financiera = "-";
               }
 
-              if (item.Perdida && Array.isArray(item.Perdida)) {
+              if (
+                item.Perdida &&
+                Array.isArray(item.Perdida) &&
+                item.Perdida.length > 0
+              ) {
                 const perdidas = this.filtros_aplicados.find(
                   (item) => item.title === "Información Financiera"
                 );
@@ -835,13 +866,17 @@ export default {
                         }
                       }
                     });
-                    if (arrIP && Array.isArray(arrIP)) {
+                    if (arrIP && Array.isArray(arrIP) && arrIP.length > 0) {
                       item.perdidas = arrIP.join(" | ");
                     } else {
                       item.perdidas = "-";
                     }
                   }
+                } else {
+                  item.perdidas = "-";
                 }
+              } else {
+                item.perdidas = "-";
               }
 
               item.FechaConstitucionOrigen = item.FechaConstitucionOrigen.length

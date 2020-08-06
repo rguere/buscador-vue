@@ -360,6 +360,13 @@ export const getColumnsSummary = () => {
       show: true,
       sortable: true,
     },
+    {
+      prop: "estado",
+      label: "Estado",
+      width: "300",
+      show: true,
+      sortable: true,
+    },
   ];
 };
 
