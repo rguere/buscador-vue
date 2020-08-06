@@ -3,22 +3,16 @@
     <div class="panel-heading">
       <p class="panel-title roboto white">
         {{ title }}
-        <span class="span-info-right" v-if="selected_by_auditores !== 0"
-          >({{ selected_by_auditores | numeral("0,0") }} Auditor (es)
-          seleccionados)</span
-        >
+        <span
+          class="span-info-right"
+          v-if="selected_by_auditores !== 0"
+        >({{ selected_by_auditores | numeral("0,0") }} empresas seleccionadas)</span>
       </p>
     </div>
     <div class="panel-body">
       <ul class="nav nav-tabs">
         <li :class="searchTab === 'roac' ? 'active' : ''">
-          <a
-            data-toggle="tab"
-            @click="setTab(`roac`)"
-            class="text-white"
-            href="#"
-            >Busqueda Roac</a
-          >
+          <a data-toggle="tab" @click="setTab(`roac`)" class="text-white" href="#">Busqueda Roac</a>
         </li>
         <li :class="searchTab === 'razonSocial' ? 'active' : ''">
           <a
@@ -26,8 +20,7 @@
             @click="setTab(`razonSocial`)"
             class="text-white"
             href="#"
-            >Busqueda Razon Social</a
-          >
+          >Busqueda Razon Social</a>
         </li>
       </ul>
       <div class="tab-content">
@@ -131,12 +124,9 @@
         <el-collapse v-model="collapseTop10">
           <el-collapse-item title="Top 10 Auditores" name="1">
             <div class="div-scroll-200 mb-5">
-              <div class="">
+              <div class>
                 <div class="col-md-6">
-                  <div
-                    v-for="(item, key) in middle(search.auditor, 1)"
-                    :key="key"
-                  >
+                  <div v-for="(item, key) in middle(search.auditor, 1)" :key="key">
                     <label class="custon-checkboxs" style="font-size: 11px;">
                       <img
                         style="width: 70px; margin-right: 5px;"
@@ -152,20 +142,20 @@
                         :value="item"
                       />
                       <span class="geekmark"></span>
-                      <span style="font-size: 11px;" class="name-checkbox">{{
+                      <span style="font-size: 11px;" class="name-checkbox">
+                        {{
                         item.label
-                      }}</span>
-                      <span style="font-size: 11px;" class="num-fil"
-                        >({{ item.data | numeral("0,0") }})</span
-                      >
+                        }}
+                      </span>
+                      <span
+                        style="font-size: 11px;"
+                        class="num-fil"
+                      >({{ item.data | numeral("0,0") }})</span>
                     </label>
                   </div>
                 </div>
                 <div class="col-md-6">
-                  <div
-                    v-for="(item, key) in middle(search.auditor, 2)"
-                    :key="key"
-                  >
+                  <div v-for="(item, key) in middle(search.auditor, 2)" :key="key">
                     <label class="custon-checkboxs" style="font-size: 11px;">
                       <img
                         style="width: 70px; margin-right: 5px;"
@@ -181,12 +171,15 @@
                         :value="item"
                       />
                       <span class="geekmark"></span>
-                      <span style="font-size: 11px;" class="name-checkbox">{{
+                      <span style="font-size: 11px;" class="name-checkbox">
+                        {{
                         item.label
-                      }}</span>
-                      <span style="font-size: 11px;" class="num-fil"
-                        >({{ item.data | numeral("0,0") }})</span
-                      >
+                        }}
+                      </span>
+                      <span
+                        style="font-size: 11px;"
+                        class="num-fil"
+                      >({{ item.data | numeral("0,0") }})</span>
                     </label>
                   </div>
                 </div>
@@ -202,8 +195,7 @@
           title="Puedes Añadir a tu Búsqueda entre nuestra Lista de Auditores Destacados o si lo prefieres realiza una búsqueda directa de uno o varios Auditores indicando el Numero Roac o por el Nombre o Razón Social del Auditor que requieras."
           type="success"
           :closable="false"
-        >
-        </el-alert>
+        ></el-alert>
         <div>
           <button class="btn btn-warning m-r-5" @click="showModal">
             Ver detalles
@@ -221,16 +213,9 @@
             @click="apply"
           >
             Aplicar
-            <i
-              :class="loadingApply ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'"
-            ></i>
+            <i :class="loadingApply ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'"></i>
           </button>
-          <button
-            type="button"
-            class="btn btn-info"
-            v-if="areApplied"
-            @click="confirmClean"
-          >
+          <button type="button" class="btn btn-info" v-if="areApplied" @click="confirmClean">
             Limpiar
             <i class="fa fa-undo"></i>
           </button>
@@ -240,10 +225,7 @@
         <div class="col-md-12">
           <br />
           <el-collapse v-model="collapseResumen">
-            <el-collapse-item
-              title="Resumen de Auditor (es) seleccionados"
-              name="1"
-            >
+            <el-collapse-item title="Resumen de Auditor (es) seleccionados" name="1">
               <div class="div-scroll-200">
                 <div v-for="(item, key) in list_selected_auditores" :key="key">
                   <div class="checkbox" id="selected_em">
@@ -301,12 +283,7 @@
                   "
                 ></i>
               </button>
-              <button
-                type="button"
-                class="btn btn-info"
-                v-if="areApplied"
-                @click="confirmClean"
-              >
+              <button type="button" class="btn btn-info" v-if="areApplied" @click="confirmClean">
                 Limpiar
                 <i class="fa fa-undo"></i>
               </button>
@@ -331,19 +308,15 @@
                             @click="setTab(`roac`)"
                             class="text-white"
                             href="#"
-                            >Busqueda Roac</a
-                          >
+                          >Busqueda Roac</a>
                         </li>
-                        <li
-                          :class="searchTab === 'razonSocial' ? 'active' : ''"
-                        >
+                        <li :class="searchTab === 'razonSocial' ? 'active' : ''">
                           <a
                             data-toggle="tab"
                             @click="setTab(`razonSocial`)"
                             class="text-white"
                             href="#"
-                            >Busqueda Razon Social</a
-                          >
+                          >Busqueda Razon Social</a>
                         </li>
                       </ul>
                       <div class="tab-content">
@@ -355,10 +328,7 @@
                               : 'tab-pane fade'
                           "
                         >
-                          <form
-                            v-on:submit.prevent="validateBormeAuditor"
-                            class="m-b-10"
-                          >
+                          <form v-on:submit.prevent="validateBormeAuditor" class="m-b-10">
                             <div class="form_items">
                               <div class="form-group">
                                 <textarea
@@ -397,10 +367,7 @@
                               : 'tab-pane fade'
                           "
                         >
-                          <form
-                            v-on:submit.prevent="validateBormeAuditor"
-                            class="m-b-10"
-                          >
+                          <form v-on:submit.prevent="validateBormeAuditor" class="m-b-10">
                             <div class="form_items">
                               <div class="form-group">
                                 <textarea
@@ -437,14 +404,8 @@
                       <el-collapse v-model="collapseTop10">
                         <el-collapse-item title="Top 10 Auditores" name="1">
                           <div class="div-scroll-200 mb-5">
-                            <div
-                              v-for="(item, key) in search.auditor"
-                              :key="key"
-                            >
-                              <label
-                                class="custon-checkboxs"
-                                style="font-size: 11px;"
-                              >
+                            <div v-for="(item, key) in search.auditor" :key="key">
+                              <label class="custon-checkboxs" style="font-size: 11px;">
                                 <img
                                   style="width: 70px; margin-right: 5px;"
                                   :src="`./top10auditores/${item.id}.jpeg`"
@@ -458,15 +419,11 @@
                                   :id="`checkbox_detalles_top_10${item.id}`"
                                   :value="item"
                                 />
-                                <span
-                                  style="font-size: 11px;"
-                                  class="geekmark"
-                                ></span>
+                                <span style="font-size: 11px;" class="geekmark"></span>
                                 <span
                                   style="font-size: 11px;"
                                   class="name-checkbox"
-                                  >{{ item.label }}</span
-                                >
+                                >{{ item.label }}</span>
                               </label>
                             </div>
                           </div>
@@ -486,9 +443,10 @@
                     <span
                       class="span-info-right"
                       v-if="selected_by_auditores !== 0"
-                      >({{ selected_by_auditores | numeral("0,0") }} Auditor
-                      (es) seleccionados)</span
                     >
+                      ({{ selected_by_auditores | numeral("0,0") }} Auditor
+                      (es) seleccionados)
+                    </span>
                   </p>
                 </div>
                 <div class="panel-body div-scroll-200">
@@ -529,9 +487,10 @@
                     <span
                       class="span-info-right"
                       v-if="selected_by_auditores !== 0"
-                      >({{ selected_by_auditores | numeral("0,0") }} Auditor
-                      (es) seleccionados)</span
                     >
+                      ({{ selected_by_auditores | numeral("0,0") }} Auditor
+                      (es) seleccionados)
+                    </span>
                   </p>
                 </div>
                 <div class="panel-body div-scroll-200">
@@ -542,10 +501,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr
-                        v-for="(item, key) in list_selected_auditores"
-                        :key="key"
-                      >
+                      <tr v-for="(item, key) in list_selected_auditores" :key="key">
                         <th scope="row">
                           <div class="checkbox" id="selected_em">
                             <label>
@@ -598,22 +554,22 @@ export default {
       applied_filters: "filters/applied_filters",
       filters: "filters/filters",
     }),
-    compareWithNewtoApply: function() {
+    compareWithNewtoApply: function () {
       let stg = this.selected_auditores_string;
       let obj = JSON.stringify(this.selected_auditores);
       return stg === obj;
     },
-    iconBtnBuscar: function() {
+    iconBtnBuscar: function () {
       return this.loadingValidar ? "fa  fa-spinner fa-spin" : "fa  fa-search";
     },
-    showAuditores: function() {
+    showAuditores: function () {
       return (
         this.auditores &&
         this.auditores.empresas.length !== 0 &&
         !this.search_edit
       );
     },
-    listSelectedAuditoresLengthNot0: function() {
+    listSelectedAuditoresLengthNot0: function () {
       return (
         this.list_selected_auditores &&
         this.list_selected_auditores.length !== 0
@@ -667,7 +623,7 @@ export default {
     });
   },
   watch: {
-    selected_auditores: function(newRazonSocial) {
+    selected_auditores: function (newRazonSocial) {
       this.selected_by_auditores = this.numberRazonSocial(newRazonSocial);
       this.list_selected_auditores = [...this.selected_auditores];
       if (this.reapply && newRazonSocial.length === 0) {
@@ -871,8 +827,8 @@ export default {
     numberRazonSocial(newRazonSocial) {
       let business_accountant = 0;
       if (Array.isArray(newRazonSocial)) {
-        newRazonSocial.forEach(() => {
-          business_accountant = business_accountant + 1;
+        newRazonSocial.forEach((item) => {
+          business_accountant = business_accountant + item.data;
         });
       }
       return business_accountant;
