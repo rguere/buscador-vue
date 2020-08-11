@@ -78,6 +78,11 @@
               </div>
             </div>
           </div>
+          <div class="row">
+            <div class="col-md-12">
+              <pre>{{ selected_custom_estados }}</pre>
+            </div>
+          </div>
           <div class="panel-body">
             <div class="row" v-if="showSelecCustomEstados">
               <div class="col-md-12">
@@ -285,7 +290,6 @@
 import { mapGetters } from "vuex";
 import swal from "sweetalert2";
 import {
-  inArrayObjectTreeselect,
   howAnimation,
   beforeOrderFilters,
   removeDuplicates,
@@ -399,6 +403,34 @@ export default {
         this.selected_custom_estados = this.selected_custom_estados.filter(
           (item) => item.apply === true
         );
+        if (
+          this.selected_estados.id === 0 &&
+          this.search &&
+          this.search.estados[0] &&
+          this.search.estados[0].children
+        ) {
+          const children = [...this.search.estados[0].children];
+          for (const s_item of children) {
+            this.selected_custom_estados.push({
+              ...s_item,
+              apply: true,
+            });
+          }
+        }
+        if (
+          this.selected_estados.id === 70 &&
+          this.search &&
+          this.search.estados[0] &&
+          this.search.estados[0].children
+        ) {
+          const children = [...this.search.estados[2].children];
+          for (const s_item of children) {
+            this.selected_custom_estados.push({
+              ...s_item,
+              apply: true,
+            });
+          }
+        }
         this.selected_custom_estados.push(this.selected_estados);
         this.selected_custom_estados = removeDuplicates(
           this.selected_custom_estados,
@@ -474,49 +506,12 @@ export default {
         ? "tab-pane fade in active"
         : "tab-pane fade";
     },
-    clickPicker(event, elementRefs) {
-      let target = event.target;
-      if (target.classList.contains("el-icon-date")) {
-        this[elementRefs]++;
-        if (this[elementRefs] == 2) {
-          this.$refs[elementRefs].pickerVisible = false;
-        }
-      }
-      if (this[elementRefs] >= 2) {
-        this[elementRefs] = 0;
-      }
-    },
-    focusPicker(el) {
-      setTimeout(() => {
-        let modal = document.querySelector(`.el-popper.${el.id}`);
-        let LI = modal.querySelector(`._${el.id}`);
-        if (!LI) {
-          let node = document.createElement("LI");
-          node.classList.add(`_${el.id}`);
-          let textnode = document.createTextNode("X");
-          node.appendChild(textnode);
-          node.addEventListener("click", (event) => {
-            let target = event.target;
-            let _class = target.getAttribute("class");
-            this.$refs[_class.replace("_", "")].pickerVisible = false;
-          });
-          modal.appendChild(node);
-        }
-      }, 100);
-    },
-    fetchSearch() {
-      // this.$store.dispatch('search/fetchSearch').then(() => {
-      //   this.options[0].children = (this.search && this.search.estados) ? this.search.estados : []
-      // })
-    },
     showModal() {
       sendPageView(`filtro-estado`, `Buscador - Estado`);
-
       this.modalVisible = true;
     },
     hideModal() {
       sendPageView(``, `Buscador - Filtro`);
-
       this.modalVisible = false;
     },
     /**
@@ -527,34 +522,6 @@ export default {
       this.$store.dispatch("filters/updateNumberSelectedCompanies", {
         quantity,
       });
-    },
-    /**
-     * [numberCompaniesSelected cuenta la cantidad de empresas selecionadas]
-     * @param  {[Array<Object>]} newSelectedCompanies [description]
-     * @return {[number]}        business_accountant  [description]
-     */
-    numberCompaniesSelected(newSelectedCompanies) {
-      let business_accountant = 0;
-      if (Array.isArray(newSelectedCompanies)) {
-        newSelectedCompanies.forEach((item) => {
-          let result = inArrayObjectTreeselect(this.search.estados, item.id);
-          if (result && result.data && result.data) {
-            business_accountant = business_accountant + result.data;
-          }
-        });
-      }
-      return business_accountant;
-    },
-    /**
-     * [isAllProvincesLocalidad saber si el valor del treeselect es TODA ESPAÑA]
-     * @param  {[type]}  arrayProvincesLocalidad [description]
-     * @return {Boolean}                         [description]
-     */
-    isAllProvincesLocalidad(arrayProvincesLocalidad) {
-      return arrayProvincesLocalidad[0] &&
-        arrayProvincesLocalidad[0].id === "all"
-        ? true
-        : false;
     },
     apply() {
       if (
