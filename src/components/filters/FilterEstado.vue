@@ -78,11 +78,6 @@
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-md-12">
-              <pre>{{ selected_custom_estados }}</pre>
-            </div>
-          </div>
           <div class="panel-body">
             <div class="row" v-if="showSelecCustomEstados">
               <div class="col-md-12">
