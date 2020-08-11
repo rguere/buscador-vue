@@ -408,7 +408,7 @@ export default {
           for (const s_item of children) {
             this.selected_custom_estados.push({
               ...s_item,
-              apply: true,
+              apply: false,
             });
           }
         }
@@ -422,7 +422,7 @@ export default {
           for (const s_item of children) {
             this.selected_custom_estados.push({
               ...s_item,
-              apply: true,
+              apply: false,
             });
           }
         }
