@@ -3,9 +3,9 @@
     <div class="panel-heading">
       <p class="panel-title roboto white">
         {{ title }}
-        <span class="span-info-right" v-if="selected_by_estados !== 0">
-          ({{ selected_by_estados | numeral("0,0") }} empresas
-          seleccionadas)
+        <span class="span-info-right" v-if="selected_custom_estados.length !== 0">
+          ({{ selected_custom_estados.length | numeral("0,0") }} estado (s)
+          seleccionados)
         </span>
       </p>
     </div>
