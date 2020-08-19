@@ -3,10 +3,10 @@
     <div class="panel-heading">
       <p class="panel-title roboto white">
         {{ title }}
-        <span class="span-info-right" v-if="selected_by_direc_vinc !== 0"
-          >({{ selected_by_direc_vinc | numeral("0,0") }} vinculaciones
-          seleccionadas)</span
-        >
+        <span class="span-info-right" v-if="selected_by_direc_vinc !== 0">
+          ({{ selected_by_direc_vinc | numeral("0,0") }} vinculaciones
+          seleccionadas)
+        </span>
       </p>
     </div>
     <div class="panel-body">
@@ -19,7 +19,7 @@
                 v-model="dataFrm"
                 id="direc_vinc1"
                 class="form-control"
-                placeholder='escribe aqui el nombre de la empresa o sociedad que pertenece al Organo de Administracion y clica en "Buscar"'
+                :placeholder="placeholder"
               />
               <span class="input-group-btn">
                 <button
@@ -46,21 +46,12 @@
               active-text="Activos"
               inactive-text="Inactivos"
               @change="changeActive"
-            >
-            </el-switch>
-            <el-checkbox
-              style="margin-left: 20px;"
-              @change="changeActive"
-              v-model="both"
-              >Ambos</el-checkbox
-            >
+            ></el-switch>
+            <el-checkbox style="margin-left: 20px;" @change="changeActive" v-model="both">Ambos</el-checkbox>
           </div>
         </div>
       </div>
-      <div
-        class="panel panel-default cd"
-        v-if="direc_vinc && direc_vinc.empresas && !search_edit"
-      >
+      <div class="panel panel-default cd" v-if="direc_vinc && direc_vinc.empresas && !search_edit">
         <div class="panel-body">
           <div class="row">
             <div class="col-md-6">
@@ -100,36 +91,29 @@
                   >
                     <div class="div-scroll-200">
                       <el-table :data="items" style="width: 100%">
-                        <el-table-column prop="Nombre" label="Persona">
-                        </el-table-column>
-                        <el-table-column
-                          prop="RazonSocial"
-                          label="Razón social de la empresa"
-                        >
+                        <el-table-column prop="Nombre" label="Persona"></el-table-column>
+                        <el-table-column prop="RazonSocial" label="Razón social de la empresa">
                           <template slot-scope="scope">
-                            <a :href="scope.row.urlInfocif" target="_blank">{{
+                            <a :href="scope.row.urlInfocif" target="_blank">
+                              {{
                               scope.row.RazonSocial
-                            }}</a>
+                              }}
+                            </a>
                           </template>
                         </el-table-column>
-                        <el-table-column prop="CargoEspejo" label="Cargo">
-                        </el-table-column>
-                        <el-table-column
-                          width="150"
-                          prop="EstadoActivo"
-                          label="Status"
-                        >
+                        <el-table-column prop="CargoEspejo" label="Cargo"></el-table-column>
+                        <el-table-column width="150" prop="EstadoActivo" label="Status">
                           <template slot-scope="scope">
-                            <div :class="classEstatus(scope.row.EstadoActivo)">
-                              {{ getEstado(scope.row.EstadoActivo) }}
-                            </div>
+                            <div
+                              :class="classEstatus(scope.row.EstadoActivo)"
+                            >{{ getEstado(scope.row.EstadoActivo) }}</div>
                           </template>
                         </el-table-column>
                       </el-table>
                     </div>
                     <el-button slot="reference">
                       Ver Vinculaciones
-                      <span class="num-fil"> ({{ items.length }})</span>
+                      <span class="num-fil">({{ items.length }})</span>
                     </el-button>
                   </el-popover>
                 </div>
@@ -159,33 +143,19 @@
             Aplicar
             <i :class="iconLoadingApply"></i>
           </button>
-          <button
-            type="button"
-            class="btn btn-info"
-            v-if="areApplied"
-            @click="confirmClean"
-          >
+          <button type="button" class="btn btn-info" v-if="areApplied" @click="confirmClean">
             Limpiar
             <i class="fa fa-undo"></i>
           </button>
         </div>
       </div>
-      <div
-        class="row"
-        v-if="list_selected_direc_vinc && list_selected_direc_vinc.length !== 0"
-      >
+      <div class="row" v-if="list_selected_direc_vinc && list_selected_direc_vinc.length !== 0">
         <div class="col-md-12">
           <br />
           <el-collapse v-model="collapseResumen">
-            <el-collapse-item
-              title="Resumen vinculaciones seleccionadas"
-              name="1"
-            >
+            <el-collapse-item title="Resumen vinculaciones seleccionadas" name="1">
               <div class="div-scroll-200">
-                <div
-                  v-for="(items, key) in list_selected_direc_vinc"
-                  :key="key"
-                >
+                <div v-for="(items, key) in list_selected_direc_vinc" :key="key">
                   <div class="item-direc_vinc" style="margin-bottom: 10px;">
                     <div class="t-t-capitalize">
                       <label class="custon-checkboxs">
@@ -210,40 +180,28 @@
                       >
                         <div class="div-scroll-200">
                           <el-table :data="items" style="width: 100%">
-                            <el-table-column prop="Nombre" label="Persona">
-                            </el-table-column>
-                            <el-table-column
-                              prop="RazonSocial"
-                              label="Razón social de la empresa"
-                            >
+                            <el-table-column prop="Nombre" label="Persona"></el-table-column>
+                            <el-table-column prop="RazonSocial" label="Razón social de la empresa">
                               <template slot-scope="scope">
                                 <a
                                   :href="scope.row.urlInfocif"
                                   target="_blank"
-                                  >{{ scope.row.RazonSocial }}</a
-                                >
+                                >{{ scope.row.RazonSocial }}</a>
                               </template>
                             </el-table-column>
-                            <el-table-column prop="CargoEspejo" label="Cargo">
-                            </el-table-column>
-                            <el-table-column
-                              width="150"
-                              prop="EstadoActivo"
-                              label="Status"
-                            >
+                            <el-table-column prop="CargoEspejo" label="Cargo"></el-table-column>
+                            <el-table-column width="150" prop="EstadoActivo" label="Status">
                               <template slot-scope="scope">
                                 <div
                                   :class="classEstatus(scope.row.EstadoActivo)"
-                                >
-                                  {{ getEstado(scope.row.EstadoActivo) }}
-                                </div>
+                                >{{ getEstado(scope.row.EstadoActivo) }}</div>
                               </template>
                             </el-table-column>
                           </el-table>
                         </div>
                         <el-button slot="reference">
                           Ver Vinculaciones
-                          <span class="num-fil"> ({{ items.length }})</span>
+                          <span class="num-fil">({{ items.length }})</span>
                         </el-button>
                       </el-popover>
                     </div>
@@ -287,12 +245,7 @@
                 Aplicar
                 <i :class="iconLoadingApply"></i>
               </button>
-              <button
-                type="button"
-                class="btn btn-info"
-                v-if="areApplied"
-                @click="confirmClean"
-              >
+              <button type="button" class="btn btn-info" v-if="areApplied" @click="confirmClean">
                 Limpiar
                 <i class="fa fa-undo"></i>
               </button>
@@ -317,7 +270,7 @@
                             v-model="dataFrm"
                             id="direc_vinc"
                             class="form-control"
-                            placeholder='escribe aqui el nombre de la empresa o sociedad que pertenece al Organo de Administracion y clica en "Buscar"'
+                            :placeholder="placeholder"
                           />
                           <span class="input-group-btn">
                             <button
@@ -343,24 +296,19 @@
                           active-text="Activos"
                           inactive-text="Inactivos"
                           @change="changeActive"
-                        >
-                        </el-switch>
+                        ></el-switch>
                         <el-checkbox
                           style="margin-left: 20px;"
                           @change="changeActive"
                           v-model="both"
-                          >Ambos</el-checkbox
-                        >
+                        >Ambos</el-checkbox>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div
-              class="col-md-12"
-              v-if="direc_vinc && direc_vinc.empresas && !search_edit"
-            >
+            <div class="col-md-12" v-if="direc_vinc && direc_vinc.empresas && !search_edit">
               <div class="panel panel-default cd">
                 <div class="panel-heading">
                   <p class="panel-title roboto white">
@@ -368,11 +316,12 @@
                     <span
                       class="span-info-right"
                       v-if="selected_by_direc_vinc !== 0"
-                      >({{
-                        selected_by_direc_vinc | numeral("0,0")
-                      }}
-                      vinculaciones seleccionadas)</span
                     >
+                      ({{
+                      selected_by_direc_vinc | numeral("0,0")
+                      }}
+                      vinculaciones seleccionadas)
+                    </span>
                   </p>
                 </div>
                 <div class="panel-body">
@@ -395,9 +344,11 @@
                               :value="items"
                             />
                             <span class="geekmark"></span>
-                            <span class="name-checkbox">{{
+                            <span class="name-checkbox">
+                              {{
                               items[0].Nombre
-                            }}</span>
+                              }}
+                            </span>
                           </label>
                         </div>
                         <div>
@@ -409,8 +360,7 @@
                           >
                             <div class="div-scroll-200">
                               <el-table :data="items" style="width: 100%">
-                                <el-table-column prop="Nombre" label="Persona">
-                                </el-table-column>
+                                <el-table-column prop="Nombre" label="Persona"></el-table-column>
                                 <el-table-column
                                   prop="RazonSocial"
                                   label="Razón social de la empresa"
@@ -419,35 +369,24 @@
                                     <a
                                       :href="scope.row.urlInfocif"
                                       target="_blank"
-                                      >{{ scope.row.RazonSocial }}</a
-                                    >
+                                    >{{ scope.row.RazonSocial }}</a>
                                   </template>
                                 </el-table-column>
-                                <el-table-column
-                                  prop="CargoEspejo"
-                                  label="Cargo"
-                                >
-                                </el-table-column>
-                                <el-table-column
-                                  width="150"
-                                  prop="EstadoActivo"
-                                  label="Status"
-                                >
+                                <el-table-column prop="CargoEspejo" label="Cargo"></el-table-column>
+                                <el-table-column width="150" prop="EstadoActivo" label="Status">
                                   <template slot-scope="scope">
                                     <div
                                       :class="
                                         classEstatus(scope.row.EstadoActivo)
                                       "
-                                    >
-                                      {{ getEstado(scope.row.EstadoActivo) }}
-                                    </div>
+                                    >{{ getEstado(scope.row.EstadoActivo) }}</div>
                                   </template>
                                 </el-table-column>
                               </el-table>
                             </div>
                             <el-button slot="reference">
                               Ver Vinculaciones
-                              <span class="num-fil"> ({{ items.length }})</span>
+                              <span class="num-fil">({{ items.length }})</span>
                             </el-button>
                           </el-popover>
                         </div>
@@ -461,19 +400,10 @@
               <div class="panel panel-default cd">
                 <div class="panel-body">
                   <el-collapse v-model="collapseResumen">
-                    <el-collapse-item
-                      title="Resumen vinculaciones seleccionadas"
-                      name="1"
-                    >
+                    <el-collapse-item title="Resumen vinculaciones seleccionadas" name="1">
                       <div class="div-scroll-200">
-                        <div
-                          v-for="(items, key) in list_selected_direc_vinc"
-                          :key="key"
-                        >
-                          <div
-                            class="item-direc_vinc"
-                            style="margin-bottom: 10px;"
-                          >
+                        <div v-for="(items, key) in list_selected_direc_vinc" :key="key">
+                          <div class="item-direc_vinc" style="margin-bottom: 10px;">
                             <div class="t-t-capitalize">
                               <label class="custon-checkboxs">
                                 <input
@@ -485,9 +415,11 @@
                                   :value="items"
                                 />
                                 <span class="geekmark"></span>
-                                <span class="name-checkbox">{{
+                                <span class="name-checkbox">
+                                  {{
                                   items[0].Nombre
-                                }}</span>
+                                  }}
+                                </span>
                               </label>
                             </div>
                             <div class="z-popover">
@@ -499,11 +431,7 @@
                               >
                                 <div class="div-scroll-200">
                                   <el-table :data="items" style="width: 100%">
-                                    <el-table-column
-                                      prop="Nombre"
-                                      label="Persona"
-                                    >
-                                    </el-table-column>
+                                    <el-table-column prop="Nombre" label="Persona"></el-table-column>
                                     <el-table-column
                                       prop="RazonSocial"
                                       label="Razón social de la empresa"
@@ -512,20 +440,11 @@
                                         <a
                                           :href="scope.row.urlInfocif"
                                           target="_blank"
-                                          >{{ scope.row.RazonSocial }}</a
-                                        >
+                                        >{{ scope.row.RazonSocial }}</a>
                                       </template>
                                     </el-table-column>
-                                    <el-table-column
-                                      prop="CargoEspejo"
-                                      label="Cargo"
-                                    >
-                                    </el-table-column>
-                                    <el-table-column
-                                      width="150"
-                                      prop="EstadoActivo"
-                                      label="Status"
-                                    >
+                                    <el-table-column prop="CargoEspejo" label="Cargo"></el-table-column>
+                                    <el-table-column width="150" prop="EstadoActivo" label="Status">
                                       <template slot-scope="scope">
                                         <div
                                           :class="
@@ -533,7 +452,7 @@
                                           "
                                         >
                                           {{
-                                            getEstado(scope.row.EstadoActivo)
+                                          getEstado(scope.row.EstadoActivo)
                                           }}
                                         </div>
                                       </template>
@@ -542,9 +461,7 @@
                                 </div>
                                 <el-button slot="reference">
                                   Ver Vinculaciones
-                                  <span class="num-fil">
-                                    ({{ items.length }})</span
-                                  >
+                                  <span class="num-fil">({{ items.length }})</span>
                                 </el-button>
                               </el-popover>
                             </div>
@@ -573,6 +490,7 @@ import {
   sendPageView,
   sendEvent,
   capitalize,
+  getResumenLength,
 } from "./../../utils";
 import { persistentData } from "./../../mixins/persistent-data";
 export default {
@@ -587,13 +505,13 @@ export default {
       applied_filters: "filters/applied_filters",
       filters: "filters/filters",
     }),
-    iconLoadingValidar: function() {
+    iconLoadingValidar: function () {
       return this.loadingValidar ? "fa  fa-spinner fa-spin" : "fa  fa-search";
     },
-    iconLoadingApply: function() {
+    iconLoadingApply: function () {
       return this.loadingApply ? "fa  fa-spinner fa-spin" : "fa  fa-search";
     },
-    compareWithNewtoApply: function() {
+    compareWithNewtoApply: function () {
       let stg = this.selected_direc_vinc_string;
       let obj = JSON.stringify(this.selected_direc_vinc);
       return stg === obj;
@@ -605,6 +523,8 @@ export default {
     search_edit: true,
     search_add: false,
     dataFrm: "",
+    placeholder:
+      'escribe aqui el nombre de la empresa o sociedad que pertenece al Organo de Administracion y clica en "Buscar"',
     direc_vinc: {
       total: 0,
       cantidad: 0,
@@ -643,9 +563,12 @@ export default {
         this.emptyFilter();
       }
     });
+    if (this.search && getResumenLength(this.search) > 0) {
+      this.getAppliedFilters();
+    }
   },
   watch: {
-    selected_direc_vinc: function(newRazonSocial) {
+    selected_direc_vinc: function (newRazonSocial) {
       this.selected_by_direc_vinc = this.numberRazonSocial(newRazonSocial);
       this.list_selected_direc_vinc = [...this.selected_direc_vinc];
       if (this.reapply && newRazonSocial.length === 0) {
@@ -730,12 +653,6 @@ export default {
                   }
                 }
               }
-              // for (const key in items) {
-              //   if (items.hasOwnProperty(key)) {
-              //     const element = items[key];
-              //     console.log(element);
-              //   }
-              // }
               this.direc_vinc.empresas = items;
             } else {
               swal.fire("Advertencia", "Datos no encontrados", "warning");
@@ -805,6 +722,7 @@ export default {
               empresas: null,
             };
             sendEvent(`filtro-aplicado`, this.title);
+            this.saveAppliedFilters();
           })
           .catch(() => {
             this.loadingApply = false;
@@ -840,6 +758,13 @@ export default {
       this.direc_vinc = { total: 0, cantidad: 0, empresas: null };
       this.list_selected_direc_vinc = [];
       this.collapseResumen = [];
+      this.selected_by_direc_vinc = 0;
+      this.$store.dispatch("filters/removeFilters", this.title);
+      this.areApplied = false;
+      this.reapply = false;
+      this.search_edit = true;
+      this.search_add = false;
+      sendEvent("filtro-limpiado", this.title);
       if (this.applied_filters.length > 1) {
         let beforeForm = beforeOrderFilters(
           this.filters,
@@ -852,17 +777,12 @@ export default {
           this.$store.dispatch("filters/setCantidades", {
             cantidades: response,
           });
+          this.saveAppliedFilters();
         });
       } else {
         this.updateNumberSelectedCompanies(0);
+        this.saveAppliedFilters();
       }
-      this.selected_by_direc_vinc = 0;
-      this.$store.dispatch("filters/removeFilters", this.title);
-      this.areApplied = false;
-      this.reapply = false;
-      this.search_edit = true;
-      this.search_add = false;
-      sendEvent("filtro-limpiado", this.title);
     },
     emptyFilter() {
       this.form.vinculaciones = [];
@@ -881,6 +801,7 @@ export default {
       this.search_edit = true;
       this.search_add = false;
       this.collapseResumen = [];
+      this.saveAppliedFilters();
     },
     editSearch() {
       this.search_edit = true;

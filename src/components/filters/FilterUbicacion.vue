@@ -3,10 +3,10 @@
     <div class="panel-heading">
       <p class="panel-title roboto white">
         {{ title }}
-        <span class="span-info-right" v-if="selected_by_location !== 0"
-          >({{ selected_by_location | numeral("0,0") }} empresas
-          seleccionadas)</span
-        >
+        <span class="span-info-right" v-if="selected_by_location !== 0">
+          ({{ selected_by_location | numeral("0,0") }} empresas
+          seleccionadas)
+        </span>
       </p>
     </div>
     <div class="panel-body">
@@ -57,12 +57,8 @@
                     :value="item"
                   />
                   <span class="geekmark"></span>
-                  <span class="name-checkbox"
-                    >- {{ formatearLabel(item) }}</span
-                  >
-                  <span class="num-fil"
-                    >({{ item.data | numeral("0,0") }})</span
-                  >
+                  <span class="name-checkbox">- {{ formatearLabel(item) }}</span>
+                  <span class="num-fil">({{ item.data | numeral("0,0") }})</span>
                 </label>
               </div>
             </div>
@@ -72,12 +68,13 @@
               v-if="selected_children.length >= limitChildren"
               class="btn"
               style="display: block;"
-              >{{
-                selected_children.length == limitChildren
-                  ? "Ver menos"
-                  : `Ver todos (${selected_children.length})`
-              }}</a
             >
+              {{
+              selected_children.length == limitChildren
+              ? "Ver menos"
+              : `Ver todos (${selected_children.length})`
+              }}
+            </a>
           </div>
         </div>
         <div class="flex-space-between-flex-end">
@@ -97,16 +94,9 @@
               @click="apply"
             >
               Aplicar
-              <i
-                :class="loadingFrm ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'"
-              ></i>
+              <i :class="loadingFrm ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'"></i>
             </button>
-            <button
-              type="button"
-              class="btn btn-info"
-              v-if="areApplied"
-              @click="confirmClean"
-            >
+            <button type="button" class="btn btn-info" v-if="areApplied" @click="confirmClean">
               Limpiar
               <i class="fa fa-undo"></i>
             </button>
@@ -150,12 +140,7 @@
                     "
                   ></i>
                 </button>
-                <button
-                  type="button"
-                  class="btn btn-info"
-                  v-if="areApplied"
-                  @click="confirmClean"
-                >
+                <button type="button" class="btn btn-info" v-if="areApplied" @click="confirmClean">
                   Limpiar
                   <i class="fa fa-undo"></i>
                 </button>
@@ -169,10 +154,7 @@
               "
             >
               <div>
-                <div
-                  class="panel panel-default cd"
-                  style="border-color: transparent;"
-                >
+                <div class="panel panel-default cd" style="border-color: transparent;">
                   <div class="panel-heading">
                     <p class="panel-title roboto white">
                       CCAA, Provincia o Localidad encontradas en base a el (los)
@@ -180,9 +162,10 @@
                     </p>
                   </div>
                   <div class="panel-body">
-                    <label class="control-label" for="SearchTheProvinceorTown"
-                      >Busca y selecciona localidades</label
-                    >
+                    <label
+                      class="control-label"
+                      for="SearchTheProvinceorTown"
+                    >Busca y selecciona localidades</label>
                     <el-select
                       id="SearchTheProvinceorTown"
                       name="SearchTheProvinceorTown"
@@ -241,12 +224,11 @@
                           :class="labelClassName"
                         >
                           {{ node.label }}
-                          <span class="num-fil" v-if="node.raw.id != 'all'"
-                            >({{ node.raw.data | numeral("0,0") }})</span
-                          >
-                          <span v-if="shouldShowCount" :class="countClassName"
-                            >({{ count }})</span
-                          >
+                          <span
+                            class="num-fil"
+                            v-if="node.raw.id != 'all'"
+                          >({{ node.raw.data | numeral("0,0") }})</span>
+                          <span v-if="shouldShowCount" :class="countClassName">({{ count }})</span>
                         </label>
                       </treeselect>
                     </div>
@@ -258,9 +240,11 @@
                   <div class="panel-heading">
                     <p class="panel-title roboto white">
                       Ubicaciones seleccionadas
-                      <span class="span-info-right">{{
+                      <span class="span-info-right">
+                        {{
                         selected_provinces_localidad.length
-                      }}</span>
+                        }}
+                      </span>
                     </p>
                   </div>
                 </div>
@@ -268,9 +252,11 @@
                   <div class="panel-heading">
                     <p class="panel-title roboto white">
                       Empresas seleccionadas
-                      <span class="span-info-right">{{
+                      <span class="span-info-right">
+                        {{
                         selected_by_location | numeral("0,0")
-                      }}</span>
+                        }}
+                      </span>
                     </p>
                   </div>
                   <div class="panel-body div-scroll-300">
@@ -278,10 +264,7 @@
                       class="ul_selected_provinces_localidad"
                       id="ul_selected_provinces_localidad"
                     >
-                      <li
-                        v-for="(item, key) in selected_provinces_localidad"
-                        :key="key"
-                      >
+                      <li v-for="(item, key) in selected_provinces_localidad" :key="key">
                         <label class="custon-checkboxs">
                           <input
                             type="checkbox"
@@ -293,9 +276,10 @@
                           />
                           <span class="geekmark"></span>
                           <span class="name-checkbox">{{ item.label }}</span>
-                          <span class="num-fil" v-if="item.id != 'all'"
-                            >({{ item.data | numeral("0,0") }})</span
-                          >
+                          <span
+                            class="num-fil"
+                            v-if="item.id != 'all'"
+                          >({{ item.data | numeral("0,0") }})</span>
                         </label>
                       </li>
                     </ul>
@@ -330,6 +314,7 @@ import {
   beforeOrderFilters,
   sendPageView,
   sendEvent,
+  getResumenLength,
 } from "./../../utils";
 import { persistentData } from "./../../mixins/persistent-data";
 export default {
@@ -344,7 +329,7 @@ export default {
       applied_filters: "filters/applied_filters",
       filters: "filters/filters",
     }),
-    compareWithNewtoApply: function() {
+    compareWithNewtoApply: function () {
       let stg = this.selected_provinces_localidad_string;
       let obj = JSON.stringify(
         this.sortData(this.selected_provinces_localidad)
@@ -388,7 +373,7 @@ export default {
     limitChildren: 3,
   }),
   watch: {
-    selected_provinces_localidad: function(newProvincesLocalidad) {
+    selected_provinces_localidad: function (newProvincesLocalidad) {
       this.selected_by_location = this.numberCompaniesSelected(
         this.isAllProvincesLocalidad(newProvincesLocalidad)
           ? this.search.provincia_localidad
@@ -398,10 +383,10 @@ export default {
         this.clean();
       }
     },
-    selected_companies: function() {
+    selected_companies: function () {
       howAnimation(document.querySelector(".selected_companies"));
     },
-    search: function(newSearch) {
+    search: function (newSearch) {
       this.options[0].children =
         newSearch && newSearch.provincia_localidad
           ? newSearch.provincia_localidad
@@ -459,6 +444,13 @@ export default {
       }
       sendEvent("filtro-vaciado", "-");
     });
+    if (this.search && getResumenLength(this.search) > 0) {
+      this.options[0].children =
+        this.search && this.search.provincia_localidad
+          ? this.search.provincia_localidad
+          : [];
+      this.getAppliedFilters();
+    }
   },
   methods: {
     fetchSearch() {},
@@ -545,6 +537,7 @@ export default {
               this.sortData(this.selected_provinces_localidad)
             );
             sendEvent(`filtro-aplicado`, this.title);
+            this.saveAppliedFilters();
           })
           .catch(() => {
             this.loadingFrm = false;
@@ -578,6 +571,13 @@ export default {
       this.selected_provinces_localidad = [];
       this.valueSelect = [];
       this.selected_provinces_localidad_string = "";
+      this.selected_by_location = 0;
+      this.$store.dispatch("filters/removeFilters", this.title);
+      this.areApplied = false;
+      this.reapply = false;
+      this.loadingSearchTheProvinceorTown = false;
+      this.ResultTheProvinceorTown = [];
+      this.SearchTheProvinceorTown = "";
       if (this.applied_filters.length > 1) {
         let beforeForm = beforeOrderFilters(
           this.filters,
@@ -590,17 +590,12 @@ export default {
           this.$store.dispatch("filters/setCantidades", {
             cantidades: response,
           });
+          this.saveAppliedFilters();
         });
       } else {
         this.updateNumberSelectedCompanies(0);
+        this.saveAppliedFilters();
       }
-      this.selected_by_location = 0;
-      this.$store.dispatch("filters/removeFilters", this.title);
-      this.areApplied = false;
-      this.reapply = false;
-      this.loadingSearchTheProvinceorTown = false;
-      this.ResultTheProvinceorTown = [];
-      this.SearchTheProvinceorTown = "";
       sendEvent("filtro-limpiado", this.title);
     },
     emptyFilter() {
@@ -619,6 +614,7 @@ export default {
       this.loadingSearchTheProvinceorTown = false;
       this.ResultTheProvinceorTown = [];
       this.SearchTheProvinceorTown = "";
+      this.saveAppliedFilters();
     },
     handleChange() {
       //province, event

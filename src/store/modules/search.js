@@ -1,6 +1,6 @@
 import axios from "axios";
 import * as types from "../mutation-types";
-import { formatProvinciaLocalidad } from "./../../utils";
+import { formatProvinciaLocalidad, setFiltersStorage } from "./../../utils";
 import dataJson from "./../../assets/buscador-data.json";
 const local = false;
 // state
@@ -58,6 +58,7 @@ export const actions = {
         commit(types.FETCH_SEARCH, {
           search: _data,
         });
+        return true;
       } catch (e) {
         commit(types.FETCH_SEARCH, {
           search: state.search,
@@ -74,11 +75,10 @@ export const actions = {
         "/buscador/filtrar?resumen=false",
         filters
       );
-
       commit(types.LOADING_SEARCH, {
         loading: false,
       });
-
+      setFiltersStorage(filters);
       return data;
     } catch (e) {
       commit(types.LOADING_SEARCH, {

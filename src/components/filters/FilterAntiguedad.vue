@@ -3,20 +3,17 @@
     <div class="panel-heading">
       <p class="panel-title roboto white">
         {{ title }}
-        <span class="span-info-right" v-if="selected_by_antiguedad !== 0"
-          >({{ selected_by_antiguedad | numeral("0,0") }} empresas
-          seleccionadas)</span
-        >
+        <span class="span-info-right" v-if="selected_by_antiguedad !== 0">
+          ({{ selected_by_antiguedad | numeral("0,0") }} empresas
+          seleccionadas)
+        </span>
       </p>
     </div>
     <div class="panel-body">
       <div v-if="search.antiguedad && search.antiguedad.length !== 0">
         <div class="grid-3-columns-1fr">
           <div v-for="(item, key) in search.antiguedad" :key="key">
-            <label
-              class="custon-checkboxs"
-              v-if="item.label !== 'incluir_null'"
-            >
+            <label class="custon-checkboxs" v-if="item.label !== 'incluir_null'">
               <input
                 type="checkbox"
                 :name="`checkbox_antiguedad_${item.id}`"
@@ -47,16 +44,9 @@
               @click="apply"
             >
               Aplicar
-              <i
-                :class="loadingFrm ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'"
-              ></i>
+              <i :class="loadingFrm ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'"></i>
             </button>
-            <button
-              type="button"
-              class="btn btn-info"
-              v-if="areApplied"
-              @click="confirmClean"
-            >
+            <button type="button" class="btn btn-info" v-if="areApplied" @click="confirmClean">
               Limpiar
               <i class="fa fa-undo"></i>
             </button>
@@ -77,21 +67,14 @@
                   antigüedad</span
                 >
               </label>
-            </div> -->
+            </div>-->
           </div>
         </div>
         <div v-if="custom_antiquity.length !== 0">
           <hr />
           <p style="margin: 0 0 10px 19px;">Renglon personalizado</p>
-          <div
-            v-for="(item, key) in custom_antiquity"
-            :key="key"
-            class="checkbox"
-          >
-            <label
-              class="custon-checkboxs"
-              v-if="item.label !== 'incluir_null'"
-            >
+          <div v-for="(item, key) in custom_antiquity" :key="key" class="checkbox">
+            <label class="custon-checkboxs" v-if="item.label !== 'incluir_null'">
               <input
                 type="checkbox"
                 :name="`__checkbox_empleados__${item.id}`"
@@ -144,21 +127,13 @@
                     "
                   ></i>
                 </button>
-                <button
-                  type="button"
-                  class="btn btn-info"
-                  v-if="areApplied"
-                  @click="confirmClean"
-                >
+                <button type="button" class="btn btn-info" v-if="areApplied" @click="confirmClean">
                   Limpiar
                   <i class="fa fa-undo"></i>
                 </button>
               </div>
             </div>
-            <div
-              class="row"
-              v-if="search.antiguedad && search.antiguedad.length !== 0"
-            >
+            <div class="row" v-if="search.antiguedad && search.antiguedad.length !== 0">
               <div class="col-md-12">
                 <div class="panel panel-default cd">
                   <div class="panel-heading">
@@ -167,9 +142,10 @@
                       <span
                         class="span-info-right"
                         v-if="selected_by_antiguedad !== 0"
-                        >({{ selected_by_antiguedad | numeral("0,0") }} empresas
-                        seleccionadas)</span
                       >
+                        ({{ selected_by_antiguedad | numeral("0,0") }} empresas
+                        seleccionadas)
+                      </span>
                     </p>
                   </div>
                   <div class="panel-body">
@@ -193,10 +169,10 @@
                           </button>
                           <div class="conten-epa">
                             <div class="form-group">
-                              <label class="control-label"
-                                >Insertar la antigüedad de la(s) empresa(s) en
-                                número de años</label
-                              >
+                              <label class="control-label">
+                                Insertar la antigüedad de la(s) empresa(s) en
+                                número de años
+                              </label>
                             </div>
                             <div
                               class="form-group anti-inputs"
@@ -204,9 +180,7 @@
                                 'has-error has-feedback': $v.ahnos_from.$error,
                               }"
                             >
-                              <label class="control-label" for="ahnos_from"
-                                >De (incluido)</label
-                              >
+                              <label class="control-label" for="ahnos_from">De (incluido)</label>
                               <input
                                 type="text"
                                 v-model.trim="$v.ahnos_from.$model"
@@ -224,9 +198,7 @@
                                 'has-error has-feedback': $v.ahnos_to.$error,
                               }"
                             >
-                              <label class="control-label" for="ahnos_to"
-                                >Hasta (incluido)</label
-                              >
+                              <label class="control-label" for="ahnos_to">Hasta (incluido)</label>
                               <input
                                 type="text"
                                 v-model.trim="$v.ahnos_to.$model"
@@ -240,9 +212,7 @@
                             </div>
                             <div v-if="custom_antiquity.length !== 0">
                               <hr />
-                              <p style="margin: 0 0 10px 19px;">
-                                Renglon personalizado
-                              </p>
+                              <p style="margin: 0 0 10px 19px;">Renglon personalizado</p>
                               <div
                                 v-for="(item, key) in custom_antiquity"
                                 :key="key"
@@ -261,12 +231,12 @@
                                     :value="item"
                                   />
                                   <span class="geekmark"></span>
-                                  <span class="name-checkbox">{{
+                                  <span class="name-checkbox">
+                                    {{
                                     item.label
-                                  }}</span>
-                                  <span class="num-fil"
-                                    >({{ item.data | numeral("0,0") }})</span
-                                  >
+                                    }}
+                                  </span>
+                                  <span class="num-fil">({{ item.data | numeral("0,0") }})</span>
                                 </label>
                               </div>
                               <button
@@ -291,9 +261,7 @@
                       </div>
                       <div class="col-md-6">
                         <div class="panel panel-warning">
-                          <div class="panel-heading">
-                            Seleccionar años, por búsqueda estándar
-                          </div>
+                          <div class="panel-heading">Seleccionar años, por búsqueda estándar</div>
                           <div class="panel-body div-scroll-300">
                             <div v-if="search.antiguedad.length !== 0">
                               <div
@@ -314,12 +282,12 @@
                                     :value="item"
                                   />
                                   <span class="geekmark"></span>
-                                  <span class="name-checkbox">{{
+                                  <span class="name-checkbox">
+                                    {{
                                     item.label
-                                  }}</span>
-                                  <span class="num-fil"
-                                    >({{ item.data | numeral("0,0") }})</span
-                                  >
+                                    }}
+                                  </span>
+                                  <span class="num-fil">({{ item.data | numeral("0,0") }})</span>
                                 </label>
                               </div>
                             </div>
@@ -346,7 +314,7 @@
                             >
                           </label>
                         </div>
-                      </div> -->
+                      </div>-->
                     </div>
                   </div>
                 </div>
@@ -359,18 +327,16 @@
                       <span
                         class="span-info-right"
                         v-if="selected_by_antiguedad !== 0"
-                        >({{ selected_by_antiguedad | numeral("0,0") }} empresas
-                        seleccionadas)</span
                       >
+                        ({{ selected_by_antiguedad | numeral("0,0") }} empresas
+                        seleccionadas)
+                      </span>
                     </p>
                   </div>
                   <div class="panel-body">
                     <div class="row">
                       <div class="col-md-4">
-                        <div
-                          class="block"
-                          @click="clickPicker($event, 'desdePicker')"
-                        >
+                        <div class="block" @click="clickPicker($event, 'desdePicker')">
                           <label class="demonstration">Desde (incluido)</label>
                           <el-date-picker
                             id="desdePicker"
@@ -387,10 +353,7 @@
                         </div>
                       </div>
                       <div class="col-md-4">
-                        <div
-                          class="block"
-                          @click="clickPicker($event, 'hastaPicker')"
-                        >
+                        <div class="block" @click="clickPicker($event, 'hastaPicker')">
                           <label class="demonstration">Hasta (incluido)</label>
                           <el-date-picker
                             id="hastaPicker"
@@ -446,7 +409,7 @@
                             >
                           </label>
                         </div>
-                      </div> -->
+                      </div>-->
                     </div>
                   </div>
                 </div>
@@ -475,6 +438,7 @@ import {
   beforeOrderFilters,
   sendPageView,
   sendEvent,
+  getResumenLength,
 } from "./../../utils";
 import { persistentData } from "./../../mixins/persistent-data";
 export default {
@@ -489,13 +453,13 @@ export default {
       applied_filters: "filters/applied_filters",
       filters: "filters/filters",
     }),
-    itemIncluirNull: function() {
-      let include = this.search.antiguedad.filter(function(item) {
+    itemIncluirNull: function () {
+      let include = this.search.antiguedad.filter(function (item) {
         return item.label === "incluir_null";
       });
       return include ? include[0] : null;
     },
-    compareWithNewtoApply: function() {
+    compareWithNewtoApply: function () {
       let stg = this.selected_antiguedad_string;
       let obj = JSON.stringify(this.selected_antiguedad);
       return stg === obj;
@@ -553,7 +517,7 @@ export default {
     };
   },
   watch: {
-    selected_antiguedad: function(newProvincesLocalidad) {
+    selected_antiguedad: function (newProvincesLocalidad) {
       this.selected_by_antiguedad = this.numberCompaniesSelected(
         this.isAllProvincesLocalidad(newProvincesLocalidad)
           ? this.search.antiguedad
@@ -563,15 +527,15 @@ export default {
         this.clean();
       }
     },
-    selected_custom_antiguedad: function(selected_custom) {
+    selected_custom_antiguedad: function (selected_custom) {
       if (this.reapply && selected_custom.length === 0) {
         this.clean();
       }
     },
-    selected_by_antiguedad: function(newValue) {
+    selected_by_antiguedad: function (newValue) {
       if (newValue === 0) this.selected_antiguedad = [];
     },
-    selected_companies: function() {
+    selected_companies: function () {
       howAnimation(document.querySelector(".selected_companies"));
     },
   },
@@ -591,6 +555,9 @@ export default {
         this.emptyFilter();
       }
     });
+    if (this.search && getResumenLength(this.search) > 0) {
+      this.getAppliedFilters();
+    }
   },
   methods: {
     clickPicker(event, elementRefs) {
@@ -707,6 +674,7 @@ export default {
             this.custom_antiquity = [];
             this.$v.$reset();
             sendEvent(`filtro-aplicado`, this.title);
+            this.saveAppliedFilters();
           })
           .catch(() => {
             this.loadingFrm = false;
@@ -751,6 +719,7 @@ export default {
             this.custom_antiquity = [];
             this.$v.$reset();
             sendEvent(`filtro-aplicado`, this.title);
+            this.saveAppliedFilters();
           })
           .catch(() => {
             this.loadingDaterange = false;
@@ -787,6 +756,7 @@ export default {
             );
             this.hideModal();
             sendEvent(`filtro-aplicado`, this.title);
+            this.saveAppliedFilters();
           })
           .catch(() => {
             this.loadingAhnos = false;
@@ -826,6 +796,7 @@ export default {
               this.selected_custom_antiguedad[0] = item;
             }
             this.loadingAhnos = false;
+            this.saveAppliedFilters();
           })
           .catch(() => {
             this.loadingAhnos = false;
@@ -855,6 +826,15 @@ export default {
       this.form.antiguedad = [];
       this.selected_antiguedad = [];
       this.selected_antiguedad_string = "";
+      this.selected_by_antiguedad = 0;
+      (this.daterange = [null, null]),
+        this.$store.dispatch("filters/removeFilters", this.title);
+      this.areApplied = false;
+      this.reapply = false;
+      this.incluir_null = false;
+      this.ahnos_from = "";
+      this.ahnos_to = "";
+      this.custom_antiquity = [];
       if (this.applied_filters.length > 1) {
         let beforeForm = beforeOrderFilters(
           this.filters,
@@ -867,19 +847,12 @@ export default {
           this.$store.dispatch("filters/setCantidades", {
             cantidades: response,
           });
+          this.saveAppliedFilters();
         });
       } else {
         this.updateNumberSelectedCompanies(0);
+        this.saveAppliedFilters();
       }
-      this.selected_by_antiguedad = 0;
-      (this.daterange = [null, null]),
-        this.$store.dispatch("filters/removeFilters", this.title);
-      this.areApplied = false;
-      this.reapply = false;
-      this.incluir_null = false;
-      this.ahnos_from = "";
-      this.ahnos_to = "";
-      this.custom_antiquity = [];
       sendEvent("filtro-limpiado", this.title);
     },
     emptyFilter() {
@@ -888,14 +861,15 @@ export default {
       this.selected_antiguedad_string = "";
       this.updateNumberSelectedCompanies(0);
       this.selected_by_antiguedad = 0;
-      (this.daterange = [null, null]),
-        this.$store.dispatch("filters/removeFilters", this.title);
+      this.daterange = [null, null];
+      this.$store.dispatch("filters/removeFilters", this.title);
       this.areApplied = false;
       this.reapply = false;
       this.incluir_null = false;
       this.ahnos_from = "";
       this.ahnos_to = "";
       this.custom_antiquity = [];
+      this.saveAppliedFilters();
     },
     handleChange() {
       //province, event

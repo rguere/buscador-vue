@@ -1130,3 +1130,30 @@ export const setIsDefaultExpanded = (_item, isDefaultExpanded = true) => {
 export const capitalize = (word) => {
   return word[0].toUpperCase() + word.slice(1);
 };
+
+export const getResumenLength = (obj) => {
+  let length = 0;
+  for (const key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      const element = obj[key];
+      if (Array.isArray(element) && element.length > 0) {
+        length++;
+      }
+    }
+  }
+  return length;
+};
+
+export const setFiltersStorage = (filters) => {
+  const filtersStringify = JSON.stringify(filters);
+  window.localStorage.setItem("filters", filtersStringify);
+};
+
+export const getFiltersStorage = () => {
+  let filters = null;
+  const filtersJson = localStorage.getItem("filters");
+  if (filtersJson) {
+    filters = JSON.parse(filtersJson);
+  }
+  return filters;
+};

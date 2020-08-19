@@ -3,20 +3,17 @@
     <div class="panel-heading">
       <p class="panel-title roboto white">
         {{ title }}
-        <span class="span-info-right" v-if="selected_by_cargos !== 0"
-          >({{ selected_by_cargos | numeral("0,0") }} empresas
-          seleccionadas)</span
-        >
+        <span class="span-info-right" v-if="selected_by_cargos !== 0">
+          ({{ selected_by_cargos | numeral("0,0") }} empresas
+          seleccionadas)
+        </span>
       </p>
     </div>
     <div class="panel-body">
       <div v-if="search.cargos && search.cargos.length !== 0">
         <div class="grid-3-columns-1fr">
           <div v-for="(item, key) in search.cargos" :key="key">
-            <label
-              class="custon-checkboxs"
-              v-if="item.label !== 'incluir_null'"
-            >
+            <label class="custon-checkboxs" v-if="item.label !== 'incluir_null'">
               <input
                 type="checkbox"
                 :name="`checkbox_cargos_${item.id}`"
@@ -41,11 +38,8 @@
               inactive-color="#ff4949"
               active-text="Activos"
               inactive-text="Inactivos"
-            >
-            </el-switch>
-            <el-checkbox style="margin-left: 20px;" v-model="both"
-              >Ambos</el-checkbox
-            >
+            ></el-switch>
+            <el-checkbox style="margin-left: 20px;" v-model="both">Ambos</el-checkbox>
           </div>
         </div>
         <div class="flex-space-between-flex-end">
@@ -54,21 +48,11 @@
               Ver detalles
               <i class="fa fa-plus-circle"></i>
             </button>
-            <button
-              type="button"
-              class="btn btn-success"
-              v-if="activeAplicar"
-              @click="apply"
-            >
+            <button type="button" class="btn btn-success" v-if="activeAplicar" @click="apply">
               Aplicar
               <i :class="iconLoadingFrm"></i>
             </button>
-            <button
-              type="button"
-              class="btn btn-info"
-              v-if="areApplied"
-              @click="confirmClean"
-            >
+            <button type="button" class="btn btn-info" v-if="areApplied" @click="confirmClean">
               Limpiar
               <i class="fa fa-undo"></i>
             </button>
@@ -95,21 +79,11 @@
                 <button class="btn btn-a">{{ title }}</button>
               </div>
               <div>
-                <button
-                  type="button"
-                  class="btn btn-success"
-                  v-if="activeAplicar"
-                  @click="apply"
-                >
+                <button type="button" class="btn btn-success" v-if="activeAplicar" @click="apply">
                   Aplicar
                   <i :class="iconLoadingFrm"></i>
                 </button>
-                <button
-                  type="button"
-                  class="btn btn-info"
-                  v-if="areApplied"
-                  @click="confirmClean"
-                >
+                <button type="button" class="btn btn-info" v-if="areApplied" @click="confirmClean">
                   Limpiar
                   <i class="fa fa-undo"></i>
                 </button>
@@ -117,10 +91,7 @@
             </div>
             <div class="conten-flex-70-30">
               <div>
-                <div
-                  class="row"
-                  v-if="search.cargos && search.cargos.length !== 0"
-                >
+                <div class="row" v-if="search.cargos && search.cargos.length !== 0">
                   <div class="col-md-12">
                     <div class="panel panel-default cd">
                       <div class="panel-heading">
@@ -130,23 +101,17 @@
                           <span
                             class="span-info-right"
                             v-if="selected_by_cargos !== 0"
-                            >({{ selected_by_cargos | numeral("0,0") }} empresas
-                            seleccionadas)</span
                           >
+                            ({{ selected_by_cargos | numeral("0,0") }} empresas
+                            seleccionadas)
+                          </span>
                         </p>
                       </div>
                       <div class="panel-body">
                         <div class="row">
                           <div class="col-md-12">
-                            <div
-                              v-if="search.cargos.length !== 0"
-                              class="div-scroll-300"
-                            >
-                              <div
-                                v-for="(item, key) in search.cargos"
-                                :key="key"
-                                class="checkbox"
-                              >
+                            <div v-if="search.cargos.length !== 0" class="div-scroll-300">
+                              <div v-for="(item, key) in search.cargos" :key="key" class="checkbox">
                                 <label
                                   class="custon-checkboxs"
                                   v-if="item.label !== 'incluir_null'"
@@ -160,12 +125,12 @@
                                     :value="item"
                                   />
                                   <span class="geekmark"></span>
-                                  <span class="name-checkbox">{{
+                                  <span class="name-checkbox">
+                                    {{
                                     item.label
-                                  }}</span>
-                                  <span class="num-fil"
-                                    >({{ item.data | numeral("0,0") }})</span
-                                  >
+                                    }}
+                                  </span>
+                                  <span class="num-fil">({{ item.data | numeral("0,0") }})</span>
                                 </label>
                               </div>
                             </div>
@@ -179,13 +144,8 @@
                                   inactive-color="#ff4949"
                                   active-text="Activos"
                                   inactive-text="Inactivos"
-                                >
-                                </el-switch>
-                                <el-checkbox
-                                  style="margin-left: 20px;"
-                                  v-model="both"
-                                  >Ambos</el-checkbox
-                                >
+                                ></el-switch>
+                                <el-checkbox style="margin-left: 20px;" v-model="both">Ambos</el-checkbox>
                               </div>
                             </div>
                           </div>
@@ -205,9 +165,7 @@
                         <div class="div-nombramiento">
                           <div>
                             <div @click="clickPicker($event, 'desdePicker')">
-                              <label class="demonstration"
-                                >Fecha nombramiento Desde (incluido)</label
-                              >
+                              <label class="demonstration">Fecha nombramiento Desde (incluido)</label>
                               <el-date-picker
                                 id="desdePicker"
                                 @focus="focusPicker"
@@ -224,9 +182,7 @@
                           </div>
                           <div>
                             <div @click="clickPicker($event, 'hastaPicker')">
-                              <label class="demonstration"
-                                >Fecha nombramiento Hasta (incluido)</label
-                              >
+                              <label class="demonstration">Fecha nombramiento Hasta (incluido)</label>
                               <el-date-picker
                                 id="hastaPicker"
                                 @focus="focusPicker"
@@ -245,10 +201,10 @@
                         <div class="div-nombramiento m-t-30">
                           <div>
                             <div @click="clickPicker($event, 'desdePicker')">
-                              <label class="demonstration"
-                                >Fecha destitución/renuncia Desde
-                                (incluido)</label
-                              >
+                              <label class="demonstration">
+                                Fecha destitución/renuncia Desde
+                                (incluido)
+                              </label>
                               <el-date-picker
                                 id="desdePicker"
                                 @focus="focusPicker"
@@ -265,10 +221,10 @@
                           </div>
                           <div>
                             <div @click="clickPicker($event, 'hastaPicker')">
-                              <label class="demonstration"
-                                >Fecha destitución/renuncia Hasta
-                                (incluido)</label
-                              >
+                              <label class="demonstration">
+                                Fecha destitución/renuncia Hasta
+                                (incluido)
+                              </label>
                               <el-date-picker
                                 id="hastaPicker"
                                 @focus="focusPicker"
@@ -305,9 +261,11 @@
                   <div class="panel-heading">
                     <p class="panel-title roboto white">
                       Cargos seleccionadas
-                      <span class="span-info-right">{{
+                      <span class="span-info-right">
+                        {{
                         selected_cargos.length
-                      }}</span>
+                        }}
+                      </span>
                     </p>
                   </div>
                 </div>
@@ -315,9 +273,11 @@
                   <div class="panel-heading">
                     <p class="panel-title roboto white">
                       Empresas seleccionadas
-                      <span class="span-info-right">{{
+                      <span class="span-info-right">
+                        {{
                         selected_by_cargos | numeral("0,0")
-                      }}</span>
+                        }}
+                      </span>
                     </p>
                   </div>
                   <div class="panel-body div-scroll-300">
@@ -334,9 +294,10 @@
                           />
                           <span class="geekmark"></span>
                           <span class="name-checkbox">{{ item.label }}</span>
-                          <span class="num-fil" v-if="item.id != 'all'"
-                            >({{ item.data | numeral("0,0") }})</span
-                          >
+                          <span
+                            class="num-fil"
+                            v-if="item.id != 'all'"
+                          >({{ item.data | numeral("0,0") }})</span>
                         </label>
                       </li>
                     </ul>
@@ -367,6 +328,7 @@ import {
   beforeOrderFilters,
   sendPageView,
   sendEvent,
+  getResumenLength,
 } from "./../../utils";
 import { persistentData } from "./../../mixins/persistent-data";
 export default {
@@ -381,30 +343,30 @@ export default {
       applied_filters: "filters/applied_filters",
       filters: "filters/filters",
     }),
-    compareWithNewtoApply: function() {
+    compareWithNewtoApply: function () {
       let stg = this.selected_cargos_string;
       let obj = JSON.stringify(this.selected_cargos);
       return stg === obj;
     },
-    iconBtnBuscarDaterange: function() {
+    iconBtnBuscarDaterange: function () {
       return this.loadingDaterange ? "fa  fa-spinner fa-spin" : "fa  fa-search";
     },
-    iconBtnBuscar: function() {
+    iconBtnBuscar: function () {
       return this.loadingCargos ? "fa  fa-spinner fa-spin" : "fa  fa-search";
     },
-    iconLoadingFrm: function() {
+    iconLoadingFrm: function () {
       return this.loadingFrm ? "fa  fa-spinner fa-spin" : "fa  fa-send";
     },
-    activeAplicar: function() {
+    activeAplicar: function () {
       return (
         (this.selected_cargos.length !== 0 && !this.areApplied) ||
         (this.selected_cargos.length !== 0 && !this.compareWithNewtoApply)
       );
     },
-    disabledRange: function() {
+    disabledRange: function () {
       return this.daterange[0] === null || this.daterange[1] === null;
     },
-    disabled2Range: function() {
+    disabled2Range: function () {
       return this.daterange2[0] === null || this.daterange2[1] === null;
     },
   },
@@ -454,7 +416,7 @@ export default {
     };
   },
   watch: {
-    selected_cargos: function(newProvincesCargos) {
+    selected_cargos: function (newProvincesCargos) {
       this.selected_by_cargos = this.numberCompaniesSelected(
         this.isAllProvincesLocalidad(newProvincesCargos)
           ? this.search.cargos
@@ -464,20 +426,20 @@ export default {
         this.clean();
       }
     },
-    selected_by_cargos: function(newValue) {
+    selected_by_cargos: function (newValue) {
       if (newValue === 0) this.selected_cargos = [];
     },
-    selected_companies: function() {
+    selected_companies: function () {
       howAnimation(document.querySelector(".selected_companies"));
     },
-    daterange: function(newDaterange) {
+    daterange: function (newDaterange) {
       if (newDaterange.length === 2 && newDaterange[0] && newDaterange[1]) {
         this.daterangeFnombramiento = `fnombramiento:${newDaterange.join("|")}`;
       } else {
         this.daterangeFnombramiento = null;
       }
     },
-    daterange2: function(newDaterange2) {
+    daterange2: function (newDaterange2) {
       if (newDaterange2.length === 2 && newDaterange2[0] && newDaterange2[1]) {
         this.daterangeFrenuncia = `frenuncia:${newDaterange2.join("|")}`;
       } else {
@@ -501,6 +463,9 @@ export default {
         this.emptyFilter();
       }
     });
+    if (this.search && getResumenLength(this.search) > 0) {
+      this.getAppliedFilters();
+    }
   },
   methods: {
     fetchSearch() {},
@@ -607,6 +572,7 @@ export default {
           this.loadingFrm = false;
           this.selected_cargos_string = JSON.stringify(this.selected_cargos);
           sendEvent(`filtro-aplicado`, this.title);
+          this.saveAppliedFilters();
         })
         .catch(() => {
           this.loadingFrm = false;
@@ -644,6 +610,14 @@ export default {
       this.daterange2 = [];
       this.daterangeFnombramiento = null;
       this.daterangeFrenuncia = null;
+      this.selected_by_cargos = 0;
+      this.$store.dispatch("filters/removeFilters", this.title);
+      this.areApplied = false;
+      this.reapply = false;
+      this.incluir_null = false;
+      this.employees_from = "";
+      this.employees_to = "";
+      sendEvent("filtro-limpiado", this.title);
       if (this.applied_filters.length > 1) {
         let beforeForm = beforeOrderFilters(
           this.filters,
@@ -656,18 +630,12 @@ export default {
           this.$store.dispatch("filters/setCantidades", {
             cantidades: response,
           });
+          this.saveAppliedFilters();
         });
       } else {
         this.updateNumberSelectedCompanies(0);
+        this.saveAppliedFilters();
       }
-      this.selected_by_cargos = 0;
-      this.$store.dispatch("filters/removeFilters", this.title);
-      this.areApplied = false;
-      this.reapply = false;
-      this.incluir_null = false;
-      this.employees_from = "";
-      this.employees_to = "";
-      sendEvent("filtro-limpiado", this.title);
     },
     emptyFilter() {
       this.form.cargo = [];
@@ -685,6 +653,7 @@ export default {
       this.incluir_null = false;
       this.employees_from = "";
       this.employees_to = "";
+      this.saveAppliedFilters();
     },
     handleChange() {
       //province, event

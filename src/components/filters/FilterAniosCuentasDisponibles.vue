@@ -3,10 +3,10 @@
     <div class="panel-heading">
       <p class="panel-title roboto white">
         {{ title }}
-        <span class="span-info-right" v-if="mas2CuentasDisponibles"
-          >({{ selected_by_cuentas_disponibles | numeral("0,0") }} empresas
-          seleccionadas)</span
-        >
+        <span class="span-info-right" v-if="mas2CuentasDisponibles">
+          ({{ selected_by_cuentas_disponibles | numeral("0,0") }} empresas
+          seleccionadas)
+        </span>
       </p>
     </div>
     <div class="panel-body">
@@ -15,10 +15,7 @@
           <div>
             <div class="grid-3-columns-1fr rows-auto-flow">
               <div v-for="(item, key) in search.cuentas_disponibles" :key="key">
-                <label
-                  class="custon-checkboxs"
-                  v-if="item.label !== 'incluir_null'"
-                >
+                <label class="custon-checkboxs" v-if="item.label !== 'incluir_null'">
                   <input
                     type="checkbox"
                     :name="`checkbox_cuentas_disponibles_${item.id}`"
@@ -29,19 +26,14 @@
                   />
                   <span class="geekmark"></span>
                   <span class="name-checkbox">{{ item.label }}</span>
-                  <span class="num-fil"
-                    >({{ item.data | numeral("0,0") }})</span
-                  >
+                  <span class="num-fil">({{ item.data | numeral("0,0") }})</span>
                 </label>
               </div>
             </div>
           </div>
           <div v-if="selected_cuentas_disponibles.length > 1">
             <div v-for="(item, key) in options_to_include" :key="key">
-              <label
-                class="custon-checkboxs white"
-                v-if="item.label !== 'incluir_null'"
-              >
+              <label class="custon-checkboxs white" v-if="item.label !== 'incluir_null'">
                 <input
                   type="checkbox"
                   :name="`checkbox___cuentas_disponibles__${item.id}`"
@@ -62,23 +54,11 @@
               Ver detalles
               <i class="fa fa-plus-circle"></i>
             </button>
-            <button
-              type="button"
-              class="btn btn-success"
-              v-if="showAplicar"
-              @click="apply"
-            >
+            <button type="button" class="btn btn-success" v-if="showAplicar" @click="apply">
               Aplicar
-              <i
-                :class="loadingFrm ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'"
-              ></i>
+              <i :class="loadingFrm ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'"></i>
             </button>
-            <button
-              type="button"
-              class="btn btn-info"
-              v-if="areApplied"
-              @click="confirmClean"
-            >
+            <button type="button" class="btn btn-info" v-if="areApplied" @click="confirmClean">
               Limpiar
               <i class="fa fa-undo"></i>
             </button>
@@ -95,8 +75,7 @@
                               ranking de Infocif"
                   type="info"
                   :closable="false"
-                >
-                </el-alert>
+                ></el-alert>
               </label>
             </div>
           </div>
@@ -117,7 +96,7 @@
                 >
               </label>
             </div>
-          </div> -->
+          </div>-->
         </div>
         <div class="float-right margin-top-10">
           <p class="text-help">* Puedes elegir más de una opción</p>
@@ -140,12 +119,7 @@
                 <button class="btn btn-a">{{ title }}</button>
               </div>
               <div>
-                <button
-                  type="button"
-                  class="btn btn-success"
-                  v-if="showAplicar"
-                  @click="apply"
-                >
+                <button type="button" class="btn btn-success" v-if="showAplicar" @click="apply">
                   Aplicar
                   <i
                     :class="
@@ -153,12 +127,7 @@
                     "
                   ></i>
                 </button>
-                <button
-                  type="button"
-                  class="btn btn-info"
-                  v-if="areApplied"
-                  @click="confirmClean"
-                >
+                <button type="button" class="btn btn-info" v-if="areApplied" @click="confirmClean">
                   Limpiar
                   <i class="fa fa-undo"></i>
                 </button>
@@ -168,26 +137,18 @@
               <div class="col-md-6">
                 <div class="panel panel-default cd">
                   <div class="panel-heading">
-                    <p class="panel-title roboto white">
-                      Años con Cuentas Disponibles
-                    </p>
+                    <p class="panel-title roboto white">Años con Cuentas Disponibles</p>
                   </div>
                   <div class="panel-body">
                     <div class="row">
                       <div class="col-md-12">
-                        <div
-                          class="div-scroll-300"
-                          v-if="hayCuentasDisponibles"
-                        >
+                        <div class="div-scroll-300" v-if="hayCuentasDisponibles">
                           <div
                             v-for="(item, key) in search.cuentas_disponibles"
                             :key="key"
                             class="checkbox"
                           >
-                            <label
-                              class="custon-checkboxs"
-                              v-if="item.label !== 'incluir_null'"
-                            >
+                            <label class="custon-checkboxs" v-if="item.label !== 'incluir_null'">
                               <input
                                 type="checkbox"
                                 :name="
@@ -199,21 +160,18 @@
                                 :value="item"
                               />
                               <span class="geekmark"></span>
-                              <span class="name-checkbox">{{
+                              <span class="name-checkbox">
+                                {{
                                 item.label
-                              }}</span>
-                              <span class="num-fil"
-                                >({{ item.data | numeral("0,0") }})</span
-                              >
+                                }}
+                              </span>
+                              <span class="num-fil">({{ item.data | numeral("0,0") }})</span>
                             </label>
                           </div>
                         </div>
                       </div>
                       <div class="col-md-12">
-                        <div
-                          class="float-right"
-                          v-if="selected_cuentas_disponibles.length !== 0"
-                        >
+                        <div class="float-right" v-if="selected_cuentas_disponibles.length !== 0">
                           <label
                             class="custon-checkboxs"
                             style="color: rgba(51, 51, 51, 0.79);color: rgba(51, 51, 51, 0.79);font-size: 12px;max-width: 320px;word-break: break-word;"
@@ -224,8 +182,7 @@
                               ranking de Infocif"
                               type="info"
                               :closable="false"
-                            >
-                            </el-alert>
+                            ></el-alert>
                           </label>
                         </div>
                       </div>
@@ -249,7 +206,7 @@
                             >
                           </label>
                         </div>
-                      </div> -->
+                      </div>-->
                     </div>
                   </div>
                 </div>
@@ -264,8 +221,7 @@
                           <span
                             class="span-info-right"
                             v-if="selected_cuentas_disponibles.length !== 0"
-                            >{{ selected_cuentas_disponibles.length }}</span
-                          >
+                          >{{ selected_cuentas_disponibles.length }}</span>
                         </p>
                       </div>
                     </div>
@@ -278,22 +234,17 @@
                           <span
                             class="span-info-right"
                             v-if="selected_by_cuentas_disponibles !== 0"
-                            >({{
-                              selected_by_cuentas_disponibles | numeral("0,0")
-                            }}
-                            empresas seleccionadas)</span
                           >
+                            ({{
+                            selected_by_cuentas_disponibles | numeral("0,0")
+                            }}
+                            empresas seleccionadas)
+                          </span>
                         </p>
                       </div>
                       <div class="panel-body">
-                        <div
-                          class="div-scroll-200"
-                          id="selected_cuentasDisponibles"
-                        >
-                          <div
-                            v-for="(item, key) in selected_cuentas_disponibles"
-                            :key="key"
-                          >
+                        <div class="div-scroll-200" id="selected_cuentasDisponibles">
+                          <div v-for="(item, key) in selected_cuentas_disponibles" :key="key">
                             <label
                               class="custon-checkboxs"
                               v-if="
@@ -313,20 +264,17 @@
                                 :value="item"
                               />
                               <span class="geekmark"></span>
-                              <span class="name-checkbox">{{
+                              <span class="name-checkbox">
+                                {{
                                 item.label
-                              }}</span>
-                              <span class="num-fil"
-                                >({{ item.data | numeral("0,0") }})</span
-                              >
+                                }}
+                              </span>
+                              <span class="num-fil">({{ item.data | numeral("0,0") }})</span>
                             </label>
                           </div>
                         </div>
                         <div style="margin-top: 40px;">
-                          <div
-                            v-for="(item, key) in options_to_include"
-                            :key="key"
-                          >
+                          <div v-for="(item, key) in options_to_include" :key="key">
                             <label
                               class="custon-checkboxs white"
                               v-if="item.label !== 'incluir_null'"
@@ -342,9 +290,11 @@
                                 @click="takeIntoAccount(item, $event)"
                               />
                               <span class="geekmark"></span>
-                              <span class="name-checkbox">{{
+                              <span class="name-checkbox">
+                                {{
                                 item.label
-                              }}</span>
+                                }}
+                              </span>
                             </label>
                           </div>
                         </div>
@@ -381,6 +331,7 @@ import {
   sendPageView,
   sendEvent,
   removeDuplicates,
+  getResumenLength,
 } from "./../../utils";
 import { persistentData } from "./../../mixins/persistent-data";
 export default {
@@ -395,13 +346,13 @@ export default {
       applied_filters: "filters/applied_filters",
       filters: "filters/filters",
     }),
-    itemIncluirNull: function() {
-      let include = this.search.cuentas_disponibles.filter(function(item) {
+    itemIncluirNull: function () {
+      let include = this.search.cuentas_disponibles.filter(function (item) {
         return item.label === "incluir_null";
       });
       return include ? include[0] : null;
     },
-    compareWithNewtoApply: function() {
+    compareWithNewtoApply: function () {
       let stg = this.selected_cuentas_disponibles_string;
       let obj = JSON.stringify(this.selected_cuentas_disponibles);
       return stg === obj;
@@ -458,7 +409,7 @@ export default {
     all: false,
   }),
   watch: {
-    selected_cuentas_disponibles: function(newProvincesLocalidad) {
+    selected_cuentas_disponibles: function (newProvincesLocalidad) {
       this.selected_by_cuentas_disponibles = this.numberCompaniesSelected(
         this.isAllProvincesLocalidad(newProvincesLocalidad)
           ? this.search.cuentas_disponibles
@@ -468,10 +419,10 @@ export default {
         this.clean();
       }
     },
-    selected_by_cuentas_disponibles: function(newValue) {
+    selected_by_cuentas_disponibles: function (newValue) {
       if (newValue === 0) this.selected_cuentas_disponibles = [];
     },
-    selected_companies: function() {
+    selected_companies: function () {
       howAnimation(document.querySelector(".selected_companies"));
     },
   },
@@ -491,6 +442,9 @@ export default {
         this.emptyFilter();
       }
     });
+    if (this.search && getResumenLength(this.search) > 0) {
+      this.getAppliedFilters();
+    }
   },
   methods: {
     fetchSearch() {},
@@ -576,6 +530,7 @@ export default {
               this.selected_cuentas_disponibles
             );
             sendEvent(`filtro-aplicado`, this.title);
+            this.saveAppliedFilters();
           })
           .catch(() => {
             this.loadingFrm = false;
@@ -605,6 +560,14 @@ export default {
       this.form.cuentasDisponibles = [];
       this.selected_cuentas_disponibles = [];
       this.selected_cuentas_disponibles_string = "";
+      this.selected_by_cuentas_disponibles = 0;
+      this.$store.dispatch("filters/removeFilters", this.title);
+      this.areApplied = false;
+      this.reapply = false;
+      this.incluir_null = false;
+      this.employees_from = "";
+      this.employees_to = "";
+      sendEvent("filtro-limpiado", this.title);
       if (this.applied_filters.length > 1) {
         let beforeForm = beforeOrderFilters(
           this.filters,
@@ -617,18 +580,12 @@ export default {
           this.$store.dispatch("filters/setCantidades", {
             cantidades: response,
           });
+          this.saveAppliedFilters();
         });
       } else {
         this.updateNumberSelectedCompanies(0);
+        this.saveAppliedFilters();
       }
-      this.selected_by_cuentas_disponibles = 0;
-      this.$store.dispatch("filters/removeFilters", this.title);
-      this.areApplied = false;
-      this.reapply = false;
-      this.incluir_null = false;
-      this.employees_from = "";
-      this.employees_to = "";
-      sendEvent("filtro-limpiado", this.title);
     },
     emptyFilter() {
       this.form.cuentasDisponibles = [];
@@ -642,6 +599,7 @@ export default {
       this.incluir_null = false;
       this.employees_from = "";
       this.employees_to = "";
+      this.saveAppliedFilters();
     },
     handleChange() {
       //province, event

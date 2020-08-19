@@ -540,6 +540,7 @@ import {
   sendEvent,
   objectToArray,
   removeDuplicates,
+  getResumenLength,
 } from "./../../utils";
 import { persistentData } from "./../../mixins/persistent-data";
 export default {
@@ -621,6 +622,9 @@ export default {
         this.emptyFilter();
       }
     });
+    if (this.search && getResumenLength(this.search) > 0) {
+      this.getAppliedFilters();
+    }
   },
   watch: {
     selected_auditores: function (newRazonSocial) {
@@ -729,6 +733,7 @@ export default {
             );
             this.auditores = { total: 0, cantidad: 0, empresas: [] };
             sendEvent(`filtro-aplicado`, this.title);
+            this.saveAppliedFilters();
           })
           .catch(() => {
             this.loadingApply = false;
@@ -766,6 +771,12 @@ export default {
       this.list_selected_auditores = [];
       this.collapseResumen = [];
       this.collapseTop10 = ["1"];
+      this.selected_by_auditores = 0;
+      this.$store.dispatch("filters/removeFilters", this.title);
+      this.areApplied = false;
+      this.reapply = false;
+      this.search_edit = true;
+      this.search_add = false;
       if (this.applied_filters.length > 1) {
         let beforeForm = beforeOrderFilters(
           this.filters,
@@ -778,16 +789,12 @@ export default {
           this.$store.dispatch("filters/setCantidades", {
             cantidades: response,
           });
+          this.saveAppliedFilters();
         });
       } else {
         this.updateNumberSelectedCompanies(0);
+        this.saveAppliedFilters();
       }
-      this.selected_by_auditores = 0;
-      this.$store.dispatch("filters/removeFilters", this.title);
-      this.areApplied = false;
-      this.reapply = false;
-      this.search_edit = true;
-      this.search_add = false;
       sendEvent("filtro-limpiado", this.title);
     },
     emptyFilter() {
@@ -807,6 +814,7 @@ export default {
       this.search_edit = true;
       this.search_add = false;
       this.collapseResumen = [];
+      this.saveAppliedFilters();
     },
     editSearch() {
       this.search_edit = true;

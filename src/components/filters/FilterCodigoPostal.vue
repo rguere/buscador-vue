@@ -3,20 +3,16 @@
     <div class="panel-heading">
       <p class="panel-title roboto white">
         {{ title }}
-        <span class="span-info-right" v-if="selected_by_zip_codes !== 0"
-          >({{ selected_by_zip_codes | numeral("0,0") }} empresas
-          seleccionadas)</span
-        >
+        <span class="span-info-right" v-if="selected_by_zip_codes !== 0">
+          ({{ selected_by_zip_codes | numeral("0,0") }} empresas
+          seleccionadas)
+        </span>
       </p>
     </div>
     <div class="panel-body">
       <div class="form_items">
         <div class="form-group">
-          <textarea
-            v-model="dataFrm"
-            id="zip_codes"
-            class="form-control"
-          ></textarea>
+          <textarea v-model="dataFrm" id="zip_codes" class="form-control"></textarea>
         </div>
         <div class="flex-space-between-flex-end">
           <div></div>
@@ -71,20 +67,20 @@
           )"
           :key="key"
           class="label label-danger label-no-encontrados"
-          >{{ item }}</span
-        >
+        >{{ item }}</span>
         <a
           href
           v-on:click.stop.prevent="showAllInvalidos"
           v-if="zip_codes.invalidos.length >= limitCodeInvalidos"
           class="btn"
           style="display: block;"
-          >{{
-            zip_codes.invalidos.length == limitCodeInvalidos
-              ? "Ver menos"
-              : `Ver todos (${zip_codes.invalidos.length})`
-          }}</a
         >
+          {{
+          zip_codes.invalidos.length == limitCodeInvalidos
+          ? "Ver menos"
+          : `Ver todos (${zip_codes.invalidos.length})`
+          }}
+        </a>
         <hr />
       </div>
       <div class="form-group">
@@ -112,33 +108,20 @@
             @click="apply"
           >
             Aplicar
-            <i
-              :class="loadingApply ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'"
-            ></i>
+            <i :class="loadingApply ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'"></i>
           </button>
-          <button
-            type="button"
-            class="btn btn-info"
-            v-if="areApplied"
-            @click="confirmClean"
-          >
+          <button type="button" class="btn btn-info" v-if="areApplied" @click="confirmClean">
             Limpiar
             <i class="fa fa-undo"></i>
           </button>
         </div>
         <div></div>
       </div>
-      <div
-        class="row"
-        v-if="selected_zip_codes && selected_zip_codes.length !== 0"
-      >
+      <div class="row" v-if="selected_zip_codes && selected_zip_codes.length !== 0">
         <div class="col-md-12">
           <br />
           <el-collapse v-model="collapseResumen">
-            <el-collapse-item
-              title="Resumen de códigos postales seleccionadas"
-              name="1"
-            >
+            <el-collapse-item title="Resumen de códigos postales seleccionadas" name="1">
               <div class="div-scroll-200" id="selected_resumen_cp2">
                 <div v-for="(item, key) in selected_zip_codes" :key="key">
                   <label class="custon-checkboxs">
@@ -152,9 +135,7 @@
                     />
                     <span class="geekmark"></span>
                     <span class="name-checkbox">{{ item.label }}</span>
-                    <span class="num-fil"
-                      >({{ item.data | numeral("0,0") }})</span
-                    >
+                    <span class="num-fil">({{ item.data | numeral("0,0") }})</span>
                   </label>
                 </div>
               </div>
@@ -199,12 +180,7 @@
                   "
                 ></i>
               </button>
-              <button
-                type="button"
-                class="btn btn-info"
-                v-if="areApplied"
-                @click="confirmClean"
-              >
+              <button type="button" class="btn btn-info" v-if="areApplied" @click="confirmClean">
                 Limpiar
                 <i class="fa fa-undo"></i>
               </button>
@@ -238,11 +214,7 @@
                           ></i>
                           Adjuntar Archivo
                         </button>
-                        <el-dialog
-                          width="55%"
-                          :visible.sync="innerVisible"
-                          append-to-body
-                        >
+                        <el-dialog width="55%" :visible.sync="innerVisible" append-to-body>
                           <div>
                             <el-alert
                               title="*NOTA"
@@ -259,10 +231,7 @@
                                 :show-file-list="false"
                                 :before-upload="uploadFileZipCodes"
                               >
-                                <button
-                                  class="btn btn-primary"
-                                  :disabled="loadingFile"
-                                >
+                                <button class="btn btn-primary" :disabled="loadingFile">
                                   <i
                                     :class="
                                       loadingFile
@@ -271,9 +240,9 @@
                                     "
                                   ></i>
                                   {{
-                                    loadingFile
-                                      ? "Cargando archivo "
-                                      : "Aceptar"
+                                  loadingFile
+                                  ? "Cargando archivo "
+                                  : "Aceptar"
                                   }}
                                 </button>
                               </el-upload>
@@ -293,10 +262,7 @@
                       </div>
                       <div style>
                         <div class="form-group">
-                          <textarea
-                            v-model="dataFrm"
-                            class="form-control"
-                          ></textarea>
+                          <textarea v-model="dataFrm" class="form-control"></textarea>
                         </div>
                       </div>
                     </div>
@@ -312,9 +278,9 @@
               </div>
               <div class="panel panel-default cd">
                 <div class="panel-heading">
-                  <p class="panel-title roboto white">
-                    Introduce el rango de código postales y clica en “BUSCAR”
-                  </p>
+                  <p
+                    class="panel-title roboto white"
+                  >Introduce el rango de código postales y clica en “BUSCAR”</p>
                 </div>
                 <div class="panel-body">
                   <div class="row text-center">
@@ -325,9 +291,7 @@
                           'has-error has-feedback': $v.from_zip_code.$error,
                         }"
                       >
-                        <label class="control-label" for="from_zip_code"
-                          >Del código postal:</label
-                        >
+                        <label class="control-label" for="from_zip_code">Del código postal:</label>
                         <input
                           type="text"
                           v-model.trim="$v.from_zip_code.$model"
@@ -345,9 +309,7 @@
                           'has-error has-feedback': $v.to_zip_code.$error,
                         }"
                       >
-                        <label class="control-label" for="to_zip_code"
-                          >Al código postal:</label
-                        >
+                        <label class="control-label" for="to_zip_code">Al código postal:</label>
                         <input
                           type="text"
                           v-model.trim="$v.to_zip_code.$model"
@@ -378,9 +340,11 @@
                 <div class="panel-heading">
                   <p class="panel-title roboto white">
                     Códigos Postales seleccionadas
-                    <span class="span-info-right">{{
+                    <span class="span-info-right">
+                      {{
                       zip_codes.validos.length
-                    }}</span>
+                      }}
+                    </span>
                   </p>
                 </div>
               </div>
@@ -388,9 +352,11 @@
                 <div class="panel-heading">
                   <p class="panel-title roboto white">
                     Empresas seleccionadas
-                    <span class="span-info-right">{{
+                    <span class="span-info-right">
+                      {{
                       selected_by_zip_codes | numeral("0,0")
-                    }}</span>
+                      }}
+                    </span>
                   </p>
                 </div>
                 <div class="panel-body">
@@ -431,9 +397,7 @@
                           />
                           <span class="geekmark"></span>
                           <span class="name-checkbox">{{ item.label }}</span>
-                          <span class="num-fil"
-                            >({{ item.data | numeral("0,0") }})</span
-                          >
+                          <span class="num-fil">({{ item.data | numeral("0,0") }})</span>
                         </label>
                       </li>
                     </ul>
@@ -455,29 +419,26 @@
                       )"
                       :key="key"
                       class="label label-danger label-no-encontrados"
-                      >{{ item }}</span
-                    >
+                    >{{ item }}</span>
                     <a
                       href
                       v-on:click.stop.prevent="showAllInvalidos"
                       v-if="zip_codes.invalidos.length >= limitCodeInvalidos"
                       class="btn"
                       style="display: block;"
-                      >{{
-                        zip_codes.invalidos.length == limitCodeInvalidos
-                          ? "Ver menos"
-                          : `Ver todos (${zip_codes.invalidos.length})`
-                      }}</a
                     >
+                      {{
+                      zip_codes.invalidos.length == limitCodeInvalidos
+                      ? "Ver menos"
+                      : `Ver todos (${zip_codes.invalidos.length})`
+                      }}
+                    </a>
                     <hr />
                   </div>
                 </div>
               </div>
             </div>
-            <div
-              class="col-md-12"
-              v-if="selected_zip_codes && selected_zip_codes.length !== 0"
-            >
+            <div class="col-md-12" v-if="selected_zip_codes && selected_zip_codes.length !== 0">
               <div class="panel panel-default cd">
                 <div class="panel-heading">
                   <p class="panel-title roboto white">
@@ -485,15 +446,13 @@
                     <span
                       class="span-info-right"
                       v-if="selected_zip_codes !== 0"
-                      >({{ selected_zip_codes | numeral("0,0") }} empresas
-                      seleccionadas)</span
                     >
+                      ({{ selected_zip_codes | numeral("0,0") }} empresas
+                      seleccionadas)
+                    </span>
                   </p>
                 </div>
-                <div
-                  class="panel-body div-scroll-200"
-                  id="selected_resumen_cp1"
-                >
+                <div class="panel-body div-scroll-200" id="selected_resumen_cp1">
                   <div v-for="(item, key) in selected_zip_codes" :key="key">
                     <label class="custon-checkboxs">
                       <input
@@ -506,9 +465,7 @@
                       />
                       <span class="geekmark"></span>
                       <span class="name-checkbox">{{ item.label }}</span>
-                      <span class="num-fil"
-                        >({{ item.data | numeral("0,0") }})</span
-                      >
+                      <span class="num-fil">({{ item.data | numeral("0,0") }})</span>
                     </label>
                   </div>
                 </div>
@@ -529,6 +486,7 @@ import {
   beforeOrderFilters,
   sendPageView,
   sendEvent,
+  getResumenLength,
 } from "./../../utils";
 import { persistentData } from "./../../mixins/persistent-data";
 import swal from "sweetalert2";
@@ -544,12 +502,12 @@ export default {
       applied_filters: "filters/applied_filters",
       filters: "filters/filters",
     }),
-    compareWithNewtoApply: function() {
+    compareWithNewtoApply: function () {
       let stg = this.selected_zip_codes_string;
       let obj = JSON.stringify(this.selected_zip_codes);
       return stg === obj;
     },
-    iconBtnBuscar: function() {
+    iconBtnBuscar: function () {
       return this.loadingValidar ? "fa  fa-spinner fa-spin" : "fa  fa-search";
     },
   },
@@ -605,9 +563,12 @@ export default {
         this.emptyFilter();
       }
     });
+    if (this.search && getResumenLength(this.search) > 0) {
+      this.getAppliedFilters();
+    }
   },
   watch: {
-    selected_zip_codes: function(newSelectedZipCodes) {
+    selected_zip_codes: function (newSelectedZipCodes) {
       this.selected_by_zip_codes = this.numberSelectedZipCodes(
         newSelectedZipCodes
       );
@@ -677,6 +638,7 @@ export default {
             );
             this.zip_codes = { validos: [], invalidos: [] };
             sendEvent(`filtro-aplicado`, this.title);
+            this.saveAppliedFilters();
           })
           .catch(() => {
             this.loadingApply = false;
@@ -710,6 +672,11 @@ export default {
       this.from_zip_code = "";
       this.to_zip_code = "";
       this.zip_codes = { validos: [], invalidos: [] };
+      this.selected_by_zip_codes = 0;
+      this.$store.dispatch("filters/removeFilters", this.title);
+      this.areApplied = false;
+      this.reapply = false;
+      this.search_edit = true;
       if (this.applied_filters.length > 1) {
         let beforeForm = beforeOrderFilters(
           this.filters,
@@ -722,15 +689,12 @@ export default {
           this.$store.dispatch("filters/setCantidades", {
             cantidades: response,
           });
+          this.saveAppliedFilters();
         });
       } else {
         this.updateNumberSelectedCompanies(0);
+        this.saveAppliedFilters();
       }
-      this.selected_by_zip_codes = 0;
-      this.$store.dispatch("filters/removeFilters", this.title);
-      this.areApplied = false;
-      this.reapply = false;
-      this.search_edit = true;
       sendEvent("filtro-limpiado", this.title);
     },
     emptyFilter() {
@@ -745,6 +709,7 @@ export default {
       this.reapply = false;
       this.search_edit = true;
       this.dataFrm = "";
+      this.saveAppliedFilters();
     },
     cleanFile() {
       this.form.codigosPostales = [];
@@ -754,6 +719,7 @@ export default {
       this.reapply = false;
       this.search_edit = true;
       this.dataFrm = "";
+      this.saveAppliedFilters();
     },
     editSearch() {
       this.search_edit = true;

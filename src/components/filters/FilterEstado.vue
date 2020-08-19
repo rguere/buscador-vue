@@ -290,6 +290,7 @@ import {
   removeDuplicates,
   sendPageView,
   sendEvent,
+  getResumenLength,
 } from "./../../utils";
 import { persistentData } from "./../../mixins/persistent-data";
 export default {
@@ -464,6 +465,9 @@ export default {
         this.emptyFilter();
       }
     });
+    if (this.search && getResumenLength(this.search) > 0) {
+      this.getAppliedFilters();
+    }
   },
   methods: {
     changeResumen(event) {
@@ -565,6 +569,7 @@ export default {
             this.ahnos_to = "";
             this.custom_estados = [];
             sendEvent(`filtro-aplicado`, this.title);
+            this.saveAppliedFilters();
           })
           .catch(() => {
             this.loadingFrm = false;
@@ -596,6 +601,17 @@ export default {
       this.selected_custom_estados_string = "";
       this.selected_estados_string = "";
       this.resteSelet();
+      this.selected_by_estados = 0;
+      (this.daterange = [null, null]),
+        this.$store.dispatch("filters/removeFilters", this.title);
+      this.areApplied = false;
+      this.reapply = false;
+      this.incluir_null = false;
+      this.ahnos_from = "";
+      this.ahnos_to = "";
+      this.custom_estados = [];
+      this.selected_custom_estados = [];
+      sendEvent("filtro-limpiado", this.title);
       if (this.applied_filters.length > 1) {
         let beforeForm = beforeOrderFilters(
           this.filters,
@@ -608,21 +624,12 @@ export default {
           this.$store.dispatch("filters/setCantidades", {
             cantidades: response,
           });
+          this.saveAppliedFilters();
         });
       } else {
         this.updateNumberSelectedCompanies(0);
+        this.saveAppliedFilters();
       }
-      this.selected_by_estados = 0;
-      (this.daterange = [null, null]),
-        this.$store.dispatch("filters/removeFilters", this.title);
-      this.areApplied = false;
-      this.reapply = false;
-      this.incluir_null = false;
-      this.ahnos_from = "";
-      this.ahnos_to = "";
-      this.custom_estados = [];
-      this.selected_custom_estados = [];
-      sendEvent("filtro-limpiado", this.title);
     },
     emptyFilter() {
       this.form.estado = [];
@@ -641,6 +648,7 @@ export default {
       this.ahnos_to = "";
       this.custom_estados = [];
       this.selected_custom_estados = [];
+      this.saveAppliedFilters();
     },
     handleChange() {
       //province, event

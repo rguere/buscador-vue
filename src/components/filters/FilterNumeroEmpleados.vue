@@ -3,20 +3,17 @@
     <div class="panel-heading">
       <p class="panel-title roboto white">
         {{ title }}
-        <span class="span-info-right" v-if="selected_by_empleados !== 0"
-          >({{ selected_by_empleados | numeral("0,0") }} empresas
-          seleccionadas)</span
-        >
+        <span class="span-info-right" v-if="selected_by_empleados !== 0">
+          ({{ selected_by_empleados | numeral("0,0") }} empresas
+          seleccionadas)
+        </span>
       </p>
     </div>
     <div class="panel-body">
       <div v-if="search.empleados && search.empleados.length !== 0">
         <div class="grid-2-columns-1fr">
           <div v-for="(item, key) in search.empleados" :key="key">
-            <label
-              class="custon-checkboxs"
-              v-if="item.label !== 'incluir_null'"
-            >
+            <label class="custon-checkboxs" v-if="item.label !== 'incluir_null'">
               <input
                 type="checkbox"
                 :name="`checkbox_empleados_${item.id}`"
@@ -47,16 +44,9 @@
               @click="apply"
             >
               Aplicar
-              <i
-                :class="loadingFrm ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'"
-              ></i>
+              <i :class="loadingFrm ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'"></i>
             </button>
-            <button
-              type="button"
-              class="btn btn-info"
-              v-if="areApplied"
-              @click="confirmClean"
-            >
+            <button type="button" class="btn btn-info" v-if="areApplied" @click="confirmClean">
               Limpiar
               <i class="fa fa-undo"></i>
             </button>
@@ -78,7 +68,7 @@
                 >
               </label>
             </div>
-          </div> -->
+          </div>-->
         </div>
         <div class="float-right margin-top-10">
           <p class="text-help">* Puedes elegir más de una opción</p>
@@ -118,21 +108,13 @@
                     "
                   ></i>
                 </button>
-                <button
-                  type="button"
-                  class="btn btn-info"
-                  v-if="areApplied"
-                  @click="confirmClean"
-                >
+                <button type="button" class="btn btn-info" v-if="areApplied" @click="confirmClean">
                   Limpiar
                   <i class="fa fa-undo"></i>
                 </button>
               </div>
             </div>
-            <div
-              class="row"
-              v-if="search.empleados && search.empleados.length !== 0"
-            >
+            <div class="row" v-if="search.empleados && search.empleados.length !== 0">
               <div class="col-md-12">
                 <div class="panel panel-default cd">
                   <div class="panel-heading">
@@ -142,24 +124,18 @@
                       <span
                         class="span-info-right"
                         v-if="selected_by_empleados !== 0"
-                        >({{ selected_by_empleados | numeral("0,0") }} empresas
-                        seleccionadas)</span
                       >
+                        ({{ selected_by_empleados | numeral("0,0") }} empresas
+                        seleccionadas)
+                      </span>
                     </p>
                   </div>
                   <div class="panel-body">
                     <div class="row">
                       <div class="col-md-12">
                         <div v-if="search.empleados.length !== 0">
-                          <div
-                            v-for="(item, key) in search.empleados"
-                            :key="key"
-                            class="checkbox"
-                          >
-                            <label
-                              class="custon-checkboxs"
-                              v-if="item.label !== 'incluir_null'"
-                            >
+                          <div v-for="(item, key) in search.empleados" :key="key" class="checkbox">
+                            <label class="custon-checkboxs" v-if="item.label !== 'incluir_null'">
                               <input
                                 type="checkbox"
                                 :name="`checkbox_empleados_${item.id}`"
@@ -169,12 +145,12 @@
                                 :value="item"
                               />
                               <span class="geekmark"></span>
-                              <span class="name-checkbox">{{
+                              <span class="name-checkbox">
+                                {{
                                 item.label
-                              }}</span>
-                              <span class="num-fil"
-                                >({{ item.data | numeral("0,0") }})</span
-                              >
+                                }}
+                              </span>
+                              <span class="num-fil">({{ item.data | numeral("0,0") }})</span>
                             </label>
                           </div>
                         </div>
@@ -199,7 +175,7 @@
                             >
                           </label>
                         </div>
-                      </div> -->
+                      </div>-->
                     </div>
                   </div>
                 </div>
@@ -207,18 +183,18 @@
               <div class="col-md-12">
                 <div class="panel panel-default cd">
                   <div class="panel-heading">
-                    <p class="panel-title roboto white">
-                      Seleccionar empresas por número de empleados.
-                    </p>
+                    <p
+                      class="panel-title roboto white"
+                    >Seleccionar empresas por número de empleados.</p>
                   </div>
                   <div class="panel-body">
                     <div class="row">
                       <div class="col-md-12">
                         <div class="form-group">
-                          <label class="control-label"
-                            >Insertar la antigüedad de la(s) empresa(s) en
-                            número de años</label
-                          >
+                          <label class="control-label">
+                            Insertar la antigüedad de la(s) empresa(s) en
+                            número de años
+                          </label>
                         </div>
                       </div>
                       <div class="col-md-4">
@@ -308,7 +284,7 @@
                             >
                           </label>
                         </div>
-                      </div> -->
+                      </div>-->
                     </div>
                   </div>
                 </div>
@@ -337,6 +313,7 @@ import {
   beforeOrderFilters,
   sendPageView,
   sendEvent,
+  getResumenLength,
 } from "./../../utils";
 import { persistentData } from "./../../mixins/persistent-data";
 export default {
@@ -351,13 +328,13 @@ export default {
       applied_filters: "filters/applied_filters",
       filters: "filters/filters",
     }),
-    itemIncluirNull: function() {
-      let include = this.search.empleados.filter(function(item) {
+    itemIncluirNull: function () {
+      let include = this.search.empleados.filter(function (item) {
         return item.label === "incluir_null";
       });
       return include ? include[0] : null;
     },
-    compareWithNewtoApply: function() {
+    compareWithNewtoApply: function () {
       let stg = this.selected_empleados_string;
       let obj = JSON.stringify(this.selected_empleados);
       return stg === obj;
@@ -406,7 +383,7 @@ export default {
     };
   },
   watch: {
-    selected_empleados: function(newProvincesLocalidad) {
+    selected_empleados: function (newProvincesLocalidad) {
       this.selected_by_empleados = this.numberCompaniesSelected(
         this.isAllProvincesLocalidad(newProvincesLocalidad)
           ? this.search.empleados
@@ -416,10 +393,10 @@ export default {
         this.clean();
       }
     },
-    selected_by_empleados: function(newValue) {
+    selected_by_empleados: function (newValue) {
       if (newValue === 0) this.selected_empleados = [];
     },
-    selected_companies: function() {
+    selected_companies: function () {
       howAnimation(document.querySelector(".selected_companies"));
     },
   },
@@ -439,6 +416,9 @@ export default {
         this.emptyFilter();
       }
     });
+    if (this.search && getResumenLength(this.search) > 0) {
+      this.getAppliedFilters();
+    }
   },
   methods: {
     fetchSearch() {
@@ -524,6 +504,7 @@ export default {
               this.selected_empleados
             );
             sendEvent(`filtro-aplicado`, this.title);
+            this.saveAppliedFilters();
           })
           .catch(() => {
             this.loadingFrm = false;
@@ -574,6 +555,7 @@ export default {
             this.selected_empleados_string = JSON.stringify(
               this.selected_empleados
             );
+            this.saveAppliedFilters();
           })
           .catch(() => {
             this.loadingEmpleados = false;
@@ -603,6 +585,13 @@ export default {
       this.form.empleados = [];
       this.selected_empleados = [];
       this.selected_empleados_string = "";
+      this.selected_by_empleados = 0;
+      this.$store.dispatch("filters/removeFilters", this.title);
+      this.areApplied = false;
+      this.reapply = false;
+      this.incluir_null = false;
+      this.employees_from = "";
+      this.employees_to = "";
       if (this.applied_filters.length > 1) {
         let beforeForm = beforeOrderFilters(
           this.filters,
@@ -615,17 +604,12 @@ export default {
           this.$store.dispatch("filters/setCantidades", {
             cantidades: response,
           });
+          this.saveAppliedFilters();
         });
       } else {
         this.updateNumberSelectedCompanies(0);
+        this.saveAppliedFilters();
       }
-      this.selected_by_empleados = 0;
-      this.$store.dispatch("filters/removeFilters", this.title);
-      this.areApplied = false;
-      this.reapply = false;
-      this.incluir_null = false;
-      this.employees_from = "";
-      this.employees_to = "";
       sendEvent("filtro-limpiado", this.title);
     },
     emptyFilter() {
@@ -640,6 +624,7 @@ export default {
       this.incluir_null = false;
       this.employees_from = "";
       this.employees_to = "";
+      this.saveAppliedFilters();
     },
     handleChange() {
       //province, event

@@ -3,10 +3,10 @@
     <div class="panel-heading">
       <p class="panel-title roboto white">
         {{ title }}
-        <span class="span-info-right" v-if="selected_by_social_reasons !== 0"
-          >({{ selected_by_social_reasons | numeral("0,0") }} empresas
-          seleccionadas)</span
-        >
+        <span class="span-info-right" v-if="selected_by_social_reasons !== 0">
+          ({{ selected_by_social_reasons | numeral("0,0") }} empresas
+          seleccionadas)
+        </span>
       </p>
     </div>
     <div class="panel-body">
@@ -89,16 +89,9 @@
             @click="apply"
           >
             Aplicar
-            <i
-              :class="loadingApply ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'"
-            ></i>
+            <i :class="loadingApply ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'"></i>
           </button>
-          <button
-            type="button"
-            class="btn btn-info"
-            v-if="areApplied"
-            @click="confirmClean"
-          >
+          <button type="button" class="btn btn-info" v-if="areApplied" @click="confirmClean">
             Limpiar
             <i class="fa fa-undo"></i>
           </button>
@@ -115,15 +108,9 @@
         <div class="col-md-12">
           <br />
           <el-collapse v-model="collapseResumen">
-            <el-collapse-item
-              title="Resumen de empresas seleccionadas"
-              name="1"
-            >
+            <el-collapse-item title="Resumen de empresas seleccionadas" name="1">
               <div class="div-scroll-200">
-                <div
-                  v-for="(item, key) in list_selected_social_reasons"
-                  :key="key"
-                >
+                <div v-for="(item, key) in list_selected_social_reasons" :key="key">
                   <div class="checkbox" id="selected_em">
                     <label>
                       <input
@@ -180,12 +167,7 @@
                   "
                 ></i>
               </button>
-              <button
-                type="button"
-                class="btn btn-info"
-                v-if="areApplied"
-                @click="confirmClean"
-              >
+              <button type="button" class="btn btn-info" v-if="areApplied" @click="confirmClean">
                 Limpiar
                 <i class="fa fa-undo"></i>
               </button>
@@ -195,9 +177,9 @@
             <div class="col-md-12">
               <div class="panel panel-default cd">
                 <div class="panel-heading">
-                  <p class="panel-title roboto white">
-                    Introduce el nombre o la razón social y clique en “BUSCAR”
-                  </p>
+                  <p
+                    class="panel-title roboto white"
+                  >Introduce el nombre o la razón social y clique en “BUSCAR”</p>
                 </div>
                 <div class="panel-body">
                   <div class="row">
@@ -252,11 +234,12 @@
                     <span
                       class="span-info-right"
                       v-if="selected_by_social_reasons !== 0"
-                      >({{
-                        selected_by_social_reasons | numeral("0,0")
-                      }}
-                      empresas seleccionadas)</span
                     >
+                      ({{
+                      selected_by_social_reasons | numeral("0,0")
+                      }}
+                      empresas seleccionadas)
+                    </span>
                   </p>
                 </div>
                 <div class="panel-body div-scroll-200">
@@ -272,10 +255,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr
-                        v-for="(item, key) in social_reasons.empresas"
-                        :key="key"
-                      >
+                      <tr v-for="(item, key) in social_reasons.empresas" :key="key">
                         <th scope="row">
                           <div class="checkbox">
                             <label>
@@ -296,9 +276,9 @@
                         <td>{{ item.Localidad }}</td>
                         <td>
                           {{
-                            item.UltimaCuentaAnual
-                              ? item.UltimaCuentaAnual.Ejercicio
-                              : ""
+                          item.UltimaCuentaAnual
+                          ? item.UltimaCuentaAnual.Ejercicio
+                          : ""
                           }}
                         </td>
                       </tr>
@@ -321,11 +301,12 @@
                     <span
                       class="span-info-right"
                       v-if="selected_by_social_reasons !== 0"
-                      >({{
-                        selected_by_social_reasons | numeral("0,0")
-                      }}
-                      empresas seleccionadas)</span
                     >
+                      ({{
+                      selected_by_social_reasons | numeral("0,0")
+                      }}
+                      empresas seleccionadas)
+                    </span>
                   </p>
                 </div>
                 <div class="panel-body div-scroll-200">
@@ -340,10 +321,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr
-                        v-for="(item, key) in list_selected_social_reasons"
-                        :key="key"
-                      >
+                      <tr v-for="(item, key) in list_selected_social_reasons" :key="key">
                         <th scope="row">
                           <div class="checkbox" id="selected_em">
                             <label>
@@ -364,9 +342,9 @@
                         <td>{{ item.Localidad }}</td>
                         <td>
                           {{
-                            item.UltimaCuentaAnual
-                              ? item.UltimaCuentaAnual.Ejercicio
-                              : ""
+                          item.UltimaCuentaAnual
+                          ? item.UltimaCuentaAnual.Ejercicio
+                          : ""
                           }}
                         </td>
                       </tr>
@@ -390,6 +368,7 @@ import {
   removeDuplicates,
   sendPageView,
   sendEvent,
+  getResumenLength,
 } from "./../../utils";
 import { persistentData } from "./../../mixins/persistent-data";
 export default {
@@ -404,7 +383,7 @@ export default {
       applied_filters: "filters/applied_filters",
       filters: "filters/filters",
     }),
-    compareWithNewtoApply: function() {
+    compareWithNewtoApply: function () {
       let stg = this.selected_social_reasons_string;
       let obj = JSON.stringify(this.selected_social_reasons);
       return stg === obj;
@@ -451,9 +430,12 @@ export default {
         this.emptyFilter();
       }
     });
+    if (this.search && getResumenLength(this.search) > 0) {
+      this.getAppliedFilters();
+    }
   },
   watch: {
-    selected_social_reasons: function(newRazonSocial) {
+    selected_social_reasons: function (newRazonSocial) {
       this.selected_by_social_reasons = this.numberRazonSocial(newRazonSocial);
       this.list_selected_social_reasons = [...this.selected_social_reasons];
       if (this.reapply && newRazonSocial.length === 0) {
@@ -542,6 +524,7 @@ export default {
             );
             this.social_reasons = { total: 0, cantidad: 0, empresas: [] };
             sendEvent(`filtro-aplicado`, this.title);
+            this.saveAppliedFilters();
           })
           .catch(() => {
             this.loadingApply = false;
@@ -576,6 +559,13 @@ export default {
       this.social_reasons = { total: 0, cantidad: 0, empresas: [] };
       this.list_selected_social_reasons = [];
       this.collapseResumen = [];
+      this.selected_by_social_reasons = 0;
+      this.$store.dispatch("filters/removeFilters", this.title);
+      this.areApplied = false;
+      this.reapply = false;
+      this.search_edit = true;
+      this.search_add = false;
+      sendEvent("filtro-limpiado", this.title);
       if (this.applied_filters.length > 1) {
         let beforeForm = beforeOrderFilters(
           this.filters,
@@ -588,17 +578,12 @@ export default {
           this.$store.dispatch("filters/setCantidades", {
             cantidades: response,
           });
+          this.saveAppliedFilters();
         });
       } else {
         this.updateNumberSelectedCompanies(0);
+        this.saveAppliedFilters();
       }
-      this.selected_by_social_reasons = 0;
-      this.$store.dispatch("filters/removeFilters", this.title);
-      this.areApplied = false;
-      this.reapply = false;
-      this.search_edit = true;
-      this.search_add = false;
-      sendEvent("filtro-limpiado", this.title);
     },
     emptyFilter() {
       this.form.razonSocial = [];
@@ -616,6 +601,7 @@ export default {
       this.search_edit = true;
       this.search_add = false;
       this.collapseResumen = [];
+      this.saveAppliedFilters();
     },
     editSearch() {
       this.search_edit = true;

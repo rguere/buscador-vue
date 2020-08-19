@@ -1,28 +1,19 @@
 <template>
-  <div
-    :class="`panel panel-default cd structure02`"
-    id="filter_tipo_de_cuentas"
-  >
+  <div :class="`panel panel-default cd structure02`" id="filter_tipo_de_cuentas">
     <div class="panel-heading">
       <p class="panel-title roboto white">
         {{ title }}
-        <span class="span-info-right" v-if="selected_by_tipo_cuentas !== 0"
-          >({{ selected_by_tipo_cuentas | numeral("0,0") }} empresas
-          seleccionadas)</span
-        >
+        <span class="span-info-right" v-if="selected_by_tipo_cuentas !== 0">
+          ({{ selected_by_tipo_cuentas | numeral("0,0") }} empresas
+          seleccionadas)
+        </span>
       </p>
     </div>
     <div class="panel-body">
       <div v-if="search.tipo_cuentas && search.tipo_cuentas.length !== 0">
         <div class="flex_tipoCuentas">
-          <div
-            v-for="(item, key) in orderItems(search.tipo_cuentas)"
-            :key="key"
-          >
-            <label
-              class="custon-checkboxs"
-              v-if="item.label !== 'incluir_null'"
-            >
+          <div v-for="(item, key) in orderItems(search.tipo_cuentas)" :key="key">
+            <label class="custon-checkboxs" v-if="item.label !== 'incluir_null'">
               <input
                 type="checkbox"
                 :name="`checkbox_TipoCuentas_${item.id}`"
@@ -53,16 +44,9 @@
               @click="apply"
             >
               Aplicar
-              <i
-                :class="loadingFrm ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'"
-              ></i>
+              <i :class="loadingFrm ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'"></i>
             </button>
-            <button
-              type="button"
-              class="btn btn-info"
-              v-if="areApplied"
-              @click="confirmClean"
-            >
+            <button type="button" class="btn btn-info" v-if="areApplied" @click="confirmClean">
               Limpiar
               <i class="fa fa-undo"></i>
             </button>
@@ -79,8 +63,7 @@
                               ranking de Infocif"
                   type="info"
                   :closable="false"
-                >
-                </el-alert>
+                ></el-alert>
               </label>
             </div>
           </div>
@@ -122,21 +105,13 @@
                     "
                   ></i>
                 </button>
-                <button
-                  type="button"
-                  class="btn btn-info"
-                  v-if="areApplied"
-                  @click="confirmClean"
-                >
+                <button type="button" class="btn btn-info" v-if="areApplied" @click="confirmClean">
                   Limpiar
                   <i class="fa fa-undo"></i>
                 </button>
               </div>
             </div>
-            <div
-              class="row"
-              v-if="search.tipo_cuentas && search.tipo_cuentas.length !== 0"
-            >
+            <div class="row" v-if="search.tipo_cuentas && search.tipo_cuentas.length !== 0">
               <div class="col-md-6">
                 <div class="panel panel-default cd">
                   <div class="panel-heading">
@@ -145,24 +120,19 @@
                       <span
                         class="span-info-right"
                         v-if="selected_by_tipo_cuentas !== 0"
-                        >({{
-                          selected_by_tipo_cuentas | numeral("0,0")
-                        }}
-                        empresas seleccionadas)</span
                       >
+                        ({{
+                        selected_by_tipo_cuentas | numeral("0,0")
+                        }}
+                        empresas seleccionadas)
+                      </span>
                     </p>
                   </div>
                   <div class="panel-body">
                     <div class="row">
                       <div class="col-md-12">
-                        <div
-                          v-for="(item, key) in orderItems(search.tipo_cuentas)"
-                          :key="key"
-                        >
-                          <label
-                            class="custon-checkboxs"
-                            v-if="item.label !== 'incluir_null'"
-                          >
+                        <div v-for="(item, key) in orderItems(search.tipo_cuentas)" :key="key">
+                          <label class="custon-checkboxs" v-if="item.label !== 'incluir_null'">
                             <input
                               type="checkbox"
                               :name="`checkbox_TipoCuentas___${item.id}`"
@@ -172,20 +142,17 @@
                               :value="item"
                             />
                             <span class="geekmark"></span>
-                            <span class="name-checkbox">{{
+                            <span class="name-checkbox">
+                              {{
                               inPlural(item.label)
-                            }}</span>
-                            <span class="num-fil"
-                              >({{ item.data | numeral("0,0") }})</span
-                            >
+                              }}
+                            </span>
+                            <span class="num-fil">({{ item.data | numeral("0,0") }})</span>
                           </label>
                         </div>
                       </div>
                       <div class="col-md-12">
-                        <div
-                          class="float-right"
-                          v-if="tipo_cuentas.length !== 0"
-                        >
+                        <div class="float-right" v-if="tipo_cuentas.length !== 0">
                           <label
                             class="custon-checkboxs"
                             style="color: rgba(51, 51, 51, 0.79);color: rgba(51, 51, 51, 0.79);font-size: 12px;max-width: 320px;word-break: break-word;"
@@ -196,8 +163,7 @@
                               ranking de Infocif"
                               type="info"
                               :closable="false"
-                            >
-                            </el-alert>
+                            ></el-alert>
                           </label>
                         </div>
                       </div>
@@ -215,8 +181,7 @@
                           <span
                             class="span-info-right"
                             v-if="tipo_cuentas.length !== 0"
-                            >{{ tipo_cuentas.length }}</span
-                          >
+                          >{{ tipo_cuentas.length }}</span>
                         </p>
                       </div>
                     </div>
@@ -229,11 +194,12 @@
                           <span
                             class="span-info-right"
                             v-if="selected_by_tipo_cuentas !== 0"
-                            >({{
-                              selected_by_tipo_cuentas | numeral("0,0")
-                            }}
-                            empresas seleccionadas)</span
                           >
+                            ({{
+                            selected_by_tipo_cuentas | numeral("0,0")
+                            }}
+                            empresas seleccionadas)
+                          </span>
                         </p>
                       </div>
                       <div class="panel-body">
@@ -258,12 +224,12 @@
                                 :value="item"
                               />
                               <span class="geekmark"></span>
-                              <span class="name-checkbox">{{
+                              <span class="name-checkbox">
+                                {{
                                 inPlural(item.label)
-                              }}</span>
-                              <span class="num-fil"
-                                >({{ item.data | numeral("0,0") }})</span
-                              >
+                                }}
+                              </span>
+                              <span class="num-fil">({{ item.data | numeral("0,0") }})</span>
                             </label>
                           </div>
                         </div>
@@ -297,6 +263,7 @@ import {
   beforeOrderFilters,
   sendPageView,
   sendEvent,
+  getResumenLength,
 } from "./../../utils";
 import { persistentData } from "./../../mixins/persistent-data";
 export default {
@@ -311,7 +278,7 @@ export default {
       applied_filters: "filters/applied_filters",
       filters: "filters/filters",
     }),
-    compareWithNewtoApply: function() {
+    compareWithNewtoApply: function () {
       let stg = this.tipo_cuentas_string;
       let obj = JSON.stringify(this.tipo_cuentas);
       return stg === obj;
@@ -341,7 +308,7 @@ export default {
     selected_custom_tipo_cuentas: [],
   }),
   watch: {
-    tipo_cuentas: function(newProvincesLocalidad) {
+    tipo_cuentas: function (newProvincesLocalidad) {
       this.selected_by_tipo_cuentas = this.numberCompaniesSelected(
         this.isAllProvincesLocalidad(newProvincesLocalidad)
           ? this.search.tipo_cuentas
@@ -351,15 +318,15 @@ export default {
         this.clean();
       }
     },
-    selected_custom_tipo_cuentas: function(selected_custom) {
+    selected_custom_tipo_cuentas: function (selected_custom) {
       if (this.reapply && selected_custom.length === 0) {
         this.clean();
       }
     },
-    selected_by_tipo_cuentas: function(newValue) {
+    selected_by_tipo_cuentas: function (newValue) {
       if (newValue === 0) this.tipo_cuentas = [];
     },
-    selected_companies: function() {
+    selected_companies: function () {
       howAnimation(document.querySelector(".selected_companies"));
     },
   },
@@ -379,6 +346,9 @@ export default {
         this.emptyFilter();
       }
     });
+    if (this.search && getResumenLength(this.search) > 0) {
+      this.getAppliedFilters();
+    }
   },
   methods: {
     inPlural(text) {
@@ -480,6 +450,7 @@ export default {
             this.ahnos_to = "";
             this.custom_tipo_cuentas = [];
             sendEvent(`filtro-aplicado`, this.title);
+            this.saveAppliedFilters();
           })
           .catch(() => {
             this.loadingFrm = false;
@@ -509,6 +480,16 @@ export default {
       this.form.TipoCuentas = [];
       this.tipo_cuentas = [];
       this.tipo_cuentas_string = "";
+      this.selected_by_tipo_cuentas = 0;
+      this.daterange = [null, null];
+      this.$store.dispatch("filters/removeFilters", this.title);
+      this.areApplied = false;
+      this.reapply = false;
+      this.incluir_null = false;
+      this.ahnos_from = "";
+      this.ahnos_to = "";
+      this.custom_tipo_cuentas = [];
+      sendEvent("filtro-limpiado", this.title);
       if (this.applied_filters.length > 1) {
         let beforeForm = beforeOrderFilters(
           this.filters,
@@ -521,20 +502,12 @@ export default {
           this.$store.dispatch("filters/setCantidades", {
             cantidades: response,
           });
+          this.saveAppliedFilters();
         });
       } else {
         this.updateNumberSelectedCompanies(0);
+        this.saveAppliedFilters();
       }
-      this.selected_by_tipo_cuentas = 0;
-      (this.daterange = [null, null]),
-        this.$store.dispatch("filters/removeFilters", this.title);
-      this.areApplied = false;
-      this.reapply = false;
-      this.incluir_null = false;
-      this.ahnos_from = "";
-      this.ahnos_to = "";
-      this.custom_tipo_cuentas = [];
-      sendEvent("filtro-limpiado", this.title);
     },
     emptyFilter() {
       this.form.TipoCuentas = [];
@@ -542,14 +515,15 @@ export default {
       this.tipo_cuentas_string = "";
       this.updateNumberSelectedCompanies(0);
       this.selected_by_tipo_cuentas = 0;
-      (this.daterange = [null, null]),
-        this.$store.dispatch("filters/removeFilters", this.title);
+      this.daterange = [null, null];
+      this.$store.dispatch("filters/removeFilters", this.title);
       this.areApplied = false;
       this.reapply = false;
       this.incluir_null = false;
       this.ahnos_from = "";
       this.ahnos_to = "";
       this.custom_tipo_cuentas = [];
+      this.saveAppliedFilters();
     },
     handleChange() {
       //province, event

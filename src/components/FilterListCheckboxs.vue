@@ -9,7 +9,7 @@
         posibilidades.
       </p>
     </div>
-    <div class="row">
+    <div class="row" v-if="loadingResumen === false">
       <div class="col-md-3">
         <div :class="class_left">
           <div class="panel panel-default cd col_left">
@@ -80,6 +80,9 @@
         </div>
       </div>
     </div>
+    <div v-else>
+      <h3 class="text-center">Cargando...</h3>
+    </div>
   </div>
 </template>
 
@@ -89,6 +92,7 @@ export default {
   name: "filter-list-checkboxs",
   props: {
     search: Object,
+    loadingResumen: Boolean,
   },
   data: () => ({
     class_main: "affix-div v-0-2_col_main",

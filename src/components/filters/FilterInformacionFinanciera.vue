@@ -791,6 +791,7 @@ import {
   removeDuplicates,
   removeDuplicateItem,
   sendPageView,
+  getResumenLength,
 } from "./../../utils";
 
 const setMin = (item) => {
@@ -982,6 +983,9 @@ export default {
       this.options = this.search.informacion_financiera;
     }
     this.monto1 = setMin(this.selected_unidad);
+    if (this.search && getResumenLength(this.search) > 0) {
+      this.getAppliedFilters();
+    }
   },
   methods: {
     balance() {
@@ -1087,24 +1091,6 @@ export default {
         return item !== itemResumen.itemSelect;
       });
 
-      // const balance = this.balance();
-      // for (const key in this.items_IF) {
-      //   if (this.items_IF.hasOwnProperty(key)) {
-      //     const element = this.items_IF[key];
-      //     // for (const key in balance) {
-      //     //   if (balance.hasOwnProperty(key)) {
-      //     //     const b_element = balance[key];
-      //     //     if (b_element === element.item) {
-      //     //       this.selectBalance = this.selectBalance.filter(
-      //     //         (item) => item !== b_element
-      //     //       );
-      //     //       this.areApplied = false;
-      //     //     }
-      //     //   }
-      //     // }
-      //   }
-      // }
-
       if (this.items_IF && this.items_IF.length === 0) {
         this.clean();
       }
@@ -1152,6 +1138,7 @@ export default {
             this.valueSelect = null;
             this.balance_string = JSON.stringify(_balance);
             sendEvent(`filtro-aplicado`, this.title);
+            this.saveAppliedFilters();
           })
           .catch(() => {
             this.loadingFrm = false;
@@ -1225,6 +1212,8 @@ export default {
       this.todas_las_empresas = false;
       this.u_a_c_d = true;
 
+      this.$store.dispatch("filters/removeFilters", this.title);
+      sendEvent("filtro-limpiado", this.title);
       if (this.applied_filters.length > 1) {
         let beforeForm = beforeOrderFilters(
           this.filters,
@@ -1237,12 +1226,12 @@ export default {
           this.$store.dispatch("filters/setCantidades", {
             cantidades: response,
           });
+          this.saveAppliedFilters();
         });
       } else {
         this.updateNumberSelectedCompanies(0);
+        this.saveAppliedFilters();
       }
-      this.$store.dispatch("filters/removeFilters", this.title);
-      sendEvent("filtro-limpiado", this.title);
     },
     emptyFilter() {
       this.itemsApplied = {};
@@ -1270,6 +1259,7 @@ export default {
       this.u_a_c_d = true;
       this.updateNumberSelectedCompanies(0);
       this.$store.dispatch("filters/removeFilters", this.title);
+      this.saveAppliedFilters();
     },
     setSelectedUnidad() {},
     setu_a_c_d() {

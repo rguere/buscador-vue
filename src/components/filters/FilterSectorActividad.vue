@@ -1,17 +1,12 @@
 <template>
-  <div
-    :class="`panel panel-default cd structure02`"
-    id="filter_sector_actividad"
-  >
+  <div :class="`panel panel-default cd structure02`" id="filter_sector_actividad">
     <div class="panel-heading">
       <p class="panel-title roboto white">
         {{ title }}
-        <span
-          class="span-info-right"
-          v-if="selected_by_code_cnae_and_industria !== 0"
-          >({{ selected_by_code_cnae_and_industria | numeral("0,0") }} empresas
-          seleccionadas)</span
-        >
+        <span class="span-info-right" v-if="selected_by_code_cnae_and_industria !== 0">
+          ({{ selected_by_code_cnae_and_industria | numeral("0,0") }} empresas
+          seleccionadas)
+        </span>
       </p>
     </div>
     <div class="panel-body">
@@ -43,16 +38,9 @@
             @click="apply"
           >
             Aplicar
-            <i
-              :class="loadingFrm ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'"
-            ></i>
+            <i :class="loadingFrm ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'"></i>
           </button>
-          <button
-            type="button"
-            class="btn btn-info"
-            v-if="areApplied"
-            @click="confirmClean"
-          >
+          <button type="button" class="btn btn-info" v-if="areApplied" @click="confirmClean">
             Limpiar
             <i class="fa fa-undo"></i>
           </button>
@@ -60,11 +48,7 @@
       </div>
       <br />
       <div class="tab-content">
-        <div
-          id="Codigo_CNAE"
-          class="tab-pane fade in active"
-          style="margin-bottom: 10px;"
-        >
+        <div id="Codigo_CNAE" class="tab-pane fade in active" style="margin-bottom: 10px;">
           <div v-if="search.cnae && search.cnae.length != 0" class="invert">
             <div class="row">
               <div class="col-md-4">
@@ -72,8 +56,7 @@
                   title="Navega a través de los diferentes arboles de Grupos Cnae, o ingresa directamente el o los códigos que necesites incluir en tu búsqueda."
                   type="success"
                   :closable="false"
-                >
-                </el-alert>
+                ></el-alert>
                 <br />
                 <div class="flex-search-cnae">
                   <div v-for="(item, key) in search.cnae" :key="key">
@@ -85,13 +68,12 @@
                       :content="item.label"
                     >
                       <el-button slot="reference" @click="setMiniTree(item)">
-                        <div style="font-size: 12px;">
-                          {{ item.id }}
-                        </div>
+                        <div style="font-size: 12px;">{{ item.id }}</div>
                         <div>
-                          <span style="font-size: 12px;" class="num-fil"
-                            >({{ item.data | numeral("0,0") }})</span
-                          >
+                          <span
+                            style="font-size: 12px;"
+                            class="num-fil"
+                          >({{ item.data | numeral("0,0") }})</span>
                         </div>
                       </el-button>
                     </el-popover>
@@ -166,18 +148,19 @@
                           :class="labelClassName"
                         >
                           {{ node.id }} - {{ node.label }}
-                          <span class="num-fil" v-if="node.raw.id != 'all'"
-                            >({{ node.raw.data | numeral("0,0") }})</span
-                          >
-                          <span v-if="shouldShowCount" :class="countClassName"
-                            >({{ count }})</span
-                          >
+                          <span
+                            class="num-fil"
+                            v-if="node.raw.id != 'all'"
+                          >({{ node.raw.data | numeral("0,0") }})</span>
+                          <span v-if="shouldShowCount" :class="countClassName">({{ count }})</span>
                         </label>
                       </treeselect>
                       <br />
-                      <el-checkbox v-model="selectAll">{{
+                      <el-checkbox v-model="selectAll">
+                        {{
                         selectAll ? "Deseleccionar todo" : "Seleccionar todo"
-                      }}</el-checkbox>
+                        }}
+                      </el-checkbox>
                     </div>
                   </div>
                 </dir>
@@ -207,12 +190,8 @@
                       :value="item"
                     />
                     <span class="geekmark"></span>
-                    <span class="name-checkbox"
-                      >{{ item.id }} - {{ item.label }}</span
-                    >
-                    <span class="num-fil"
-                      >({{ item.data | numeral("0,0") }})</span
-                    >
+                    <span class="name-checkbox">{{ item.id }} - {{ item.label }}</span>
+                    <span class="num-fil">({{ item.data | numeral("0,0") }})</span>
                   </label>
                 </div>
               </div>
@@ -240,16 +219,9 @@
             @click="apply"
           >
             Aplicar
-            <i
-              :class="loadingFrm ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'"
-            ></i>
+            <i :class="loadingFrm ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'"></i>
           </button>
-          <button
-            type="button"
-            class="btn btn-info"
-            v-if="areApplied"
-            @click="confirmClean"
-          >
+          <button type="button" class="btn btn-info" v-if="areApplied" @click="confirmClean">
             Limpiar
             <i class="fa fa-undo"></i>
           </button>
@@ -261,10 +233,7 @@
         <div class="col-md-12">
           <br />
           <el-collapse v-model="collapseResumen">
-            <el-collapse-item
-              title="Resumen de empresas seleccionadas"
-              name="1"
-            >
+            <el-collapse-item title="Resumen de empresas seleccionadas" name="1">
               <div class="div-scroll-200 ul_selected_cnae">
                 <div v-for="(item, key) in selected_cnae" :key="key">
                   <div class="checkbox">
@@ -335,43 +304,28 @@
                 @click="apply"
               >
                 Aplicar
-                <i
-                  :class="loadingFrm ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'"
-                ></i>
+                <i :class="loadingFrm ? 'fa  fa-spinner fa-spin' : 'fa  fa-send'"></i>
               </button>
-              <button
-                type="button"
-                class="btn btn-info"
-                v-if="areApplied"
-                @click="confirmClean"
-              >
+              <button type="button" class="btn btn-info" v-if="areApplied" @click="confirmClean">
                 Limpiar
                 <i class="fa fa-undo"></i>
               </button>
             </div>
           </div>
-          <div
-            class="conten-flex-70-30"
-            v-if="search.cnae && search.cnae.length != 0"
-          >
+          <div class="conten-flex-70-30" v-if="search.cnae && search.cnae.length != 0">
             <div>
               <ul class="nav nav-tabs">
                 <li class="active">
                   <a data-toggle="tab" href="#Modal_Codigo_CNAE">Código CNAE</a>
                 </li>
                 <li>
-                  <a data-toggle="tab" href="#Modal_Sector_INFOCIF"
-                    >Sector INFOCIF</a
-                  >
+                  <a data-toggle="tab" href="#Modal_Sector_INFOCIF">Sector INFOCIF</a>
                 </li>
               </ul>
 
               <div class="tab-content">
                 <div id="Modal_Codigo_CNAE" class="tab-pane fade in active">
-                  <div
-                    class="panel panel-default cd"
-                    style="border-color: transparent;"
-                  >
+                  <div class="panel panel-default cd" style="border-color: transparent;">
                     <div class="panel-heading">
                       <p class="panel-title roboto white">
                         Selecciona los Códigos CNAE que desee agregar a su
@@ -379,23 +333,21 @@
                       </p>
                     </div>
                     <div class="panel-body">
-                      <div
-                        style="display: flex; justify-content: space-between;"
-                      >
+                      <div style="display: flex; justify-content: space-between;">
                         <div>
-                          <label
-                            class="control-label"
-                            for="SearchTheProvinceorTown"
-                            >Introduce el código de uno o varios Códigos CNAE
-                            para “BUSCAR”</label
-                          >
+                          <label class="control-label" for="SearchTheProvinceorTown">
+                            Introduce el código de uno o varios Códigos CNAE
+                            para “BUSCAR”
+                          </label>
                         </div>
                         <div>
-                          <el-checkbox v-model="selectAll">{{
+                          <el-checkbox v-model="selectAll">
+                            {{
                             selectAll
-                              ? "Deseleccionar todo"
-                              : "Seleccionar todo"
-                          }}</el-checkbox>
+                            ? "Deseleccionar todo"
+                            : "Seleccionar todo"
+                            }}
+                          </el-checkbox>
                         </div>
                       </div>
                       <el-select
@@ -455,12 +407,11 @@
                             :class="labelClassName"
                           >
                             {{ node.id }} - {{ node.label }}
-                            <span class="num-fil" v-if="node.raw.id != 'all'"
-                              >({{ node.raw.data | numeral("0,0") }})</span
-                            >
-                            <span v-if="shouldShowCount" :class="countClassName"
-                              >({{ count }})</span
-                            >
+                            <span
+                              class="num-fil"
+                              v-if="node.raw.id != 'all'"
+                            >({{ node.raw.data | numeral("0,0") }})</span>
+                            <span v-if="shouldShowCount" :class="countClassName">({{ count }})</span>
                           </label>
                         </treeselect>
                       </div>
@@ -470,7 +421,7 @@
                 <div id="Modal_Sector_INFOCIF" class="tab-pane fade">
                   <div v-if="search.industria && search.industria.length != 0">
                     <div class="div-scroll-400">
-                      <div class="">
+                      <div class>
                         <div v-for="(item, key) in search.industria" :key="key">
                           <label class="custon-checkboxs">
                             <input
@@ -482,12 +433,8 @@
                               :value="item"
                             />
                             <span class="geekmark"></span>
-                            <span class="name-checkbox"
-                              >{{ item.id }} - {{ item.label }}</span
-                            >
-                            <span class="num-fil"
-                              >({{ item.data | numeral("0,0") }})</span
-                            >
+                            <span class="name-checkbox">{{ item.id }} - {{ item.label }}</span>
+                            <span class="num-fil">({{ item.data | numeral("0,0") }})</span>
                           </label>
                         </div>
                       </div>
@@ -501,9 +448,11 @@
                 <div class="panel-heading">
                   <p class="panel-title roboto white">
                     Códigos seleccionadas
-                    <span class="span-info-right">{{
+                    <span class="span-info-right">
+                      {{
                       lengthCnaeIndustri
-                    }}</span>
+                      }}
+                    </span>
                   </p>
                 </div>
               </div>
@@ -511,9 +460,11 @@
                 <div class="panel-heading">
                   <p class="panel-title roboto white">
                     Empresas seleccionadas
-                    <span class="span-info-right">{{
+                    <span class="span-info-right">
+                      {{
                       selected_by_code_cnae_and_industria | numeral("0,0")
-                    }}</span>
+                      }}
+                    </span>
                   </p>
                 </div>
                 <div class="panel-body div-scroll-300">
@@ -529,18 +480,14 @@
                           :value="item"
                         />
                         <span class="geekmark"></span>
-                        <span class="name-checkbox"
-                          >{{ item.id }} - {{ item.label }}</span
-                        >
-                        <span class="num-fil" v-if="item.id != 'all'"
-                          >({{ item.data | numeral("0,0") }})</span
-                        >
+                        <span class="name-checkbox">{{ item.id }} - {{ item.label }}</span>
+                        <span
+                          class="num-fil"
+                          v-if="item.id != 'all'"
+                        >({{ item.data | numeral("0,0") }})</span>
                       </label>
                     </li>
-                    <li
-                      v-for="(item, key) in selected_industria"
-                      :key="`_${key}`"
-                    >
+                    <li v-for="(item, key) in selected_industria" :key="`_${key}`">
                       <label class="custon-checkboxs">
                         <input
                           type="checkbox"
@@ -551,12 +498,11 @@
                           :value="item"
                         />
                         <span class="geekmark"></span>
-                        <span class="name-checkbox"
-                          >{{ item.id }} - {{ item.label }}</span
-                        >
-                        <span class="num-fil" v-if="item.id != 'all'"
-                          >({{ item.data | numeral("0,0") }})</span
-                        >
+                        <span class="name-checkbox">{{ item.id }} - {{ item.label }}</span>
+                        <span
+                          class="num-fil"
+                          v-if="item.id != 'all'"
+                        >({{ item.data | numeral("0,0") }})</span>
                       </label>
                     </li>
                   </ul>
@@ -583,6 +529,7 @@ import {
   sendPageView,
   sendEvent,
   searchInArrayObject,
+  getResumenLength,
 } from "./../../utils";
 import { persistentData } from "./../../mixins/persistent-data";
 
@@ -598,7 +545,7 @@ export default {
       applied_filters: "filters/applied_filters",
       filters: "filters/filters",
     }),
-    compareWithNewtoApply: function() {
+    compareWithNewtoApply: function () {
       let stg = this.selected_cnae_string;
       let obj = JSON.stringify(this.sortData(this.selected_cnae));
       let compare_cnae = stg === obj;
@@ -609,7 +556,7 @@ export default {
       let compare = compare_cnae === compare_industria;
       return compare;
     },
-    lengthCnaeIndustri: function() {
+    lengthCnaeIndustri: function () {
       return this.selected_cnae.length + this.selected_industria.length;
     },
   },
@@ -655,7 +602,7 @@ export default {
     selectAll: false,
   }),
   watch: {
-    selected_cnae: function(newCnae) {
+    selected_cnae: function (newCnae) {
       this.selected_by_code_cnae = this.numberCompaniesSelected(newCnae);
       this.selected_by_code_cnae_and_industria =
         this.selected_by_code_cnae + this.selected_by_code_industria;
@@ -663,7 +610,7 @@ export default {
         this.clean();
       }
     },
-    selected_industria: function(newIndustria) {
+    selected_industria: function (newIndustria) {
       this.selected_by_code_industria = this.numberCompaniesSelected(
         newIndustria,
         "industria"
@@ -674,10 +621,10 @@ export default {
         this.clean();
       }
     },
-    selected_companies: function() {
+    selected_companies: function () {
       howAnimation(document.querySelector(".selected_companies"));
     },
-    search: function(newSearch) {
+    search: function (newSearch) {
       this.options = newSearch && newSearch.cnae ? newSearch.cnae : [];
       if (
         newSearch.cnae &&
@@ -713,7 +660,7 @@ export default {
         });
       }
     },
-    selectAll: function(all) {
+    selectAll: function (all) {
       if (all) {
         this.selected_cnae = [];
         for (const cnaes of this.search.cnae) {
@@ -747,6 +694,9 @@ export default {
       }
       sendEvent("filtro-vaciado", "-");
     });
+    if (this.search && getResumenLength(this.search) > 0) {
+      this.getAppliedFilters();
+    }
   },
   methods: {
     setMiniTree(_item) {
@@ -849,6 +799,7 @@ export default {
               this.sortData(this.selected_industria)
             );
             sendEvent(`filtro-aplicado`, this.title);
+            this.saveAppliedFilters();
           })
           .catch(() => {
             this.loadingFrm = false;
@@ -883,6 +834,14 @@ export default {
       this.valueSelect = [];
       this.collapseResumen = [];
       this.selected_cnae_string = "";
+      this.selected_by_code_cnae_and_industria = 0;
+      this.$store.dispatch("filters/removeFilters", this.title);
+      this.areApplied = false;
+      this.reapply = false;
+      this.loadingSearchTheProvinceorTown = false;
+      this.ResultTheProvinceorTown = [];
+      this.SearchTheProvinceorTown = "";
+      sendEvent("filtro-limpiado", this.title);
       if (this.applied_filters.length > 1) {
         let beforeForm = beforeOrderFilters(
           this.filters,
@@ -895,18 +854,12 @@ export default {
           this.$store.dispatch("filters/setCantidades", {
             cantidades: response,
           });
+          this.saveAppliedFilters();
         });
       } else {
         this.updateNumberSelectedCompanies(0);
+        this.saveAppliedFilters();
       }
-      this.selected_by_code_cnae_and_industria = 0;
-      this.$store.dispatch("filters/removeFilters", this.title);
-      this.areApplied = false;
-      this.reapply = false;
-      this.loadingSearchTheProvinceorTown = false;
-      this.ResultTheProvinceorTown = [];
-      this.SearchTheProvinceorTown = "";
-      sendEvent("filtro-limpiado", this.title);
     },
     emptyFilter() {
       this.selected_children = [];
@@ -925,6 +878,7 @@ export default {
       this.loadingSearchTheProvinceorTown = false;
       this.ResultTheProvinceorTown = [];
       this.SearchTheProvinceorTown = "";
+      this.saveAppliedFilters();
     },
     handleChange() {
       this.reapply = this.areApplied ? true : this.areApplied;
