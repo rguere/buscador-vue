@@ -17,6 +17,7 @@ export const SET_CANTIDADES = "SET_CANTIDADES";
 //search.js
 export const FETCH_SEARCH = "FETCH_SEARCH";
 export const LOADING_SEARCH = "LOADING_SEARCH";
+export const LOADING_RESUMEN = "LOADING_RESUMEN";
 
 //layout.js
 export const SET_LAYOUT = "SET_LAYOUT";

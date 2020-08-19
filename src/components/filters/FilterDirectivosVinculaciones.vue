@@ -711,6 +711,7 @@ export default {
               quantity: this.selected_by_direc_vinc,
               cantidades: response,
               items: this.selected_direc_vinc,
+              applied_filters: this.applied_filters,
             });
             this.updateNumberSelectedCompanies(response.cantidad);
             this.selected_direc_vinc_string = JSON.stringify(
@@ -759,7 +760,10 @@ export default {
       this.list_selected_direc_vinc = [];
       this.collapseResumen = [];
       this.selected_by_direc_vinc = 0;
-      this.$store.dispatch("filters/removeFilters", this.title);
+      this.$store.dispatch("filters/removeFilters", {
+        title: this.title,
+        applied_filters: this.applied_filters,
+      });
       this.areApplied = false;
       this.reapply = false;
       this.search_edit = true;
@@ -795,7 +799,10 @@ export default {
       this.list_selected_direc_vinc = [];
       this.updateNumberSelectedCompanies(0);
       this.selected_by_direc_vinc = 0;
-      this.$store.dispatch("filters/removeFilters", this.title);
+      this.$store.dispatch("filters/removeFilters", {
+        title: this.title,
+        applied_filters: this.applied_filters,
+      });
       this.areApplied = false;
       this.reapply = false;
       this.search_edit = true;

@@ -1128,6 +1128,7 @@ export default {
               quantity: _balance.length,
               cantidades: response,
               items: this.items_IF,
+              applied_filters: this.applied_filters,
             });
             this.areApplied = true;
             this.reapply = false;
@@ -1212,7 +1213,10 @@ export default {
       this.todas_las_empresas = false;
       this.u_a_c_d = true;
 
-      this.$store.dispatch("filters/removeFilters", this.title);
+      this.$store.dispatch("filters/removeFilters", {
+        title: this.title,
+        applied_filters: this.applied_filters,
+      });
       sendEvent("filtro-limpiado", this.title);
       if (this.applied_filters.length > 1) {
         let beforeForm = beforeOrderFilters(
@@ -1258,7 +1262,10 @@ export default {
       this.todas_las_empresas = false;
       this.u_a_c_d = true;
       this.updateNumberSelectedCompanies(0);
-      this.$store.dispatch("filters/removeFilters", this.title);
+      this.$store.dispatch("filters/removeFilters", {
+        title: this.title,
+        applied_filters: this.applied_filters,
+      });
       this.saveAppliedFilters();
     },
     setSelectedUnidad() {},

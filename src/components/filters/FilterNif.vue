@@ -539,6 +539,7 @@ export default {
               quantity: this.selected_by_list_nif,
               cantidades: response,
               items: this.selected_list_nif,
+              applied_filters: this.applied_filters,
             });
             this.updateNumberSelectedCompanies(response.cantidad);
             this.areApplied = true;
@@ -583,7 +584,10 @@ export default {
       this.selected_list_nif_string = "";
       this.list_nif = { validos: [], invalidos: [] };
       this.selected_by_list_nif = 0;
-      this.$store.dispatch("filters/removeFilters", this.title);
+      this.$store.dispatch("filters/removeFilters", {
+        title: this.title,
+        applied_filters: this.applied_filters,
+      });
       this.areApplied = false;
       this.reapply = false;
       this.search_edit = true;
@@ -627,7 +631,10 @@ export default {
       this.list_nif = { validos: [], invalidos: [] };
       this.updateNumberSelectedCompanies(0);
       this.selected_by_list_nif = 0;
-      this.$store.dispatch("filters/removeFilters", this.title);
+      this.$store.dispatch("filters/removeFilters", {
+        title: this.title,
+        applied_filters: this.applied_filters,
+      });
       this.areApplied = false;
       this.reapply = false;
       this.search_edit = true;

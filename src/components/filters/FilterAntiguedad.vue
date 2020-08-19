@@ -662,6 +662,7 @@ export default {
               quantity: this.selected_by_antiguedad,
               cantidades: response,
               items: this.selected_antiguedad,
+              applied_filters: this.applied_filters,
             });
             this.areApplied = true;
             this.reapply = false;
@@ -707,6 +708,7 @@ export default {
               quantity: this.selected_by_antiguedad,
               cantidades: response,
               items: this.selected_antiguedad,
+              applied_filters: this.applied_filters,
             });
             this.areApplied = true;
             this.reapply = false;
@@ -747,6 +749,7 @@ export default {
               quantity: this.selected_by_antiguedad,
               cantidades: response,
               items: this.selected_custom_antiguedad,
+              applied_filters: this.applied_filters,
             });
             this.areApplied = true;
             this.reapply = false;
@@ -827,8 +830,11 @@ export default {
       this.selected_antiguedad = [];
       this.selected_antiguedad_string = "";
       this.selected_by_antiguedad = 0;
-      (this.daterange = [null, null]),
-        this.$store.dispatch("filters/removeFilters", this.title);
+      this.daterange = [null, null];
+      this.$store.dispatch("filters/removeFilters", {
+        title: this.title,
+        applied_filters: this.applied_filters,
+      });
       this.areApplied = false;
       this.reapply = false;
       this.incluir_null = false;
@@ -862,7 +868,10 @@ export default {
       this.updateNumberSelectedCompanies(0);
       this.selected_by_antiguedad = 0;
       this.daterange = [null, null];
-      this.$store.dispatch("filters/removeFilters", this.title);
+      this.$store.dispatch("filters/removeFilters", {
+        title: this.title,
+        applied_filters: this.applied_filters,
+      });
       this.areApplied = false;
       this.reapply = false;
       this.incluir_null = false;

@@ -441,6 +441,7 @@ export default {
               quantity: this.selected_by_tipo_cuentas,
               cantidades: response,
               items: this.tipo_cuentas,
+              applied_filters: this.applied_filters,
             });
             this.areApplied = true;
             this.reapply = false;
@@ -482,7 +483,10 @@ export default {
       this.tipo_cuentas_string = "";
       this.selected_by_tipo_cuentas = 0;
       this.daterange = [null, null];
-      this.$store.dispatch("filters/removeFilters", this.title);
+      this.$store.dispatch("filters/removeFilters", {
+        title: this.title,
+        applied_filters: this.applied_filters,
+      });
       this.areApplied = false;
       this.reapply = false;
       this.incluir_null = false;
@@ -516,7 +520,10 @@ export default {
       this.updateNumberSelectedCompanies(0);
       this.selected_by_tipo_cuentas = 0;
       this.daterange = [null, null];
-      this.$store.dispatch("filters/removeFilters", this.title);
+      this.$store.dispatch("filters/removeFilters", {
+        title: this.title,
+        applied_filters: this.applied_filters,
+      });
       this.areApplied = false;
       this.reapply = false;
       this.incluir_null = false;

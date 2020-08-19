@@ -788,6 +788,7 @@ export default {
               quantity: this.selected_by_code_cnae_and_industria,
               cantidades: response,
               items: selecteds,
+              applied_filters: this.applied_filters,
             });
             this.areApplied = true;
             this.reapply = false;
@@ -835,7 +836,10 @@ export default {
       this.collapseResumen = [];
       this.selected_cnae_string = "";
       this.selected_by_code_cnae_and_industria = 0;
-      this.$store.dispatch("filters/removeFilters", this.title);
+      this.$store.dispatch("filters/removeFilters", {
+        title: this.title,
+        applied_filters: this.applied_filters,
+      });
       this.areApplied = false;
       this.reapply = false;
       this.loadingSearchTheProvinceorTown = false;
@@ -872,7 +876,10 @@ export default {
       this.selected_cnae_string = "";
       this.updateNumberSelectedCompanies(0);
       this.selected_by_code_cnae_and_industria = 0;
-      this.$store.dispatch("filters/removeFilters", this.title);
+      this.$store.dispatch("filters/removeFilters", {
+        title: this.title,
+        applied_filters: this.applied_filters,
+      });
       this.areApplied = false;
       this.reapply = false;
       this.loadingSearchTheProvinceorTown = false;

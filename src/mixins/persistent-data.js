@@ -23,7 +23,6 @@ export const persistentData = {
       this.$store.dispatch("localDatas/setLocalDatas", {
         key: this.$options.name,
         data: this.$data,
-        storage: this.$storage,
       });
     },
     setData: function() {
@@ -41,20 +40,20 @@ export const persistentData = {
       return array.sort();
     },
     saveAppliedFilters() {
-      console.log("saveAppliedFilters");
+      // console.log("saveAppliedFilters");
       this.setLocalDatas();
-      setTimeout(() => {
-        this.$storage.set("localDatas", this.localDatas);
-      }, 300);
+      // setTimeout(() => {
+      //   this.$storage.set("localDatas", this.localDatas);
+      // }, 300);
     },
     getAppliedFilters() {
       //console.log("getAppliedFilters", this.$options.name);
-      const localDatas = this.$storage.get("localDatas");
-      if (localDatas && localDatas[this.$options.name]) {
-        for (let key in localDatas[this.$options.name]) {
-          this.$set(this.$data, key, localDatas[this.$options.name][key]);
-        }
-      }
+      // const localDatas = this.$storage.get("localDatas");
+      // if (localDatas && localDatas[this.$options.name]) {
+      //   for (let key in localDatas[this.$options.name]) {
+      //     this.$set(this.$data, key, localDatas[this.$options.name][key]);
+      //   }
+      // }
     },
   },
 };

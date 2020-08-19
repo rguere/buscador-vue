@@ -566,6 +566,7 @@ export default {
             quantity: this.selected_by_cargos,
             cantidades: response,
             items: this.selected_cargos,
+            applied_filters: this.applied_filters,
           });
           this.areApplied = true;
           this.reapply = false;
@@ -611,7 +612,10 @@ export default {
       this.daterangeFnombramiento = null;
       this.daterangeFrenuncia = null;
       this.selected_by_cargos = 0;
-      this.$store.dispatch("filters/removeFilters", this.title);
+      this.$store.dispatch("filters/removeFilters", {
+        title: this.title,
+        applied_filters: this.applied_filters,
+      });
       this.areApplied = false;
       this.reapply = false;
       this.incluir_null = false;
@@ -647,7 +651,10 @@ export default {
       this.daterangeFrenuncia = null;
       this.updateNumberSelectedCompanies(0);
       this.selected_by_cargos = 0;
-      this.$store.dispatch("filters/removeFilters", this.title);
+      this.$store.dispatch("filters/removeFilters", {
+        title: this.title,
+        applied_filters: this.applied_filters,
+      });
       this.areApplied = false;
       this.reapply = false;
       this.incluir_null = false;

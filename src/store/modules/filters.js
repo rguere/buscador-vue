@@ -262,8 +262,12 @@ export const actions = {
       initial: initialState(),
     });
   },
-  addFilters({ commit }, { name, quantity, cantidades, items }) {
-    if (!state.applied_filters.includes(name)) {
+  addFilters(
+    { commit },
+    { name, quantity, cantidades, items, applied_filters }
+  ) {
+    const includes = applied_filters.includes(name);
+    if (!includes) {
       commit(types.ADD_FILTER, {
         name: name,
         quantity: quantity,
@@ -279,10 +283,11 @@ export const actions = {
       });
     }
   },
-  removeFilters({ commit }, filter) {
-    if (state.applied_filters.includes(filter)) {
+  removeFilters({ commit }, { title, applied_filters }) {
+    const includes = applied_filters.includes(title);
+    if (includes) {
       commit(types.REMOVE_FILTER, {
-        filter: filter,
+        filter: title,
       });
     }
   },

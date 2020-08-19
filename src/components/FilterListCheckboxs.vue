@@ -92,7 +92,6 @@ export default {
   name: "filter-list-checkboxs",
   props: {
     search: Object,
-    loadingResumen: Boolean,
   },
   data: () => ({
     class_main: "affix-div v-0-2_col_main",
@@ -109,6 +108,7 @@ export default {
     },
     ...mapGetters({
       class_btns_filter: "class_btns_filter/class_btns_filter",
+      loadingResumen: "search/loadingResumen",
     }),
   },
   mounted() {

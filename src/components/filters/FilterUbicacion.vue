@@ -529,6 +529,7 @@ export default {
               quantity: this.selected_by_location,
               cantidades: response,
               items: this.selected_provinces_localidad,
+              applied_filters: this.applied_filters,
             });
             this.areApplied = true;
             this.reapply = false;
@@ -572,7 +573,10 @@ export default {
       this.valueSelect = [];
       this.selected_provinces_localidad_string = "";
       this.selected_by_location = 0;
-      this.$store.dispatch("filters/removeFilters", this.title);
+      this.$store.dispatch("filters/removeFilters", {
+        title: this.title,
+        applied_filters: this.applied_filters,
+      });
       this.areApplied = false;
       this.reapply = false;
       this.loadingSearchTheProvinceorTown = false;
@@ -608,7 +612,10 @@ export default {
       this.selected_provinces_localidad_string = "";
       this.updateNumberSelectedCompanies(0);
       this.selected_by_location = 0;
-      this.$store.dispatch("filters/removeFilters", this.title);
+      this.$store.dispatch("filters/removeFilters", {
+        title: this.title,
+        applied_filters: this.applied_filters,
+      });
       this.areApplied = false;
       this.reapply = false;
       this.loadingSearchTheProvinceorTown = false;

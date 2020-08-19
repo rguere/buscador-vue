@@ -1,6 +1,11 @@
 import Vue from "vue";
 import Vuex from "vuex";
 //import createPersistedState from 'vuex-persistedstate'
+import VuexPersistence from "vuex-persist";
+
+const vuexLocal = new VuexPersistence({
+  storage: window.localStorage,
+});
 
 Vue.use(Vuex);
 
@@ -23,5 +28,5 @@ const modules = requireContext
 
 export default new Vuex.Store({
   modules,
-  //plugins: [createPersistedState()]
+  plugins: [vuexLocal.plugin],
 });

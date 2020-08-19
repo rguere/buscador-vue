@@ -522,6 +522,7 @@ export default {
               quantity: this.selected_by_cuentas_disponibles,
               cantidades: response,
               items: this.selected_cuentas_disponibles,
+              applied_filters: this.applied_filters,
             });
             this.areApplied = true;
             this.reapply = false;
@@ -561,7 +562,10 @@ export default {
       this.selected_cuentas_disponibles = [];
       this.selected_cuentas_disponibles_string = "";
       this.selected_by_cuentas_disponibles = 0;
-      this.$store.dispatch("filters/removeFilters", this.title);
+      this.$store.dispatch("filters/removeFilters", {
+        title: this.title,
+        applied_filters: this.applied_filters,
+      });
       this.areApplied = false;
       this.reapply = false;
       this.incluir_null = false;
@@ -593,7 +597,10 @@ export default {
       this.selected_cuentas_disponibles_string = "";
       this.updateNumberSelectedCompanies(0);
       this.selected_by_cuentas_disponibles = 0;
-      this.$store.dispatch("filters/removeFilters", this.title);
+      this.$store.dispatch("filters/removeFilters", {
+        title: this.title,
+        applied_filters: this.applied_filters,
+      });
       this.areApplied = false;
       this.reapply = false;
       this.incluir_null = false;

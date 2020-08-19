@@ -6,6 +6,7 @@ const local = false;
 // state
 export const state = {
   loading: false,
+  loadingResumen: false,
   search: {
     cantidad: 0,
     antiguedad: [],
@@ -24,6 +25,7 @@ export const state = {
 // getters
 export const getters = {
   loading: (state) => state.loading,
+  loadingResumen: (state) => state.loadingResumen,
   search: (state) => state.search,
 };
 
@@ -32,9 +34,14 @@ export const mutations = {
   [types.FETCH_SEARCH](state, { search }) {
     state.search = search;
     state.loading = false;
+    state.loadingResumen = false;
   },
   [types.LOADING_SEARCH](state, { loading }) {
     state.loading = loading;
+  },
+  [types.LOADING_RESUMEN](state, { loading, loadingResumen }) {
+    state.loading = loading;
+    state.loadingResumen = loadingResumen;
   },
 };
 
@@ -45,8 +52,9 @@ export const actions = {
     load++;
     if (load < 2) {
       try {
-        commit(types.LOADING_SEARCH, {
+        commit(types.LOADING_RESUMEN, {
           loading: true,
+          loadingResumen: true,
         });
         let _data = [];
         if (!local) {

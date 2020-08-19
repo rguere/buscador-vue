@@ -627,6 +627,7 @@ export default {
               quantity: this.selected_by_zip_codes,
               cantidades: response,
               items: this.selected_zip_codes,
+              applied_filters: this.applied_filters,
             });
             this.updateNumberSelectedCompanies(response.cantidad);
             this.areApplied = true;
@@ -673,7 +674,10 @@ export default {
       this.to_zip_code = "";
       this.zip_codes = { validos: [], invalidos: [] };
       this.selected_by_zip_codes = 0;
-      this.$store.dispatch("filters/removeFilters", this.title);
+      this.$store.dispatch("filters/removeFilters", {
+        title: this.title,
+        applied_filters: this.applied_filters,
+      });
       this.areApplied = false;
       this.reapply = false;
       this.search_edit = true;
@@ -704,7 +708,10 @@ export default {
       this.zip_codes = { validos: [], invalidos: [] };
       this.updateNumberSelectedCompanies(0);
       this.selected_by_zip_codes = 0;
-      this.$store.dispatch("filters/removeFilters", this.title);
+      this.$store.dispatch("filters/removeFilters", {
+        title: this.title,
+        applied_filters: this.applied_filters,
+      });
       this.areApplied = false;
       this.reapply = false;
       this.search_edit = true;

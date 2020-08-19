@@ -722,6 +722,7 @@ export default {
               quantity: this.selected_by_auditores,
               cantidades: response,
               items: this.selected_auditores,
+              applied_filters: this.applied_filters,
             });
             this.updateNumberSelectedCompanies(response.cantidad);
             this.areApplied = true;
@@ -772,7 +773,10 @@ export default {
       this.collapseResumen = [];
       this.collapseTop10 = ["1"];
       this.selected_by_auditores = 0;
-      this.$store.dispatch("filters/removeFilters", this.title);
+      this.$store.dispatch("filters/removeFilters", {
+        title: this.title,
+        applied_filters: this.applied_filters,
+      });
       this.areApplied = false;
       this.reapply = false;
       this.search_edit = true;
@@ -808,7 +812,10 @@ export default {
       this.list_selected_auditores = [];
       this.updateNumberSelectedCompanies(0);
       this.selected_by_auditores = 0;
-      this.$store.dispatch("filters/removeFilters", this.title);
+      this.$store.dispatch("filters/removeFilters", {
+        title: this.title,
+        applied_filters: this.applied_filters,
+      });
       this.areApplied = false;
       this.reapply = false;
       this.search_edit = true;
