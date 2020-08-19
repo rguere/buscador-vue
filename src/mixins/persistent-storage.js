@@ -13,11 +13,9 @@ export const persistentStorage = {
   beforeDestroy: function() {},
   methods: {
     saveAppliedFilters() {
-      console.log("saveAppliedFilters");
       this.$storage.set("localDatas", this.localDatas);
     },
     getAppliedFilters() {
-      console.log("getAppliedFilters");
       return this.$storage.get("localDatas");
     },
   },
